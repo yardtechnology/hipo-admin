@@ -1,0 +1,2 @@
+import DETAILPANEL from "./DETAILPANEL";
+export { DETAILPANEL };

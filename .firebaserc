@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "skyrise-celebrity"
+  },
+  "targets": {
+    "skyrise-celebrity": {
+      "hosting": {
+        "skyrise-admin": [
+          "skyrise-admin"
+        ]
+      }
+    }
+  }
+}
