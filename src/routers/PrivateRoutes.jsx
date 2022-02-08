@@ -5,7 +5,7 @@ import {
   EditProfile,
   ManageActivityList,
   ManageArtists,
-  ManageCategories,
+  // ManageCategories,
   ManageUsers,
   ManageManagers,
   ManagePromoCodes,
@@ -23,7 +23,16 @@ import {
   ManageDays,
   Bookings,
   ArtistBookingList,
+  Categories,
+  Contacts,
+  AllDrivers,
+  Vehicles,
+  Pricing,
+  Rides,
+  Coupons,
+  Localization,
 } from "pages";
+import Riders from "pages/Riders";
 import { Routes, Route } from "react-router-dom";
 
 const PrivateRoutes = () => {
@@ -36,7 +45,7 @@ const PrivateRoutes = () => {
         <Route path="/manage-requests" element={<ManageRequests />} />
         <Route path="/manage-events" element={<ManageEvents />} />
         <Route path="/manage-days" element={<ManageDays />} />
-        <Route path="/manage-categories" element={<ManageCategories />} />
+        <Route path="/categories" element={<Categories />} />
         <Route path="/manage-languages" element={<ManageLanguage />} />
         <Route path="/manage-genres" element={<ManageGenre />} />
         <Route path="/manage-services" element={<ManageServices />} />
@@ -52,7 +61,15 @@ const PrivateRoutes = () => {
         <Route path="/manage-promo-codes" element={<ManagePromoCodes />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/drivers" element={<AllDrivers />} />
+        <Route path="/vehicles" element={<Vehicles />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/coupons" element={<Coupons />} />
+        <Route path="/localization" element={<Localization />} />
+        <Route path="/rides" element={<Rides />} />
+        <Route path="/riders" element={<Riders />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/contacts" element={<Contacts />} />
         <Route path="/users" element={<Users />} />
       </Routes>
     </PanelLayout>

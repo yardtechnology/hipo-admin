@@ -536,7 +536,7 @@ const Dashboard = () => {
       },
       colors: ["#40559b"],
       chart: {
-        background: "transparent",
+        background: "#fff",
         toolbar: {
           show: true,
           offsetX: 0,
