@@ -1,10 +1,10 @@
 import { createTheme } from "@mui/material/";
-import { purple } from "@mui/material/colors";
+// import { purple } from "@mui/material/colors";
 const boxShadow = "#40559b73 0px 8px 16px 0px";
 const CustomTheme = createTheme({
   palette: {
     primary: {
-      main: purple[700],
+      main: "#1877f2",
     },
   },
   typography: {

@@ -66,7 +66,7 @@ const Login = () => {
                 <Button
                   component={Link}
                   to="/forgot-password"
-                  sx={{ color: "#c91c83" }}
+                  sx={{ color: "#1877f2" }}
                 >
                   Forgot Password?
                 </Button>
