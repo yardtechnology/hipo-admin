@@ -15,17 +15,17 @@ import { Box } from "@mui/system";
 import { Card as DashboardCard } from "components/dashboard";
 import { useBookings } from "hooks";
 import moment from "moment";
-// import GoogleMapReact from "google-map-react";
+import GoogleMapReact from "google-map-react";
 import Chart from "react-apexcharts";
 const Dashboard = () => {
   const { bookings } = useBookings();
   console.log(bookings);
-  // const AnyReactComponent = ({ text }) => <div>{text}</div>;
-  // const location = {
-  //   address: "1600 Amphitheatre Parkway, Mountain View, california.",
-  //   lat: 37.42216,
-  //   lng: -122.08427,
-  // };
+  const AnyReactComponent = ({ text }) => <div>{text}</div>;
+  const location = {
+    address: "1600 Amphitheatre Parkway, Mountain View, california.",
+    lat: 37.42216,
+    lng: -122.08427,
+  };
   const BOOKINGS =
     bookings === null
       ? []
@@ -256,80 +256,35 @@ const Dashboard = () => {
         />
       </Card> */}
 
-      <section className="">
-        {/* <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <DashboardCard
-              title={Artists?.length}
-              subtitle="Artists"
-              icon={<Attractions className="iconColor" />}
-              iconAction={"/manage-users"}
-              menuName={"view artists"}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <DashboardCard
-              title={Managers?.length}
-              subtitle="Managers"
-              icon={<SupervisedUserCircleOutlined className="iconColor" />}
-              iconAction={"/manage-users"}
-              menuName={"view managers"}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <DashboardCard
-              title={USERS?.length}
-              subtitle="Users"
-              icon={<People className="iconColor" />}
-              iconAction={"/manage-users"}
-              menuName={"view users"}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
-            <DashboardCard
-              title={"$ " + Revenue}
-              subtitle="Revenue"
-              icon={<Money className="iconColor" />}
-              iconAction={<MoreVert sx={{ color: "snow" }} />}
-              menuName={"total revenue"}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ marginTop: 3.5 }}>
-            <Chart
-              options={{
-                ...chartOptions.options,
-              }}
-              series={chartOptions.series}
-              type="line"
-              height="300"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} sx={{ marginTop: 3.5 }}>
-            <Chart
-              options={{ ...optionsPie.options }}
-              series={optionsPie.series}
-              type="donut"
-              height="300"
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={6}
-            lg={6}
-            sx={{ marginTop: 3.5, justifyContent: "center" }}
+      <section className="" style={{ marginTop: "0vh" }}>
+        <Typography
+          component={"h6"}
+          variant="h6"
+          style={{
+            backgroundColor: "",
+            padding: "0vh 2vh 1vh 2vh",
+            marginBottom: "2vh",
+            color: "#000",
+            fontWeight: "bold",
+          }}
+        >
+          Taxi Live Location
+        </Typography>
+        <div style={{ height: "50vh", width: "100%", marginBottom: "2vh" }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{
+              key: "AIzaSyC61d5ftTpAnHONe8k5tbo4mkSmzvDNO-4",
+            }}
+            defaultCenter={location}
+            defaultZoom={15}
           >
-            <Chart
-              options={{
-                ...areaOptions.options,
-              }}
-              series={areaOptions.series}
-              type="area"
-              height="300"
+            <AnyReactComponent
+              lat={location.lat}
+              lng={location.lng}
+              text="My Location"
             />
-          </Grid>
-        </Grid> */}
+          </GoogleMapReact>
+        </div>
 
         <Box
           class="d-flex"

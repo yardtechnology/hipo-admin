@@ -89,11 +89,11 @@ const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
             </Tooltip>
           </>
           <>
-            <Tooltip title="Users">
+            <Tooltip title="Riders">
               <IconButton
                 sx={{ mr: 2 }}
                 onClick={() => {
-                  navigate("/manage-users");
+                  navigate("/riders");
                 }}
               >
                 <People className="iconColor" />
