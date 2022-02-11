@@ -24,6 +24,7 @@ export const Localization = lazy(() => import("./Localization"));
 export const Vehicles = lazy(() => import("./Vehicles"));
 export const Pricing = lazy(() => import("./Pricing"));
 export const Rides = lazy(() => import("./Rides"));
+export const RiderHistory = lazy(() => import("./RiderHistory"));
 export const Coupons = lazy(() => import("./Coupons"));
 export const ManageArtists = lazy(() => import("./ManageArtists"));
 export const ManageManagers = lazy(() => import("./ManageManagers"));
