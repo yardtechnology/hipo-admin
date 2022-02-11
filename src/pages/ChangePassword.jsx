@@ -62,8 +62,8 @@ const ChangePassword = () => {
           className="d-flex place-content-center place-items-center"
         >
           <Card>
-            <div className="" style={{ textAlign: "center" }}>
-              <img src={LOGO} alt="logo" width="200" />
+            <div className="" style={{ textAlign: "center", marginTop: "2vh" }}>
+              <img src={LOGO} alt="logo" width="150" />
             </div>
 
             <CardHeader

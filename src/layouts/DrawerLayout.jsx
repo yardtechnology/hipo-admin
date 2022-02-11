@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import {
   Box,
   List,
@@ -10,12 +10,20 @@ import {
   Tooltip,
   Button,
   ListItemButton,
+  Divider,
+  Collapse,
 } from "@mui/material";
-import { ExitToApp, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import {
+  ExitToApp,
+  ChevronLeft,
+  ChevronRight,
+  ExpandLess,
+  ExpandMore,
+} from "@mui/icons-material";
 import { MenuItems } from "configs";
 import { useAppContext } from "contexts";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { CustomDrawer, CustomDrawerHeader } from "./custom";
 import Scrollbars from "react-custom-scrollbars";
 import { LOGO } from "assets";
@@ -25,6 +33,7 @@ const DrawerLayout = ({ isDrawerOpen, handleDrawerClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAppContext();
+  const [selectedSubMenu, setSelectedSubMenu] = useState("");
   const handleLogout = async () => {
     try {
       logout();
@@ -41,7 +50,7 @@ const DrawerLayout = ({ isDrawerOpen, handleDrawerClose }) => {
             <>
               {" "}
               <div className="layoutLogo">
-                <img src={LOGO} alt="" width="170px" />
+                <img src={LOGO} alt="" width="100px" />
                 {/* <Typography variant="h6" noWrap>
               ADMIN PANEL
             </Typography> */}
@@ -57,7 +66,7 @@ const DrawerLayout = ({ isDrawerOpen, handleDrawerClose }) => {
         {/* <Divider /> */}
         {/* Render Menu Items */}
         <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
-          <List sx={{ marginTop: "1px" }}>
+          <List sx={{ mt: "1px" }}>
             {MenuItems.map((item) => (
               <Fragment key={item.key}>
                 <Tooltip
@@ -67,13 +76,22 @@ const DrawerLayout = ({ isDrawerOpen, handleDrawerClose }) => {
                   placement="top-end"
                 >
                   <ListItemButton
-                    component={Link}
-                    to={item.route}
-                    selected={location.pathname === item.route}
+                    onClick={() =>
+                      item?.submenus
+                        ? setSelectedSubMenu((prev) =>
+                            prev === item.key ? "" : item.key
+                          )
+                        : navigate(item.route, {})
+                    }
                     className={
                       location.pathname === item.route
                         ? "selectedItem"
                         : "listItem"
+                    }
+                    selected={
+                      item?.submenus
+                        ? selectedSubMenu === item?.key
+                        : location.pathname === item.route
                     }
                   >
                     {isDrawerOpen ? (
@@ -90,16 +108,53 @@ const DrawerLayout = ({ isDrawerOpen, handleDrawerClose }) => {
                       >
                         {item.icon}
                       </ListItemIcon>
-                    )}
+                    )}{" "}
                     <ListItemText
                       primary={item.title}
                       className="listItemText"
                     />
+                    {item?.submenus &&
+                      (selectedSubMenu === item?.key ? (
+                        <ExpandLess />
+                      ) : (
+                        <ExpandMore />
+                      ))}
                   </ListItemButton>
                 </Tooltip>
-                {/* <Divider /> */}
+                {item?.submenus && (
+                  <Collapse
+                    in={selectedSubMenu === item?.key}
+                    timeout="auto"
+                    unmountOnExit
+                  >
+                    <List component="div" disablePadding>
+                      {item?.submenus.map((submenu) => (
+                        <ListItemButton
+                          onClick={() => navigate(submenu.route, {})}
+                          sx={{ pl: 4 }}
+                          key={submenu?.key}
+                          className={
+                            location?.pathname === submenu?.route
+                              ? "selectedSubMenu"
+                              : "listItemSubMenu"
+                          }
+                        >
+                          <ListItemIcon sx={{ paddingLeft: ".2vw" }}>
+                            {submenu?.icon}
+                          </ListItemIcon>
+                          <ListItemText
+                            className="listItemText"
+                            primary={submenu?.title}
+                          />
+                        </ListItemButton>
+                      ))}
+                    </List>
+                  </Collapse>
+                )}
+                <Divider />
               </Fragment>
             ))}
+
             <Box hidden={isDrawerOpen}>
               <Tooltip
                 title={"Click Here To Logout"}

@@ -9,8 +9,8 @@ const withAuthLayout = (Page) => {
         className="d-flex h-75vh place-content-center place-items-center"
       >
         <Card>
-          <div className="mt-4vh" style={{ textAlign: "center" }}>
-            <img src={LOGO} alt="logo" width="200" style={{}} />
+          <div className="" style={{ textAlign: "center", marginTop: "3vh" }}>
+            <img src={LOGO} alt="logo" width="150" style={{}} />
           </div>
           <Page />
         </Card>

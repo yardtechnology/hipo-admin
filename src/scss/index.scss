@@ -69,6 +69,32 @@ $secondary-color: #1877f2;
   padding-bottom: 2vh;
 }
 
+.selectedSubMenu {
+  border-radius: 0px 40px 40px 0px !important;
+  // background-color: rgb(224 22 213 / 25%) !important;
+  // background: linear-gradient(
+  //   90deg,
+  //   rgb(163, 117, 155) 10%,
+  //   rgb(233, 72, 193) 65%
+  // ) !important;
+  // background: linear-gradient(90deg, #ec123dd9 12%, #d92764eb 65%) !important;
+  background: linear-gradient(
+    90deg,
+    $primary-color 12%,
+    $secondary-color 65%
+  ) !important;
+  font-size: medium !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  box-shadow: $secondary-color 0px 3px 8px 0px !important;
+}
+.selectedSubMenu .listItemText span {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: #fff !important;
+}
 .selectedItem {
   border-radius: 0px 40px 40px 0px !important;
   // background-color: rgb(224 22 213 / 25%) !important;
@@ -190,7 +216,7 @@ $secondary-color: #1877f2;
   // background: linear-gradient(90deg, #515e8b 12%, #40559b 65%) !important;
   background: linear-gradient(
     90deg,
-    #576ba8 12%,
+    $primary-color 12%,
     $secondary-color 65%
   ) !important;
   height: 17vh !important;
