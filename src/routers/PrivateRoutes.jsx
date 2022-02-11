@@ -63,7 +63,7 @@ const PrivateRoutes = () => {
         <Route path="/manage-promo-codes" element={<ManagePromoCodes />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/drivers" element={<AllDrivers />} />
+        <Route path="drivers/all-drivers" element={<AllDrivers />} />
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/coupons" element={<Coupons />} />
