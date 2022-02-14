@@ -1,5 +1,6 @@
 import MaterialTable from "@material-table/core";
-import { ExportCsv, ExportPdf } from "@material-table/export";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
+
 import { Breadcrumbs, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
