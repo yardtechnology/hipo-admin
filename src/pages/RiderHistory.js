@@ -1,9 +1,30 @@
 import MaterialTable from "@material-table/core";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
+import { PictureAsPdf } from "@mui/icons-material";
+import { Breadcrumbs, IconButton, Tooltip, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const RiderHistory = () => {
   return (
     <>
       {" "}
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
+      >
+        <Link underline="hover" color="inherit" to="/riders">
+          Riders
+        </Link>
+        <Typography color="text.primary">Ride History</Typography>
+      </Breadcrumbs>
+      {/* <Typography
+        component={"h6"}
+        variant={"h6"}
+        color="Highlight"
+        sx={{ marginBottom: "2vh" }}
+      >
+        History Of Alexa
+      </Typography> */}
       <MaterialTable
         title="Rider History"
         // onSelectionChange={(data) => {
@@ -13,41 +34,34 @@ const RiderHistory = () => {
         //   });
         // }}
         options={{
-          // pageSize: "3",
-          paging: false,
-          actionsColumnIndex: -1,
-          search: false,
-          // selection: true,
-          sorting: true,
-          headerStyle: {
-            backgroundColor: "rgba(239,239,247,.7)",
-            color: "#3b3e66",
-            fontSize: 16,
-            fontWeight: 560,
-            textAlign: "left",
-            "&:hover": {
-              color: "#ff4f00 !important",
-              cursor: "pointer",
+          exportAllData: true,
+          search: true,
+          exportMenu: [
+            {
+              label: "Export PDF",
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Ride History"),
             },
-            whiteSpace: "nowrap",
-          },
-          rowStyle: {
-            backgroundColor: "#fffbf2",
-            color: "#3b3e66",
-            textAlign: "left",
-          },
-          cellStyle: {
-            textAlign: "left",
-          },
+            {
+              label: "Export CSV",
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Ride History"),
+            },
+          ],
+          pageSize: "10",
+          actionsColumnIndex: -1,
+          selection: true,
+          sorting: true,
         }}
-        // data={}
+        data={[{ riderName: "Alexa" }]}
         columns={[
-          // {
-          //   title: "Sl no",
-          //   field: "sl",
-          //   render: (newData) => newData.tableData.id + 1,
-          //   editable: "never"
-          // },
+          {
+            title: "#",
+            field: "sl",
+            render: (newData) => newData.tableData.id + 1,
+            editable: "never",
+            width: "5%",
+          },
           // {
           //   title: "Name",
           //   field: "displayName",
@@ -78,11 +92,15 @@ const RiderHistory = () => {
 
           {
             title: "Rider Name",
-            field: "phoneNumber",
+            field: "riderName",
           },
           {
             title: "Driver Name",
             field: "Driver Name",
+          },
+          {
+            title: "Type",
+            field: "rideType",
           },
           {
             title: "Pick Date/Time",
@@ -99,6 +117,28 @@ const RiderHistory = () => {
           {
             title: "Status",
             field: "status",
+          },
+          // {
+          //   title: "View Invoice",
+          //   // field: "status",
+          // },
+          {
+            title: "View Invoice",
+
+            // field: "pick",
+            render: (row) => (
+              <>
+                <div className="d-flex">
+                  {" "}
+                  <Tooltip title="View Invoice">
+                    <IconButton>
+                      {" "}
+                      <PictureAsPdf sx={{ color: "#1877f2" }} />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              </>
+            ),
           },
         ]}
       />
