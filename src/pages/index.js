@@ -12,6 +12,7 @@ export const ManageCrowd = lazy(() => import("./ManageCrowd"));
 export const ManageGenre = lazy(() => import("./ManageGenre"));
 export const ManageDays = lazy(() => import("./ManageDays"));
 export const AppUpdate = lazy(() => import("./AppUpdate"));
+export const DriverStatements = lazy(() => import("./DriverStatements"));
 export const Bookings = lazy(() => import("./Bookings"));
 export const ArtistBookingList = lazy(() => import("./ArtistBookingList"));
 export const ManageLanguage = lazy(() => import("./ManageLanguage"));

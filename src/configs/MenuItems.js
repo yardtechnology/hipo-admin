@@ -74,7 +74,7 @@ const MenuItems = [
       {
         key: "2",
         title: "All Drivers",
-        icon: <PeopleAlt sx={{ color: "#000" }} />,
+        icon: <PeopleAlt sx={{ color: "snow" }} />,
         route: "/drivers/all-drivers",
       },
       {
@@ -138,7 +138,7 @@ const MenuItems = [
   {
     key: "11",
     icon: <Category className="iconColor" />,
-    title: "vehicles",
+    title: "Vehicles",
     route: "/vehicles",
   },
   // {

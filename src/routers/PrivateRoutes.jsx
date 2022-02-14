@@ -32,6 +32,7 @@ import {
   Coupons,
   Localization,
   RiderHistory,
+  DriverStatements,
 } from "pages";
 import Riders from "pages/Riders";
 import { Routes, Route } from "react-router-dom";
@@ -53,6 +54,7 @@ const PrivateRoutes = () => {
         <Route path="/rider-history" element={<RiderHistory />} />
         <Route path="/manage-artists" element={<ManageArtists />} />
         <Route path="/manage-managers" element={<ManageManagers />} />
+        <Route path="/driver-statement" element={<DriverStatements />} />
         <Route path="/manage-crowd" element={<ManageCrowd />} />
         <Route path="/app-update" element={<AppUpdate />} />
         <Route path="/all-bookings" element={<Bookings />} />

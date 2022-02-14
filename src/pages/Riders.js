@@ -5,14 +5,19 @@ import {
   Avatar,
   Button,
   Chip,
+  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Typography,
 } from "@mui/material";
-import React from "react";
-
+import { SendNotification } from "components/dialog";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Riders = () => {
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  console.log(selectedUsers);
+  const navigate = useNavigate();
   return (
     <>
       {" "}
@@ -39,6 +44,7 @@ const Riders = () => {
           // pageSize: "3",
           actionsColumnIndex: -1,
           search: true,
+          selection: true,
           // selection: true,
           sorting: true,
           headerStyle: {
@@ -51,7 +57,6 @@ const Riders = () => {
               color: "#ff4f00 !important",
               cursor: "pointer",
             },
-            whiteSpace: "nowrap",
           },
           rowStyle: {
             backgroundColor: "#fffbf2",
@@ -75,8 +80,9 @@ const Riders = () => {
         ]}
         columns={[
           {
-            title: "Sl no",
+            title: "#",
             field: "sl",
+            width: "5%",
             render: (newData) => newData.tableData.id + 1,
             editable: "never",
           },
@@ -88,7 +94,7 @@ const Riders = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "30%",
+
             field: "firstName",
             render: ({ profileImageUrl, name, email, phoneNumber }) => (
               <>
@@ -104,13 +110,8 @@ const Riders = () => {
                     }
                     // secondary={email}
                     secondary={
-                      <Typography
-                        sx={{}}
-                        component="details"
-                        variant="subtitle2"
-                      >
+                      <Typography sx={{}} component="h6" variant="subtitle2">
                         {email || "Not Provided"} <br />
-                        {phoneNumber || "Not Provided"}
                       </Typography>
                     }
                   ></ListItemText>
@@ -118,11 +119,14 @@ const Riders = () => {
               </>
             ),
           },
-
           {
-            title: "Address",
-            field: "address",
+            title: "Phone",
+            field: "phoneNumber",
           },
+          // {
+          //   title: "Address",
+          //   field: "address",
+          // },
           {
             title: "Trips",
             field: "trips",
@@ -142,11 +146,28 @@ const Riders = () => {
             ),
           },
           {
-            title: "Ride History",
+            title: "Creation Time",
+            field: "createdAt",
+          },
+          {
+            title: "Last Login Time",
+            field: "lastLoginTime",
+          },
+          {
+            title: "History",
             // field: "pick",
             render: (row) => (
-              <Button variant="contained" size="small" startIcon={<History />}>
-                History
+              <IconButton onClick={() => navigate("/rider-history")}>
+                <History />
+              </IconButton>
+            ),
+          },
+          {
+            title: "Block or Unblock",
+            // field: "pick",
+            render: (row) => (
+              <Button variant="contained" size="small">
+                Block
               </Button>
             ),
           },
@@ -155,16 +176,23 @@ const Riders = () => {
           //   field: "drop",
           // },
         ]}
-        // actions={[
-        //   {
-        //     // icon: () => <Visibility style={{ color: "#1991eb" }} />,
-        //     // tooltip: "View All Rides ",
-        //     // position: "toolbar",
-        //     // onClick: () => {
-        //     //   history.push("/users");
-        //     // },
-        //   },
-        // ]}
+        editable={{
+          onRowDelete: async (oldData) => {
+            try {
+            } catch (error) {}
+          },
+        }}
+        actions={[
+          {
+            tooltip: "Send notification to all selected users",
+            icon: "send",
+            onClick: (evt, data) => setSelectedUsers(data),
+          },
+        ]}
+      />
+      <SendNotification
+        selectedUsers={selectedUsers}
+        handleClose={() => setSelectedUsers([])}
       />
     </>
   );
