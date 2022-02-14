@@ -38,7 +38,7 @@ const MenuItems = [
     key: "1",
     title: "Dashboard",
     icon: <Dashboard className="iconColor" />,
-    route: "/",
+    route: "/dashboard",
   },
   // {
   //   key: "2",

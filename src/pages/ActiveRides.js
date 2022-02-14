@@ -1,5 +1,6 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
+
 import { Breadcrumbs, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,7 @@ const ActiveRides = () => {
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
       >
-        <Link underline="hover" color="inherit" to="/">
+        <Link underline="hover" color="inherit" to="/riders">
           Rides
         </Link>
         <Typography color="text.primary">Active Rides</Typography>
@@ -25,7 +26,7 @@ const ActiveRides = () => {
         History Of Alexa
       </Typography> */}
       <MaterialTable
-        title="Rider History"
+        title="Active Rides"
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -52,7 +53,21 @@ const ActiveRides = () => {
           selection: true,
           sorting: true,
         }}
-        data={[{ riderName: "Alexa" }]}
+        data={[
+          {
+            displayName: "Mehmet",
+            driverName: "Alexa",
+            pick: "20/1/22 2.00 pm",
+            drop: "20/1/22 2.00 pm",
+            rideId: "12345",
+            rideType: "Ride",
+            phoneNumber: "777887643625",
+            address: "Bbsr",
+            trips: "15",
+            profileImageUrl: "",
+            status: "Unblocked",
+          },
+        ]}
         columns={[
           {
             title: "#",
@@ -67,7 +82,7 @@ const ActiveRides = () => {
           // },
           {
             title: "Ride Id",
-            tooltip: "Ride Id",
+            // tooltip: "rideId",
             // field: "displayName",
             // render: ({ photoURL, displayName, email }) => (
             //   <>
@@ -87,15 +102,16 @@ const ActiveRides = () => {
             //     </ListItem>
             //   </>
             // ),
+            field: "rideId",
           },
 
           {
             title: "Rider Name",
-            field: "riderName",
+            field: "displayName",
           },
           {
             title: "Driver Name",
-            field: "Driver Name",
+            field: "driverName",
           },
           {
             title: "Type",
@@ -105,14 +121,16 @@ const ActiveRides = () => {
             title: "Pick Date/Time",
             field: "pick",
           },
-          {
-            title: "Drop Date/Time",
-            field: "drop",
-          },
+
           {
             title: "Pick/Drop Address",
             field: "address",
           },
+
+          // {
+          //   title: "View Invoice",
+          //   // field: "status",
+          // },
         ]}
       />
     </>

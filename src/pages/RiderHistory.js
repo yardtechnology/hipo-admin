@@ -1,7 +1,13 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { PictureAsPdf } from "@mui/icons-material";
-import { Breadcrumbs, IconButton, Tooltip, Typography } from "@mui/material";
+import {
+  Breadcrumbs,
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 const RiderHistory = () => {
@@ -26,7 +32,7 @@ const RiderHistory = () => {
         History Of Alexa
       </Typography> */}
       <MaterialTable
-        title="Rider History"
+        title="Ride History"
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -53,7 +59,21 @@ const RiderHistory = () => {
           selection: true,
           sorting: true,
         }}
-        data={[{ riderName: "Alexa" }]}
+        data={[
+          {
+            displayName: "Mehmet",
+            driverName: "Alexa",
+            pick: "20/1/22 2.00 pm",
+            drop: "20/1/22 2.00 pm",
+            rideId: "12345",
+            rideType: "Ride",
+            phoneNumber: "777887643625",
+            address: "Bbsr",
+            trips: "15",
+            profileImageUrl: "",
+            status: "Unblocked",
+          },
+        ]}
         columns={[
           {
             title: "#",
@@ -68,7 +88,7 @@ const RiderHistory = () => {
           // },
           {
             title: "Ride Id",
-            tooltip: "Ride Id",
+            // tooltip: "rideId",
             // field: "displayName",
             // render: ({ photoURL, displayName, email }) => (
             //   <>
@@ -88,15 +108,16 @@ const RiderHistory = () => {
             //     </ListItem>
             //   </>
             // ),
+            field: "rideId",
           },
 
           {
             title: "Rider Name",
-            field: "riderName",
+            field: "displayName",
           },
           {
             title: "Driver Name",
-            field: "Driver Name",
+            field: "driverName",
           },
           {
             title: "Type",
@@ -117,6 +138,19 @@ const RiderHistory = () => {
           {
             title: "Status",
             field: "status",
+            width: "5%",
+            render: (row) => (
+              <>
+                <Button
+                  sx={{ padding: "4px 5px", textTransform: "none" }}
+                  size="small"
+                  variant="contained"
+                  color="success"
+                >
+                  {row?.status}
+                </Button>
+              </>
+            ),
           },
           // {
           //   title: "View Invoice",
