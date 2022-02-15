@@ -1,47 +1,43 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { PictureAsPdf } from "@mui/icons-material";
+import { PictureAsPdf, Visibility } from "@mui/icons-material";
 import {
   Breadcrumbs,
   Button,
-  IconButton,
   Tooltip,
   Typography,
+  ListItem,
+  ListItemText,
+  IconButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-
+import { formatCurrency } from "@ashirbad/js-core";
+import { useState } from "react";
+import { InvoiceDrawer } from "components";
 const CompletedRides = () => {
+  const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
+
   return (
     <>
-      {" "}
+      <InvoiceDrawer
+        rideDetails={openInvoiceDrawer}
+        setOpenInvoiceDrawer={setOpenInvoiceDrawer}
+      />{" "}
       <Breadcrumbs
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
       >
         <Link underline="hover" color="inherit" to="/riders">
-          Rides
+          Riders
         </Link>
-        <Typography color="text.primary">Completed Rides</Typography>
+        <Typography color="text.primary">Ride History</Typography>
       </Breadcrumbs>
-      {/* <Typography
-        component={"h6"}
-        variant={"h6"}
-        color="Highlight"
-        sx={{ marginBottom: "2vh" }}
-      >
-        History Of Alexa
-      </Typography> */}
       <MaterialTable
-        title="Completed Rides"
-        // onSelectionChange={(data) => {
-        //   setSelectedUserFCMToken({
-        //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
-        //     fcmToken: data?.[0]?.fcmToken || null,
-        //   });
-        // }}
+        title="Ride History"
         options={{
           exportAllData: true,
           search: true,
+          detailPanelColumnAlignment: "right",
           exportMenu: [
             {
               label: "Export PDF",
@@ -54,27 +50,29 @@ const CompletedRides = () => {
                 ExportCsv(cols, datas, "Ride History"),
             },
           ],
-          pageSize: "10",
+          pageSize: 10,
           actionsColumnIndex: -1,
           selection: true,
           sorting: true,
         }}
         data={[
           {
-            displayName: "Mehmet",
+            bookingTime: new Date().toString(),
+            pickAddress: "Sector-12, Noida",
+            dropAddress: "Sector-15, Noida",
+            invoiceNumber: "CRN-001121432546",
+            displayName: "Aliva Priyadarshini",
             driverName: "Alexa",
-            pick: "20/1/22 2.00 pm",
-            drop: "20/1/22 2.00 pm",
+            pick: new Date().toString(),
+            drop: new Date().toString(),
             rideId: "12345",
-            rideType: "Ride",
-
-            phoneNumber: "777887643625",
+            rideType: "Rental",
+            rideAmount: 245,
+            vehicleType: "Car",
+            phoneNumber: "+91 7887643625",
             address: "Bbsr",
             trips: "15",
-            profileImageUrl: "",
-            distance: "10km",
-            fare: "$10",
-            status: "Unblocked",
+            status: "Initiated",
           },
         ]}
         columns={[
@@ -91,59 +89,83 @@ const CompletedRides = () => {
           // },
           {
             title: "Ride Id",
-            // tooltip: "rideId",
-            // field: "displayName",
-            // render: ({ photoURL, displayName, email }) => (
-            //   <>
-            //     <ListItem>
-            //       <ListItemAvatar>
-            //         {" "}
-            //         <Avatar src={photoURL} alt={displayName} />
-            //       </ListItemAvatar>
-            //       <ListItemText
-            //         primary={
-            //           <Typography component="span" variant="body2">
-            //             {displayName || "Not Provided"}
-            //           </Typography>
-            //         }
-            //         secondary={email}
-            //       ></ListItemText>
-            //     </ListItem>
-            //   </>
-            // ),
             field: "rideId",
+            export: true,
+            hidden: true,
           },
 
           {
-            title: "Rider Name",
-            field: "displayName",
+            title: "Rider Profile",
+            tooltip: "Profile",
+            searchable: true,
+            width: "22%",
+            field: "firstName",
+            render: ({ photoURL, displayName, email, phoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {displayName || "Not Provided"}
+                      </Typography>
+                    }
+                    secondary={phoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
           },
           {
-            title: "Driver Name",
-            field: "driverName",
+            title: "Driver Profile",
+            tooltip: "Profile",
+            searchable: true,
+            width: "22%",
+            field: "firstName",
+            render: ({ photoURL, displayName, phoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {displayName || "Not Provided"}
+                      </Typography>
+                    }
+                    secondary={phoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
           },
           {
-            title: "Type",
+            title: "Ride Type",
             field: "rideType",
+          },
+          {
+            title: "Vehicle",
+            field: "vehicleType",
           },
           {
             title: "Pick Date/Time",
             field: "pick",
+            hidden: true,
+            export: true,
           },
           {
             title: "Drop Date/Time",
             field: "drop",
+            hidden: true,
+            export: true,
           },
           {
             title: "Pick/Drop Address",
             field: "address",
+            hidden: true,
+            export: true,
           },
-          { title: "Distance", field: "distance" },
-          { title: "Fare", field: "fare" },
           {
             title: "Status",
             field: "status",
-            width: "5%",
+            // width: "5%",
             render: (row) => (
               <>
                 <Button
@@ -154,32 +176,182 @@ const CompletedRides = () => {
                 >
                   {row?.status}
                 </Button>
+                {/* <Button
+                  sx={{ padding: "4px 5px", textTransform: "none" }}
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                >
+                  initiated
+                </Button>
+                <Button
+                  sx={{ padding: "4px 5px", textTransform: "none" }}
+                  size="small"
+                  variant="contained"
+                  color="success"
+                >
+                  ongoing
+                </Button> */}
               </>
             ),
           },
-          // {
-          //   title: "View Invoice",
-          //   // field: "status",
-          // },
           {
-            title: "View Invoice",
+            title: "Fare",
+            field: "rideAmount",
+            render: (row) => formatCurrency(row.rideAmount),
+          },
 
+          {
+            title: "Actions",
             // field: "pick",
             render: (row) => (
               <>
                 <div className="d-flex">
                   {" "}
-                  <Tooltip title="View Invoice">
-                    <IconButton>
+                  <Tooltip title="View Details">
+                    {/* <Avatar
+                      variant="rounded"
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "blueViolet",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                      // onClick={() => setOpenAddressDrawer(row)}
+                    > */}
+                    <IconButton
+                      onClick={() => setOpenInvoiceDrawer(row)}
+                      sx={{ mr: 1 }}
+                    >
                       {" "}
+                      <Visibility sx={{ color: "#1877f2" }} />
+                    </IconButton>
+                    {/* </Avatar> */}
+                  </Tooltip>
+                  <Tooltip title="Download Invoice">
+                    {/* <Avatar
+                      variant="rounded"
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "#1877f2",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    > */}
+                    <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
                       <PictureAsPdf sx={{ color: "#1877f2" }} />
                     </IconButton>
+
+                    {/* </Avatar> */}
                   </Tooltip>
                 </div>
               </>
             ),
           },
         ]}
+        // detailPanel={[
+        //   {
+        //     tooltip: "Show more info",
+
+        //     icon: "info",
+        //     openIcon: "visibility",
+        //     render: ({ rowData }) => (
+
+        //     ),
+        //   },
+        // ]}
+        // actions={[
+        //   {
+        //     icon: "visibility",
+        //     tooltip: "View Invoice",
+        //     onClick: (event, rowData) => {
+        //       console.log("rowData", rowData);
+        //     },
+        //   },
+        //   {
+        //     icon: "picture_as_pdf",
+        //     tooltip: "Dowload Invoice",
+        //     onClick: (event, rowData) => {
+        //       console.log("rowData", rowData);
+        //     },
+        //   },
+        // ]}
+        // detailPanel={({ rowData }) => {
+        //   return (
+        //     <div
+        //       style={{
+        //         padding: "20px",
+        //         margin: "auto",
+        //         backgroundColor: "#eef5f9",
+        //       }}
+        //     >
+        //       <Card
+        //         sx={{
+        //           minWidth: 500,
+        //           maxWidth: 550,
+        //           transition: "0.3s",
+        //           margin: "auto",
+        //           padding: "2vh 2vw",
+        //           borderRadius: "10px",
+        //           // fontFamily: italic,
+        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+        //           "&:hover": {
+        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+        //           },
+        //         }}
+        //       >
+        //         <CardContent>
+        //           <Typography
+        //             variant="body1"
+        //             component="p"
+        //             gutterBottom
+        //             align="left"
+        //           >
+        //             Ride Id:{" "}
+        //             <span
+        //               style={{
+        //                 color: "rgb(30, 136, 229)",
+        //                 fontSize: "15px",
+        //               }}
+        //             >
+        //               {rowData?.rideId}
+        //             </span>
+        //           </Typography>
+
+        //           <Typography
+        //             variant="body1"
+        //             component="p"
+        //             gutterBottom
+        //             align="left"
+        //           >
+        //             Pick Date/Time:{" "}
+        //             <span
+        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+        //             >
+        //               {rowData?.pick}
+        //             </span>
+        //           </Typography>
+        //           <Typography variant="body1" gutterBottom align="left">
+        //             Drop Date/Time:{" "}
+        //             <span
+        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+        //             >
+        //               {rowData?.drop}
+        //             </span>
+        //           </Typography>
+        //           <Typography variant="body1" gutterBottom align="left">
+        //             Pick/Drop Address:{" "}
+        //             <span
+        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+        //             >
+        //               {rowData?.address}
+        //             </span>
+        //           </Typography>
+        //         </CardContent>
+        //       </Card>
+        //     </div>
+        //   );
+        // }}
       />
     </>
   );

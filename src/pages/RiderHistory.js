@@ -6,8 +6,6 @@ import {
   Button,
   Tooltip,
   Typography,
-  Card,
-  CardContent,
   ListItem,
   ListItemText,
   IconButton,
@@ -22,7 +20,7 @@ const RiderHistory = () => {
   return (
     <>
       <InvoiceDrawer
-        open={openInvoiceDrawer}
+        rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />{" "}
       <Breadcrumbs

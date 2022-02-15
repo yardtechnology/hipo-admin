@@ -20,6 +20,18 @@ $secondary-color: #1877f2;
 // :not(Material Icons) {
 //   font-family: "Typold", serif !important;
 // }
+.zigzag {
+  height: 1.5vh;
+  background-color: transparent;
+  opacity: 0.8;
+  background-image: linear-gradient(135deg, #c7c9f3 25%, transparent 25%),
+    linear-gradient(225deg, #c7c9f3 25%, transparent 25%),
+    linear-gradient(45deg, snow 25%, transparent 25%),
+    linear-gradient(315deg, snow 25%, #e5e5f7 25%);
+  background-position: 10px 0, 10px 0, 0 0, 0 0;
+  background-size: 20px 20px;
+  background-repeat: repeat;
+}
 .circularProgress {
   position: absolute;
   left: 50%;

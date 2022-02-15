@@ -16,16 +16,16 @@ import {
 } from "@mui/material";
 import { MAP } from "assets";
 import moment from "moment";
-const InvoiceDrawer = ({ open, setOpenInvoiceDrawer }) => {
-  const drawerData = open;
+const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
+  const drawerData = rideDetails;
   console.log(drawerData);
-  console.log(open);
+  console.log(rideDetails);
 
   return (
     <>
       <Drawer
         anchor="right"
-        open={open}
+        open={rideDetails}
         onClose={() => setOpenInvoiceDrawer(false)}
       >
         <Container
@@ -56,9 +56,9 @@ const InvoiceDrawer = ({ open, setOpenInvoiceDrawer }) => {
               }}
               variant="body1"
             >
-              {open?.invoiceNumber}
+              {rideDetails?.rideId}
               <br />
-              {moment(open?.bookingTime)?.format("llll")}
+              {moment(rideDetails?.bookingTime)?.format("llll")}
             </Typography>
             <img src={MAP} alt="p" />
           </div>
@@ -82,7 +82,10 @@ const InvoiceDrawer = ({ open, setOpenInvoiceDrawer }) => {
                     <TwoWheeler />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={open?.vehicleType} />
+                <ListItemText
+                  primary={rideDetails?.vehicleType}
+                  secondary={"Maruti Suzuki Baleno"}
+                />
               </ListItem>
             </Tooltip>
             <Divider />
@@ -93,7 +96,10 @@ const InvoiceDrawer = ({ open, setOpenInvoiceDrawer }) => {
                     <MonetizationOn />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={formatCurrency(open?.rideAmount)} />
+                <ListItemText
+                  secondary={formatCurrency(rideDetails?.rideAmount)}
+                  primary={"Total Price"}
+                />
               </ListItem>
             </Tooltip>
             <Divider />
@@ -110,9 +116,11 @@ const InvoiceDrawer = ({ open, setOpenInvoiceDrawer }) => {
               }}
               variant="body1"
             >
-              Pick: {open?.pickAddress} {moment(open?.pick)?.format("hh:mm a")}
+              Pick: {rideDetails?.pickAddress}{" "}
+              {moment(rideDetails?.pick)?.format("hh:mm a")}
               <br />
-              Drop: {open?.dropAddress} {moment(open?.drop)?.format("hh:mm a")}
+              Drop: {rideDetails?.dropAddress}{" "}
+              {moment(rideDetails?.drop)?.format("hh:mm a")}
             </Typography>
             {/* </Tooltip> */}
             <Divider />
@@ -129,17 +137,77 @@ const InvoiceDrawer = ({ open, setOpenInvoiceDrawer }) => {
                     fontWeight: "bold",
                     // paddingLeft: "1.10vw",
                     // marginTop: "1vh",
+                    marginBottom: "0vh",
                   }}
                 >
                   Bill Details
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
-                </Typography>
+              <AccordionDetails sx={{ marginTop: "0vh" }}>
+                <ListItem
+                  sx={{ marginBottom: "0vh" }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                >
+                  <ListItemText primary={"Your Trip"} />
+                </ListItem>
+
+                <Divider />
+
+                <ListItem
+                  sx={{
+                    marginTop: "0vh",
+                    marginBottom: "0vh",
+                    padding: "0vh 1.11vw",
+                  }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                >
+                  <ListItemText primary={"Coupon Savings"} />
+                </ListItem>
+                <ListItem
+                  sx={{ marginTop: "0vh", marginBottom: "0vh" }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                >
+                  <ListItemText primary={"Rounded Off"} />
+                </ListItem>
+                <Divider />
+                <ListItem
+                  sx={{ marginTop: "0vh", marginBottom: "0vh" }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                >
+                  <ListItemText
+                    primary={"Total Bill"}
+                    secondary={"includes 13.87 Taxes"}
+                  />
+                </ListItem>
+                <Divider />
+                <ListItem
+                  sx={{ marginTop: "0vh", marginBottom: "1vh" }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                >
+                  <ListItemText
+                    primary={"Total Payable"}
+                    primaryTypographyProps={{ fontWeight: "bold" }}
+                  />
+                </ListItem>
+                {/* <div className="zigzag"> </div> */}
+                <ListItem sx={{ marginTop: "1vh" }}>
+                  <ListItemText
+                    primary={"Payment"}
+                    primaryTypographyProps={{ fontWeight: "bold" }}
+                  />
+                </ListItem>
+                <ListItem
+                  sx={{ marginTop: "0vh", marginBottom: "1vh" }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                >
+                  <ListItemText primary={"Cash"} />
+                </ListItem>
               </AccordionDetails>
             </Accordion>
           </div>
