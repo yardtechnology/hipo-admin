@@ -221,7 +221,7 @@ const RiderHistory = () => {
                     > */}
                     <IconButton
                       onClick={() => setOpenInvoiceDrawer(row)}
-                      sx={{ mr: 1 }}
+                      sx={{ mr: 1, cursor: "pointer" }}
                     >
                       {" "}
                       <Visibility sx={{ color: "#1877f2" }} />

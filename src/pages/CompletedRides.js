@@ -28,12 +28,12 @@ const CompletedRides = () => {
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
       >
         <Link underline="hover" color="inherit" to="/riders">
-          Riders
+          Rides
         </Link>
-        <Typography color="text.primary">Ride History</Typography>
+        <Typography color="text.primary">Completed Rides</Typography>
       </Breadcrumbs>
       <MaterialTable
-        title="Ride History"
+        title="Completed Rides"
         options={{
           exportAllData: true,
           search: true,
@@ -72,7 +72,7 @@ const CompletedRides = () => {
             phoneNumber: "+91 7887643625",
             address: "Bbsr",
             trips: "15",
-            status: "Initiated",
+            status: "Completed",
           },
         ]}
         columns={[
@@ -221,7 +221,7 @@ const CompletedRides = () => {
                     > */}
                     <IconButton
                       onClick={() => setOpenInvoiceDrawer(row)}
-                      sx={{ mr: 1 }}
+                      sx={{ mr: 1, cursor: "pointer" }}
                     >
                       {" "}
                       <Visibility sx={{ color: "#1877f2" }} />
@@ -249,109 +249,6 @@ const CompletedRides = () => {
             ),
           },
         ]}
-        // detailPanel={[
-        //   {
-        //     tooltip: "Show more info",
-
-        //     icon: "info",
-        //     openIcon: "visibility",
-        //     render: ({ rowData }) => (
-
-        //     ),
-        //   },
-        // ]}
-        // actions={[
-        //   {
-        //     icon: "visibility",
-        //     tooltip: "View Invoice",
-        //     onClick: (event, rowData) => {
-        //       console.log("rowData", rowData);
-        //     },
-        //   },
-        //   {
-        //     icon: "picture_as_pdf",
-        //     tooltip: "Dowload Invoice",
-        //     onClick: (event, rowData) => {
-        //       console.log("rowData", rowData);
-        //     },
-        //   },
-        // ]}
-        // detailPanel={({ rowData }) => {
-        //   return (
-        //     <div
-        //       style={{
-        //         padding: "20px",
-        //         margin: "auto",
-        //         backgroundColor: "#eef5f9",
-        //       }}
-        //     >
-        //       <Card
-        //         sx={{
-        //           minWidth: 500,
-        //           maxWidth: 550,
-        //           transition: "0.3s",
-        //           margin: "auto",
-        //           padding: "2vh 2vw",
-        //           borderRadius: "10px",
-        //           // fontFamily: italic,
-        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-        //           "&:hover": {
-        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-        //           },
-        //         }}
-        //       >
-        //         <CardContent>
-        //           <Typography
-        //             variant="body1"
-        //             component="p"
-        //             gutterBottom
-        //             align="left"
-        //           >
-        //             Ride Id:{" "}
-        //             <span
-        //               style={{
-        //                 color: "rgb(30, 136, 229)",
-        //                 fontSize: "15px",
-        //               }}
-        //             >
-        //               {rowData?.rideId}
-        //             </span>
-        //           </Typography>
-
-        //           <Typography
-        //             variant="body1"
-        //             component="p"
-        //             gutterBottom
-        //             align="left"
-        //           >
-        //             Pick Date/Time:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.pick}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             Drop Date/Time:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.drop}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             Pick/Drop Address:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.address}
-        //             </span>
-        //           </Typography>
-        //         </CardContent>
-        //       </Card>
-        //     </div>
-        //   );
-        // }}
       />
     </>
   );

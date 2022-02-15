@@ -137,6 +137,11 @@ $secondary-color: #1877f2;
   font-size: x-large !important;
   color: $secondary-color;
 }
+.selectedSubMenu .itemIcon svg {
+  font-size: 26px !important;
+  color: #fff !important;
+  background: transparent !important;
+}
 .selectedItem .itemIcon svg {
   font-size: 26px !important;
   color: #fff !important;

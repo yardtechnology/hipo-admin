@@ -74,7 +74,7 @@ const MenuItems = [
       {
         key: "2",
         title: "All Drivers",
-        icon: <PeopleAlt sx={{ color: "snow" }} />,
+        icon: <PeopleAlt sx={{ color: "#000" }} />,
         route: "/drivers/all-drivers",
       },
       {

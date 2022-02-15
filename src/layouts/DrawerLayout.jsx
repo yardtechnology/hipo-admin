@@ -129,24 +129,34 @@ const DrawerLayout = ({ isDrawerOpen, handleDrawerClose }) => {
                   >
                     <List component="div" disablePadding>
                       {item?.submenus.map((submenu) => (
-                        <ListItemButton
-                          onClick={() => navigate(submenu.route, {})}
-                          sx={{ pl: 4 }}
-                          key={submenu?.key}
-                          className={
-                            location?.pathname === submenu?.route
-                              ? "selectedSubMenu"
-                              : "listItemSubMenu"
-                          }
+                        <Tooltip
+                          title={submenu.title}
+                          followCursor
+                          arrow
+                          placement="top-end"
                         >
-                          <ListItemIcon sx={{ paddingLeft: ".2vw" }}>
-                            {submenu?.icon}
-                          </ListItemIcon>
-                          <ListItemText
-                            className="listItemText"
-                            primary={submenu?.title}
-                          />
-                        </ListItemButton>
+                          <ListItemButton
+                            onClick={() => navigate(submenu.route, {})}
+                            sx={{ pl: 4 }}
+                            key={submenu?.key}
+                            className={
+                              location?.pathname === submenu?.route
+                                ? "selectedSubMenu"
+                                : "listItemSubMenu"
+                            }
+                          >
+                            <ListItemIcon
+                              sx={{ minWidth: "40px" }}
+                              className="itemIcon"
+                            >
+                              {submenu?.icon}
+                            </ListItemIcon>
+                            <ListItemText
+                              className="listItemText"
+                              primary={submenu?.title}
+                            />
+                          </ListItemButton>
+                        </Tooltip>
                       ))}
                     </List>
                   </Collapse>

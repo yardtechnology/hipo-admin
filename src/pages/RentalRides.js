@@ -1,13 +1,28 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-
-import { Breadcrumbs, Typography } from "@mui/material";
+import { PictureAsPdf, Visibility } from "@mui/icons-material";
+import {
+  Breadcrumbs,
+  Button,
+  Tooltip,
+  Typography,
+  ListItem,
+  ListItemText,
+  IconButton,
+} from "@mui/material";
 import { Link } from "react-router-dom";
-
+import { formatCurrency } from "@ashirbad/js-core";
+import { useState } from "react";
+import { InvoiceDrawer } from "components";
 const RentalRides = () => {
+  const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
+
   return (
     <>
-      {" "}
+      <InvoiceDrawer
+        rideDetails={openInvoiceDrawer}
+        setOpenInvoiceDrawer={setOpenInvoiceDrawer}
+      />{" "}
       <Breadcrumbs
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
@@ -17,25 +32,12 @@ const RentalRides = () => {
         </Link>
         <Typography color="text.primary">Rental Rides</Typography>
       </Breadcrumbs>
-      {/* <Typography
-        component={"h6"}
-        variant={"h6"}
-        color="Highlight"
-        sx={{ marginBottom: "2vh" }}
-      >
-        History Of Alexa
-      </Typography> */}
       <MaterialTable
         title="Rental Rides"
-        // onSelectionChange={(data) => {
-        //   setSelectedUserFCMToken({
-        //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
-        //     fcmToken: data?.[0]?.fcmToken || null,
-        //   });
-        // }}
         options={{
           exportAllData: true,
           search: true,
+          detailPanelColumnAlignment: "right",
           exportMenu: [
             {
               label: "Export PDF",
@@ -48,25 +50,29 @@ const RentalRides = () => {
                 ExportCsv(cols, datas, "Ride History"),
             },
           ],
-          pageSize: "10",
+          pageSize: 10,
           actionsColumnIndex: -1,
           selection: true,
           sorting: true,
         }}
         data={[
           {
-            displayName: "Mehmet",
+            bookingTime: new Date().toString(),
+            pickAddress: "Sector-12, Noida",
+            dropAddress: "Sector-15, Noida",
+            invoiceNumber: "CRN-001121432546",
+            displayName: "Aliva Priyadarshini",
             driverName: "Alexa",
-            pick: "20/1/22 2.00 pm",
-            drop: "20/1/22 2.00 pm",
+            pick: new Date().toString(),
+            drop: new Date().toString(),
             rideId: "12345",
-            vehicleType: "Ride",
-            rideType: "self",
-            phoneNumber: "777887643625",
+            driveBy: "self",
+            rideAmount: 245,
+            vehicleType: "Car",
+            phoneNumber: "+91 7887643625",
             address: "Bbsr",
             trips: "15",
-            profileImageUrl: "",
-            status: "Unblocked",
+            status: "Completed",
           },
         ]}
         columns={[
@@ -83,96 +89,165 @@ const RentalRides = () => {
           // },
           {
             title: "Ride Id",
-            // tooltip: "rideId",
-            // field: "displayName",
-            // render: ({ photoURL, displayName, email }) => (
-            //   <>
-            //     <ListItem>
-            //       <ListItemAvatar>
-            //         {" "}
-            //         <Avatar src={photoURL} alt={displayName} />
-            //       </ListItemAvatar>
-            //       <ListItemText
-            //         primary={
-            //           <Typography component="span" variant="body2">
-            //             {displayName || "Not Provided"}
-            //           </Typography>
-            //         }
-            //         secondary={email}
-            //       ></ListItemText>
-            //     </ListItem>
-            //   </>
-            // ),
             field: "rideId",
+            export: true,
+            hidden: true,
           },
 
           {
-            title: "Rider Name",
-            field: "displayName",
+            title: "Rider Profile",
+            tooltip: "Profile",
+            searchable: true,
+            width: "22%",
+            field: "firstName",
+            render: ({ photoURL, displayName, email, phoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {displayName || "Not Provided"}
+                      </Typography>
+                    }
+                    secondary={phoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
           },
           {
-            title: "Driver Name",
-            field: "driverName",
+            title: "Driver Profile",
+            tooltip: "Profile",
+            searchable: true,
+            width: "22%",
+            field: "firstName",
+            render: ({ photoURL, displayName, phoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {displayName || "Not Provided"}
+                      </Typography>
+                    }
+                    secondary={phoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
           },
           {
-            title: " Vehicle Type",
+            title: "Drive By",
+            field: "driveBy",
+          },
+          {
+            title: "Vehicle",
             field: "vehicleType",
-          },
-          {
-            title: "Type",
-            field: "rideType",
           },
           {
             title: "Pick Date/Time",
             field: "pick",
+            hidden: true,
+            export: true,
           },
           {
             title: "Drop Date/Time",
             field: "drop",
+            hidden: true,
+            export: true,
           },
           {
             title: "Pick/Drop Address",
             field: "address",
+            hidden: true,
+            export: true,
           },
-          //   {
-          //     title: "Status",
-          //     field: "status",
-          //     width: "5%",
-          //     render: (row) => (
-          //       <>
-          //         <Button
-          //           sx={{ padding: "4px 5px", textTransform: "none" }}
-          //           size="small"
-          //           variant="contained"
-          //           color="success"
-          //         >
-          //           {row?.status}
-          //         </Button>
-          //       </>
-          //     ),
-          //   },
-          //   // {
-          //   //   title: "View Invoice",
-          //   //   // field: "status",
-          //   // },
-          //   {
-          //     title: "View Invoice",
+          {
+            title: "Status",
+            field: "status",
+            // width: "5%",
+            render: (row) => (
+              <>
+                <Button
+                  sx={{ padding: "4px 5px", textTransform: "none" }}
+                  size="small"
+                  variant="contained"
+                  color="success"
+                >
+                  {row?.status}
+                </Button>
+                {/* <Button
+                  sx={{ padding: "4px 5px", textTransform: "none" }}
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                >
+                  initiated
+                </Button>
+                <Button
+                  sx={{ padding: "4px 5px", textTransform: "none" }}
+                  size="small"
+                  variant="contained"
+                  color="success"
+                >
+                  ongoing
+                </Button> */}
+              </>
+            ),
+          },
+          {
+            title: "Fare",
+            field: "rideAmount",
+            render: (row) => formatCurrency(row.rideAmount),
+          },
 
-          //     // field: "pick",
-          //     render: (row) => (
-          //       <>
-          //         <div className="d-flex">
-          //           {" "}
-          //           <Tooltip title="View Invoice">
-          //             <IconButton>
-          //               {" "}
-          //               <PictureAsPdf sx={{ color: "#1877f2" }} />
-          //             </IconButton>
-          //           </Tooltip>
-          //         </div>
-          //       </>
-          //     ),
-          //   },
+          {
+            title: "Actions",
+            // field: "pick",
+            render: (row) => (
+              <>
+                <div className="d-flex">
+                  {" "}
+                  <Tooltip title="View Details">
+                    {/* <Avatar
+                      variant="rounded"
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "blueViolet",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                      // onClick={() => setOpenAddressDrawer(row)}
+                    > */}
+                    <IconButton
+                      onClick={() => setOpenInvoiceDrawer(row)}
+                      sx={{ mr: 1, cursor: "pointer" }}
+                    >
+                      {" "}
+                      <Visibility sx={{ color: "#1877f2" }} />
+                    </IconButton>
+                    {/* </Avatar> */}
+                  </Tooltip>
+                  <Tooltip title="Download Invoice">
+                    {/* <Avatar
+                      variant="rounded"
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "#1877f2",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    > */}
+                    <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
+                      <PictureAsPdf sx={{ color: "#1877f2" }} />
+                    </IconButton>
+
+                    {/* </Avatar> */}
+                  </Tooltip>
+                </div>
+              </>
+            ),
+          },
         ]}
       />
     </>
