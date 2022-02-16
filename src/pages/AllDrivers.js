@@ -19,12 +19,17 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { ReferralDrawer } from "components";
+import { SendNotification } from "components/dialog";
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const AllDrivers = () => {
   const navigate = useNavigate();
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
+
   return (
     <>
       {" "}
@@ -37,6 +42,10 @@ const AllDrivers = () => {
         </Link>
         <Typography color="text.primary">All Drivers</Typography>
       </Breadcrumbs>
+      <ReferralDrawer
+        open={openReferralDrawer}
+        setOpenReferralDrawer={setOpenReferralDrawer}
+      />
       <MaterialTable
         title="All Drivers"
         // onSelectionChange={(data) => {
@@ -189,7 +198,7 @@ const AllDrivers = () => {
                   <Tooltip title="View Referrals">
                     <Avatar
                       variant="rounded"
-                      // onClick={() => setOpenReferralDrawer(row)}
+                      onClick={() => setOpenReferralDrawer(row)}
                       sx={{
                         padding: "0px !important",
                         backgroundColor: "blue",
@@ -204,7 +213,7 @@ const AllDrivers = () => {
                   <Tooltip title="View Statements">
                     <Avatar
                       variant="rounded"
-                      // onClick={() => setOpenReferralDrawer(row)}
+                      onClick={() => navigate("/driver-statement")}
                       sx={{
                         padding: "0px !important",
                         backgroundColor: "indigo",
@@ -236,6 +245,23 @@ const AllDrivers = () => {
           // {
           //   title: "Drop Date/Time",
           //   field: "drop",
+          // },
+        ]}
+        actions={[
+          {
+            tooltip: "Send notification to all selected users",
+            icon: "send",
+            onClick: (evt, data) => setSelectedUsers(data),
+          },
+          // {
+          //   tooltip: "Block all selected users",
+          //   icon: "block",
+          //   // onClick: (evt, data) => setSelectedUsers(data),
+          // },
+          // {
+          //   tooltip: "Unblock all selected users",
+          //   icon: "done",
+          //   // onClick: (evt, data) => setSelectedUsers(data),
           // },
         ]}
         detailPanel={({ rowData }) => {
@@ -318,6 +344,10 @@ const AllDrivers = () => {
         //     // },
         //   },
         // ]}
+      />
+      <SendNotification
+        selectedUsers={selectedUsers}
+        handleClose={() => setSelectedUsers([])}
       />
     </>
   );
