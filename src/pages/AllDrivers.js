@@ -1,18 +1,32 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { Article, History, SummarizeRounded } from "@mui/icons-material";
+import {
+  Article,
+  DocumentScanner,
+  History,
+  PersonAdd,
+  Report,
+  SummarizeRounded,
+  TwoWheeler,
+} from "@mui/icons-material";
 import {
   Avatar,
   Button,
+  Card,
+  CardContent,
   Chip,
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import moment from "moment";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AllDrivers = () => {
+  const navigate = useNavigate();
   return (
     <>
       {" "}
@@ -36,39 +50,21 @@ const AllDrivers = () => {
               exportFunc: (cols, datas) => ExportCsv(cols, datas, "Riders"),
             },
           ],
-          // pageSize: "3",
+          pageSize: 10,
           actionsColumnIndex: -1,
           search: true,
-          // selection: true,
+          selection: true,
+          detailPanelColumnAlignment: "right",
           sorting: true,
-          headerStyle: {
-            backgroundColor: "rgba(239,239,247,.7)",
-            color: "#3b3e66",
-            fontSize: 16,
-            fontWeight: 560,
-            textAlign: "left",
-            "&:hover": {
-              color: "#ff4f00 !important",
-              cursor: "pointer",
-            },
-            whiteSpace: "nowrap",
-          },
-          rowStyle: {
-            backgroundColor: "#fffbf2",
-            color: "#3b3e66",
-            textAlign: "left",
-          },
-          cellStyle: {
-            textAlign: "left",
-          },
         }}
         data={[
           {
-            name: "Alexa",
+            dateOfBirth: "12/12/12",
+            displayName: "Alexa",
             email: "alexa@gmail.com",
-            phoneNumber: "777887643625",
-            address: "Bbsr",
-            joiningDate: "12/2/2021",
+            phoneNumber: "+91 7778876436",
+            city: "Bbsr",
+            joiningDate: new Date().toString(),
             trips: "15",
             profileImageUrl: "",
             status: "Approved",
@@ -76,61 +72,59 @@ const AllDrivers = () => {
         ]}
         columns={[
           {
-            title: "Sl no",
+            title: "#",
             field: "sl",
             render: (newData) => newData.tableData.id + 1,
             editable: "never",
+            width: "2%",
           },
           // {
           //   title: "Name",
           //   field: "displayName",
           // },
           {
-            title: "Profile",
+            title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "30%",
+            width: "25%",
             field: "firstName",
-            render: ({ profileImageUrl, name, email, phoneNumber }) => (
+            render: ({ photoURL, displayName, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemAvatar>
-                    <Avatar src={profileImageUrl} alt={"img"} />
+                    <Avatar src={photoURL} alt={"img"} />
                   </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {name || "Not Provided"}
+                        {displayName || "Not Provided"}
                       </Typography>
                     }
                     // secondary={email}
-                    secondary={
-                      <Typography
-                        sx={{}}
-                        component="details"
-                        variant="subtitle2"
-                      >
-                        {email || "Not Provided"} <br />
-                        {phoneNumber || "Not Provided"}
-                      </Typography>
-                    }
+                    secondary={phoneNumber || "Not Provided"}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
+          // {
+          //   title: "Phone",
+          //   field: "phoneNumber",
+          //   width: "5%",
+          // },
 
           {
-            title: "Address",
-            field: "address",
+            title: "City",
+            field: "city",
           },
-          {
-            title: "Trips",
-            field: "trips",
-          },
+          // {
+          //   title: "Trips",
+          //   field: "trips",
+          // },
           {
             title: "Joining Date",
             field: "joiningDate",
+            render: (rowData) => moment(rowData.joiningDate).format("llll"),
           },
           {
             title: "Status",
@@ -147,45 +141,166 @@ const AllDrivers = () => {
             ),
           },
           {
-            title: "Other",
+            title: "Actions",
+            width: "18%",
+            headerStyle: {
+              textAlign: "center",
+            },
             // field: "pick",
             render: (row) => (
               <>
-                {" "}
-                <Button
-                  variant="contained"
-                  size="small"
-                  startIcon={<History />}
-                  sx={{ textTransform: "none" }}
-                >
-                  History
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  startIcon={<SummarizeRounded />}
-                  sx={{ marginTop: "1vh", textTransform: "none" }}
-                >
-                  Statement
-                </Button>
-                <Button
-                  variant="contained"
-                  size="small"
-                  color="warning"
-                  startIcon={<Article />}
-                  sx={{ marginTop: "1vh", textTransform: "none" }}
-                >
-                  Document
-                </Button>
+                <div className="d-flex">
+                  {" "}
+                  <Tooltip title="View Vehicles">
+                    <Avatar
+                      variant="rounded"
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "blueViolet",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                      // onClick={() => setOpenAddressDrawer(row)}
+                    >
+                      <TwoWheeler />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Driver History">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => navigate("/driver-history")}
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "#1877f2",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <History sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Referrals">
+                    <Avatar
+                      variant="rounded"
+                      // onClick={() => setOpenReferralDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "blue",
+                        mr: ".4vw",
+
+                        cursor: "pointer",
+                      }}
+                    >
+                      <PersonAdd sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Statements">
+                    <Avatar
+                      variant="rounded"
+                      // onClick={() => setOpenReferralDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "indigo",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Report sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Documents">
+                    <Avatar
+                      variant="rounded"
+                      // onClick={() => setOpenReferralDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "lawngreen",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <DocumentScanner sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                </div>
               </>
             ),
           },
+
           // {
           //   title: "Drop Date/Time",
           //   field: "drop",
           // },
         ]}
+        detailPanel={({ rowData }) => {
+          return (
+            <div
+              style={{
+                padding: "20px",
+                margin: "auto",
+                backgroundColor: "#eef5f9",
+              }}
+            >
+              <Card
+                sx={{
+                  minWidth: 500,
+                  maxWidth: 550,
+                  transition: "0.3s",
+                  margin: "auto",
+                  padding: "2vh 2vw",
+                  borderRadius: "10px",
+                  // fontFamily: italic,
+                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                  "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardContent>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    gutterBottom
+                    align="left"
+                  >
+                    Email:{" "}
+                    <span
+                      style={{
+                        color: "rgb(30, 136, 229)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {rowData?.email}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    DOB:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.dateOfBirth}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    City:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.city}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Trips:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.trips}
+                    </span>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </div>
+          );
+        }}
         // actions={[
         //   {
         //     // icon: () => <Visibility style={{ color: "#1991eb" }} />,
