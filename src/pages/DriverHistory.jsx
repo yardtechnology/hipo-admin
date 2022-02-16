@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
-const RiderHistory = () => {
+const DriverHistory = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
 
   return (
@@ -27,13 +27,13 @@ const RiderHistory = () => {
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
       >
-        <Link underline="hover" color="inherit" to="/riders">
-          Riders
+        <Link underline="hover" color="inherit" to="/drivers/all-drivers">
+          All Drivers
         </Link>
-        <Typography color="text.primary">Ride History</Typography>
+        <Typography color="text.primary">Driver History</Typography>
       </Breadcrumbs>
       <MaterialTable
-        title="History Of Rider"
+        title="History Of Alexa"
         options={{
           exportAllData: true,
           search: true,
@@ -73,7 +73,7 @@ const RiderHistory = () => {
             phoneNumber: "+91 7887643625",
             address: "Bbsr",
             trips: "15",
-            status: "Completed",
+            status: "Initiated",
           },
         ]}
         columns={[
@@ -116,27 +116,27 @@ const RiderHistory = () => {
               </>
             ),
           },
-          {
-            title: "Driver Profile",
-            tooltip: "Profile",
-            searchable: true,
-            width: "22%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
-              <>
-                <ListItem sx={{ paddingLeft: "0px" }}>
-                  <ListItemText
-                    primary={
-                      <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
-                      </Typography>
-                    }
-                    secondary={phoneNumber}
-                  ></ListItemText>
-                </ListItem>
-              </>
-            ),
-          },
+          //   {
+          //     title: "Driver Profile",
+          //     tooltip: "Profile",
+          //     searchable: true,
+          //     width: "22%",
+          //     field: "firstName",
+          //     render: ({ photoURL, displayName, phoneNumber }) => (
+          //       <>
+          //         <ListItem sx={{ paddingLeft: "0px" }}>
+          //           <ListItemText
+          //             primary={
+          //               <Typography component="span" variant="body2">
+          //                 {displayName || "Not Provided"}
+          //               </Typography>
+          //             }
+          //             secondary={phoneNumber}
+          //           ></ListItemText>
+          //         </ListItem>
+          //       </>
+          //     ),
+          //   },
           {
             title: "Ride Type",
             field: "rideType",
@@ -363,4 +363,4 @@ const RiderHistory = () => {
   );
 };
 
-export default RiderHistory;
+export default DriverHistory;

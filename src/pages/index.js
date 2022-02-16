@@ -32,6 +32,7 @@ export const RentalRides = lazy(() => import("./RentalRides"));
 export const CancelledRides = lazy(() => import("./CancelledRides"));
 export const OutstationRides = lazy(() => import("./OutstationRides"));
 export const RiderHistory = lazy(() => import("./RiderHistory"));
+export const DriverHistory = lazy(() => import("./DriverHistory"));
 export const Coupons = lazy(() => import("./Coupons"));
 export const ManageArtists = lazy(() => import("./ManageArtists"));
 export const ManageManagers = lazy(() => import("./ManageManagers"));
