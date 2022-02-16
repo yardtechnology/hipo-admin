@@ -12,6 +12,7 @@ import {
   FeaturedPlayList,
   // HomeRepairService,
   LocalActivity,
+  LocalCarWash,
   Money,
   // LocalActivity,
   Notifications,
@@ -126,6 +127,12 @@ const MenuItems = [
         title: "Rental Rides",
         icon: <CarRental className="iconColor" sx={{ color: "#000" }} />,
         route: "/rides/rental-rides",
+      },
+      {
+        key: "6",
+        title: "Outstation Rides",
+        icon: <LocalCarWash className="iconColor" sx={{ color: "#000" }} />,
+        route: "/rides/outstation-rides",
       },
       {
         key: "5",

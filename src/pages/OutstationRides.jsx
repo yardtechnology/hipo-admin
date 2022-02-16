@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
-const RiderHistory = () => {
+const OutstationRides = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
 
   return (
@@ -28,12 +28,12 @@ const RiderHistory = () => {
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
       >
         <Link underline="hover" color="inherit" to="/riders">
-          Riders
+          Rides
         </Link>
-        <Typography color="text.primary">Ride History</Typography>
+        <Typography color="text.primary">Outstation Rides</Typography>
       </Breadcrumbs>
       <MaterialTable
-        title="Ride History"
+        title="Outstation Rides"
         options={{
           exportAllData: true,
           search: true,
@@ -67,13 +67,13 @@ const RiderHistory = () => {
             drop: new Date().toString(),
             distance: "10km",
             rideId: "12345",
-            rideType: "Rental",
+            driveBy: "self",
             rideAmount: 245,
             vehicleType: "Car",
             phoneNumber: "+91 7887643625",
             address: "Bbsr",
             trips: "15",
-            status: "Initiated",
+            status: "Completed",
           },
         ]}
         columns={[
@@ -137,10 +137,7 @@ const RiderHistory = () => {
               </>
             ),
           },
-          {
-            title: "Ride Type",
-            field: "rideType",
-          },
+
           {
             title: "Vehicle",
             field: "vehicleType",
@@ -199,7 +196,6 @@ const RiderHistory = () => {
           {
             title: "Distance",
             field: "distance",
-            // render: (row) => formatCurrency(row.rideAmount),
           },
           {
             title: "Fare",
@@ -255,112 +251,9 @@ const RiderHistory = () => {
             ),
           },
         ]}
-        // detailPanel={[
-        //   {
-        //     tooltip: "Show more info",
-
-        //     icon: "info",
-        //     openIcon: "visibility",
-        //     render: ({ rowData }) => (
-
-        //     ),
-        //   },
-        // ]}
-        // actions={[
-        //   {
-        //     icon: "visibility",
-        //     tooltip: "View Invoice",
-        //     onClick: (event, rowData) => {
-        //       console.log("rowData", rowData);
-        //     },
-        //   },
-        //   {
-        //     icon: "picture_as_pdf",
-        //     tooltip: "Dowload Invoice",
-        //     onClick: (event, rowData) => {
-        //       console.log("rowData", rowData);
-        //     },
-        //   },
-        // ]}
-        // detailPanel={({ rowData }) => {
-        //   return (
-        //     <div
-        //       style={{
-        //         padding: "20px",
-        //         margin: "auto",
-        //         backgroundColor: "#eef5f9",
-        //       }}
-        //     >
-        //       <Card
-        //         sx={{
-        //           minWidth: 500,
-        //           maxWidth: 550,
-        //           transition: "0.3s",
-        //           margin: "auto",
-        //           padding: "2vh 2vw",
-        //           borderRadius: "10px",
-        //           // fontFamily: italic,
-        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-        //           "&:hover": {
-        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-        //           },
-        //         }}
-        //       >
-        //         <CardContent>
-        //           <Typography
-        //             variant="body1"
-        //             component="p"
-        //             gutterBottom
-        //             align="left"
-        //           >
-        //             Ride Id:{" "}
-        //             <span
-        //               style={{
-        //                 color: "rgb(30, 136, 229)",
-        //                 fontSize: "15px",
-        //               }}
-        //             >
-        //               {rowData?.rideId}
-        //             </span>
-        //           </Typography>
-
-        //           <Typography
-        //             variant="body1"
-        //             component="p"
-        //             gutterBottom
-        //             align="left"
-        //           >
-        //             Pick Date/Time:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.pick}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             Drop Date/Time:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.drop}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             Pick/Drop Address:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.address}
-        //             </span>
-        //           </Typography>
-        //         </CardContent>
-        //       </Card>
-        //     </div>
-        //   );
-        // }}
       />
     </>
   );
 };
 
-export default RiderHistory;
+export default OutstationRides;

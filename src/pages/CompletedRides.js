@@ -73,6 +73,7 @@ const CompletedRides = () => {
             address: "Bbsr",
             trips: "15",
             status: "Completed",
+            distance: "15km",
           },
         ]}
         columns={[
@@ -98,7 +99,7 @@ const CompletedRides = () => {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "22%",
+            width: "25%",
             field: "firstName",
             render: ({ photoURL, displayName, email, phoneNumber }) => (
               <>
@@ -119,7 +120,7 @@ const CompletedRides = () => {
             title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "22%",
+            width: "25%",
             field: "firstName",
             render: ({ photoURL, displayName, phoneNumber }) => (
               <>
@@ -194,6 +195,11 @@ const CompletedRides = () => {
                 </Button> */}
               </>
             ),
+          },
+          {
+            title: "Distance",
+            field: "distance",
+            // render: (row) => formatCurrency(row.rideAmount),
           },
           {
             title: "Fare",

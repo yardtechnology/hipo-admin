@@ -38,6 +38,7 @@ import {
   ScheduledRides,
   CancelledRides,
   RentalRides,
+  OutstationRides,
 } from "pages";
 import Riders from "pages/Riders";
 import { Routes, Route } from "react-router-dom";
@@ -81,6 +82,7 @@ const PrivateRoutes = () => {
         <Route path="rides/scheduled-rides" element={<ScheduledRides />} />
         <Route path="rides/cancelled-rides" element={<CancelledRides />} />
         <Route path="rides/rental-rides" element={<RentalRides />} />
+        <Route path="rides/outstation-rides" element={<OutstationRides />} />
         <Route path="/riders" element={<Riders />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/contacts" element={<Contacts />} />

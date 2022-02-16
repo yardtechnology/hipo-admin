@@ -154,16 +154,7 @@ const ScheduledRides = () => {
             render: (rowData) => moment(rowData?.pick).format("llll"),
             width: "25%",
           },
-          {
-            title: "Drop Time",
-            field: "drop",
-            width: "25%",
 
-            // hidden: true,
-            render: (rowData) => moment(rowData?.drop).format("llll"),
-
-            export: true,
-          },
           {
             title: "Pick/Drop Address",
             field: "address",

@@ -67,6 +67,7 @@ const RentalRides = () => {
             drop: new Date().toString(),
             rideId: "12345",
             driveBy: "self",
+            distance: "10km",
             rideAmount: 245,
             vehicleType: "Car",
             phoneNumber: "+91 7887643625",
@@ -98,7 +99,7 @@ const RentalRides = () => {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "22%",
+            width: "25%",
             field: "firstName",
             render: ({ photoURL, displayName, email, phoneNumber }) => (
               <>
@@ -119,7 +120,7 @@ const RentalRides = () => {
             title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "22%",
+            width: "25%",
             field: "firstName",
             render: ({ photoURL, displayName, phoneNumber }) => (
               <>
@@ -194,6 +195,11 @@ const RentalRides = () => {
                 </Button> */}
               </>
             ),
+          },
+          {
+            title: "Distance",
+            field: "distance",
+            // render: (row) => formatCurrency(row.rideAmount),
           },
           {
             title: "Fare",
