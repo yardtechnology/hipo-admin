@@ -21,6 +21,7 @@ export const Supports = lazy(() => import("./Supports"));
 export const ManageReviews = lazy(() => import("./ManageReviews"));
 export const ManagePromoCodes = lazy(() => import("./ManagePromoCodes"));
 export const AllDrivers = lazy(() => import("./AllDrivers"));
+export const DriverPayment = lazy(() => import("./DriverPayment"));
 export const Localization = lazy(() => import("./Localization"));
 export const Vehicles = lazy(() => import("./Vehicles"));
 export const Pricing = lazy(() => import("./Pricing"));

@@ -7,13 +7,10 @@ import {
   Container,
   Drawer,
   Grid,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Typography,
 } from "@mui/material";
 import { RC } from "assets";
-const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
+const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
   const drawerData = open;
   console.log(drawerData);
   console.log(open);
@@ -23,7 +20,7 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
       <Drawer
         anchor="right"
         open={open}
-        onClose={() => setOpenVehicleInfoDrawer(false)}
+        onClose={() => setOpenDocumentsDrawer(false)}
       >
         <Container
           style={{
@@ -41,39 +38,32 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
             }}
             variant="h5"
           >
-            Vehicles Info
+            Driver Documents
           </Typography>
           <div>
-            <Accordion sx={{ marginTop: "2vh" }}>
+            {" "}
+            <Accordion sx={{ marginTop: "3vh" }}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-                sx={{ padding: "0px", margin: "0vh" }}
+                sx={{ margin: "0vh" }}
               >
-                <ListItem sx={{ paddingTop: "0px", marginTop: "0vh" }}>
-                  <ListItemAvatar>
-                    <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Car" secondary="Hyundai i20" />
-                </ListItem>{" "}
-              </AccordionSummary>
-              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
-                <Typography>Vehicle No - OD 02 DM 5555</Typography>
-                <Typography>Has Insurance - Yes</Typography>
                 <Typography
                   component={"h6"}
                   variant="h5"
-                  sx={{ marginTop: "2vh", color: "GrayText" }}
+                  sx={{ color: "GrayText" }}
                 >
-                  RC Info
-                </Typography>
-                <Typography sx={{ fontWeight: "bold" }}>
                   {" "}
-                  OD-STRDASEEFHH124444ASWFVGG
+                  Aadhaar Card Info
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  5555 7654 5425 5555
                 </Typography>
 
-                <Grid container spacing={1} sx={{ marginTop: "0vh" }}>
+                <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
                   {" "}
                   <Grid
                     item
@@ -135,37 +125,29 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
                   </Grid>
                 </Grid>
               </AccordionDetails>
-            </Accordion>
-            <Accordion sx={{ marginTop: "2vh" }}>
+            </Accordion>{" "}
+            <Accordion sx={{ marginTop: "3vh" }}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-                sx={{ padding: "0px", margin: "0vh" }}
+                sx={{ margin: "0vh" }}
               >
-                <ListItem sx={{ paddingTop: "0px", marginTop: "0vh" }}>
-                  <ListItemAvatar>
-                    <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Car" secondary="Hyundai i20" />
-                </ListItem>{" "}
-              </AccordionSummary>
-              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
-                <Typography>Vehicle No - OD 02 DM 5555</Typography>
-                <Typography>Has Insurance - Yes</Typography>
                 <Typography
                   component={"h6"}
                   variant="h5"
-                  sx={{ marginTop: "2vh", color: "GrayText" }}
+                  sx={{ color: "GrayText" }}
                 >
-                  RC Info
-                </Typography>
-                <Typography sx={{ fontWeight: "bold" }}>
                   {" "}
-                  OD-STRDASEEFHH124444ASWFVGG
+                  Driving License Info
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  5555 7654 5425 5555
                 </Typography>
 
-                <Grid container spacing={1} sx={{ marginTop: "0vh" }}>
+                <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
                   {" "}
                   <Grid
                     item
@@ -227,7 +209,35 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
                   </Grid>
                 </Grid>
               </AccordionDetails>
-            </Accordion>
+            </Accordion>{" "}
+            <Accordion sx={{ marginTop: "3vh" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMore />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{ margin: "0vh" }}
+              >
+                <Typography
+                  component={"h6"}
+                  variant="h5"
+                  sx={{ color: "GrayText" }}
+                >
+                  {" "}
+                  Bank Account Info
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Holder Name - Alexa Aryan
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  IFSC code - UTIB0000001
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Number - 123456789
+                </Typography>
+              </AccordionDetails>
+            </Accordion>{" "}
           </div>
 
           {/* <Typography
@@ -245,4 +255,4 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
   );
 };
 
-export default VehicleInfoDrawer;
+export default DocumentsDrawer;
