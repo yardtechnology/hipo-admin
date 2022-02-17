@@ -115,6 +115,77 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
                   </Grid>
                 </Grid>
               </AccordionDetails>
+            </Accordion>{" "}
+            <Accordion sx={{ marginTop: "2vh" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMore />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{ padding: "0px", margin: "0vh" }}
+              >
+                <ListItem sx={{ paddingTop: "0px", marginTop: "0vh" }}>
+                  <ListItemAvatar>
+                    <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary="Car" secondary="Hyundai i20" />
+                </ListItem>{" "}
+              </AccordionSummary>
+              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+                <Typography>Vehicle No - OD 02 DM 5555</Typography>
+                <Typography>Has Insurance - Yes</Typography>
+                <Typography
+                  component={"h6"}
+                  variant="h5"
+                  sx={{ marginTop: "2vh", color: "GrayText" }}
+                >
+                  RC Info
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  {" "}
+                  OD-STRDASEEFHH124444ASWFVGG
+                </Typography>
+
+                <Grid container spacing={1} sx={{ marginTop: "0vh" }}>
+                  {" "}
+                  <Grid item lg={6} md={6} sm={6} xs={6}>
+                    {" "}
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={RC}
+                      variant="square"
+                      sx={{
+                        width: "auto",
+                        height: "auto",
+                        "&:hover": {
+                          cursor: "pointer",
+                          transform: "scale(3.2)",
+                          zIndex: "1",
+                          paddingLeft: "6vw",
+                        },
+                      }}
+                    />{" "}
+                  </Grid>
+                  <Grid item lg={6} md={6} sm={6} xs={6}>
+                    {" "}
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={RC}
+                      variant="square"
+                      sx={{
+                        width: "auto",
+                        height: "auto",
+                        "&:hover": {
+                          cursor: "pointer",
+                          transform: "scale(3.2)",
+                          zIndex: "1",
+                          paddingRight: "6vw",
+                          backdropFilter: "blur(5px)",
+                        },
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
             </Accordion>
           </div>
 
