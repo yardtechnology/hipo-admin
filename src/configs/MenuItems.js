@@ -39,7 +39,7 @@ const MenuItems = [
     key: "1",
     title: "Dashboard",
     icon: <Dashboard className="iconColor" />,
-    route: "/dashboard",
+    route: "/",
   },
   // {
   //   key: "2",
@@ -94,7 +94,7 @@ const MenuItems = [
         key: "4",
         title: "Requests",
         icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
-        route: "/drivers/add-new-driver",
+        route: "/drivers/driver-requests",
       },
     ],
   },

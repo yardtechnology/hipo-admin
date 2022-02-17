@@ -19,7 +19,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { ReferralDrawer } from "components";
+import { ReferralDrawer, VehicleInfoDrawer } from "components";
 import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
@@ -29,6 +29,7 @@ const AllDrivers = () => {
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
+  const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
 
   return (
     <>
@@ -45,6 +46,10 @@ const AllDrivers = () => {
       <ReferralDrawer
         open={openReferralDrawer}
         setOpenReferralDrawer={setOpenReferralDrawer}
+      />
+      <VehicleInfoDrawer
+        open={openVehicleInfoDrawer}
+        setOpenVehicleInfoDrawer={setOpenVehicleInfoDrawer}
       />
       <MaterialTable
         title="All Drivers"
@@ -176,7 +181,7 @@ const AllDrivers = () => {
                         mr: ".4vw",
                         cursor: "pointer",
                       }}
-                      // onClick={() => setOpenAddressDrawer(row)}
+                      onClick={() => setOpenVehicleInfoDrawer(row)}
                     >
                       <TwoWheeler />
                     </Avatar>
