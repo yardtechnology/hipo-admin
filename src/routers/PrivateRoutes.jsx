@@ -41,6 +41,7 @@ import {
   OutstationRides,
   DriverHistory,
   DriverPayment,
+  DriverRequests,
 } from "pages";
 import Riders from "pages/Riders";
 import { Routes, Route } from "react-router-dom";
@@ -75,7 +76,7 @@ const PrivateRoutes = () => {
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="drivers/all-drivers" element={<AllDrivers />} />
         <Route path="drivers/driver-payment" element={<DriverPayment />} />
-
+        <Route path="drivers/driver-requests" element={<DriverRequests />} />
         <Route path="driver-history" element={<DriverHistory />} />
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/pricing" element={<Pricing />} />
