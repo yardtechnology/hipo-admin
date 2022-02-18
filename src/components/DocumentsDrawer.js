@@ -38,7 +38,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
             }}
             variant="h5"
           >
-            Driver Documents
+            Documents
           </Typography>
           <div>
             {" "}
@@ -51,7 +51,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
               >
                 <Typography
                   component={"h6"}
-                  variant="h5"
+                  variant="h6"
                   sx={{ color: "GrayText" }}
                 >
                   {" "}
@@ -135,7 +135,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
               >
                 <Typography
                   component={"h6"}
-                  variant="h5"
+                  variant="h6"
                   sx={{ color: "GrayText" }}
                 >
                   {" "}
@@ -219,7 +219,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
               >
                 <Typography
                   component={"h6"}
-                  variant="h5"
+                  variant="h6"
                   sx={{ color: "GrayText" }}
                 >
                   {" "}

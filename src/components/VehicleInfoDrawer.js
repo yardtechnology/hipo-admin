@@ -61,9 +61,70 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
               <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
                 <Typography>Vehicle No - OD 02 DM 5555</Typography>
                 <Typography>Has Insurance - Yes</Typography>
+                <Grid container spacing={1} sx={{ marginTop: "0vh" }}>
+                  {" "}
+                  <Grid
+                    item
+                    lg={6}
+                    md={6}
+                    sm={6}
+                    xs={6}
+                    sx={{
+                      "&:hover": {
+                        cursor: "pointer",
+                        transform: "scale(3.1)",
+                        transition: "transform 0.5s",
+                        zIndex: "1",
+                        paddingLeft: "6vw",
+                        backdropFilter: "blur(5px)",
+                        paddingTop: "6vh",
+                      },
+                    }}
+                  >
+                    {" "}
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={RC}
+                      variant="square"
+                      sx={{
+                        width: "auto",
+                        height: "auto",
+                      }}
+                    />{" "}
+                  </Grid>
+                  <Grid
+                    item
+                    lg={6}
+                    md={6}
+                    sm={6}
+                    xs={6}
+                    sx={{
+                      "&:hover": {
+                        cursor: "pointer",
+                        transform: "scale(3.2)",
+                        transition: "transform 0.5s",
+                        zIndex: "1",
+                        paddingRight: "6vw",
+                        backdropFilter: "blur(5px)",
+                        paddingTop: "5vh",
+                      },
+                    }}
+                  >
+                    {" "}
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={RC}
+                      variant="square"
+                      sx={{
+                        width: "auto",
+                        height: "auto",
+                      }}
+                    />
+                  </Grid>
+                </Grid>
                 <Typography
                   component={"h6"}
-                  variant="h5"
+                  variant="h6"
                   sx={{ marginTop: "2vh", color: "GrayText" }}
                 >
                   RC Info

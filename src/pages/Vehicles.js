@@ -3,6 +3,7 @@ import { Avatar, Chip } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
+import { formatCurrency } from "@ashirbad/js-core";
 
 const Vehicles = () => {
   // const { days, setRealtime } = useDays();
@@ -65,6 +66,7 @@ const Vehicles = () => {
             title: "Cost Per Km",
             field: "costPerKm",
             type: "numeric",
+            render: ({ costPerKm }) => formatCurrency(costPerKm),
             searchable: true,
           },
           {
