@@ -104,6 +104,23 @@ const Localization = () => {
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
         ]}
+        actions={[
+          // {
+          //   tooltip: "Send notification to all selected users",
+          //   icon: "send",
+          //   onClick: (evt, data) => setSelectedUsers(data),
+          // },
+          {
+            tooltip: "Turn On for Selected Cities",
+            icon: "toggle_on",
+            // onClick: (evt, data) => setSelectedUsers(data),
+          },
+          {
+            tooltip: "Turn Off for Selected Cities",
+            icon: "toggle_off",
+            // onClick: (evt, data) => setSelectedUsers(data),
+          },
+        ]}
         editable={{
           onRowAdd: async (data) => {},
           onRowUpdate: async (newData, oldData) => {},

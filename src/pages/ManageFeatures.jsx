@@ -1,11 +1,10 @@
 import MaterialTable from "@material-table/core";
+import { Avatar } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { formatCurrency } from "@ashirbad/js-core";
-import { Chip } from "@mui/material";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 
-const Coupons = () => {
+const ManageFeatures = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
@@ -28,18 +27,15 @@ const Coupons = () => {
             },
           ],
         }}
-        title={"Manage Coupons"}
+        title={"Manage Features"}
         data={[
           {
             sl: 1,
-            amount: "100",
             typeImage: "",
-            couponCode: "45#APR",
-            count: 5,
-            usedCount: 2,
+            featureName: "WiFi",
             costPerKm: 7,
             seatingCapacity: 5,
-            status: "active",
+            status: "On",
           },
         ]}
         columns={[
@@ -50,54 +46,22 @@ const Coupons = () => {
             width: "10%",
           },
           {
-            title: "Valid From",
-            field: "validFrom",
-            type: "datetime",
-            render: ({ validFrom }) =>
-              moment(validFrom).format(" Do MMM YYYY hh:mm A"),
+            title: "Feature Image",
+            field: "typeImageUrl",
+            render: ({ typeImageUrl }) => (
+              <Avatar
+                variant="rounded"
+                sx={{ width: "12vh", height: "12vh" }}
+              />
+            ),
+            searchable: true,
+          },
+          {
+            title: "Feature Name",
+            field: "featureName",
+            searchable: true,
           },
 
-          {
-            title: "Valid Till",
-            field: "validTill",
-            type: "datetime",
-            render: ({ validTill }) =>
-              moment(validTill).format(" Do MMM YYYY hh:mm A"),
-          },
-          {
-            title: "Coupon Code",
-            field: "couponCode",
-          },
-          {
-            title: "Amount",
-            field: "amount",
-            type: "numeric",
-            render: ({ amount }) => formatCurrency(amount),
-          },
-          {
-            title: "Count",
-            field: "count",
-            type: "numeric",
-          },
-          {
-            title: "Used Count",
-            field: "count",
-            type: "numeric",
-          },
-          {
-            title: "Status",
-            field: "status",
-            render: (row) => (
-              <>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  label={row?.status}
-                />
-              </>
-            ),
-          },
           {
             title: "Timestamp",
             // width: "70%",
@@ -137,4 +101,4 @@ const Coupons = () => {
   );
 };
 
-export default Coupons;
+export default ManageFeatures;

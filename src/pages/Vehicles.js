@@ -108,6 +108,23 @@ const Vehicles = () => {
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
         ]}
+        actions={[
+          // {
+          //   tooltip: "Send notification to all selected users",
+          //   icon: "send",
+          //   onClick: (evt, data) => setSelectedUsers(data),
+          // },
+          {
+            tooltip: "Turn On",
+            icon: "toggle_on",
+            // onClick: (evt, data) => setSelectedUsers(data),
+          },
+          {
+            tooltip: "Turn Off",
+            icon: "toggle_off",
+            // onClick: (evt, data) => setSelectedUsers(data),
+          },
+        ]}
         editable={{
           onRowAdd: async (data) => {},
           onRowUpdate: async (newData, oldData) => {},
