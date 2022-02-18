@@ -1,41 +1,23 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Reply } from "@mui/icons-material";
-import { Card, CardContent, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  IconButton,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import { SendReply } from "components/dialog";
-import { BASE_URL } from "configs";
-import { useSupports } from "hooks";
 import moment from "moment";
 import { useState } from "react";
-import Swal from "sweetalert2";
 const Contacts = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
-  const { supports, setRealtime } = useSupports();
-  console.log(supports);
-  const handleBulkDelete = async (data) => {
-    try {
-      const result = await fetch(`${BASE_URL}/support/delete`, {
-        method: "DELETE",
-        body: JSON.stringify({
-          supportIds: data,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const res = await result.json();
-      console.log(res);
-      result.status === 200
-        ? Swal.fire({ icon: "success", text: res.success.message })
-        : Swal.fire({ icon: "error", text: res.error.message });
-    } catch (error) {
-      Swal.fire({ icon: "error", text: error.message });
-      console.log(error);
-    } finally {
-      setRealtime((prev) => !prev);
-    }
-  };
+  const handleBulkDelete = async (data) => {};
   return (
     <div style={{ marginTop: "2vh" }}>
       <MaterialTable
@@ -56,40 +38,48 @@ const Contacts = () => {
             },
           ],
         }}
-        title={"Supports"}
-        data={
-          supports === null
-            ? []
-            : supports?.map((support, i) => ({
-                ...support,
-                sl: i + 1,
-                // firstName: support?.user?.firstName,
-                // lastName: support?.user?.lastName,
-                // email: support?.user?.email,
-                currentTimestamp: moment(support?.timestamp).format("lll"),
-              }))
-        }
+        title={"Contacts"}
+        data={[
+          {
+            displayName: "Aliva Priyadarshini",
+            phoneNumber: "7787654545",
+            message: "Hi, I am looking for a ride from Kolkata to Delhi",
+            sl: 1,
+          },
+        ]}
         columns={[
           {
             title: "#",
             field: "sl",
             editable: "never",
+            width: "2%",
           },
           {
-            title: "First Name",
+            title: "Profile",
+            tooltip: "Profile",
+            searchable: true,
+            width: "35%",
             field: "firstName",
-            searchable: true,
+            render: ({ photoURL, displayName, phoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemAvatar>
+                    <Avatar src={photoURL} alt={"img"} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={displayName}
+                    // secondary={email}
+                    secondary={phoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
           },
-          {
-            title: "Last Name",
-            field: "lastName",
-            searchable: true,
-          },
-          {
-            title: "Email",
-            field: "email",
-            searchable: true,
-          },
+          // {
+          //   title: "Phone",
+          //   field: "phoneNumber",
+          //   width: "5%",
+          // },
           {
             title: "Message",
             field: "message",
@@ -105,6 +95,14 @@ const Contacts = () => {
             hidden: true,
             export: true,
           },
+
+          {
+            title: "Timestamp",
+            searchable: true,
+            field: "timestamp",
+            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            export: false,
+          },
           {
             export: false,
             title: "Reply",
@@ -113,13 +111,6 @@ const Contacts = () => {
                 <Reply />
               </IconButton>
             ),
-          },
-          {
-            title: "Timestamp",
-            searchable: true,
-            field: "timestamp",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
-            export: false,
           },
           {
             title: "Timestamp",
@@ -132,29 +123,7 @@ const Contacts = () => {
           },
         ]}
         editable={{
-          onRowDelete: async (oldData) => {
-            try {
-              const result = await fetch(`${BASE_URL}/support/delete`, {
-                method: "DELETE",
-                body: JSON.stringify({
-                  supportIds: [oldData?._id],
-                }),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-              const res = await result.json();
-              console.log(res);
-              result.status === 200
-                ? Swal.fire({ icon: "success", text: res.success.message })
-                : Swal.fire({ icon: "error", text: res.error.message });
-            } catch (error) {
-              Swal.fire({ icon: "error", text: error.message });
-              console.log(error);
-            } finally {
-              setRealtime((prev) => !prev);
-            }
-          },
+          onRowDelete: async (oldData) => {},
         }}
         actions={[
           {
@@ -207,7 +176,7 @@ const Contacts = () => {
             </div>
           );
         }}
-        isLoading={supports === null}
+        // isLoading={supports === null}
       />
       <SendReply
         selectedUsers={selectedUsers}

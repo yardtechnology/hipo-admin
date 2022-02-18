@@ -8,13 +8,12 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { TextInput } from "components/core";
-import { BASE_URL } from "configs";
+// import { BASE_URL } from "configs";
 import { Form, Formik } from "formik";
 import { MessageSchema } from "schemas";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import * as Yup from "yup";
 const SendReply = ({ selectedUsers, handleClose }) => {
-  console.log(selectedUsers?.userRef?._id);
   const initialValues = MessageSchema.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
@@ -24,41 +23,39 @@ const SendReply = ({ selectedUsers, handleClose }) => {
     return accumulator;
   }, {});
   const handleSendReply = async (values, submitProps) => {
-    try {
-      const result = await fetch(
-        `${BASE_URL}/support/support-email/${selectedUsers?.userRef?._id}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            message: values?.message,
-            subject: values?.subject,
-          }),
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const res = await result.json();
-      console.log(res);
-      console.log(result.status);
-
-      result.status === 200
-        ? Swal.fire({ icon: "success", text: res?.success?.message })
-        : Swal.fire({ icon: "error", text: res.error.message });
-      handleClose();
-      // console.log(values, selectedUsers);
-      submitProps.resetForm();
-    } catch (error) {
-      console.log(error);
-      Swal.fire({ icon: "error", text: error.message });
-      submitProps.setSubmitting(false);
-    }
+    // try {
+    //   const result = await fetch(
+    //     `${BASE_URL}/support/support-email/${selectedUsers?.userRef?._id}`,
+    //     {
+    //       method: "POST",
+    //       body: JSON.stringify({
+    //         message: values?.message,
+    //         subject: values?.subject,
+    //       }),
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   const res = await result.json();
+    //   console.log(res);
+    //   console.log(result.status);
+    //   result.status === 200
+    //     ? Swal.fire({ icon: "success", text: res?.success?.message })
+    //     : Swal.fire({ icon: "error", text: res.error.message });
+    //   handleClose();
+    //   // console.log(values, selectedUsers);
+    //   submitProps.resetForm();
+    // } catch (error) {
+    //   console.log(error);
+    //   Swal.fire({ icon: "error", text: error.message });
+    //   submitProps.setSubmitting(false);
+    // }
   };
   return (
     <>
       <Dialog
-        open={Boolean(selectedUsers?._id)}
+        open={Boolean(selectedUsers?.displayName)}
         onClose={handleClose}
         maxWidth="sm"
         fullWidth
