@@ -246,15 +246,15 @@ const MenuItems = [
     submenus: [
       {
         key: "1",
-        title: "Rider Ratings",
+        title: "Riders Rating",
         icon: <Star className="iconColor" sx={{ color: "#000" }} />,
         route: "/rider-ratings",
       },
       {
         key: "2",
-        title: "Driver Ratings",
+        title: "Drivers Rating",
         icon: <Star className="iconColor" sx={{ color: "#000" }} />,
-        route: "driver-ratings",
+        route: "/driver-ratings",
       },
     ],
   },

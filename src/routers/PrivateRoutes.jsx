@@ -43,6 +43,8 @@ import {
   DriverPayment,
   DriverRequests,
   ManageFeatures,
+  RidersRating,
+  DriversRating,
 } from "pages";
 import Riders from "pages/Riders";
 import { Routes, Route } from "react-router-dom";
@@ -66,6 +68,8 @@ const PrivateRoutes = () => {
         <Route path="/manage-artists" element={<ManageArtists />} />
         <Route path="/manage-managers" element={<ManageManagers />} />
         <Route path="/driver-statement" element={<DriverStatements />} />
+        <Route path="/rider-ratings" element={<RidersRating />} />
+        <Route path="/driver-ratings" element={<DriversRating />} />
         <Route path="/manage-crowd" element={<ManageCrowd />} />
         <Route path="/app-update" element={<AppUpdate />} />
         <Route path="/all-bookings" element={<Bookings />} />

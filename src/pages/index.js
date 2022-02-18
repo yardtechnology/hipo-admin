@@ -15,6 +15,8 @@ export const ManageDays = lazy(() => import("./ManageDays"));
 export const AppUpdate = lazy(() => import("./AppUpdate"));
 export const DriverStatements = lazy - (() => import("./DriverStatements"));
 export const DriverRequests = lazy(() => import("./DriverRequests"));
+export const RidersRating = lazy(() => import("./RidersRating"));
+export const DriversRating = lazy(() => import("./DriversRating"));
 export const Bookings = lazy(() => import("./Bookings"));
 export const ArtistBookingList = lazy(() => import("./ArtistBookingList"));
 export const ManageLanguage = lazy(() => import("./ManageLanguage"));
