@@ -1,5 +1,5 @@
 import MaterialTable from "@material-table/core";
-import { Avatar, Chip } from "@mui/material";
+import { Chip } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
@@ -11,6 +11,7 @@ const Localization = () => {
     <div style={{ marginTop: "2vh" }}>
       <MaterialTable
         options={{
+          whiteSpace: "nowrap",
           selection: "true",
           addRowPosition: "first",
           actionsColumnIndex: -1,
@@ -27,14 +28,14 @@ const Localization = () => {
             },
           ],
         }}
-        title={"Vehicles"}
+        title={"Localization"}
         data={[
           {
             sl: 1,
-            typeImage: "",
-            typeName: "SUV",
-            costPerKm: 7,
-            seatingCapacity: 5,
+            city: "Bhubaneswar",
+            country: "India",
+            range: "",
+            zipCode: 751030,
             status: "On",
           },
         ]}
@@ -46,32 +47,27 @@ const Localization = () => {
             width: "10%",
           },
           {
-            title: "Type Image",
-            field: "typeImageUrl",
-            render: ({ typeImageUrl }) => (
-              <Avatar
-                variant="rounded"
-                sx={{ width: "12vh", height: "12vh" }}
-              />
-            ),
+            title: "City",
+            field: "city",
+
             searchable: true,
           },
           {
-            title: "Name",
-            field: "typeName",
+            title: "Country",
+            field: "country",
             searchable: true,
           },
           {
-            title: "Cost Per Km",
-            field: "costPerKm",
+            title: "Zip Code",
+            field: "zipCode",
             type: "numeric",
             searchable: true,
           },
           {
-            title: "Seating Capacity",
-            field: "seatingCapacity",
+            title: "Range",
+            field: "",
             searchable: true,
-            type: "numeric",
+            // type: "numeric",
           },
           {
             title: "Status",
