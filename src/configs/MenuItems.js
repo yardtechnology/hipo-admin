@@ -14,6 +14,7 @@ import {
   LocalActivity,
   LocalCarWash,
   Money,
+  Visibility,
   // LocalActivity,
   Notifications,
   Paid,
@@ -147,6 +148,20 @@ const MenuItems = [
     icon: <Category className="iconColor" />,
     title: "Vehicles",
     route: "/vehicles",
+    submenus: [
+      {
+        key: "1",
+        title: "Add Vehicles",
+        icon: <Add className="iconColor" sx={{ color: "#000" }} />,
+        route: "/add-vehicles",
+      },
+      {
+        key: "2",
+        title: "View Vehicles",
+        icon: <Visibility className="iconColor" sx={{ color: "#000" }} />,
+        route: "/vehicles",
+      },
+    ],
   },
   // {
   //   key: "20",

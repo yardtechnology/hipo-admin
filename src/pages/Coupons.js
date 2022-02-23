@@ -1,6 +1,6 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { formatCurrency } from "@ashirbad/js-core";
+// import { formatCurrency } from "@ashirbad/js-core";
 import { Chip } from "@mui/material";
 // import { BASE_URL } from "configs";
 import moment from "moment";
@@ -69,21 +69,29 @@ const Coupons = () => {
             field: "couponCode",
           },
           {
-            title: "Amount",
-            field: "amount",
-            type: "numeric",
-            render: ({ amount }) => formatCurrency(amount),
+            title: "Max Cashback",
+            field: "maxCashback",
           },
           {
-            title: "Count",
-            field: "count",
-            type: "numeric",
+            title: "Discount In %",
+            field: "discount",
           },
-          {
-            title: "Used Count",
-            field: "count",
-            type: "numeric",
-          },
+          // {
+          //   title: "Amount",
+          //   field: "amount",
+          //   type: "numeric",
+          //   render: ({ amount }) => formatCurrency(amount),
+          // },
+          // {
+          //   title: "Count",
+          //   field: "count",
+          //   type: "numeric",
+          // },
+          // {
+          //   title: "Used Count",
+          //   field: "count",
+          //   type: "numeric",
+          // },
           {
             title: "Status",
             field: "status",
