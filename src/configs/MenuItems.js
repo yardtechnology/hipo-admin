@@ -220,6 +220,20 @@ const MenuItems = [
     icon: <LocalAtm className="iconColor" />,
     title: "Incentives",
     route: "/incentives",
+    submenus: [
+      {
+        key: "1",
+        title: "Driver Share",
+        icon: <Person className="iconColor" sx={{ color: "#000" }} />,
+        route: "/view-operators",
+      },
+      {
+        key: "2",
+        title: "Operators Share",
+        icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
+        route: "/operators-requests",
+      },
+    ],
   },
   {
     key: "16",
