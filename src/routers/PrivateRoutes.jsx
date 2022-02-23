@@ -85,7 +85,7 @@ const PrivateRoutes = () => {
         <Route path="/app-update" element={<AppUpdate />} />
         <Route path="/all-bookings" element={<Bookings />} />
         <Route path="/driver-share" element={<DriverShare />} />
-        <Route path="/operator-share" element={<OperatorShare />} />
+        <Route path="/operators-share" element={<OperatorShare />} />
         <Route path="/artist-booking-list" element={<ArtistBookingList />} />
         <Route path="/manage-activity-list" element={<ManageActivityList />} />
         <Route path="/supports" element={<Supports />} />

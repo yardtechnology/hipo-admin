@@ -224,14 +224,14 @@ const MenuItems = [
       {
         key: "1",
         title: "Driver Share",
-        icon: <Person className="iconColor" sx={{ color: "#000" }} />,
-        route: "/view-operators",
+        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+        route: "/driver-share",
       },
       {
         key: "2",
         title: "Operators Share",
-        icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
-        route: "/operators-requests",
+        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+        route: "/operators-share",
       },
     ],
   },
