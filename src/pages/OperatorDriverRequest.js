@@ -2,14 +2,16 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import {
   DocumentScanner,
-  SupervisorAccount,
+  History,
+  PersonAdd,
+  Report,
   TwoWheeler,
 } from "@mui/icons-material";
 import {
   Avatar,
   Breadcrumbs,
-  //   Card,
-  //   CardContent,
+  Card,
+  CardContent,
   Chip,
   ListItem,
   ListItemAvatar,
@@ -23,12 +25,13 @@ import moment from "moment";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const OperatorRequest = () => {
+const OperatorDriverRequest = () => {
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
+
   return (
     <>
       {" "}
@@ -36,10 +39,10 @@ const OperatorRequest = () => {
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
       >
-        <Link underline="hover" color="inherit" to="/">
-          Operators
+        <Link underline="hover" color="inherit" to="/operators-requests">
+          Operator Requests
         </Link>
-        <Typography color="text.primary">Operators Requests</Typography>
+        <Typography color="text.primary">Drivers</Typography>
       </Breadcrumbs>
       <ReferralDrawer
         open={openReferralDrawer}
@@ -54,7 +57,7 @@ const OperatorRequest = () => {
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
       />
       <MaterialTable
-        title="Operators Requests"
+        title="Operator Drivers"
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -90,7 +93,7 @@ const OperatorRequest = () => {
             joiningDate: new Date().toString(),
             trips: "15",
             profileImageUrl: "",
-            status: "Pending",
+            status: "Approved",
           },
         ]}
         columns={[
@@ -106,7 +109,7 @@ const OperatorRequest = () => {
           //   field: "displayName",
           // },
           {
-            title: "Profile",
+            title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
             width: "25%",
@@ -130,11 +133,11 @@ const OperatorRequest = () => {
               </>
             ),
           },
-          {
-            title: "Email",
-            field: "email",
-            // width: "5%",
-          },
+          // {
+          //   title: "Phone",
+          //   field: "phoneNumber",
+          //   width: "5%",
+          // },
 
           {
             title: "City",
@@ -145,7 +148,7 @@ const OperatorRequest = () => {
           //   field: "trips",
           // },
           {
-            title: "Requested At",
+            title: "Joining Date",
             field: "joiningDate",
             render: (rowData) => moment(rowData.joiningDate).format("llll"),
           },
@@ -174,20 +177,6 @@ const OperatorRequest = () => {
               <>
                 <div className="d-flex">
                   {" "}
-                  <Tooltip title="View Drivers">
-                    <Avatar
-                      variant="rounded"
-                      sx={{
-                        padding: " 0px !important",
-                        backgroundColor: "#f50057",
-                        mr: ".4vw",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => navigate(`/operator-requested-drivers`)}
-                    >
-                      <SupervisorAccount />
-                    </Avatar>
-                  </Tooltip>
                   <Tooltip title="View Vehicles">
                     <Avatar
                       variant="rounded"
@@ -200,6 +189,49 @@ const OperatorRequest = () => {
                       onClick={() => setOpenVehicleInfoDrawer(row)}
                     >
                       <TwoWheeler />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Driver History">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => navigate("/driver-history")}
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "#1877f2",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <History sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Referrals">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => setOpenReferralDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "blue",
+                        mr: ".4vw",
+
+                        cursor: "pointer",
+                      }}
+                    >
+                      <PersonAdd sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Statements">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => navigate("/driver-statement")}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "indigo",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Report sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
                   <Tooltip title="View Documents">
@@ -226,84 +258,92 @@ const OperatorRequest = () => {
           // },
         ]}
         actions={[
-          //   {
-          //     tooltip: "Send notification to all selected users",
-          //     icon: "send",
-          //     onClick: (evt, data) => setSelectedUsers(data),
-          //   },
           {
-            tooltip: "Accept all selected operators",
-            icon: "done",
-            //   // onClick: (evt, data) => setSelectedUsers(data),
+            tooltip: "Send notification to all selected users",
+            icon: "send",
+            onClick: (evt, data) => setSelectedUsers(data),
           },
-          {
-            tooltip: "Reject all selected operators",
-            icon: "cancel",
-            //   // onClick: (evt, data) => setSelectedUsers(data),
-          },
+          // {
+          //   tooltip: "Block all selected users",
+          //   icon: "block",
+          //   // onClick: (evt, data) => setSelectedUsers(data),
+          // },
+          // {
+          //   tooltip: "Unblock all selected users",
+          //   icon: "done",
+          //   // onClick: (evt, data) => setSelectedUsers(data),
+          // },
         ]}
-        // detailPanel={({ rowData }) => {
-        //   return (
-        //     <div
-        //       style={{
-        //         padding: "20px",
-        //         margin: "auto",
-        //         backgroundColor: "#eef5f9",
-        //       }}
-        //     >
-        //       <Card
-        //         sx={{
-        //           minWidth: 500,
-        //           maxWidth: 550,
-        //           transition: "0.3s",
-        //           margin: "auto",
-        //           padding: "2vh 2vw",
-        //           borderRadius: "10px",
-        //           // fontFamily: italic,
-        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-        //           "&:hover": {
-        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-        //           },
-        //         }}
-        //       >
-        //         <CardContent>
-        //           <Typography
-        //             variant="body1"
-        //             component="p"
-        //             gutterBottom
-        //             align="left"
-        //           >
-        //             Email:{" "}
-        //             <span
-        //               style={{
-        //                 color: "rgb(30, 136, 229)",
-        //                 fontSize: "15px",
-        //               }}
-        //             >
-        //               {rowData?.email}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             DOB:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.dateOfBirth}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             City:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.city}
-        //             </span>
-        //           </Typography>
-        //         </CardContent>
-        //       </Card>
-        //     </div>
-        //   );
-        // }}
+        detailPanel={({ rowData }) => {
+          return (
+            <div
+              style={{
+                padding: "20px",
+                margin: "auto",
+                backgroundColor: "#eef5f9",
+              }}
+            >
+              <Card
+                sx={{
+                  minWidth: 500,
+                  maxWidth: 550,
+                  transition: "0.3s",
+                  margin: "auto",
+                  padding: "2vh 2vw",
+                  borderRadius: "10px",
+                  // fontFamily: italic,
+                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                  "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardContent>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    gutterBottom
+                    align="left"
+                  >
+                    Email:{" "}
+                    <span
+                      style={{
+                        color: "rgb(30, 136, 229)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {rowData?.email}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    DOB:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.dateOfBirth}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    City:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.city}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Trips:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.trips}
+                    </span>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </div>
+          );
+        }}
         // actions={[
         //   {
         //     // icon: () => <Visibility style={{ color: "#1991eb" }} />,
@@ -323,4 +363,4 @@ const OperatorRequest = () => {
   );
 };
 
-export default OperatorRequest;
+export default OperatorDriverRequest;

@@ -52,6 +52,7 @@ import {
   OperatorDriver,
   DriverShare,
   OperatorShare,
+  OperatorRequestedDriver,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -63,6 +64,10 @@ const PrivateRoutes = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/manage-users" element={<ManageUsers />} />
         <Route path="/manage-requests" element={<ManageRequests />} />
+        <Route
+          path="/operator-requested-drivers"
+          element={<OperatorRequestedDriver />}
+        />
         <Route path="/manage-events" element={<ManageEvents />} />
         <Route path="/manage-days" element={<ManageDays />} />
         <Route path="/categories" element={<Categories />} />

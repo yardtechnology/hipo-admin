@@ -24,6 +24,9 @@ export const ManageRequests = lazy(() => import("./ManageRequests"));
 export const Supports = lazy(() => import("./Supports"));
 export const Operators = lazy(() => import("./Operators"));
 export const OperatorRequest = lazy(() => import("./OperatorRequest"));
+export const OperatorRequestedDriver = lazy(() =>
+  import("./OperatorDriverRequest")
+);
 export const ManageReviews = lazy(() => import("./ManageReviews"));
 export const ManagePromoCodes = lazy(() => import("./ManagePromoCodes"));
 export const AllDrivers = lazy(() => import("./AllDrivers"));
