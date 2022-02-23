@@ -53,6 +53,7 @@ import {
   DriverShare,
   OperatorShare,
   OperatorRequestedDriver,
+  DriverEarningReports,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -93,6 +94,7 @@ const PrivateRoutes = () => {
         <Route path="/manage-promo-codes" element={<ManagePromoCodes />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/driver-payment" element={<DriverEarningReports />} />
         <Route path="/drivers/all-drivers" element={<AllDrivers />} />
         <Route path="/drivers/driver-payment" element={<DriverPayment />} />
         <Route path="/drivers/driver-requests" element={<DriverRequests />} />

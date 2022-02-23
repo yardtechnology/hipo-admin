@@ -33,6 +33,10 @@ export const AllDrivers = lazy(() => import("./AllDrivers"));
 export const DriverPayment = lazy(() => import("./DriverPayment"));
 export const Localization = lazy(() => import("./Localization"));
 export const Vehicles = lazy(() => import("./Vehicles"));
+export const DriverEarningReports = lazy(() =>
+  import("./DriverEarningReports")
+);
+
 export const Pricing = lazy(() => import("./Pricing"));
 export const Rides = lazy(() => import("./Rides"));
 export const ActiveRides = lazy(() => import("./ActiveRides"));
