@@ -2,14 +2,16 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import {
   DocumentScanner,
-  SupervisorAccount,
+  History,
+  PersonAdd,
+  Report,
   TwoWheeler,
 } from "@mui/icons-material";
 import {
   Avatar,
   Breadcrumbs,
-  //   Card,
-  //   CardContent,
+  Card,
+  CardContent,
   Chip,
   ListItem,
   ListItemAvatar,
@@ -23,7 +25,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Operators = () => {
+const OperatorDriver = () => {
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
@@ -37,10 +39,10 @@ const Operators = () => {
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
       >
-        <Link underline="hover" color="inherit" to="/">
+        <Link underline="hover" color="inherit" to="/view-operators">
           Operators
         </Link>
-        <Typography color="text.primary">View Operators</Typography>
+        <Typography color="text.primary">Drivers</Typography>
       </Breadcrumbs>
       <ReferralDrawer
         open={openReferralDrawer}
@@ -55,7 +57,7 @@ const Operators = () => {
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
       />
       <MaterialTable
-        title="Operators"
+        title="Operator Drivers"
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -107,7 +109,7 @@ const Operators = () => {
           //   field: "displayName",
           // },
           {
-            title: "Profile",
+            title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
             width: "25%",
@@ -131,11 +133,11 @@ const Operators = () => {
               </>
             ),
           },
-          {
-            title: "Email",
-            field: "email",
-            // width: "5%",
-          },
+          // {
+          //   title: "Phone",
+          //   field: "phoneNumber",
+          //   width: "5%",
+          // },
 
           {
             title: "City",
@@ -146,7 +148,7 @@ const Operators = () => {
           //   field: "trips",
           // },
           {
-            title: "Accepted Date",
+            title: "Joining Date",
             field: "joiningDate",
             render: (rowData) => moment(rowData.joiningDate).format("llll"),
           },
@@ -175,20 +177,6 @@ const Operators = () => {
               <>
                 <div className="d-flex">
                   {" "}
-                  <Tooltip title="View Drivers">
-                    <Avatar
-                      variant="rounded"
-                      sx={{
-                        padding: " 0px !important",
-                        backgroundColor: "#f50057",
-                        mr: ".4vw",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => navigate(`/operator-driver`)}
-                    >
-                      <SupervisorAccount />
-                    </Avatar>
-                  </Tooltip>
                   <Tooltip title="View Vehicles">
                     <Avatar
                       variant="rounded"
@@ -201,6 +189,49 @@ const Operators = () => {
                       onClick={() => setOpenVehicleInfoDrawer(row)}
                     >
                       <TwoWheeler />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Driver History">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => navigate("/driver-history")}
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "#1877f2",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <History sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Referrals">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => setOpenReferralDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "blue",
+                        mr: ".4vw",
+
+                        cursor: "pointer",
+                      }}
+                    >
+                      <PersonAdd sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="View Statements">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => navigate("/driver-statement")}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "indigo",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Report sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
                   <Tooltip title="View Documents">
@@ -243,68 +274,76 @@ const Operators = () => {
           //   // onClick: (evt, data) => setSelectedUsers(data),
           // },
         ]}
-        // detailPanel={({ rowData }) => {
-        //   return (
-        //     <div
-        //       style={{
-        //         padding: "20px",
-        //         margin: "auto",
-        //         backgroundColor: "#eef5f9",
-        //       }}
-        //     >
-        //       <Card
-        //         sx={{
-        //           minWidth: 500,
-        //           maxWidth: 550,
-        //           transition: "0.3s",
-        //           margin: "auto",
-        //           padding: "2vh 2vw",
-        //           borderRadius: "10px",
-        //           // fontFamily: italic,
-        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-        //           "&:hover": {
-        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-        //           },
-        //         }}
-        //       >
-        //         <CardContent>
-        //           <Typography
-        //             variant="body1"
-        //             component="p"
-        //             gutterBottom
-        //             align="left"
-        //           >
-        //             Email:{" "}
-        //             <span
-        //               style={{
-        //                 color: "rgb(30, 136, 229)",
-        //                 fontSize: "15px",
-        //               }}
-        //             >
-        //               {rowData?.email}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             DOB:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.dateOfBirth}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             City:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.city}
-        //             </span>
-        //           </Typography>
-        //         </CardContent>
-        //       </Card>
-        //     </div>
-        //   );
-        // }}
+        detailPanel={({ rowData }) => {
+          return (
+            <div
+              style={{
+                padding: "20px",
+                margin: "auto",
+                backgroundColor: "#eef5f9",
+              }}
+            >
+              <Card
+                sx={{
+                  minWidth: 500,
+                  maxWidth: 550,
+                  transition: "0.3s",
+                  margin: "auto",
+                  padding: "2vh 2vw",
+                  borderRadius: "10px",
+                  // fontFamily: italic,
+                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                  "&:hover": {
+                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                <CardContent>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    gutterBottom
+                    align="left"
+                  >
+                    Email:{" "}
+                    <span
+                      style={{
+                        color: "rgb(30, 136, 229)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {rowData?.email}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    DOB:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.dateOfBirth}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    City:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.city}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Trips:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.trips}
+                    </span>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </div>
+          );
+        }}
         // actions={[
         //   {
         //     // icon: () => <Visibility style={{ color: "#1991eb" }} />,
@@ -324,4 +363,4 @@ const Operators = () => {
   );
 };
 
-export default Operators;
+export default OperatorDriver;

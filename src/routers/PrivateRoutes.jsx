@@ -48,6 +48,8 @@ import {
   Operators,
   Riders,
   OperatorRequest,
+  Incentives,
+  OperatorDriver,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -90,6 +92,8 @@ const PrivateRoutes = () => {
         <Route path="/operators-requests" element={<OperatorRequest />} />
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/incentives" element={<Incentives />} />
+        <Route path="/operator-driver" element={<OperatorDriver />} />
         <Route path="/coupons" element={<Coupons />} />
         <Route path="/localization" element={<Localization />} />
         <Route path="/rides" element={<Rides />} />

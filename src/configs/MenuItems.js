@@ -33,6 +33,7 @@ import {
   TwoWheeler,
   // TheaterComedy,
   VpnKey,
+  LocalAtm,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -215,6 +216,12 @@ const MenuItems = [
     ],
   },
   {
+    key: "27",
+    icon: <LocalAtm className="iconColor" />,
+    title: "Incentives",
+    route: "/incentives",
+  },
+  {
     key: "16",
     icon: <Money className="iconColor" />,
     title: "Pricing",
@@ -256,7 +263,7 @@ const MenuItems = [
   {
     key: "6",
     icon: <Reviews className="iconColor" />,
-    title: "Reviews & Ratings",
+    title: "Reviews",
     route: "/manage-reviews",
     submenus: [
       {
