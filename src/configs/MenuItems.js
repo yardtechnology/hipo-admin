@@ -34,6 +34,7 @@ import {
   // TheaterComedy,
   VpnKey,
   LocalAtm,
+  PriceCheck,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -251,14 +252,26 @@ const MenuItems = [
       {
         key: "1",
         title: "Overall Ride Statement",
-        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
-        route: "/driver-payment",
+        icon: <PriceCheck className="iconColor" sx={{ color: "#000" }} />,
+        route: "/overall-ride-statement",
       },
       {
         key: "2",
         title: "Daily Statement",
-        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
-        route: "/operator-payment",
+        icon: <PriceCheck className="iconColor" sx={{ color: "#000" }} />,
+        route: "/daily-statement",
+      },
+      {
+        key: "2",
+        title: "Monthly Statement",
+        icon: <PriceCheck className="iconColor" sx={{ color: "#000" }} />,
+        route: "/monthly-statement",
+      },
+      {
+        key: "2",
+        title: "Yearly Statement",
+        icon: <PriceCheck className="iconColor" sx={{ color: "#000" }} />,
+        route: "/yearly-statement",
       },
     ],
   },
