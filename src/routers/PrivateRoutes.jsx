@@ -56,6 +56,9 @@ import {
   DriverEarningReports,
   OperatorEarningReports,
   OverallRideStatement,
+  DailyStatement,
+  MonthlyStatement,
+  YearlyStatement,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -120,7 +123,10 @@ const PrivateRoutes = () => {
         <Route
           path="overall-ride-statement"
           element={<OverallRideStatement />}
-        />
+        />{" "}
+        <Route path="daily-statement" element={<DailyStatement />} />
+        <Route path="monthly-statement" element={<MonthlyStatement />} />
+        <Route path="yearly-statement" element={<YearlyStatement />} />
         <Route path="/riders" element={<Riders />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/contacts" element={<Contacts />} />
