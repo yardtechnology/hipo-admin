@@ -247,6 +247,20 @@ const MenuItems = [
     icon: <Summarize className="iconColor" />,
     title: "Statement",
     route: "/statements",
+    submenus: [
+      {
+        key: "1",
+        title: "Overall Ride Statement",
+        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+        route: "/driver-payment",
+      },
+      {
+        key: "2",
+        title: "Daily Statement",
+        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+        route: "/operator-payment",
+      },
+    ],
   },
   {
     key: "18",

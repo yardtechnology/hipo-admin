@@ -19,7 +19,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const DriverEarningReports = () => {
+const OperatorEarningReports = () => {
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
@@ -50,7 +50,7 @@ const DriverEarningReports = () => {
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
       />
       <MaterialTable
-        title="Driver Payments"
+        title="Operator Payments"
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -111,7 +111,7 @@ const DriverEarningReports = () => {
           //   field: "displayName",
           // },
           {
-            title: "Driver Profile",
+            title: "Operator Profile",
             tooltip: "Profile",
             searchable: true,
             width: "25%",
@@ -282,4 +282,4 @@ const DriverEarningReports = () => {
   );
 };
 
-export default DriverEarningReports;
+export default OperatorEarningReports;

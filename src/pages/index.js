@@ -36,7 +36,9 @@ export const Vehicles = lazy(() => import("./Vehicles"));
 export const DriverEarningReports = lazy(() =>
   import("./DriverEarningReports")
 );
-
+export const OperatorEarningReports = lazy(() =>
+  import("./OperatorEarningReports")
+);
 export const Pricing = lazy(() => import("./Pricing"));
 export const Rides = lazy(() => import("./Rides"));
 export const ActiveRides = lazy(() => import("./ActiveRides"));

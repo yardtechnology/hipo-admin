@@ -54,6 +54,7 @@ import {
   OperatorShare,
   OperatorRequestedDriver,
   DriverEarningReports,
+  OperatorEarningReports,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -101,6 +102,7 @@ const PrivateRoutes = () => {
         <Route path="/driver-history" element={<DriverHistory />} />
         <Route path="/view-operators" element={<Operators />} />
         <Route path="/operators-requests" element={<OperatorRequest />} />
+        <Route path="/operator-payment" element={<OperatorEarningReports />} />
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/incentives" element={<Incentives />} />
