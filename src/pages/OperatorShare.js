@@ -39,7 +39,7 @@ const OperatorShare = () => {
             },
           ],
         }}
-        title={"Driver Incentives"}
+        title={"Operator Incentives"}
         data={[
           {
             sl: 1,
