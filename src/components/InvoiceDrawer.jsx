@@ -63,7 +63,7 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
             <img src={MAP} alt="p" />
           </div>
           <div>
-            <Tooltip title="Driver Profile">
+            <Tooltip title="Rider Profile">
               <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "1vh" }}>
                 <ListItemAvatar>
                   <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
@@ -72,6 +72,14 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                   primary="Aliva Priyadarshini"
                   secondary="772634243264"
                 />
+              </ListItem>
+            </Tooltip>
+            <Tooltip title="Driver Profile">
+              <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "1vh" }}>
+                <ListItemAvatar>
+                  <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Alexa Smith" secondary="772634243264" />
               </ListItem>
             </Tooltip>
             <Divider />

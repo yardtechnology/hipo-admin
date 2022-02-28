@@ -32,10 +32,12 @@ const ManageFeatures = () => {
           {
             sl: 1,
             typeImage: "",
-            featureName: "WiFi",
+            categoryName: "Auto",
             costPerKm: 7,
             seatingCapacity: 5,
             status: "On",
+            description:
+              "The all too familiar auto rides without the hassle of waiting and haggling for price",
           },
         ]}
         columns={[
@@ -57,9 +59,15 @@ const ManageFeatures = () => {
             searchable: true,
           },
           {
-            title: "Feature Name",
-            field: "featureName",
+            title: "Category Name",
+            field: "categoryName",
             searchable: true,
+          },
+          {
+            title: "Brief",
+            field: "description",
+            searchable: true,
+            width: "40%",
           },
 
           {

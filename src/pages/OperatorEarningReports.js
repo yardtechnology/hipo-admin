@@ -35,7 +35,7 @@ const OperatorEarningReports = () => {
         <Link underline="hover" color="inherit" to="/">
           Earning Reports
         </Link>
-        <Typography color="text.primary">Driver Payments</Typography>
+        <Typography color="text.primary">Operator Payments</Typography>
       </Breadcrumbs>
       <ReferralDrawer
         open={openReferralDrawer}
@@ -96,6 +96,7 @@ const OperatorEarningReports = () => {
             commission: "10%",
             bankName: "HDFC",
             acno: "123456789",
+            incentives: formatCurrency(100),
           },
         ]}
         columns={[
@@ -153,6 +154,10 @@ const OperatorEarningReports = () => {
           {
             title: "Site Commission",
             field: "commission",
+          },
+          {
+            title: "Incentives",
+            field: "incentives",
           },
           {
             title: "City",

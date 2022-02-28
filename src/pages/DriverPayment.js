@@ -150,6 +150,10 @@ const DriverPayment = () => {
             field: "commission",
           },
           {
+            title: "Incentives",
+            field: "incentives",
+          },
+          {
             title: "City",
             field: "city",
             hidden: true,

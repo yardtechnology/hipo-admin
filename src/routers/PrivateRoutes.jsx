@@ -99,14 +99,20 @@ const PrivateRoutes = () => {
         <Route path="/manage-promo-codes" element={<ManagePromoCodes />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/driver-payment" element={<DriverEarningReports />} />
+        <Route
+          path="/driver-earning-reports"
+          element={<DriverEarningReports />}
+        />
         <Route path="/drivers/all-drivers" element={<AllDrivers />} />
         <Route path="/drivers/driver-payment" element={<DriverPayment />} />
         <Route path="/drivers/driver-requests" element={<DriverRequests />} />
         <Route path="/driver-history" element={<DriverHistory />} />
         <Route path="/view-operators" element={<Operators />} />
         <Route path="/operators-requests" element={<OperatorRequest />} />
-        <Route path="/operator-payment" element={<OperatorEarningReports />} />
+        <Route
+          path="/operator-earning-reports"
+          element={<OperatorEarningReports />}
+        />
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/incentives" element={<Incentives />} />

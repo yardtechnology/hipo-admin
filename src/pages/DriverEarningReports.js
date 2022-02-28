@@ -94,6 +94,7 @@ const DriverEarningReports = () => {
             onDate: new Date().toString(),
             amount: "1000",
             commission: "10%",
+            incentives: formatCurrency(100),
             bankName: "HDFC",
             acno: "123456789",
           },
@@ -153,6 +154,10 @@ const DriverEarningReports = () => {
           {
             title: "Site Commission",
             field: "commission",
+          },
+          {
+            title: "Incentives",
+            field: "incentives",
           },
           {
             title: "City",

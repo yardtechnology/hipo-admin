@@ -7,16 +7,26 @@ import {
   Card,
   CardContent,
   Chip,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
+import { InvoiceDrawer } from "components";
+import { useState } from "react";
+import { PictureAsPdf, Visibility } from "@mui/icons-material";
 
 const YearlyStatement = () => {
+  const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <div>
+      <InvoiceDrawer
+        rideDetails={openInvoiceDrawer}
+        setOpenInvoiceDrawer={setOpenInvoiceDrawer}
+      />
       <Breadcrumbs
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
@@ -116,6 +126,53 @@ const YearlyStatement = () => {
             export: true,
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
+          {
+            title: "Actions",
+            // field: "pick",
+            render: (row) => (
+              <>
+                <div className="d-flex">
+                  {" "}
+                  <Tooltip title="View Details">
+                    {/* <Avatar
+                      variant="rounded"
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "blueViolet",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                      // onClick={() => setOpenAddressDrawer(row)}
+                    > */}
+                    <IconButton
+                      onClick={() => setOpenInvoiceDrawer(row)}
+                      sx={{ mr: 1, cursor: "pointer" }}
+                    >
+                      {" "}
+                      <Visibility sx={{ color: "#1877f2" }} />
+                    </IconButton>
+                    {/* </Avatar> */}
+                  </Tooltip>
+                  <Tooltip title="Download Invoice">
+                    {/* <Avatar
+                      variant="rounded"
+                      sx={{
+                        padding: " 0px !important",
+                        backgroundColor: "#1877f2",
+                        mr: ".4vw",
+                        cursor: "pointer",
+                      }}
+                    > */}
+                    <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
+                      <PictureAsPdf sx={{ color: "#1877f2" }} />
+                    </IconButton>
+
+                    {/* </Avatar> */}
+                  </Tooltip>
+                </div>
+              </>
+            ),
+          },
         ]}
         actions={
           [
@@ -131,11 +188,13 @@ const YearlyStatement = () => {
             //   },
           ]
         }
-        editable={{
-          //   onRowAdd: async (data) => {},
-          //   onRowUpdate: async (newData, oldData) => {},
-          onRowDelete: async (oldData) => {},
-        }}
+        // editable={
+        //   {
+        //     //   onRowAdd: async (data) => {},
+        //     //   onRowUpdate: async (newData, oldData) => {},
+        //     // onRowDelete: async (oldData) => {},
+        //   }
+        // }
         // actions={[
         //   {
         //     tooltip: "Delete all selected Days",
