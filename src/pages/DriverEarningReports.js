@@ -159,6 +159,7 @@ const DriverEarningReports = () => {
           {
             title: "Incentives",
             field: "incentives",
+            hidden: true,
             export: true,
           },
           {

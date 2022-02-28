@@ -72,6 +72,31 @@ const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
             sx={{ textTransform: "capitalize" }}
           >
             {MenuItems.find((item) => item.route === location.pathname)?.title}
+            {
+              MenuItems.find((item) =>
+                item?.submenus?.find(
+                  (submenus) => submenus.route === location?.pathname
+                )
+              )?.title
+            }
+            {MenuItems.find((item) =>
+              item?.submenus?.find(
+                (submenus) => submenus.route === location?.pathname
+              )
+            )?.title ? (
+              <span> / </span>
+            ) : (
+              <span> </span>
+            )}
+            {
+              MenuItems.find((item) =>
+                item?.submenus?.find(
+                  (submenus) => submenus.route === location?.pathname
+                )
+              )?.submenus?.find(
+                (submenus) => submenus.route === location?.pathname
+              )?.title
+            }
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <>
