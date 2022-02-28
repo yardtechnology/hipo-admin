@@ -152,6 +152,7 @@ const DrawerLayout = ({ isDrawerOpen, handleDrawerClose }) => {
                               {submenu?.icon}
                             </ListItemIcon>
                             <ListItemText
+                              sx={{ whiteSpace: "pre-wrap" }}
                               className="listItemText"
                               primary={submenu?.title}
                             />

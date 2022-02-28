@@ -154,10 +154,12 @@ const DriverEarningReports = () => {
           {
             title: "Site Commission",
             field: "commission",
+            hidden: true,
           },
           {
             title: "Incentives",
             field: "incentives",
+            export: true,
           },
           {
             title: "City",
@@ -234,6 +236,30 @@ const DriverEarningReports = () => {
                 }}
               >
                 <CardContent>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    gutterBottom
+                    align="left"
+                  >
+                    Site Commission:{" "}
+                    <span
+                      style={{
+                        color: "rgb(30, 136, 229)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {rowData?.commission}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Incentives:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.incentives}
+                    </span>
+                  </Typography>
                   <Typography
                     variant="body1"
                     component="p"
