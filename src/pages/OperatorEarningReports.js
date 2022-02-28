@@ -13,7 +13,13 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
+import {
+  AddPaymentsDrawer,
+  DocumentsDrawer,
+  EditPaymentsDrawer,
+  ReferralDrawer,
+  VehicleInfoDrawer,
+} from "components";
 // import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
@@ -24,6 +30,8 @@ const OperatorEarningReports = () => {
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
+  const [openAddPaymentsDrawer, setOpenAddPaymentsDrawer] = useState(false);
+  const [openEditPaymentsDrawer, setOpenEditPaymentsDrawer] = useState(false);
 
   return (
     <>
@@ -48,6 +56,14 @@ const OperatorEarningReports = () => {
       <DocumentsDrawer
         open={openDocumentDrawer}
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
+      />
+      <AddPaymentsDrawer
+        open={openAddPaymentsDrawer}
+        setOpenAddPaymentsDrawer={setOpenAddPaymentsDrawer}
+      />
+      <EditPaymentsDrawer
+        open={openEditPaymentsDrawer}
+        setOpenEditPaymentsDrawer={setOpenEditPaymentsDrawer}
       />
       <MaterialTable
         title="Operator Payments"
@@ -190,25 +206,34 @@ const OperatorEarningReports = () => {
           //   field: "drop",
           // },
         ]}
-        actions={
-          [
-            // {
-            //   tooltip: "Send notification to all selected users",
-            //   icon: "send",
-            //   onClick: (evt, data) => setSelectedUsers(data),
-            // },
-            // {
-            //   tooltip: "Block all selected users",
-            //   icon: "block",
-            //   // onClick: (evt, data) => setSelectedUsers(data),
-            // },
-            // {
-            //   tooltip: "Unblock all selected users",
-            //   icon: "done",
-            //   // onClick: (evt, data) => setSelectedUsers(data),
-            // },
-          ]
-        }
+        actions={[
+          {
+            tooltip: "Add Driver Earning Reports",
+            icon: "add",
+            isFreeAction: true,
+            onClick: (evt, data) => setOpenAddPaymentsDrawer(true),
+          },
+          {
+            tooltip: "Edit Driver Earning Reports",
+            icon: "edit",
+            onClick: (evt, data) => setOpenEditPaymentsDrawer(data),
+          },
+          // {
+          //   tooltip: "Send notification to all selected users",
+          //   icon: "send",
+          //   onClick: (evt, data) => setSelectedUsers(data),
+          // },
+          // {
+          //   tooltip: "Block all selected users",
+          //   icon: "block",
+          //   // onClick: (evt, data) => setSelectedUsers(data),
+          // },
+          // {
+          //   tooltip: "Unblock all selected users",
+          //   icon: "done",
+          //   // onClick: (evt, data) => setSelectedUsers(data),
+          // },
+        ]}
         detailPanel={({ rowData }) => {
           return (
             <div
