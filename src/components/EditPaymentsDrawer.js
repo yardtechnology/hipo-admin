@@ -18,7 +18,7 @@ import { Done } from "@mui/icons-material";
 
 import { LoadingButton } from "@mui/lab";
 
-const AddPaymentsDrawer = ({ open, setOpenAddPaymentsDrawer }) => {
+const EditPaymentsDrawer = ({ open, setOpenEditPaymentsDrawer }) => {
   const drawerData = open;
   console.log(drawerData);
   console.log(open);
@@ -52,7 +52,7 @@ const AddPaymentsDrawer = ({ open, setOpenAddPaymentsDrawer }) => {
       <Drawer
         anchor="right"
         open={open}
-        onClose={() => setOpenAddPaymentsDrawer(false)}
+        onClose={() => setOpenEditPaymentsDrawer(false)}
       >
         <Container
           style={{
@@ -61,7 +61,7 @@ const AddPaymentsDrawer = ({ open, setOpenAddPaymentsDrawer }) => {
           }}
         >
           <Typography align="center" color="text.primary" variant="h5">
-            Add Payments
+            Edit Payments
           </Typography>
 
           <Formik
@@ -169,4 +169,4 @@ const AddPaymentsDrawer = ({ open, setOpenAddPaymentsDrawer }) => {
   );
 };
 
-export default AddPaymentsDrawer;
+export default EditPaymentsDrawer;
