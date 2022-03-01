@@ -16,9 +16,11 @@ import { formatCurrency } from "@ashirbad/js-core";
 import { PictureAsPdf, Visibility } from "@mui/icons-material";
 import { InvoiceDrawer } from "components";
 import { useState } from "react";
+import { StatementInvoice } from "components/dialog";
 
 const OverallRideStatement = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
+  const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
 
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
@@ -62,8 +64,21 @@ const OverallRideStatement = () => {
           {
             sl: 1,
             city: "Bhubaneswar",
+            riderName: "Aliva Priyadarshini",
+            driverName: "Alexa Aryan Smith ",
+            rideStartTime: moment("2020-05-01T00:00:00.000Z").format("llll"),
+            rideEndTime: moment("2020-05-01T00:00:00.000Z").format("llll"),
             noOfRides: "4",
+            rideType: "Outstation",
+            vehicleType: "SUV",
+            baseFare: formatCurrency(1000),
+            totalDistance: "10 KM",
+            totalAmount: formatCurrency(1875),
+            rideFare: formatCurrency(800),
+            tax: formatCurrency(100),
+            discount: formatCurrency(50),
             period: "Monthly",
+            roundedOff: formatCurrency(5),
             country: "India",
             role: "Driver",
             rideId: "1234567890",
@@ -146,7 +161,7 @@ const OverallRideStatement = () => {
                       // onClick={() => setOpenAddressDrawer(row)}
                     > */}
                     <IconButton
-                      onClick={() => setOpenInvoiceDrawer(row)}
+                      onClick={() => setOpenStatementInvoice(row)}
                       sx={{ mr: 1, cursor: "pointer" }}
                     >
                       {" "}
@@ -267,6 +282,10 @@ const OverallRideStatement = () => {
             </div>
           );
         }}
+      />
+      <StatementInvoice
+        selectedDetails={openStatementInvoice}
+        handleClose={() => setOpenStatementInvoice([])}
       />
     </div>
   );

@@ -2,4 +2,6 @@
 import LOGO from "./whitelogocolor.png";
 import MAP from "./googlemap.jfif";
 import RC from "./rc.jpg";
-export { LOGO, MAP, RC };
+import SMAP from "./statement.jpg";
+
+export { LOGO, MAP, RC, SMAP };
