@@ -56,7 +56,7 @@ const Notifications = () => {
   };
   return (
     <>
-      {notifications.length === 0 ? (
+      {notifications.length === false ? (
         notifications.map((notification) => (
           <section className="py-1">
             <>

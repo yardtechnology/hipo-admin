@@ -16,9 +16,12 @@ import { formatCurrency } from "@ashirbad/js-core";
 import InvoiceDrawer from "components/InvoiceDrawer";
 import { useState } from "react";
 import { PictureAsPdf, Visibility } from "@mui/icons-material";
+import { StatementInvoice } from "components/dialog";
 
 const DailyStatement = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
+  const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
+
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
@@ -145,7 +148,7 @@ const DailyStatement = () => {
                       // onClick={() => setOpenAddressDrawer(row)}
                     > */}
                     <IconButton
-                      onClick={() => setOpenInvoiceDrawer(row)}
+                      onClick={() => setOpenStatementInvoice(row)}
                       sx={{ mr: 1, cursor: "pointer" }}
                     >
                       {" "}
@@ -264,6 +267,10 @@ const DailyStatement = () => {
             </div>
           );
         }}
+      />
+      <StatementInvoice
+        selectedDetails={openStatementInvoice}
+        handleClose={() => setOpenStatementInvoice([])}
       />
     </div>
   );
