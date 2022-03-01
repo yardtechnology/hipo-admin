@@ -170,10 +170,14 @@ const OperatorEarningReports = () => {
           {
             title: "Site Commission",
             field: "commission",
+            hidden: true,
+            export: true,
           },
           {
             title: "Incentives",
             field: "incentives",
+            hidden: true,
+            export: true,
           },
           {
             title: "City",
@@ -208,13 +212,13 @@ const OperatorEarningReports = () => {
         ]}
         actions={[
           {
-            tooltip: "Add Driver Earning Reports",
+            tooltip: "Add Operator Earning Reports",
             icon: "add",
             isFreeAction: true,
             onClick: (evt, data) => setOpenAddPaymentsDrawer(true),
           },
           {
-            tooltip: "Edit Driver Earning Reports",
+            tooltip: "Edit Operator Earning Reports",
             icon: "edit",
             onClick: (evt, data) => setOpenEditPaymentsDrawer(data),
           },
@@ -265,6 +269,30 @@ const OperatorEarningReports = () => {
                     gutterBottom
                     align="left"
                   >
+                    Site Commission:{" "}
+                    <span
+                      style={{
+                        color: "rgb(30, 136, 229)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {rowData?.commission}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Incentives:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.incentives}
+                    </span>
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    gutterBottom
+                    align="left"
+                  >
                     Bank Name:{" "}
                     <span
                       style={{
@@ -289,8 +317,8 @@ const OperatorEarningReports = () => {
           );
         }}
         editable={{
-          onRowAdd: (newData) => {},
-          onRowUpdate: (newData, oldData) => {},
+          // onRowAdd: (newData) => {},
+          // onRowUpdate: (newData, oldData) => {},
           onRowDelete: (oldData) => {},
         }}
         // actions={[
