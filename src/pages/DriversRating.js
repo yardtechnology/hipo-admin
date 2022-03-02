@@ -2,7 +2,6 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import {
   Avatar,
-  Breadcrumbs,
   Card,
   CardContent,
   ListItem,
@@ -12,7 +11,6 @@ import {
 } from "@mui/material";
 import { SendReply } from "components/dialog";
 import moment from "moment";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 const DriversRating = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -21,15 +19,6 @@ const DriversRating = () => {
   const handleBulkDelete = async (data) => {};
   return (
     <div style={{ marginTop: "" }}>
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/">
-          Reviews & Ratings
-        </Link>
-        <Typography color="text.primary">Drivers Rating</Typography>
-      </Breadcrumbs>
       <MaterialTable
         options={{
           selection: "true",

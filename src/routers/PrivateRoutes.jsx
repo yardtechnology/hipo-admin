@@ -59,6 +59,7 @@ import {
   DailyStatement,
   MonthlyStatement,
   YearlyStatement,
+  AddNewDriver,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -105,7 +106,10 @@ const PrivateRoutes = () => {
         />
         <Route path="/drivers/all-drivers" element={<AllDrivers />} />
         <Route path="/drivers/driver-payment" element={<DriverPayment />} />
+        <Route path="/drivers/add-new-driver" element={<AddNewDriver />} />
         <Route path="/drivers/driver-requests" element={<DriverRequests />} />
+        <Route path="/drivers/driver-requests" element={<DriverRequests />} />
+        <Route path="/drivers/driver-requests" element={<viewD />} />
         <Route path="/driver-history" element={<DriverHistory />} />
         <Route path="/view-operators" element={<Operators />} />
         <Route path="/operators-requests" element={<OperatorRequest />} />

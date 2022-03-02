@@ -3,7 +3,6 @@ import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import {
-  Breadcrumbs,
   Card,
   CardContent,
   Chip,
@@ -11,7 +10,6 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
 import { InvoiceDrawer } from "components";
 import { useState } from "react";
@@ -30,15 +28,7 @@ const YearlyStatement = () => {
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/">
-          Statement
-        </Link>
-        <Typography color="text.primary">Yearly Statement</Typography>
-      </Breadcrumbs>
+
       <MaterialTable
         options={{
           whiteSpace: "nowrap",

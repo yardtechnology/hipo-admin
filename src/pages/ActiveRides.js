@@ -2,14 +2,12 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 
 import {
-  Breadcrumbs,
   Typography,
   ListItem,
   ListItemText,
   Card,
   CardContent,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
@@ -23,15 +21,6 @@ const RiderHistory = () => {
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />{" "}
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/riders">
-          Rides
-        </Link>
-        <Typography color="text.primary">Active Rides</Typography>
-      </Breadcrumbs>
       <MaterialTable
         title="Active Rides"
         options={{

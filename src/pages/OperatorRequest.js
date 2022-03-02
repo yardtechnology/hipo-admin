@@ -7,7 +7,6 @@ import {
 } from "@mui/icons-material";
 import {
   Avatar,
-  Breadcrumbs,
   //   Card,
   //   CardContent,
   Chip,
@@ -21,7 +20,7 @@ import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
 import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OperatorRequest = () => {
   const navigate = useNavigate();
@@ -32,15 +31,6 @@ const OperatorRequest = () => {
   return (
     <>
       {" "}
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/">
-          Operators
-        </Link>
-        <Typography color="text.primary">Operators Requests</Typography>
-      </Breadcrumbs>
       <ReferralDrawer
         open={openReferralDrawer}
         setOpenReferralDrawer={setOpenReferralDrawer}

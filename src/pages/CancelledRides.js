@@ -1,14 +1,12 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import {
-  Breadcrumbs,
   Typography,
   ListItem,
   ListItemText,
   CardContent,
   Card,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
 import moment from "moment";
@@ -21,15 +19,6 @@ const CancelledRides = () => {
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />{" "}
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/riders">
-          Rides
-        </Link>
-        <Typography color="text.primary">Cancelled Rides</Typography>
-      </Breadcrumbs>
       <MaterialTable
         title="Cancelled Rides"
         options={{

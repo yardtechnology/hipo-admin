@@ -15,6 +15,7 @@ export const ManageDays = lazy(() => import("./ManageDays"));
 export const AppUpdate = lazy(() => import("./AppUpdate"));
 export const DriverRequests = lazy(() => import("./DriverRequests"));
 export const DriverStatements = lazy(() => import("./DriverStatements"));
+export const AddNewDriver = lazy(() => import("./AddNewDriver"));
 export const RidersRating = lazy(() => import("./RidersRating"));
 export const DriversRating = lazy(() => import("./DriversRating"));
 export const Bookings = lazy(() => import("./Bookings"));
@@ -39,6 +40,7 @@ export const DriverEarningReports = lazy(() =>
 export const OperatorEarningReports = lazy(() =>
   import("./OperatorEarningReports")
 );
+export const ViewDocuments = lazy(() => import("./ViewDocuments"));
 export const Pricing = lazy(() => import("./Pricing"));
 export const Rides = lazy(() => import("./Rides"));
 export const ActiveRides = lazy(() => import("./ActiveRides"));

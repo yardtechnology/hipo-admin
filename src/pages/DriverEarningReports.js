@@ -4,7 +4,6 @@ import { ExportCsv, ExportPdf } from "@material-table/exporters";
 
 import {
   Avatar,
-  Breadcrumbs,
   Card,
   CardContent,
   Chip,
@@ -23,7 +22,6 @@ import {
 // import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 const DriverEarningReports = () => {
   // const [selectedUsers, setSelectedUsers] = useState([]);
@@ -36,15 +34,6 @@ const DriverEarningReports = () => {
   return (
     <>
       {" "}
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/">
-          Earning Reports
-        </Link>
-        <Typography color="text.primary">Driver Payments</Typography>
-      </Breadcrumbs>
       <ReferralDrawer
         open={openReferralDrawer}
         setOpenReferralDrawer={setOpenReferralDrawer}
