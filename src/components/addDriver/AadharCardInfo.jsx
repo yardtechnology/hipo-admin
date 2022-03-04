@@ -13,8 +13,13 @@ import { LoadingButton } from "@mui/lab";
 import { Done, Email, Send } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
+import { useAppContext } from "contexts";
+import { useState } from "react";
 
 const AadharCardInfo = ({ handelNext, handleBack }) => {
+  const { aadharCardInfo, setAadharCardInfo } = useAppContext();
+  const [value, setValue] = useState(aadharCardInfo.imgFile);
+  const [value1, setValue1] = useState(aadharCardInfo.imgFile1);
   const initialValues = {
     aadharCardNumber: "",
   };
@@ -23,6 +28,7 @@ const AadharCardInfo = ({ handelNext, handleBack }) => {
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
+      setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -41,14 +47,19 @@ const AadharCardInfo = ({ handelNext, handleBack }) => {
         }}
       >
         <Grid item lg={6} md={6} sm={12} xs={12} sx={{ textAlign: "center" }}>
-          <AadharUpload width={"100%"} />
+          <AadharUpload width={"100%"} value={value} onChange={setValue} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <AadharUpload width={"100%"} />
+          <AadharUpload width={"100%"} value={value1} onChange={setValue1} />
         </Grid>
       </Grid>
       <Formik
-        initialValues={initialValues}
+        initialValues={
+          aadharCardInfo?.aadharCardNumber
+            ? { aadharCardNumber: aadharCardInfo?.aadharCardNumber }
+            : initialValues
+        }
+        enableReinitialize
         validationSchema={Yup.object(validationSchema)}
         onSubmit={handleAadharCardInfo}
       >

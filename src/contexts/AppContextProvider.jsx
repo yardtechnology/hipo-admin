@@ -19,8 +19,8 @@ const AppContextProvider = ({ children }) => {
   });
   const [aadharCardInfo, setAadharCardInfo] = useState({
     aadharCardNumber: "",
-    aimageFileFront: "",
-    aimageFileBack: "",
+    imgFile: "",
+    imgFile1: "",
   });
   const [drivingLicenceInfo, setDrivingLicenceInfo] = useState({
     drivingLicenceNumber: "",
