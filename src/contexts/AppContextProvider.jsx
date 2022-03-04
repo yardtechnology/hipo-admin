@@ -8,6 +8,29 @@ export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [basicDetails, setBasicDetails] = useState({
+    displayName: "",
+    phoneNumber: "",
+    email: "",
+    dob: "",
+    gender: "",
+    city: "",
+    imgFile: "",
+  });
+  const [aadharCardInfo, setAadharCardInfo] = useState({
+    aadharCardNumber: "",
+    aimageFileFront: "",
+    aimageFileBack: "",
+  });
+  const [drivingLicenceInfo, setDrivingLicenceInfo] = useState({
+    drivingLicenceNumber: "",
+    drivingLicenceimage: "",
+  });
+  const [bankAccountInfo, setBankAccountInfo] = useState({
+    bankAccountNumber: "",
+    ifsc: "",
+    bankName: "",
+  });
   // const { isMounted } = useIsMounted();
   const login = async (email, password, submitProps) => {
     try {
@@ -80,7 +103,22 @@ const AppContextProvider = ({ children }) => {
     }
   };
   return (
-    <AppContext.Provider value={{ user, setUser, login, logout }}>
+    <AppContext.Provider
+      value={{
+        user,
+        setUser,
+        login,
+        logout,
+        basicDetails,
+        setBasicDetails,
+        aadharCardInfo,
+        setAadharCardInfo,
+        bankAccountInfo,
+        setBankAccountInfo,
+        drivingLicenceInfo,
+        setDrivingLicenceInfo,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
