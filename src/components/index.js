@@ -7,6 +7,7 @@ import DocumentsDrawer from "./DocumentsDrawer";
 import AddPaymentsDrawer from "./AddPaymentsDrawer";
 import EditPaymentsDrawer from "./EditPaymentsDrawer";
 import StatementInvoiceDrawer from "./StatementInvoiceDrawer";
+import EditDriverDrawer from "./EditDriverDrawer";
 
 export {
   DETAILPANEL,
@@ -15,6 +16,7 @@ export {
   AddPaymentsDrawer,
   EditPaymentsDrawer,
   InvoiceDrawer,
+  EditDriverDrawer,
   StatementInvoiceDrawer,
   DocumentsDrawer,
   VehicleInfoDrawer,

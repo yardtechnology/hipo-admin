@@ -34,7 +34,7 @@ const EditAadharCard = ({ handleNext, handleBack }) => {
         container
         spacing={2}
         sx={{
-          p: "4vh 2vw 0vh 2vw ",
+          p: "2vh 1.5vw 0vh 1.5vw ",
           alignItems: "center",
           justifyContent: "center",
         }}

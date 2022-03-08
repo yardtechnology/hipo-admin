@@ -20,7 +20,12 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
+import {
+  DocumentsDrawer,
+  EditDriverDrawer,
+  ReferralDrawer,
+  VehicleInfoDrawer,
+} from "components";
 import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
@@ -32,6 +37,7 @@ const AllDrivers = () => {
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
+  const [openEditDriverDrawer, setOpenEditDriverDrawer] = useState(false);
 
   return (
     <>
@@ -47,6 +53,10 @@ const AllDrivers = () => {
       <DocumentsDrawer
         open={openDocumentDrawer}
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
+      />
+      <EditDriverDrawer
+        open={openEditDriverDrawer}
+        setOpenEditDriverDrawer={setOpenEditDriverDrawer}
       />
       <MaterialTable
         title="All Drivers"
@@ -243,7 +253,7 @@ const AllDrivers = () => {
                   <Tooltip title="Edit Driver">
                     <Avatar
                       variant="rounded"
-                      onClick={() => setOpenDocumentDrawer(row)}
+                      onClick={() => setOpenEditDriverDrawer(row)}
                       sx={{
                         mr: ".4vw",
                         padding: "0px !important",

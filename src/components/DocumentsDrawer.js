@@ -167,10 +167,14 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   {value === 1 && <EditAadharCard />}
                 </CardContent>
               </AccordionDetails>
-            </Accordion>{" "}
+            </Accordion>
             <Accordion sx={{ marginTop: "3vh" }}>
               <AccordionSummary
-                expandIcon={<ExpandMore />}
+                expandIcon={
+                  <>
+                    <ExpandMore />
+                  </>
+                }
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 sx={{ margin: "0vh" }}
@@ -181,77 +185,109 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   sx={{ color: "GrayText" }}
                 >
                   {" "}
-                  Driving License Info
+                  Aadhaar Card Info
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
-                <Typography sx={{ fontWeight: "bold" }}>
-                  5555 7654 5425 5555
-                </Typography>
 
-                <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
-                  {" "}
-                  <Grid
-                    item
-                    lg={6}
-                    md={6}
-                    sm={6}
-                    xs={6}
-                    sx={{
-                      "&:hover": {
-                        cursor: "pointer",
-                        transform: "scale(3.1)",
-                        transition: "transform 0.5s",
-                        zIndex: "1",
-                        paddingLeft: "6vw",
-                        backdropFilter: "blur(5px)",
-                        paddingTop: "6vh",
-                      },
-                    }}
-                  >
-                    {" "}
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={RC}
-                      variant="square"
-                      sx={{
-                        width: "auto",
-                        height: "auto",
-                      }}
-                    />{" "}
-                  </Grid>
-                  <Grid
-                    item
-                    lg={6}
-                    md={6}
-                    sm={6}
-                    xs={6}
-                    sx={{
-                      "&:hover": {
-                        cursor: "pointer",
-                        transform: "scale(3.2)",
-                        transition: "transform 0.5s",
-                        zIndex: "1",
-                        paddingRight: "6vw",
-                        backdropFilter: "blur(5px)",
-                        paddingTop: "5vh",
-                      },
-                    }}
-                  >
-                    {" "}
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={RC}
-                      variant="square"
-                      sx={{
-                        width: "auto",
-                        height: "auto",
-                      }}
-                    />
-                  </Grid>
-                </Grid>
+              <AccordionDetails
+                sx={{
+                  marginTop: "0vh",
+                  paddingTop: "0vh",
+                  marginBottom: "2vh",
+                }}
+              >
+                <Tabs
+                  value={value}
+                  onChange={(e, i) => setValue(i)}
+                  aria-label="icon position tabs example"
+                >
+                  <Tab
+                    icon={<Visibility />}
+                    iconPosition="start"
+                    label="View"
+                  />
+                  {/* <Tab
+                icon={<Notifications />}
+                iconPosition="start"
+                label="Notification"
+              /> */}
+                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                </Tabs>
+                <CardContent>
+                  {value === 0 && (
+                    <>
+                      {" "}
+                      <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
+                        5555 7654 5425 5555
+                      </Typography>
+                      <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
+                        {" "}
+                        <Grid
+                          item
+                          lg={6}
+                          md={6}
+                          sm={6}
+                          xs={6}
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                              transform: "scale(3.1)",
+                              transition: "transform 0.5s",
+                              zIndex: "1",
+                              paddingLeft: "6vw",
+                              backdropFilter: "blur(5px)",
+                              paddingTop: "6vh",
+                            },
+                          }}
+                        >
+                          {" "}
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={RC}
+                            variant="square"
+                            sx={{
+                              width: "auto",
+                              height: "auto",
+                            }}
+                          />{" "}
+                        </Grid>
+                        <Grid
+                          item
+                          lg={6}
+                          md={6}
+                          sm={6}
+                          xs={6}
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                              transform: "scale(3.2)",
+                              transition: "transform 0.5s",
+                              zIndex: "1",
+                              paddingRight: "6vw",
+                              backdropFilter: "blur(5px)",
+                              paddingTop: "5vh",
+                            },
+                          }}
+                        >
+                          {" "}
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={RC}
+                            variant="square"
+                            sx={{
+                              width: "auto",
+                              height: "auto",
+                            }}
+                          />
+                        </Grid>
+                      </Grid>
+                    </>
+                  )}
+                  {/* {value === 1 && <Notification />} */}
+                  {value === 1 && <EditAadharCard />}
+                </CardContent>
               </AccordionDetails>
-            </Accordion>{" "}
+            </Accordion>
             <Accordion sx={{ marginTop: "3vh" }}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}
