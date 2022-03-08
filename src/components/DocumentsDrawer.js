@@ -14,7 +14,11 @@ import {
 } from "@mui/material";
 import { RC } from "assets";
 import { useState } from "react";
-import { EditAadharCard, EditDrivingLicense } from "./addDriver";
+import {
+  EditAadharCard,
+  EditAccountInfo,
+  EditDrivingLicense,
+} from "./addDriver";
 const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
   const [value, setValue] = useState(0);
   const drawerData = open;
@@ -334,7 +338,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                       <Typography
                         sx={{
                           fontWeight: "bold",
-                          marginTop: "2vh",
+                          marginTop: "4vh",
                           marginBottom: "1vh",
                         }}
                       >
@@ -358,7 +362,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditDrivingLicense />}
+                  {value === 1 && <EditAccountInfo />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>{" "}
