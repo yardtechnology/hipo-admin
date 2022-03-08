@@ -185,7 +185,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   sx={{ color: "GrayText" }}
                 >
                   {" "}
-                  Aadhaar Card Info
+                  Driving License Info
                 </Typography>
               </AccordionSummary>
 
@@ -284,7 +284,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAadharCard />}
+                  {value === 1 && "Alexa"}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
