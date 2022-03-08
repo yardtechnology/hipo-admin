@@ -1,6 +1,7 @@
 import { Done } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
+  Button,
   Grid,
   FormControl,
   FormHelperText,
@@ -8,25 +9,34 @@ import {
   MenuItem,
   Select,
   TextField,
+  CardActions,
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useAppContext } from "contexts";
-import React, { Fragment, useState } from "react";
-import { AddDriverSchema } from "schemas";
+import React, { Fragment } from "react";
+import { AccountInfoSchema } from "schemas";
+import Swal from "sweetalert2";
 
-import { PhotoUpload } from "components/core";
-const BasicDetails = ({ handleNext }) => {
-  const { basicDetails, setBasicDetails } = useAppContext();
-  console.log("basicDetails", basicDetails);
-  const [value, setValue] = useState(basicDetails?.imgFile);
-  console.log(value);
-
-  const initialValues = AddDriverSchema?.reduce((accumulator, currentValue) => {
-    accumulator[currentValue.name] = currentValue.initialValue;
-    return accumulator;
-  }, {});
-  const validationSchema = AddDriverSchema.reduce(
+const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
+  const {
+    bankAccountInfo,
+    setBankAccountInfo,
+    setBasicDetails,
+    setAadharCardInfo,
+    setDrivingLicenceInfo,
+  } = useAppContext();
+  // const [value, setValue] = useState(basicDetails.imgFile);
+  // console.log(value);
+  console.log("bankAccountInfo", bankAccountInfo);
+  const initialValues = AccountInfoSchema?.reduce(
+    (accumulator, currentValue) => {
+      accumulator[currentValue.name] = currentValue.initialValue;
+      return accumulator;
+    },
+    {}
+  );
+  const validationSchema = AccountInfoSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
       return accumulator;
@@ -36,38 +46,34 @@ const BasicDetails = ({ handleNext }) => {
   const handleSend = async (values, submitProps) => {
     try {
       console.log(values);
-      await setBasicDetails({
+      await setBankAccountInfo({
         ...values,
-        imgFile: value,
       });
-      setValue("");
+      setBasicDetails({ imgFile: "" });
     } catch (error) {
       console.log(error);
     } finally {
-      handleNext();
-      // submitProps.setSubmitting(false);
+      setBasicDetails("");
+      setBankAccountInfo();
+      setAadharCardInfo();
+      setDrivingLicenceInfo();
+      Swal.fire({ icon: "success", text: "Successfully Submitted" });
+      handleReset();
+
+      submitProps.setSubmitting(false);
     }
   };
+
   return (
     <div>
-      <div
-        style={{
-          textAlign: "center",
-          justifyContent: "center",
-          display: "flex",
-          marginTop: "4vh",
-        }}
-      >
-        <PhotoUpload
-          variant={"circular"}
-          value={value || value?.imgFile}
-          onChange={setValue}
-        />
-      </div>
       <Formik
         initialValues={
-          basicDetails?.displayName
-            ? { displayName: basicDetails?.displayName }
+          bankAccountInfo?.bankName
+            ? {
+                bankName: bankAccountInfo?.bankName,
+                accountNo: bankAccountInfo?.accountNo,
+                ifscCode: bankAccountInfo?.ifscCode,
+              }
             : initialValues
         }
         enableReinitialize
@@ -76,9 +82,14 @@ const BasicDetails = ({ handleNext }) => {
       >
         {(formik) => (
           <Form>
-            <Grid container spacing={0.5} justifyContent="center">
-              {AddDriverSchema?.map((inputItem) => (
-                <Grid item lg={6} md={12} sm={12} xs={12}>
+            <Grid
+              container
+              spacing={1}
+              justifyContent="center"
+              sx={{ mt: "2vh" }}
+            >
+              {AccountInfoSchema?.map((inputItem) => (
+                <Grid item lg={10} md={12} sm={12} xs={12}>
                   <Field name={inputItem.name} key={inputItem.key}>
                     {(props) => {
                       if (inputItem.type === "select") {
@@ -152,28 +163,28 @@ const BasicDetails = ({ handleNext }) => {
                 </Grid>
               ))}
             </Grid>
-            <div>
-              <div
-                style={{
-                  marginTop: "4px",
-                  marginBottom: "2vh",
-                  textAlign: "right",
-                }}
+            <CardActions style={{ justifyContent: "flex-end" }}>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                style={{ marginRight: ".5rem" }}
+                onClick={handleBack}
               >
-                <LoadingButton
-                  className="mt-1vh gradient"
-                  variant="contained"
-                  sx={{ color: "snow" }}
-                  type="submit"
-                  disabled={formik.isSubmitting || !formik.isValid || !value}
-                  loading={formik.isSubmitting}
-                  loadingPosition="start"
-                  startIcon={<Done sx={{ color: "snow" }} />}
-                >
-                  Next
-                </LoadingButton>
-              </div>
-            </div>
+                Previous
+              </Button>
+              <LoadingButton
+                className=" btn-background"
+                variant="contained"
+                type="submit"
+                disabled={formik?.isSubmitting || !formik?.isValid}
+                loading={formik?.isSubmitting}
+                loadingPosition="start"
+                startIcon={<Done />}
+              >
+                Submit
+              </LoadingButton>
+            </CardActions>
           </Form>
         )}
       </Formik>
@@ -181,4 +192,4 @@ const BasicDetails = ({ handleNext }) => {
   );
 };
 
-export default BasicDetails;
+export default BankAccountInfo;

@@ -1,30 +1,21 @@
 import {
   Box,
-  Button,
   Card,
   Container,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
-  TextField,
   Typography,
 } from "@mui/material";
-import { Field, Form, Formik } from "formik";
-import * as Yup from "yup";
 
 import React, { Fragment } from "react";
-import { AddDriverSchema } from "schemas";
-import { Done } from "@mui/icons-material";
 
-import { LoadingButton } from "@mui/lab";
-import { PhotoUpload } from "components/core";
-import { useState } from "react";
-import { AadharCardInfo, BasicDetails } from "components/addDriver";
+import {
+  AadharCardInfo,
+  BankAccountInfo,
+  BasicDetails,
+  DrivingLicense,
+} from "components/addDriver";
 const steps = [
   "Add Basic Details",
   "Add Aadhar card Info",
@@ -32,36 +23,7 @@ const steps = [
   "Add Account Info",
 ];
 const AddNewDriver = ({ open, setOpenAddPaymentsDrawer }) => {
-  const [value, setValue] = useState({});
-  console.log(value);
-  const drawerData = open;
-  console.log(drawerData);
-  console.log(open);
-
-  const initialValues = AddDriverSchema?.reduce((accumulator, currentValue) => {
-    accumulator[currentValue.name] = currentValue.initialValue;
-    return accumulator;
-  }, {});
-  const validationSchema = AddDriverSchema.reduce(
-    (accumulator, currentValue) => {
-      accumulator[currentValue.name] = currentValue.validationSchema;
-      return accumulator;
-    },
-    {}
-  );
-  const handleSend = async (values, submitProps) => {
-    try {
-      console.log(values);
-      submitProps.resetForm();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      submitProps.setSubmitting(false);
-    }
-  };
-
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
 
   const handleNext = () => setActiveStep((prev) => prev + 1);
   // Go back to prev step
@@ -78,12 +40,14 @@ const AddNewDriver = ({ open, setOpenAddPaymentsDrawer }) => {
         return (
           <AadharCardInfo handleNext={handleNext} handleBack={handleBack} />
         );
-      // case 2:
-      //   return (
-      //     <HotelMapLocation handleNext={handleNext} handleBack={handleBack} />
-      //   );
-      // case 3:
-      //   return <RoomCategory handleBack={handleBack} />;
+      case 2:
+        return (
+          <DrivingLicense handleNext={handleNext} handleBack={handleBack} />
+        );
+      case 3:
+        return (
+          <BankAccountInfo handleBack={handleBack} handleReset={handleReset} />
+        );
       // case 4:
       //   return <HotelPhoto handleNext={handleNext} handleBack={handleBack} />;
       // case 5:

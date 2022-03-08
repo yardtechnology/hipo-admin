@@ -13,22 +13,22 @@ import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
-import { BACK, FRONT } from "assets";
+import { DL } from "assets";
 
-const AadharCardInfo = ({ handleNext, handleBack }) => {
-  const { aadharCardInfo, setAadharCardInfo } = useAppContext();
-  const [value, setValue] = useState(aadharCardInfo?.imgFile);
-  const [value1, setValue1] = useState(aadharCardInfo?.imgFile1);
-  console.log(aadharCardInfo);
+const DrivingLicense = ({ handleNext, handleBack }) => {
+  const { drivingLicenceInfo, setDrivingLicenceInfo } = useAppContext();
+  const [value, setValue] = useState(drivingLicenceInfo?.imgFile);
   const initialValues = {
-    aadharCardNumber: "",
+    drivingLicenceNumber: "",
   };
   const validationSchema = {
-    aadharCardNumber: Yup.number().required("Aadhar Card Number is Required"),
+    drivingLicenceNumber: Yup.number().required(
+      "Driving License Number is Required"
+    ),
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
-      setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
+      setDrivingLicenceInfo({ ...values, imgFile: value });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -48,25 +48,18 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
           justifyContent: "center",
         }}
       >
-        <Grid item lg={6} md={6} sm={12} xs={12} sx={{ textAlign: "center" }}>
+        <Grid item lg={8} md={8} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || FRONT}
+            value={value || DL}
             onChange={setValue}
-          />
-        </Grid>
-        <Grid item lg={6} md={6} sm={12} xs={12}>
-          <AadharUpload
-            width={"100%"}
-            value={value1 || BACK}
-            onChange={setValue1}
           />
         </Grid>
       </Grid>
       <Formik
         initialValues={
-          aadharCardInfo?.aadharCardNumber
-            ? { aadharCardNumber: aadharCardInfo?.aadharCardNumber }
+          drivingLicenceInfo?.drivingLicenceNumber
+            ? { drivingLicenceNumber: drivingLicenceInfo?.drivingLicenceNumber }
             : initialValues
         }
         enableReinitialize
@@ -76,12 +69,12 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
         {({ isSubmitting, isValid }) => (
           <Form>
             <CardContent>
-              <Field name={"aadharCardNumber"}>
+              <Field name={"drivingLicenceNumber"}>
                 {(props) => (
                   <TextField
                     fullWidth
                     margin="normal"
-                    label={"Enter Your Aadhar Card Number"}
+                    label={"Enter Your Driving License Number"}
                     type={"number"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
@@ -101,10 +94,10 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
                 Previous
               </Button>
               <LoadingButton
-                className=" btn-background"
+                className="btn-background"
                 variant="contained"
                 type="submit"
-                disabled={isSubmitting || !isValid || !value || !value1}
+                disabled={isSubmitting || !isValid || !value}
                 loading={isSubmitting}
                 loadingPosition="start"
                 startIcon={<Done />}
@@ -119,4 +112,4 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
   );
 };
 
-export default AadharCardInfo;
+export default DrivingLicense;

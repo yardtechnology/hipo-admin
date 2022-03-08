@@ -27,8 +27,8 @@ const AppContextProvider = ({ children }) => {
     drivingLicenceimage: "",
   });
   const [bankAccountInfo, setBankAccountInfo] = useState({
-    bankAccountNumber: "",
-    ifsc: "",
+    accountNo: "",
+    ifscCode: "",
     bankName: "",
   });
   // const { isMounted } = useIsMounted();

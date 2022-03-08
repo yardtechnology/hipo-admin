@@ -1,7 +1,9 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import {
+  Delete,
   DocumentScanner,
+  Edit,
   History,
   PersonAdd,
   Report,
@@ -229,12 +231,40 @@ const AllDrivers = () => {
                       variant="rounded"
                       onClick={() => setOpenDocumentDrawer(row)}
                       sx={{
+                        mr: ".4vw",
                         padding: "0px !important",
                         backgroundColor: "lawngreen",
                         cursor: "pointer",
                       }}
                     >
                       <DocumentScanner sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Edit Driver">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => setOpenDocumentDrawer(row)}
+                      sx={{
+                        mr: ".4vw",
+                        padding: "0px !important",
+                        backgroundColor: "gray",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Edit sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Delete Driver">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => setOpenDocumentDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "red",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Delete sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
                 </div>

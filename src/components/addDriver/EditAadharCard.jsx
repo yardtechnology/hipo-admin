@@ -1,25 +1,16 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import {
-  CardContent,
-  TextField,
-  CardActions,
-  Button,
-  Grid,
-} from "@mui/material";
+import { CardContent, TextField, CardActions, Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Done } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
-import { useAppContext } from "contexts";
 import { useState } from "react";
 import { BACK, FRONT } from "assets";
 
-const AadharCardInfo = ({ handleNext, handleBack }) => {
-  const { aadharCardInfo, setAadharCardInfo } = useAppContext();
-  const [value, setValue] = useState(aadharCardInfo?.imgFile);
-  const [value1, setValue1] = useState(aadharCardInfo?.imgFile1);
-  console.log(aadharCardInfo);
+const EditAadharCard = ({ handleNext, handleBack }) => {
+  const [value, setValue] = useState();
+  const [value1, setValue1] = useState();
   const initialValues = {
     aadharCardNumber: "",
   };
@@ -28,13 +19,13 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
-      setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
+      //   setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
-      handleNext();
+      submitProps.setSubmitting(false);
     }
   };
   return (
@@ -64,11 +55,7 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
         </Grid>
       </Grid>
       <Formik
-        initialValues={
-          aadharCardInfo?.aadharCardNumber
-            ? { aadharCardNumber: aadharCardInfo?.aadharCardNumber }
-            : initialValues
-        }
+        initialValues={initialValues}
         enableReinitialize
         validationSchema={Yup.object(validationSchema)}
         onSubmit={handleAadharCardInfo}
@@ -91,15 +78,6 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
               </Field>
             </CardContent>
             <CardActions style={{ justifyContent: "flex-end" }}>
-              <Button
-                type="button"
-                variant="contained"
-                color="primary"
-                onClick={handleBack}
-                style={{ marginRight: ".5rem" }}
-              >
-                Previous
-              </Button>
               <LoadingButton
                 className=" btn-background"
                 variant="contained"
@@ -109,7 +87,7 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
                 loadingPosition="start"
                 startIcon={<Done />}
               >
-                Next
+                Save
               </LoadingButton>
             </CardActions>
           </Form>
@@ -119,4 +97,4 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
   );
 };
 
-export default AadharCardInfo;
+export default EditAadharCard;
