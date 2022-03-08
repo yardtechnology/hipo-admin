@@ -153,9 +153,9 @@ const MenuItems = [
     submenus: [
       {
         key: "1",
-        title: "Add Vehicles",
+        title: "Add New Vehicle",
         icon: <Add className="iconColor" sx={{ color: "#000" }} />,
-        route: "/add-vehicles",
+        route: "/add-new-vehicle",
       },
       {
         key: "2",
