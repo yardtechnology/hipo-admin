@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { RC } from "assets";
 import { useState } from "react";
-import { EditAadharCard } from "./addDriver";
+import { EditAadharCard, EditDrivingLicense } from "./addDriver";
 const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
   const [value, setValue] = useState(0);
   const drawerData = open;
@@ -217,26 +217,40 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   {value === 0 && (
                     <>
                       {" "}
-                      <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          marginTop: "2vh",
+                          p: "1.5vh 5vw 0vh 5vw ",
+                        }}
+                      >
                         5555 7654 5425 5555
                       </Typography>
-                      <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
-                        {" "}
+                      <Grid
+                        container
+                        spacing={1}
+                        sx={{
+                          p: "0vh 1.2vw 0vh 1.2vw ",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: "2vh",
+                        }}
+                      >
                         <Grid
                           item
-                          lg={6}
-                          md={6}
-                          sm={6}
-                          xs={6}
+                          lg={10}
+                          md={12}
+                          sm={12}
+                          xs={12}
                           sx={{
                             "&:hover": {
                               cursor: "pointer",
-                              transform: "scale(3.1)",
+                              transform: "scale(1.5)",
                               transition: "transform 0.5s",
                               zIndex: "1",
-                              paddingLeft: "6vw",
+                              paddingLeft: "2vw",
                               backdropFilter: "blur(5px)",
-                              paddingTop: "6vh",
+                              paddingTop: "1vh",
                             },
                           }}
                         >
@@ -251,40 +265,11 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                             }}
                           />{" "}
                         </Grid>
-                        <Grid
-                          item
-                          lg={6}
-                          md={6}
-                          sm={6}
-                          xs={6}
-                          sx={{
-                            "&:hover": {
-                              cursor: "pointer",
-                              transform: "scale(3.2)",
-                              transition: "transform 0.5s",
-                              zIndex: "1",
-                              paddingRight: "6vw",
-                              backdropFilter: "blur(5px)",
-                              paddingTop: "5vh",
-                            },
-                          }}
-                        >
-                          {" "}
-                          <Avatar
-                            alt="Remy Sharp"
-                            src={RC}
-                            variant="square"
-                            sx={{
-                              width: "auto",
-                              height: "auto",
-                            }}
-                          />
-                        </Grid>
                       </Grid>
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && "Alexa"}
+                  {value === 1 && <EditDrivingLicense />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
