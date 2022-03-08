@@ -289,9 +289,12 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   Bank Account Info
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+              {/* <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
                 <Typography sx={{ fontWeight: "bold" }}>
                   Account Holder Name - Alexa Aryan
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Bank Name - State Bank Of India
                 </Typography>
                 <Typography sx={{ fontWeight: "bold" }}>
                   IFSC code - UTIB0000001
@@ -299,6 +302,64 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                 <Typography sx={{ fontWeight: "bold" }}>
                   Account Number - 123456789
                 </Typography>
+              </AccordionDetails> */}
+              <AccordionDetails
+                sx={{
+                  marginTop: "0vh",
+                  paddingTop: "0vh",
+                  marginBottom: "2vh",
+                }}
+              >
+                <Tabs
+                  value={value}
+                  onChange={(e, i) => setValue(i)}
+                  aria-label="icon position tabs example"
+                >
+                  <Tab
+                    icon={<Visibility />}
+                    iconPosition="start"
+                    label="View"
+                  />
+                  {/* <Tab
+                icon={<Notifications />}
+                iconPosition="start"
+                label="Notification"
+              /> */}
+                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                </Tabs>
+                <CardContent>
+                  {value === 0 && (
+                    <>
+                      {" "}
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          marginTop: "2vh",
+                          marginBottom: "1vh",
+                        }}
+                      >
+                        Account Holder Name - Alexa Aryan
+                      </Typography>
+                      <Typography
+                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                      >
+                        Bank Name - State Bank Of India
+                      </Typography>
+                      <Typography
+                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                      >
+                        IFSC code - UTIB0000001
+                      </Typography>
+                      <Typography
+                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                      >
+                        Account Number - 123456789
+                      </Typography>
+                    </>
+                  )}
+                  {/* {value === 1 && <Notification />} */}
+                  {value === 1 && <EditDrivingLicense />}
+                </CardContent>
               </AccordionDetails>
             </Accordion>{" "}
           </div>

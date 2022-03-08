@@ -70,6 +70,7 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
         initialValues={
           bankAccountInfo?.bankName
             ? {
+                accountHolderName: bankAccountInfo?.accountHolderName,
                 bankName: bankAccountInfo?.bankName,
                 accountNo: bankAccountInfo?.accountNo,
                 ifscCode: bankAccountInfo?.ifscCode,

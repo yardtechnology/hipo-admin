@@ -5,6 +5,16 @@ import { number } from "yup";
 
 const AccountInfoSchema = [
   {
+    key: "12",
+    label: "Account Holder Name",
+    name: "accountHolderName",
+    validationSchema: Yup.string()
+      .required("Account Holder Name is required")
+      .min(2, "Account Holder Name must be at least 2 characters"),
+    initialValue: "",
+    startIcon: <Person />,
+  },
+  {
     key: "8",
     label: "Bank Name",
     name: "bankName",
