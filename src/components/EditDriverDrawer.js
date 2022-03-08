@@ -12,13 +12,15 @@ import {
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { AddDriverSchema } from "schemas";
 import { Done } from "@mui/icons-material";
 
 import { LoadingButton } from "@mui/lab";
+import { PhotoUpload } from "./core";
 
 const EditDriverDrawer = ({ open, setOpenEditDriverDrawer }) => {
+  const [value, setValue] = useState("");
   const drawerData = open;
   console.log(drawerData);
   console.log(open);
@@ -60,7 +62,20 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer }) => {
           <Typography align="center" color="text.primary" variant="h5">
             Edit Driver Basic Details
           </Typography>
-
+          <div
+            style={{
+              textAlign: "center",
+              justifyContent: "center",
+              display: "flex",
+              marginTop: "4vh",
+            }}
+          >
+            <PhotoUpload
+              variant={"circular"}
+              value={value || value?.imgFile}
+              onChange={setValue}
+            />
+          </div>
           <Formik
             initialValues={initialValues}
             validationSchema={Yup.object(validationSchema)}

@@ -250,7 +250,7 @@ const AllDrivers = () => {
                       <DocumentScanner sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
-                  <Tooltip title="Edit Driver">
+                  <Tooltip title="Edit Driver Basic Details">
                     <Avatar
                       variant="rounded"
                       onClick={() => setOpenEditDriverDrawer(row)}

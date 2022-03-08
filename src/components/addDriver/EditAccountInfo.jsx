@@ -83,7 +83,7 @@ const EditAccountInfo = ({ handleBack, handleNext, handleReset }) => {
           <Form>
             <Grid
               container
-              spacing={1}
+              // spacing={1}
               justifyContent="center"
               sx={{ mt: "2vh" }}
             >
@@ -153,7 +153,7 @@ const EditAccountInfo = ({ handleBack, handleNext, handleReset }) => {
                             )}
                             helperText={props.meta.touched && props.meta.error}
                             {...props.field}
-                            InputLabelProps={{ shrink: true }}
+                            // InputLabelProps={{ shrink: true }}
                           />
                         </div>
                       );

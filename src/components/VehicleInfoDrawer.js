@@ -1,4 +1,4 @@
-import { ExpandMore } from "@mui/icons-material";
+import { DriveEta, ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -53,9 +53,11 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
               >
                 <ListItem sx={{ paddingTop: "0px", marginTop: "0vh" }}>
                   <ListItemAvatar>
-                    <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
+                    <Avatar sx={{ backgroundColor: "#1877f2" }}>
+                      <DriveEta />
+                    </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary="Car" secondary="Hyundai i20" />
+                  <ListItemText primary="MICRO" secondary="Hyundai i20" />
                 </ListItem>{" "}
               </AccordionSummary>
               <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
@@ -206,9 +208,11 @@ const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
               >
                 <ListItem sx={{ paddingTop: "0px", marginTop: "0vh" }}>
                   <ListItemAvatar>
-                    <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
+                    <Avatar sx={{ backgroundColor: "#1877f2" }}>
+                      <DriveEta />
+                    </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary="Car" secondary="Hyundai i20" />
+                  <ListItemText primary="SUV" secondary="Hyundai i20" />
                 </ListItem>{" "}
               </AccordionSummary>
               <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>

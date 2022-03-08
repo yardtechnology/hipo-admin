@@ -155,7 +155,7 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
                             )}
                             helperText={props.meta.touched && props.meta.error}
                             {...props.field}
-                            InputLabelProps={{ shrink: true }}
+                            // InputLabelProps={{ shrink: true }}
                           />
                         </div>
                       );
