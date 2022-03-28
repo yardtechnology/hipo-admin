@@ -98,10 +98,14 @@ const VehicleBasicDetails = ({ handleNext }) => {
                               props.meta.touched && props.meta.error
                             )}
                           >
-                            <InputLabel id={`label-${inputItem.name}`}>
+                            <InputLabel
+                              id={`label-${inputItem.name}`}
+                              shrink={true}
+                            >
                               {inputItem.label}
                             </InputLabel>
                             <Select
+                              notched={true}
                               labelId={`label-${inputItem.name}`}
                               id={inputItem.name}
                               label={inputItem.label}
@@ -123,7 +127,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
                                   {option?.phone ? (
                                     <>{`${option.value} (${option.key}) +${option.phone} `}</>
                                   ) : (
-                                    option.value
+                                    option?.vehicleType
                                   )}
                                 </MenuItem>
                               ))}
@@ -137,6 +141,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
                       return (
                         <div>
                           <TextField
+                            required={inputItem.required}
                             variant="outlined"
                             fullWidth
                             margin="normal"
