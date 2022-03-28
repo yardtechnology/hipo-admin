@@ -12,15 +12,14 @@ import React, { Fragment } from "react";
 
 import {
   AadharCardInfo,
-  BankAccountInfo,
-  BasicDetails,
+  // BasicDetails,
   DrivingLicense,
 } from "components/addDriver";
+import { VehicleBasicDetails } from "components/AddVehicle";
 const steps = [
-  "Add Basic Details",
-  "Add Aadhar card Info",
-  "Add Driving License Info",
-  "Add Account Info",
+  "Add Vehicle Basic Details",
+  "Add Insurance Info",
+  "Add RC Info",
 ];
 const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -35,23 +34,19 @@ const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
   const handleSteps = (step) => {
     switch (step) {
       case 0:
-        return <BasicDetails handleNext={handleNext} />;
+        return <VehicleBasicDetails handleNext={handleNext} />;
       case 1:
         return (
           <AadharCardInfo handleNext={handleNext} handleBack={handleBack} />
         );
       case 2:
         return (
-          <DrivingLicense handleNext={handleNext} handleBack={handleBack} />
+          <DrivingLicense handleReset={handleReset} handleBack={handleBack} />
         );
-      case 3:
-        return (
-          <BankAccountInfo handleBack={handleBack} handleReset={handleReset} />
-        );
-      // case 4:
-      //   return <HotelPhoto handleNext={handleNext} handleBack={handleBack} />;
-      // case 5:
-      //   return <HotelFeature handleNext={handleNext} handleBack={handleBack} />;
+      //   case 3:
+      //     return (
+      //       <BankAccountInfo handleBack={handleBack} handleReset={handleReset} />
+      //     );
 
       default:
         break;
@@ -75,7 +70,7 @@ const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
               sx={{ fontWeight: "bold", color: "#1877f2" }}
               marginBottom={"6vh"}
             >
-              Add New Driver Information
+              Add New Vehicle Information
             </Typography>
             <Stepper activeStep={activeStep} alternativeLabel>
               {steps?.map((label) => (

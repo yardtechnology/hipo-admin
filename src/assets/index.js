@@ -6,5 +6,19 @@ import SMAP from "./statement.jpg";
 import FRONT from "./Upload.png";
 import BACK from "./aadharBack.png";
 import DL from "./Dl2.png";
+import UPLOADRC from "./uplaod_RC.png";
+import UPLOADINSURANCE from "./uplaod_insurance.png";
+import VEHICLE from "./Vehicle.png";
 
-export { LOGO, MAP, RC, SMAP, FRONT, BACK, DL };
+export {
+  LOGO,
+  MAP,
+  RC,
+  SMAP,
+  FRONT,
+  BACK,
+  DL,
+  UPLOADRC,
+  UPLOADINSURANCE,
+  VEHICLE,
+};

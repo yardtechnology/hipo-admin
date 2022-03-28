@@ -14,6 +14,7 @@ import { AddressDrawer, ReferralDrawer } from "components";
 import { SendNotification } from "components/dialog";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 const Riders = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openAddressDrawer, setOpenAddressDrawer] = useState(false);
@@ -21,6 +22,7 @@ const Riders = () => {
 
   console.log(selectedUsers);
   const navigate = useNavigate();
+  console.log(new Date().toString());
   return (
     <>
       <AddressDrawer
@@ -72,6 +74,8 @@ const Riders = () => {
             trips: "15",
             profileImageUrl: "",
             status: "Unblocked",
+            creationTime: new Date().toString(),
+            lastSignInTime: "Mon Mar 28 2022 12:28:48 GMT+0530",
           },
         ]}
         columns={[
@@ -148,11 +152,14 @@ const Riders = () => {
           {
             title: "Creation Time",
             field: "creationTime",
-            width: "5%",
+            render: ({ creationTime }) => moment(creationTime).format("lll"),
+            emptyValue: "--",
           },
           {
-            title: "Last Login Time",
+            title: "Last Login",
             field: "lastSignInTime",
+            render: ({ lastSignInTime }) => moment(lastSignInTime).fromNow(),
+            emptyValue: "--",
           },
 
           {

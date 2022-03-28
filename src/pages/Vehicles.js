@@ -1,9 +1,17 @@
 import MaterialTable from "@material-table/core";
-import { Avatar, Card, CardContent, Chip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  Chip,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import { formatCurrency } from "@ashirbad/js-core";
+import { Delete, DocumentScanner, Edit } from "@mui/icons-material";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const Vehicles = () => {
@@ -129,6 +137,61 @@ const Vehicles = () => {
             export: true,
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
+          {
+            title: "Actions",
+            width: "18%",
+            headerStyle: {
+              textAlign: "center",
+            },
+            // field: "pick",
+            render: (row) => (
+              <>
+                <div className="d-flex">
+                  <Tooltip title="View Documents">
+                    <Avatar
+                      variant="rounded"
+                      // onClick={() => setOpenDocumentDrawer(row)}
+                      sx={{
+                        mr: ".4vw",
+                        padding: "0px !important",
+                        backgroundColor: "lawngreen",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <DocumentScanner sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Edit Driver Basic Details">
+                    <Avatar
+                      variant="rounded"
+                      // onClick={() => setOpenEditDriverDrawer(row)}
+                      sx={{
+                        mr: ".4vw",
+                        padding: "0px !important",
+                        backgroundColor: "gray",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Edit sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Delete Driver">
+                    <Avatar
+                      variant="rounded"
+                      // onClick={() => setOpenDocumentDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "red",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Delete sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                </div>
+              </>
+            ),
+          },
         ]}
         actions={[
           // {
@@ -217,11 +280,7 @@ const Vehicles = () => {
             </div>
           );
         }}
-        editable={{
-          onRowAdd: async (data) => {},
-          onRowUpdate: async (newData, oldData) => {},
-          onRowDelete: async (oldData) => {},
-        }}
+
         // actions={[
         //   {
         //     tooltip: "Delete all selected Days",

@@ -5,3 +5,4 @@ export { default as AppUpdateSchema } from "./AppUpdateSchema";
 export { default as AddPaymentSchema } from "./AddPaymentSchema";
 export { default as AddDriverSchema } from "./AddDriverSchema";
 export { default as AccountInfoSchema } from "./AccountInfoSchema";
+export { default as VehicleBasicDetailsSchema } from "./VehicleBasicDetailsSchema";
