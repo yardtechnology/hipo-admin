@@ -51,7 +51,7 @@ const Vehicles = () => {
             seatingCapacity: 5,
             status: "On",
             purchaseOn: moment(new Date().toString()).format("LL"),
-            fuel: "Gasoline",
+            // fuel: "Gasoline",
           },
         ]}
         columns={[
@@ -269,14 +269,14 @@ const Vehicles = () => {
                       {rowData?.purchaseOn}
                     </span>
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  {/* <Typography variant="body1" gutterBottom align="left">
                     Fuel:{" "}
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
                       {rowData?.fuel}
                     </span>
-                  </Typography>
+                  </Typography> */}
                 </CardContent>
               </Card>
             </div>

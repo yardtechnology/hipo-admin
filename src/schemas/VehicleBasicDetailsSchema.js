@@ -25,7 +25,7 @@ const VehicleBasicDetailsSchema = [
     key: "12",
     label: "Vehicle Type",
     validationSchema: Yup.string().required("Vehicle Type is required"),
-    name: "gender",
+    name: "vehicleType",
     // validationSchema: Yup.number().required("Requested Credit is Required"),
     initialValue: "",
     type: "select",
@@ -114,15 +114,15 @@ const VehicleBasicDetailsSchema = [
     required: true,
   },
 
-  {
-    key: "11",
-    label: "Fuel",
-    name: "fuel",
-    validationSchema: Yup.string().required("Fuel is required "),
-    type: "text",
-    initialValue: "",
-    // startIcon: <Person />,
-    required: true,
-  },
+  // {
+  //   key: "11",
+  //   label: "Fuel",
+  //   name: "fuel",
+  //   validationSchema: Yup.string().required("Fuel is required "),
+  //   type: "text",
+  //   initialValue: "",
+  //   // startIcon: <Person />,
+  //   required: true,
+  // },
 ];
 export default VehicleBasicDetailsSchema;

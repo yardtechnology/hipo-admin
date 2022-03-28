@@ -18,10 +18,10 @@ import { VehicleBasicDetailsSchema } from "schemas";
 import { PhotoUpload } from "components/core";
 import { VEHICLE } from "assets";
 const VehicleBasicDetails = ({ handleNext }) => {
-  const { basicDetails, setBasicDetails } = useAppContext();
-  console.log("basicDetails", basicDetails);
-  const [value, setValue] = useState(basicDetails?.imgFile);
+  const { vehicleBasicDetails, setVehicleBasicDetails } = useAppContext();
+  const [value, setValue] = useState(vehicleBasicDetails?.imgFile);
   console.log(value);
+  console.log(vehicleBasicDetails);
 
   const initialValues = VehicleBasicDetailsSchema?.reduce(
     (accumulator, currentValue) => {
@@ -40,7 +40,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
   const handleSend = async (values, submitProps) => {
     try {
       console.log(values);
-      await setBasicDetails({
+      await setVehicleBasicDetails({
         ...values,
         imgFile: value,
       });
@@ -72,8 +72,17 @@ const VehicleBasicDetails = ({ handleNext }) => {
       </div>
       <Formik
         initialValues={
-          basicDetails?.displayName
-            ? { displayName: basicDetails?.displayName }
+          vehicleBasicDetails?.vehicleName
+            ? {
+                vehicleName: vehicleBasicDetails?.vehicleName,
+                vehicleType: vehicleBasicDetails?.vehicleType,
+                vehicleNumber: vehicleBasicDetails?.vehicleNumber,
+                ownerName: vehicleBasicDetails?.ownerName,
+                ownerNumber: vehicleBasicDetails?.ownerNumber,
+                purchaseOn: vehicleBasicDetails?.purchaseOn,
+                seatingCapacity: vehicleBasicDetails?.seatingCapacity,
+                costPerKM: vehicleBasicDetails?.costPerKM,
+              }
             : initialValues
         }
         enableReinitialize

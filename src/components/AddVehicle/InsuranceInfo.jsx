@@ -13,22 +13,20 @@ import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
-import { DL } from "assets";
+import { UPLOADINSURANCE } from "assets";
 
 const InsuranceInfo = ({ handleNext, handleBack }) => {
-  const { drivingLicenceInfo, setDrivingLicenceInfo } = useAppContext();
-  const [value, setValue] = useState(drivingLicenceInfo?.imgFile);
+  const { insuranceInfo, setInsuranceInfo } = useAppContext();
+  const [value, setValue] = useState(insuranceInfo?.insuranceImage);
   const initialValues = {
-    drivingLicenceNumber: "",
+    insuranceNumber: "",
   };
   const validationSchema = {
-    drivingLicenceNumber: Yup.number().required(
-      "Driving License Number is Required"
-    ),
+    insuranceNumber: Yup.number().required("Insurance Number is Required"),
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
-      setDrivingLicenceInfo({ ...values, imgFile: value });
+      setInsuranceInfo({ ...values, insuranceImage: value });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -37,6 +35,7 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
       handleNext();
     }
   };
+  console.log(insuranceInfo);
   return (
     <>
       <Grid
@@ -51,15 +50,15 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
         <Grid item lg={8} md={8} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || DL}
+            value={value || UPLOADINSURANCE}
             onChange={setValue}
           />
         </Grid>
       </Grid>
       <Formik
         initialValues={
-          drivingLicenceInfo?.drivingLicenceNumber
-            ? { drivingLicenceNumber: drivingLicenceInfo?.drivingLicenceNumber }
+          insuranceInfo?.insuranceNumber
+            ? { insuranceNumber: insuranceInfo?.insuranceNumber }
             : initialValues
         }
         enableReinitialize
@@ -69,12 +68,12 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
         {({ isSubmitting, isValid }) => (
           <Form>
             <CardContent>
-              <Field name={"drivingLicenceNumber"}>
+              <Field name={"insuranceNumber"}>
                 {(props) => (
                   <TextField
                     fullWidth
                     margin="normal"
-                    label={"Enter Your Driving License Number"}
+                    label={"Enter Your Insurance Number"}
                     type={"number"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}

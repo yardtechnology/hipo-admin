@@ -13,28 +13,32 @@ import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
-import { DL } from "assets";
+import { UPLOADRC } from "assets";
 
-const RCInfo = ({ handleNext, handleBack }) => {
-  const { drivingLicenceInfo, setDrivingLicenceInfo } = useAppContext();
-  const [value, setValue] = useState(drivingLicenceInfo?.imgFile);
+const RCInfo = ({ handleReset, handleBack }) => {
+  const { RCInfo, setRCInfo, setInsuranceInfo, setVehicleBasicDetails } =
+    useAppContext();
+  const [value, setValue] = useState(RCInfo?.RCImage);
   const initialValues = {
-    drivingLicenceNumber: "",
+    RCNumber: "",
   };
   const validationSchema = {
-    drivingLicenceNumber: Yup.number().required(
-      "Driving License Number is Required"
-    ),
+    RCNumber: Yup.number().required("RC Number is Required"),
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
-      setDrivingLicenceInfo({ ...values, imgFile: value });
+      setRCInfo({ ...values, RCImage: value });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
-      handleNext();
+      setVehicleBasicDetails();
+      setInsuranceInfo();
+      setRCInfo();
+      Swal.fire({ icon: "success", text: "Successfully Submitted" });
+      submitProps.setSubmitting(false);
+      handleReset();
     }
   };
   return (
@@ -51,16 +55,14 @@ const RCInfo = ({ handleNext, handleBack }) => {
         <Grid item lg={8} md={8} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || DL}
+            value={value || UPLOADRC}
             onChange={setValue}
           />
         </Grid>
       </Grid>
       <Formik
         initialValues={
-          drivingLicenceInfo?.drivingLicenceNumber
-            ? { drivingLicenceNumber: drivingLicenceInfo?.drivingLicenceNumber }
-            : initialValues
+          RCInfo?.RCNumber ? { RCNumber: RCInfo?.RCNumber } : initialValues
         }
         enableReinitialize
         validationSchema={Yup.object(validationSchema)}
@@ -69,12 +71,12 @@ const RCInfo = ({ handleNext, handleBack }) => {
         {({ isSubmitting, isValid }) => (
           <Form>
             <CardContent>
-              <Field name={"drivingLicenceNumber"}>
+              <Field name={"RCNumber"}>
                 {(props) => (
                   <TextField
                     fullWidth
                     margin="normal"
-                    label={"Enter Your Driving License Number"}
+                    label={"Enter Your RC Number"}
                     type={"number"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}

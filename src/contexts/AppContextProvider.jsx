@@ -17,6 +17,7 @@ const AppContextProvider = ({ children }) => {
     seatingCapacity: "",
     costPerKm: "",
     purchaseOn: "",
+    imgFile: "",
   });
   const [basicDetails, setBasicDetails] = useState({
     displayName: "",
