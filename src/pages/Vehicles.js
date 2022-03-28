@@ -3,7 +3,8 @@ import {
   Avatar,
   Card,
   CardContent,
-  Chip,
+  // Chip,
+  Switch,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -108,13 +109,14 @@ const Vehicles = () => {
             field: "status",
             render: (row) => (
               <>
-                <Chip
+                <Switch defaultChecked />
+                {/* <Chip
                   size="small"
                   variant="outlined"
                   color="secondary"
                   label={row?.status}
                   sx={{ padding: "4px" }}
-                />
+                /> */}
               </>
             ),
           },
