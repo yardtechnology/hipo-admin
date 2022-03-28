@@ -13,6 +13,15 @@ const VehicleBasicDetailsSchema = [
     required: true,
   },
   {
+    key: "52",
+    label: "Vehicle Number",
+    name: "vehicleNumber",
+    validationSchema: Yup.string().required("Vehicle Number is Required"),
+    initialValue: "",
+    startIcon: <Person />,
+    required: true,
+  },
+  {
     key: "12",
     label: "Vehicle Type",
     validationSchema: Yup.string().required("Vehicle Type is required"),
@@ -60,7 +69,7 @@ const VehicleBasicDetailsSchema = [
   {
     key: "3",
     label: "Owner Number",
-    name: "phoneNumber",
+    name: "ownerNumber",
     type: "tel",
     validationSchema: Yup.string()
       .required("Phone Number is Required")

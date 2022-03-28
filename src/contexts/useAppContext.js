@@ -15,6 +15,12 @@ const useAppContext = () => {
     setBankAccountInfo,
     drivingLicenceInfo,
     setDrivingLicenceInfo,
+    insuranceInfo,
+    setInsuranceInfo,
+    RCInfo,
+    setRCInfo,
+    vehicleBasicDetails,
+    setVehicleBasicDetails,
   } = useContext(AppContext);
 
   return {
@@ -30,6 +36,12 @@ const useAppContext = () => {
     setBankAccountInfo,
     drivingLicenceInfo,
     setDrivingLicenceInfo,
+    insuranceInfo,
+    setInsuranceInfo,
+    RCInfo,
+    setRCInfo,
+    vehicleBasicDetails,
+    setVehicleBasicDetails,
   };
 };
 

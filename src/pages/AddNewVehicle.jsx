@@ -11,11 +11,10 @@ import {
 import React, { Fragment } from "react";
 
 import {
-  AadharCardInfo,
-  // BasicDetails,
-  DrivingLicense,
-} from "components/addDriver";
-import { VehicleBasicDetails } from "components/AddVehicle";
+  InsuranceInfo,
+  RCInfo,
+  VehicleBasicDetails,
+} from "components/AddVehicle";
 const steps = [
   "Add Vehicle Basic Details",
   "Add Insurance Info",
@@ -37,12 +36,10 @@ const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
         return <VehicleBasicDetails handleNext={handleNext} />;
       case 1:
         return (
-          <AadharCardInfo handleNext={handleNext} handleBack={handleBack} />
+          <InsuranceInfo handleNext={handleNext} handleBack={handleBack} />
         );
       case 2:
-        return (
-          <DrivingLicense handleReset={handleReset} handleBack={handleBack} />
-        );
+        return <RCInfo handleReset={handleReset} handleBack={handleBack} />;
       //   case 3:
       //     return (
       //       <BankAccountInfo handleBack={handleBack} handleReset={handleReset} />

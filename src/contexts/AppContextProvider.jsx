@@ -8,6 +8,16 @@ export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [vehicleBasicDetails, setVehicleBasicDetails] = useState({
+    vehicleName: "",
+    vehicleType: "",
+    vehicleNumber: "",
+    ownerNumber: "",
+    ownerName: "",
+    seatingCapacity: "",
+    costPerKm: "",
+    purchaseOn: "",
+  });
   const [basicDetails, setBasicDetails] = useState({
     displayName: "",
     phoneNumber: "",
@@ -16,6 +26,14 @@ const AppContextProvider = ({ children }) => {
     gender: "",
     city: "",
     imgFile: "",
+  });
+  const [insuranceInfo, setInsuranceInfo] = useState({
+    insuranceNumber: "",
+    insuranceImage: "",
+  });
+  const [RCInfo, setRCInfo] = useState({
+    RCNumber: "",
+    RCImage: "",
   });
   const [aadharCardInfo, setAadharCardInfo] = useState({
     aadharCardNumber: "",
@@ -118,6 +136,12 @@ const AppContextProvider = ({ children }) => {
         setBankAccountInfo,
         drivingLicenceInfo,
         setDrivingLicenceInfo,
+        insuranceInfo,
+        setInsuranceInfo,
+        RCInfo,
+        setRCInfo,
+        vehicleBasicDetails,
+        setVehicleBasicDetails,
       }}
     >
       {children}
