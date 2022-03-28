@@ -101,9 +101,9 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   {value === 0 && (
                     <>
                       {" "}
-                      <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
+                      {/* <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
                         5555 7654 5425 5555
-                      </Typography>
+                      </Typography> */}
                       <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
                         {" "}
                         <Grid

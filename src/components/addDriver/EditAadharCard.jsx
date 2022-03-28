@@ -1,6 +1,4 @@
-import { Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { CardContent, TextField, CardActions, Grid } from "@mui/material";
+import { CardActions, Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Done } from "@mui/icons-material";
 import Swal from "sweetalert2";
@@ -11,12 +9,7 @@ import { BACK, FRONT } from "assets";
 const EditAadharCard = ({ handleNext, handleBack }) => {
   const [value, setValue] = useState();
   const [value1, setValue1] = useState();
-  const initialValues = {
-    aadharCardNumber: "",
-  };
-  const validationSchema = {
-    aadharCardNumber: Yup.number().required("Aadhar Card Number is Required"),
-  };
+
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
       //   setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
@@ -54,45 +47,22 @@ const EditAadharCard = ({ handleNext, handleBack }) => {
           />
         </Grid>
       </Grid>
-      <Formik
-        initialValues={initialValues}
-        enableReinitialize
-        validationSchema={Yup.object(validationSchema)}
-        onSubmit={handleAadharCardInfo}
-      >
-        {({ isSubmitting, isValid }) => (
-          <Form>
-            <CardContent>
-              <Field name={"aadharCardNumber"}>
-                {(props) => (
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label={"Enter Your Aadhar Card Number"}
-                    type={"number"}
-                    error={Boolean(props.meta.touched && props.meta.error)}
-                    helperText={props.meta.touched && props.meta.error}
-                    {...props.field}
-                  />
-                )}
-              </Field>
-            </CardContent>
-            <CardActions style={{ justifyContent: "flex-end" }}>
-              <LoadingButton
-                className=" btn-background"
-                variant="contained"
-                type="submit"
-                disabled={isSubmitting || !isValid || !value || !value1}
-                loading={isSubmitting}
-                loadingPosition="start"
-                startIcon={<Done />}
-              >
-                Save
-              </LoadingButton>
-            </CardActions>
-          </Form>
-        )}
-      </Formik>
+
+      <CardActions style={{ justifyContent: "flex-end" }}>
+        <LoadingButton
+          sx={{ marginRight: "0.5rem !important" }}
+          className=" btn-background"
+          variant="contained"
+          type="submit"
+          disabled={!value || !value1}
+          // loading={isSubmitting}
+          loadingPosition="start"
+          startIcon={<Done />}
+          onClick={() => handleAadharCardInfo(value, value1)}
+        >
+          Save
+        </LoadingButton>
+      </CardActions>
     </>
   );
 };
