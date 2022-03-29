@@ -15,17 +15,23 @@ import { formatCurrency } from "@ashirbad/js-core";
 import { Delete, DocumentScanner, Edit } from "@mui/icons-material";
 import { useState } from "react";
 import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
+import { EditVehicle } from "components/AddVehicle";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const Vehicles = () => {
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);
-  console.log(openVehicleDocumentDrawer);
+  const [openEditVehicleDocumentDrawer, setOpenEditVehicleDocumentDrawer] =
+    useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
 
   return (
     <div style={{ marginTop: "2vh" }}>
+      <EditVehicle
+        open={openEditVehicleDocumentDrawer}
+        setOpenEditVehicleDrawer={setOpenEditVehicleDocumentDrawer}
+      />
       <VehicleDocumentDrawer
         open={openVehicleDocumentDrawer}
         setOpenVehicleDocumentDrawer={setOpenVehicleDocumentDrawer}
@@ -173,10 +179,10 @@ const Vehicles = () => {
                       <DocumentScanner sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
-                  <Tooltip title="Edit Driver Basic Details">
+                  <Tooltip title="Edit Vehicle Basic Details">
                     <Avatar
                       variant="rounded"
-                      // onClick={() => setOpenEditDriverDrawer(row)}
+                      onClick={() => setOpenEditVehicleDocumentDrawer(row)}
                       sx={{
                         mr: ".4vw",
                         padding: "0px !important",

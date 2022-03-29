@@ -13,10 +13,12 @@ const AddDriverSchema = [
       .max(50, "Name must be less than 150 characters"),
     initialValue: "",
     startIcon: <Person />,
+    required: true,
   },
 
   {
     key: "3",
+    required: true,
     label: "Phone Number",
     name: "phoneNumber",
     type: "tel",
@@ -33,6 +35,7 @@ const AddDriverSchema = [
   {
     key: "1",
     label: "Email",
+    required: true,
     name: "email",
     type: "email",
     validationSchema: Yup.string()
@@ -43,6 +46,7 @@ const AddDriverSchema = [
   },
   {
     key: "5",
+    required: true,
     label: "Date of birth",
     name: "dob",
     validationSchema: Yup.string().required("DOB is required "),
@@ -52,6 +56,7 @@ const AddDriverSchema = [
   },
   {
     key: "12",
+    required: true,
     label: "Gender",
     validationSchema: Yup.string().required("Gender is required"),
     name: "gender",
@@ -79,6 +84,7 @@ const AddDriverSchema = [
   {
     key: "11",
     label: "City",
+    required: true,
     name: "city",
     validationSchema: Yup.string().required("City is required "),
     type: "text",

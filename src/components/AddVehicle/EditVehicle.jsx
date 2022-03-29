@@ -100,7 +100,10 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
                               props.meta.touched && props.meta.error
                             )}
                           >
-                            <InputLabel id={`label-${inputItem.name}`}>
+                            <InputLabel
+                              shrink={true}
+                              id={`label-${inputItem.name}`}
+                            >
                               {inputItem.label}
                             </InputLabel>
                             <Select
@@ -108,6 +111,7 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
                               id={inputItem.name}
                               label={inputItem.label}
                               {...props.field}
+                              notched={true}
                             >
                               {inputItem.options.map((option) => (
                                 <MenuItem value={option.value} key={option.key}>
@@ -139,6 +143,7 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
                       return (
                         <div>
                           <TextField
+                            required={inputItem.required}
                             variant="outlined"
                             fullWidth
                             margin="normal"

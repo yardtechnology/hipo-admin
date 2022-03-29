@@ -92,10 +92,14 @@ const BasicDetails = ({ handleNext }) => {
                               props.meta.touched && props.meta.error
                             )}
                           >
-                            <InputLabel id={`label-${inputItem.name}`}>
+                            <InputLabel
+                              shrink={true}
+                              id={`label-${inputItem.name}`}
+                            >
                               {inputItem.label}
                             </InputLabel>
                             <Select
+                              notched={true}
                               labelId={`label-${inputItem.name}`}
                               id={inputItem.name}
                               label={inputItem.label}
@@ -131,6 +135,7 @@ const BasicDetails = ({ handleNext }) => {
                       return (
                         <div>
                           <TextField
+                            required={inputItem.required}
                             variant="outlined"
                             fullWidth
                             margin="normal"
