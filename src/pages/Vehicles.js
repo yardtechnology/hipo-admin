@@ -13,13 +13,23 @@ import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import moment from "moment";
 import { formatCurrency } from "@ashirbad/js-core";
 import { Delete, DocumentScanner, Edit } from "@mui/icons-material";
+import { useState } from "react";
+import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const Vehicles = () => {
+  const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
+    useState(false);
+  console.log(openVehicleDocumentDrawer);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
+
   return (
     <div style={{ marginTop: "2vh" }}>
+      <VehicleDocumentDrawer
+        open={openVehicleDocumentDrawer}
+        setOpenVehicleDocumentDrawer={setOpenVehicleDocumentDrawer}
+      />
       <MaterialTable
         options={{
           selection: "true",
@@ -152,7 +162,7 @@ const Vehicles = () => {
                   <Tooltip title="View Documents">
                     <Avatar
                       variant="rounded"
-                      // onClick={() => setOpenDocumentDrawer(row)}
+                      onClick={() => setOpenVehicleDocumentDrawer(row)}
                       sx={{
                         mr: ".4vw",
                         padding: "0px !important",
