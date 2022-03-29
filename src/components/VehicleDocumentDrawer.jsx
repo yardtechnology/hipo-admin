@@ -14,8 +14,7 @@ import {
 } from "@mui/material";
 import { RC } from "assets";
 import { useState } from "react";
-import { EditAccountInfo } from "./addDriver";
-import EditInsurance from "./AddVehicle/EditInsurance";
+import { EditRC, EditInsurance } from "./AddVehicle";
 const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
   const [value, setValue] = useState(0);
   const drawerData = open;
@@ -215,31 +214,56 @@ const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
                       <Typography
                         sx={{
                           fontWeight: "bold",
-                          marginTop: "4vh",
-                          marginBottom: "1vh",
+                          marginTop: "2vh",
+                          p: "1.5vh 5vw 0vh 5vw ",
                         }}
                       >
-                        Account Holder Name - Alexa Aryan
+                        5555 7654 5425 5555
                       </Typography>
-                      <Typography
-                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                      <Grid
+                        container
+                        spacing={1}
+                        sx={{
+                          p: "0vh 1.2vw 0vh 1.2vw ",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: "2vh",
+                        }}
                       >
-                        Bank Name - State Bank Of India
-                      </Typography>
-                      <Typography
-                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
-                      >
-                        IFSC code - UTIB0000001
-                      </Typography>
-                      <Typography
-                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
-                      >
-                        Account Number - 123456789
-                      </Typography>
+                        <Grid
+                          item
+                          lg={10}
+                          md={12}
+                          sm={12}
+                          xs={12}
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                              transform: "scale(1.5)",
+                              transition: "transform 0.5s",
+                              zIndex: "1",
+                              paddingLeft: "2vw",
+                              backdropFilter: "blur(5px)",
+                              paddingTop: "1vh",
+                            },
+                          }}
+                        >
+                          {" "}
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={RC}
+                            variant="square"
+                            sx={{
+                              width: "auto",
+                              height: "auto",
+                            }}
+                          />{" "}
+                        </Grid>
+                      </Grid>
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAccountInfo />}
+                  {value === 1 && <EditRC />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>{" "}
