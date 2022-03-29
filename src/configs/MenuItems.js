@@ -149,7 +149,7 @@ const MenuItems = [
     key: "11",
     icon: <Category className="iconColor" />,
     title: "Vehicles",
-    route: "/vehicles",
+    route: "/view-vehicles",
     submenus: [
       {
         key: "1",

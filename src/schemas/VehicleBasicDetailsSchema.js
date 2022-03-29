@@ -1,4 +1,5 @@
 // import { countries } from "configs";
+import { Person } from "@mui/icons-material";
 import * as Yup from "yup";
 
 const VehicleBasicDetailsSchema = [
@@ -56,72 +57,72 @@ const VehicleBasicDetailsSchema = [
       },
     ],
   },
-  // {
-  //   key: "27",
-  //   label: "Owner Name",
-  //   name: "ownerName",
-  //   validationSchema: Yup.string().required("Owner Name is Required"),
-  //   initialValue: "",
-  //   startIcon: <Person />,
-  //   required: true,
-  // },
-  // {
-  //   key: "3",
-  //   label: "Owner Number",
-  //   name: "ownerNumber",
-  //   type: "tel",
-  //   validationSchema: Yup.string()
-  //     .required("Phone Number is Required")
-  //     .min(5, "Phone Number must be at least 5 characters")
-  //     .max(15, "Phone Number must be less than 15 characters")
-  //     .matches(
-  //       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-  //       "Phone number is not valid"
-  //     ),
-  //   initialValue: "",
-  //   required: true,
-  // },
-  // {
-  //   key: "1",
-  //   label: "Cost Per KM",
-  //   name: "costPerKM",
-  //   type: "number",
-  //   validationSchema: Yup.number().required("Cost Per KM is Required"),
-  //   initialValue: "",
-  //   required: true,
-  //   // startIcon: <Email />,
-  // },
-  // {
-  //   key: "81",
-  //   label: "Seating Capacity",
-  //   name: "seatingCapacity",
-  //   type: "number",
-  //   validationSchema: Yup.number().required("Seating Capacity is Required"),
-  //   initialValue: "",
-  //   required: true,
+  {
+    key: "27",
+    label: "Owner Name",
+    name: "ownerName",
+    validationSchema: Yup.string().required("Owner Name is Required"),
+    initialValue: "",
+    startIcon: <Person />,
+    required: true,
+  },
+  {
+    key: "3",
+    label: "Owner Number",
+    name: "ownerNumber",
+    type: "tel",
+    validationSchema: Yup.string()
+      .required("Phone Number is Required")
+      .min(5, "Phone Number must be at least 5 characters")
+      .max(15, "Phone Number must be less than 15 characters")
+      .matches(
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        "Phone number is not valid"
+      ),
+    initialValue: "",
+    required: true,
+  },
+  {
+    key: "1",
+    label: "Cost Per KM",
+    name: "costPerKM",
+    type: "number",
+    validationSchema: Yup.number().required("Cost Per KM is Required"),
+    initialValue: "",
+    required: true,
+    // startIcon: <Email />,
+  },
+  {
+    key: "81",
+    label: "Seating Capacity",
+    name: "seatingCapacity",
+    type: "number",
+    validationSchema: Yup.number().required("Seating Capacity is Required"),
+    initialValue: "",
+    required: true,
 
-  //   // startIcon: <Email />,
-  // },
-  // {
-  //   key: "5",
-  //   label: "Purchase On",
-  //   name: "purchaseOn",
-  //   validationSchema: Yup.string().required("Purchase On is required "),
-  //   type: "date",
-  //   initialValue: "",
-  //   startIcon: <Person />,
-  //   required: true,
-  // },
+    // startIcon: <Email />,
+  },
+  {
+    key: "5",
+    label: "Purchase On",
+    name: "purchaseOn",
+    validationSchema: Yup.string().required("Purchase On is required "),
+    type: "date",
+    initialValue: "",
+    startIcon: <Person />,
+    required: true,
+  },
 
-  // {
-  //   key: "11",
-  //   label: "Fuel",
-  //   name: "fuel",
-  //   validationSchema: Yup.string().required("Fuel is required "),
-  //   type: "text",
-  //   initialValue: "",
-  //   // startIcon: <Person />,
-  //   required: true,
-  // },
+  {
+    key: "11",
+    label: "Fuel",
+    name: "fuel",
+    validationSchema: Yup.string().required("Fuel is required "),
+    type: "text",
+    initialValue: "",
+    // startIcon: <Person />,
+    required: true,
+  },
 ];
 export default VehicleBasicDetailsSchema;
