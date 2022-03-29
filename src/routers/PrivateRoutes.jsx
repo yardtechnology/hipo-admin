@@ -62,6 +62,7 @@ import {
   AddNewDriver,
   ViewDocuments,
   AddVehicle,
+  Faqs,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -144,6 +145,7 @@ const PrivateRoutes = () => {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/faqs" element={<Faqs />} />
       </Routes>
     </PanelLayout>
   );

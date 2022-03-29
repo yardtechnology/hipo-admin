@@ -28,13 +28,13 @@ import {
   Schedule,
   Star,
   Summarize,
-  Support,
   ToggleOn,
   TwoWheeler,
   // TheaterComedy,
   VpnKey,
   LocalAtm,
   PriceCheck,
+  Quiz,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -297,9 +297,9 @@ const MenuItems = [
   },
   {
     key: "8",
-    icon: <Support className="iconColor" />,
+    icon: <Quiz className="iconColor" />,
     title: "Faqs",
-    route: "/supports",
+    route: "/faqs",
   },
   {
     key: "6",
