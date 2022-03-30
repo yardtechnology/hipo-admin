@@ -23,7 +23,7 @@ const MonthlyStatement = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <InvoiceDrawer
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
@@ -263,7 +263,7 @@ const MonthlyStatement = () => {
         selectedDetails={openStatementInvoice}
         handleClose={() => setOpenStatementInvoice([])}
       />
-    </div>
+    </>
   );
 };
 

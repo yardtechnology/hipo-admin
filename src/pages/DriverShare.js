@@ -10,7 +10,7 @@ const DriverShare = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <Breadcrumbs
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
@@ -134,7 +134,7 @@ const DriverShare = () => {
         // ]}
         // isLoading={days === null}
       />
-    </div>
+    </>
   );
 };
 

@@ -145,6 +145,7 @@ const DriverEarningReports = () => {
             title: "RideAmount",
             field: "amount",
             width: "5%",
+            render: (rowData) => formatCurrency(rowData.amount),
           },
           //   {
           //     title: "Date",

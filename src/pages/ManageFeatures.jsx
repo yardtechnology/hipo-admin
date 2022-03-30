@@ -8,7 +8,7 @@ const ManageFeatures = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <MaterialTable
         options={{
           selection: "true",
@@ -93,7 +93,7 @@ const ManageFeatures = () => {
         detailPanel={({ rowData }) => {
           return (
             <>
-              <div style={{ marginTop: "2vh" }}>
+              <>
                 <MaterialTable
                   options={{
                     selection: "true",
@@ -185,7 +185,7 @@ const ManageFeatures = () => {
                   // ]}
                   // isLoading={days === null}
                 />
-              </div>
+              </>
             </>
           );
         }}
@@ -204,7 +204,7 @@ const ManageFeatures = () => {
         // ]}
         // isLoading={days === null}
       />
-    </div>
+    </>
   );
 };
 

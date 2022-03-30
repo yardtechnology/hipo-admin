@@ -14,7 +14,7 @@ const Faqs = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <ViewQADrawer
         open={openViewQADrawer}
         setOpenQADrawer={setOpenViewQADrawer}
@@ -396,7 +396,7 @@ const Faqs = () => {
         // ]}
         // isLoading={days === null}
       />
-    </div>
+    </>
   );
 };
 

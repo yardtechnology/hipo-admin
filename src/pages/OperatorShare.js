@@ -3,23 +3,12 @@ import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import { formatCurrency } from "@ashirbad/js-core";
-import { Breadcrumbs, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 const OperatorShare = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/">
-          Incentives
-        </Link>
-        <Typography color="text.primary">Operator Incentives</Typography>
-      </Breadcrumbs>
+    <>
       <MaterialTable
         options={{
           whiteSpace: "nowrap",
@@ -134,7 +123,7 @@ const OperatorShare = () => {
         // ]}
         // isLoading={days === null}
       />
-    </div>
+    </>
   );
 };
 

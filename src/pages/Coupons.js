@@ -1,3 +1,4 @@
+import { formatCurrency } from "@ashirbad/js-core";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { formatCurrency } from "@ashirbad/js-core";
@@ -9,7 +10,7 @@ const Coupons = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <MaterialTable
         options={{
           selection: "true",
@@ -20,11 +21,11 @@ const Coupons = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Counpons"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Counpons"),
             },
           ],
         }}
@@ -40,6 +41,8 @@ const Coupons = () => {
             costPerKm: 7,
             seatingCapacity: 5,
             status: "active",
+            maxCashback: 85,
+            discount: 15,
           },
         ]}
         columns={[
@@ -69,10 +72,14 @@ const Coupons = () => {
           {
             title: "Max Cashback",
             field: "maxCashback",
+            type: "numeric",
+            render: ({ maxCashback }) => formatCurrency(maxCashback),
           },
           {
             title: "Discount In %",
             field: "discount",
+            type: "numeric",
+            render: ({ discount }) => `${discount}%`,
           },
           // {
           //   title: "Amount",
@@ -139,7 +146,7 @@ const Coupons = () => {
         // ]}
         // isLoading={days === null}
       />
-    </div>
+    </>
   );
 };
 

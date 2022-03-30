@@ -27,7 +27,7 @@ const Vehicles = () => {
   // const handleBulkDelete = async (data) => {};
 
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <EditVehicle
         open={openEditVehicleDocumentDrawer}
         setOpenEditVehicleDrawer={setOpenEditVehicleDocumentDrawer}
@@ -310,7 +310,7 @@ const Vehicles = () => {
         // ]}
         // isLoading={days === null}
       />
-    </div>
+    </>
   );
 };
 

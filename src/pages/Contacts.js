@@ -19,7 +19,7 @@ const Contacts = () => {
   console.log(selectedUsers);
   const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <MaterialTable
         options={{
           selection: "true",
@@ -182,7 +182,7 @@ const Contacts = () => {
         selectedUsers={selectedUsers}
         handleClose={() => setSelectedUsers({})}
       />
-    </div>
+    </>
   );
 };
 

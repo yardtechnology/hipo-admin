@@ -10,7 +10,7 @@ const Premium = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <MaterialTable
         options={{
           selection: "true",
@@ -140,7 +140,7 @@ const Premium = () => {
         // ]}
         // isLoading={days === null}
       />
-    </div>
+    </>
   );
 };
 

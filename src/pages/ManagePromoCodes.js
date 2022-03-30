@@ -32,7 +32,7 @@ const ManagePromoCodes = () => {
     }
   };
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <>
       <MaterialTable
         options={{
           selection: true,
@@ -242,7 +242,7 @@ const ManagePromoCodes = () => {
         ]}
         isLoading={promoCodes === null}
       />
-    </div>
+    </>
   );
 };
 
