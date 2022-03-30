@@ -35,6 +35,7 @@ import {
   LocalAtm,
   PriceCheck,
   Quiz,
+  WorkspacePremium,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -189,6 +190,12 @@ const MenuItems = [
     icon: <Redeem className="iconColor" />,
     title: "Coupons",
     route: "/coupons",
+  },
+  {
+    key: "71",
+    icon: <WorkspacePremium className="iconColor" />,
+    title: "Premium",
+    route: "/premium",
   },
   {
     key: "19",

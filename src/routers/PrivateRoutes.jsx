@@ -63,6 +63,7 @@ import {
   ViewDocuments,
   AddVehicle,
   Faqs,
+  Premium,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -146,6 +147,7 @@ const PrivateRoutes = () => {
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/users" element={<Users />} />
         <Route path="/faqs" element={<Faqs />} />
+        <Route path="/premium" element={<Premium />} />
       </Routes>
     </PanelLayout>
   );
