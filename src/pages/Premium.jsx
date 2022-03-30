@@ -1,3 +1,4 @@
+import { formatCurrency } from "@ashirbad/js-core";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { formatCurrency } from "@ashirbad/js-core";
@@ -38,7 +39,7 @@ const Premium = () => {
             count: 5,
             usedCount: 2,
             totalBookings: 7,
-            benefit: 5,
+            benefit: 250,
             status: "active",
           },
         ]}
@@ -48,18 +49,6 @@ const Premium = () => {
             field: "sl",
             editable: "never",
             width: "10%",
-          },
-
-          {
-            title: "Benefit",
-            field: "benefit",
-            type: "numeric",
-            cellStyle: {
-              textAlign: "center",
-            },
-            headerStyle: {
-              textAlign: "center",
-            },
           },
           {
             title: "Total Bookings",
@@ -71,6 +60,19 @@ const Premium = () => {
             headerStyle: {
               textAlign: "center",
             },
+          },
+
+          {
+            title: "Benefit",
+            field: "benefit",
+            render: ({ benefit }) => formatCurrency(benefit),
+            type: "numeric",
+            // cellStyle: {
+            //   textAlign: "center",
+            // },
+            // headerStyle: {
+            //   textAlign: "center",
+            // },
           },
 
           // {
