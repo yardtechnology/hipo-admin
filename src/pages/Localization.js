@@ -1,5 +1,5 @@
 import MaterialTable from "@material-table/core";
-import { Chip } from "@mui/material";
+import { Switch } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
@@ -34,7 +34,7 @@ const Localization = () => {
             sl: 1,
             city: "Bhubaneswar",
             country: "India",
-            range: "",
+            range: 25,
             zipCode: 751030,
             status: "On",
           },
@@ -65,7 +65,9 @@ const Localization = () => {
           },
           {
             title: "Range",
-            field: "",
+            field: "range",
+            type: "numeric",
+            render: ({ range }) => `${range} Km`,
             searchable: true,
             // type: "numeric",
           },
@@ -74,12 +76,11 @@ const Localization = () => {
             field: "status",
             render: (row) => (
               <>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  label={row?.status}
-                  sx={{ padding: "4px" }}
+                <Switch
+                // size="small"
+                // variant="outlined"
+                // color="secondary"
+                // label={row?.status}
                 />
               </>
             ),

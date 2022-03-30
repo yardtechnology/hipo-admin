@@ -80,6 +80,7 @@ const DriverPayment = () => {
             onDate: new Date().toString(),
             amount: "1000",
             commission: "10%",
+            incentives: "150",
           },
         ]}
         columns={[
@@ -141,6 +142,7 @@ const DriverPayment = () => {
           {
             title: "Incentives",
             field: "incentives",
+            render: (rowData) => formatCurrency(rowData?.incentives),
           },
           {
             title: "City",
@@ -260,7 +262,7 @@ const DriverPayment = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.joiningDate}
+                      {moment(rowData?.joiningDate).format("ll")}
                     </span>
                   </Typography>
                   <Typography variant="body1" gutterBottom align="left">
