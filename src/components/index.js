@@ -9,6 +9,8 @@ import EditPaymentsDrawer from "./EditPaymentsDrawer";
 import StatementInvoiceDrawer from "./StatementInvoiceDrawer";
 import EditDriverDrawer from "./EditDriverDrawer";
 import ViewQADrawer from "./ViewQADrawer";
+import EditQADrawer from "./EditQADrawer";
+import AddQADrawer from "./AddQADrawer";
 
 export {
   DETAILPANEL,
@@ -22,4 +24,6 @@ export {
   StatementInvoiceDrawer,
   DocumentsDrawer,
   VehicleInfoDrawer,
+  EditQADrawer,
+  AddQADrawer,
 };

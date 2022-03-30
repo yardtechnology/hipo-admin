@@ -2,13 +2,15 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
 import { Avatar, Tooltip } from "@mui/material";
-import { ViewQADrawer } from "components";
+import { AddQADrawer, EditQADrawer, ViewQADrawer } from "components";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import { useState } from "react";
 
 const Faqs = () => {
   const [openViewQADrawer, setOpenViewQADrawer] = useState(false);
+  const [openAddQADrawer, setOpenAddQADrawer] = useState(false);
+  const [openEditQADrawer, setOpenEditQADrawer] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
@@ -16,6 +18,14 @@ const Faqs = () => {
       <ViewQADrawer
         open={openViewQADrawer}
         setOpenQADrawer={setOpenViewQADrawer}
+      />
+      <AddQADrawer
+        open={openAddQADrawer}
+        setOpenQADrawer={setOpenAddQADrawer}
+      />
+      <EditQADrawer
+        open={openEditQADrawer}
+        setOpenQADrawer={setOpenEditQADrawer}
       />
       <MaterialTable
         options={{
@@ -288,11 +298,9 @@ const Faqs = () => {
                                       <Tooltip title="Edit Questions & Answers">
                                         <Avatar
                                           variant="rounded"
-                                          // onClick={() =>
-                                          //   setOpenEditVehicleDocumentDrawer(
-                                          //     row
-                                          //   )
-                                          // }
+                                          onClick={() =>
+                                            setOpenEditQADrawer(row)
+                                          }
                                           sx={{
                                             mr: ".4vw",
                                             padding: "0px !important",
@@ -325,19 +333,29 @@ const Faqs = () => {
                                 ),
                               },
                             ]}
-                            editable={{
-                              onRowAdd: async (data) => {},
-                              // onRowUpdate: async (newData, oldData) => {},
-                              // onRowDelete: async (oldData) => {},
-                            }}
-                            // actions={[
-                            //   {
-                            //     tooltip: "Delete all selected Days",
-                            //     icon: "delete",
-                            //     onClick: (evt, data) =>
-                            //       handleBulkDelete(data.map((data) => data?.day)),
-                            //   },
-                            // ]}
+                            // editable={{
+                            //   onRowAdd: async (data) => {},
+                            //   // onRowUpdate: async (newData, oldData) => {},
+                            //   // onRowDelete: async (oldData) => {},
+                            // }}
+                            actions={[
+                              // {
+                              //   tooltip: "Delete all selected Days",
+                              //   icon: "delete",
+                              //   onClick: (evt, data) =>
+                              //     handleBulkDelete(data.map((data) => data?.day)),
+                              // },
+                              {
+                                tooltip: "Add Questions & Answers",
+                                icon: "add",
+                                isFreeAction: true,
+                                onClick: (evt, data) =>
+                                  setOpenAddQADrawer(true),
+                                // handleBulkDelete(
+                                //   data.map((data) => data?.day)
+                                // ),
+                              },
+                            ]}
                             // isLoading={days === null}
                           />
                         </div>
