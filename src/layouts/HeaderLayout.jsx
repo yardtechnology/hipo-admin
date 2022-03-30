@@ -171,7 +171,9 @@ const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
         <MenuItem>
           <Avatar alt="" src="/logo192.png" />
           <ListItemText
-            primary={`${user?.firstName} ${user?.lastName}`}
+            primary={`Super Admin`}
+            // primary={`${user?.firstName} ${user?.lastName}`}
+
             secondary={user?.email}
           />
         </MenuItem>

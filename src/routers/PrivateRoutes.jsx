@@ -64,6 +64,7 @@ import {
   AddVehicle,
   Faqs,
   Premium,
+  Career,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -148,6 +149,7 @@ const PrivateRoutes = () => {
         <Route path="/users" element={<Users />} />
         <Route path="/faqs" element={<Faqs />} />
         <Route path="/premium" element={<Premium />} />
+        <Route path="/career" element={<Career />} />
       </Routes>
     </PanelLayout>
   );

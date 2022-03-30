@@ -36,6 +36,7 @@ import {
   PriceCheck,
   Quiz,
   WorkspacePremium,
+  DocumentScanner,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -327,6 +328,12 @@ const MenuItems = [
         route: "/driver-ratings",
       },
     ],
+  },
+  {
+    key: "92",
+    icon: <DocumentScanner className="iconColor" />,
+    title: "Career",
+    route: "/career",
   },
   {
     key: "21",
