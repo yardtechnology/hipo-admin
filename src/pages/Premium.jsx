@@ -67,12 +67,12 @@ const Premium = () => {
             field: "benefit",
             render: ({ benefit }) => formatCurrency(benefit),
             type: "numeric",
-            // cellStyle: {
-            //   textAlign: "center",
-            // },
-            // headerStyle: {
-            //   textAlign: "center",
-            // },
+            cellStyle: {
+              textAlign: "center",
+            },
+            headerStyle: {
+              textAlign: "center",
+            },
           },
 
           // {
