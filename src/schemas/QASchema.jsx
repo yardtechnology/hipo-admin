@@ -15,7 +15,7 @@ const QASchema = [
     label: "Answer",
     name: "answers",
     multiline: true,
-    rows: 6,
+    rows: 5,
     validationSchema: Yup.string().required("Answer is Required"),
     //   .max(350, "Answer must be less than 350 characters")
     //   .min(5, "Answer must be greater than 5 characters"),
