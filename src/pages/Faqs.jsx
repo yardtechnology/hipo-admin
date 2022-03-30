@@ -2,14 +2,21 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
 import { Avatar, Tooltip } from "@mui/material";
+import { ViewQADrawer } from "components";
 // import { BASE_URL } from "configs";
 import moment from "moment";
+import { useState } from "react";
 
 const Faqs = () => {
+  const [openViewQADrawer, setOpenViewQADrawer] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
     <div style={{ marginTop: "2vh" }}>
+      <ViewQADrawer
+        open={openViewQADrawer}
+        setOpenQADrawer={setOpenViewQADrawer}
+      />
       <MaterialTable
         options={{
           selection: "true",
@@ -35,9 +42,9 @@ const Faqs = () => {
             sl: 1,
             typeImage: "",
             categoryName: "Auto",
-            topics: "The all too familiar auto rides Pocket Friendly",
+            topics: "Rental",
             status: "On",
-            topicTitle: "Auto Rides Pocket Friendly",
+            topicTitle: "All about HIPO services",
             userType: "Rider",
           },
         ]}
@@ -132,7 +139,7 @@ const Faqs = () => {
                       featureName: "Auto",
                       costPerKm: 7,
                       status: "On",
-                      topics: "The all too familiar auto rides Pocket Friendly",
+                      topics: "Rental",
                     },
                   ]}
                   columns={[
@@ -195,7 +202,7 @@ const Faqs = () => {
                                 },
                               ],
                             }}
-                            title={"Sub Topics"}
+                            title={`Sub Topics Of ${rowData?.topics} `}
                             data={[
                               {
                                 sl: 1,
@@ -203,9 +210,9 @@ const Faqs = () => {
                                 featureName: "Auto",
                                 costPerKm: 7,
                                 status: "On",
-                                questions: "Are the cabs sanitized?",
+                                questions: "What is HIPO Rental?",
                                 answers:
-                                  "We have informed our partners to follow all precautionary measures like wearing a mask and keep the cars clean.",
+                                  "Whether you are heading out for multiple client meetings, planning a city trip for relatives, or just stepping out for a shopping trip across the city , HIPO Rental can be your trusted ride partner.  ",
                               },
                             ]}
                             columns={[
@@ -263,7 +270,9 @@ const Faqs = () => {
                                       <Tooltip title="View Questions & Answers">
                                         <Avatar
                                           variant="rounded"
-                                          // onClick={() => setOpenVehicleDocumentDrawer(row)}
+                                          onClick={() =>
+                                            setOpenViewQADrawer(row)
+                                          }
                                           sx={{
                                             mr: ".4vw",
                                             padding: "0px !important",

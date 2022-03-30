@@ -8,9 +8,11 @@ import AddPaymentsDrawer from "./AddPaymentsDrawer";
 import EditPaymentsDrawer from "./EditPaymentsDrawer";
 import StatementInvoiceDrawer from "./StatementInvoiceDrawer";
 import EditDriverDrawer from "./EditDriverDrawer";
+import ViewQADrawer from "./ViewQADrawer";
 
 export {
   DETAILPANEL,
+  ViewQADrawer,
   AddressDrawer,
   ReferralDrawer,
   AddPaymentsDrawer,

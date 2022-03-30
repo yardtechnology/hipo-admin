@@ -36,6 +36,7 @@ const Vehicles = () => {
         open={openVehicleDocumentDrawer}
         setOpenVehicleDocumentDrawer={setOpenVehicleDocumentDrawer}
       />
+
       <MaterialTable
         options={{
           selection: "true",
