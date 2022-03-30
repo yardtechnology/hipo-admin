@@ -1,13 +1,17 @@
 import { Container, Drawer, ListItem, ListItemText } from "@mui/material";
 
-const AddQADrawer = ({ open, setOpenQADrawer }) => {
+const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
   const drawerData = open;
   console.log(drawerData);
   console.log(open);
 
   return (
     <>
-      <Drawer anchor="right" open={open} onClose={() => setOpenQADrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={() => setOpenAddQADrawer(false)}
+      >
         <Container
           style={{
             width: "40vw",
