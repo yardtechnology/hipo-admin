@@ -21,11 +21,11 @@ const Faqs = () => {
       />
       <AddQADrawer
         open={openAddQADrawer}
-        setOpenQADrawer={setOpenAddQADrawer}
+        setOpenAddQADrawer={setOpenAddQADrawer}
       />
       <EditQADrawer
         open={openEditQADrawer}
-        setOpenQADrawer={setOpenEditQADrawer}
+        setOpenEditQADrawer={setOpenEditQADrawer}
       />
       <MaterialTable
         options={{
