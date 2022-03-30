@@ -3,24 +3,24 @@ import { Person } from "@mui/icons-material";
 import * as Yup from "yup";
 
 const VehicleBasicDetailsSchema = [
-  // {
-  //   key: "2",
-  //   label: "Vehicle Name",
-  //   name: "vehicleName",
-  //   validationSchema: Yup.string().required("Vehicle Name is Required"),
-  //   initialValue: "",
-  //   startIcon: <Person />,
-  //   required: true,
-  // },
-  // {
-  //   key: "52",
-  //   label: "Vehicle Number",
-  //   name: "vehicleNumber",
-  //   validationSchema: Yup.string().required("Vehicle Number is Required"),
-  //   initialValue: "",
-  //   startIcon: <Person />,
-  //   required: true,
-  // },
+  {
+    key: "2",
+    label: "Vehicle Name",
+    name: "vehicleName",
+    validationSchema: Yup.string().required("Vehicle Name is Required"),
+    initialValue: "",
+    startIcon: <Person />,
+    required: true,
+  },
+  {
+    key: "52",
+    label: "Vehicle Number",
+    name: "vehicleNumber",
+    validationSchema: Yup.string().required("Vehicle Number is Required"),
+    initialValue: "",
+    startIcon: <Person />,
+    required: true,
+  },
   {
     key: "12",
     label: "Vehicle Type",
@@ -114,15 +114,15 @@ const VehicleBasicDetailsSchema = [
     required: true,
   },
 
-  {
-    key: "11",
-    label: "Fuel",
-    name: "fuel",
-    validationSchema: Yup.string().required("Fuel is required "),
-    type: "text",
-    initialValue: "",
-    // startIcon: <Person />,
-    required: true,
-  },
+  // {
+  //   key: "11",
+  //   label: "Fuel",
+  //   name: "fuel",
+  //   validationSchema: Yup.string().required("Fuel is required "),
+  //   type: "text",
+  //   initialValue: "",
+  //   // startIcon: <Person />,
+  //   required: true,
+  // },
 ];
 export default VehicleBasicDetailsSchema;

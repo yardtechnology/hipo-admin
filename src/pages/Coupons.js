@@ -53,16 +53,14 @@ const Coupons = () => {
             title: "Valid From",
             field: "validFrom",
             type: "datetime",
-            render: ({ validFrom }) =>
-              moment(validFrom).format(" Do MMM YYYY hh:mm A"),
+            render: ({ validFrom }) => moment(validFrom).format("ll"),
           },
 
           {
             title: "Valid Till",
             field: "validTill",
             type: "datetime",
-            render: ({ validTill }) =>
-              moment(validTill).format(" Do MMM YYYY hh:mm A"),
+            render: ({ validTill }) => moment(validTill).format("ll"),
           },
           {
             title: "Coupon Code",

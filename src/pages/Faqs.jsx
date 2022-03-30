@@ -1,5 +1,7 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
+import { Delete, Edit, Visibility } from "@mui/icons-material";
+import { Avatar, Tooltip } from "@mui/material";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 
@@ -36,6 +38,7 @@ const Faqs = () => {
             topics: "The all too familiar auto rides Pocket Friendly",
             status: "On",
             topicTitle: "Auto Rides Pocket Friendly",
+            userType: "Rider",
           },
         ]}
         columns={[
@@ -66,7 +69,16 @@ const Faqs = () => {
             field: "topicTitle",
             searchable: true,
           },
-
+          {
+            title: "User Type",
+            field: "userType",
+            lookup: {
+              Rider: "Rider",
+              Driver: "Driver",
+              Operator: "Operator",
+            },
+            searchable: true,
+          },
           {
             title: "Timestamp",
             // width: "70%",
@@ -191,10 +203,9 @@ const Faqs = () => {
                                 featureName: "Auto",
                                 costPerKm: 7,
                                 status: "On",
-                                questions:
-                                  "The all too familiar auto rides Pocket Friendly",
+                                questions: "Are the cabs sanitized?",
                                 answers:
-                                  "The all too familiar auto rides Pocket Friendly",
+                                  "We have informed our partners to follow all precautionary measures like wearing a mask and keep the cars clean.",
                               },
                             ]}
                             columns={[
@@ -213,6 +224,10 @@ const Faqs = () => {
                               {
                                 title: "Answers",
                                 field: "answers",
+                                render: ({ answers }) =>
+                                  answers?.length >= 60
+                                    ? answers.slice(0, 60) + "......"
+                                    : answers,
                                 searchable: true,
                               },
                               {
@@ -235,11 +250,76 @@ const Faqs = () => {
                                 export: true,
                                 // render: ({ timestamp }) => moment(timestamp).format("lll"),
                               },
+                              {
+                                title: "Actions",
+                                width: "18%",
+                                headerStyle: {
+                                  textAlign: "center",
+                                },
+                                // field: "pick",
+                                render: (row) => (
+                                  <>
+                                    <div className="d-flex">
+                                      <Tooltip title="View Questions & Answers">
+                                        <Avatar
+                                          variant="rounded"
+                                          // onClick={() => setOpenVehicleDocumentDrawer(row)}
+                                          sx={{
+                                            mr: ".4vw",
+                                            padding: "0px !important",
+                                            backgroundColor: "lawngreen",
+                                            cursor: "pointer",
+                                          }}
+                                        >
+                                          <Visibility
+                                            sx={{ padding: "0px !important" }}
+                                          />
+                                        </Avatar>
+                                      </Tooltip>
+                                      <Tooltip title="Edit Questions & Answers">
+                                        <Avatar
+                                          variant="rounded"
+                                          // onClick={() =>
+                                          //   setOpenEditVehicleDocumentDrawer(
+                                          //     row
+                                          //   )
+                                          // }
+                                          sx={{
+                                            mr: ".4vw",
+                                            padding: "0px !important",
+                                            backgroundColor: "gray",
+                                            cursor: "pointer",
+                                          }}
+                                        >
+                                          <Edit
+                                            sx={{ padding: "0px !important" }}
+                                          />
+                                        </Avatar>
+                                      </Tooltip>
+                                      <Tooltip title="Delete Questions & Answers">
+                                        <Avatar
+                                          variant="rounded"
+                                          // onClick={() => setOpenDocumentDrawer(row)}
+                                          sx={{
+                                            padding: "0px !important",
+                                            backgroundColor: "red",
+                                            cursor: "pointer",
+                                          }}
+                                        >
+                                          <Delete
+                                            sx={{ padding: "0px !important" }}
+                                          />
+                                        </Avatar>
+                                      </Tooltip>
+                                    </div>
+                                  </>
+                                ),
+                              },
                             ]}
                             editable={{
                               onRowAdd: async (data) => {},
-                              onRowUpdate: async (newData, oldData) => {},
-                              onRowDelete: async (oldData) => {},
+                              // onRowUpdate: async (newData, oldData) => {},
+                              // onRowDelete: async (oldData) => {},
                             }}
                             // actions={[
                             //   {

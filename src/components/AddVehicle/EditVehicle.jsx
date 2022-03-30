@@ -61,7 +61,12 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
             marginTop: "12vh",
           }}
         >
-          <Typography align="center" color="text.primary" variant="h5">
+          <Typography
+            align="center"
+            color="text.primary"
+            variant="h5"
+            sx={{ marginBottom: 3 }}
+          >
             Edit Vehicle Basic Details
           </Typography>
           {/* <div
