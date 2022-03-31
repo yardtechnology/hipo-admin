@@ -66,6 +66,7 @@ import {
   Premium,
   Career,
   Enquiries,
+  HipoDrive,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -152,6 +153,7 @@ const PrivateRoutes = () => {
         <Route path="/premium" element={<Premium />} />
         <Route path="/career" element={<Career />} />
         <Route path="/enquiries" element={<Enquiries />} />
+        <Route path="/hipo-drive" element={<HipoDrive />} />
       </Routes>
     </PanelLayout>
   );

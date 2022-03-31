@@ -39,6 +39,7 @@ import {
   DocumentScanner,
   Phone,
   Support,
+  RequestPage,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -336,6 +337,12 @@ const MenuItems = [
     icon: <DocumentScanner className="iconColor" />,
     title: "Career",
     route: "/career",
+  },
+  {
+    key: "87",
+    icon: <RequestPage className="iconColor" />,
+    title: "Hipo Drive",
+    route: "/hipo-drive",
   },
   {
     key: "21",

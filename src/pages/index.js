@@ -77,3 +77,4 @@ export const Faqs = lazy(() => import("./Faqs"));
 export const Premium = lazy(() => import("./Premium"));
 export const Career = lazy(() => import("./Career"));
 export const Enquiries = lazy(() => import("./Enquiries"));
+export const HipoDrive = lazy(() => import("./HipoDrive"));
