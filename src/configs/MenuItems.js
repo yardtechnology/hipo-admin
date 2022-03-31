@@ -37,6 +37,8 @@ import {
   Quiz,
   WorkspacePremium,
   DocumentScanner,
+  Phone,
+  Support,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -340,6 +342,18 @@ const MenuItems = [
     icon: <ContactMail className="iconColor" />,
     title: "Contacts",
     route: "/contacts",
+  },
+  {
+    key: "85",
+    icon: <Support className="iconColor" />,
+    title: "Supports",
+    route: "/supports",
+  },
+  {
+    key: "86",
+    icon: <Phone className="iconColor" />,
+    title: "Enquiries",
+    route: "/enquiries",
   },
   {
     key: "9",
