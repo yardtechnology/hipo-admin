@@ -14,7 +14,7 @@ import {
 import { SendReply } from "components/dialog";
 import moment from "moment";
 import { useState } from "react";
-const Supports = () => {
+const Enquiries = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
   const handleBulkDelete = async (data) => {};
@@ -30,15 +30,15 @@ const Supports = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Supports"),
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Enquiries"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Supports"),
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Enquiries"),
             },
           ],
         }}
-        title={"Supports"}
+        title={"Enquiries"}
         data={[
           {
             userType: "Driver",
@@ -192,4 +192,4 @@ const Supports = () => {
   );
 };
 
-export default Supports;
+export default Enquiries;

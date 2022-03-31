@@ -65,6 +65,7 @@ import {
   Faqs,
   Premium,
   Career,
+  Enquiries,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -150,6 +151,7 @@ const PrivateRoutes = () => {
         <Route path="/faqs" element={<Faqs />} />
         <Route path="/premium" element={<Premium />} />
         <Route path="/career" element={<Career />} />
+        <Route path="/enquiries" element={<Enquiries />} />
       </Routes>
     </PanelLayout>
   );

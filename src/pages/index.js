@@ -76,3 +76,4 @@ export const Users = lazy(() => import("./Users"));
 export const Faqs = lazy(() => import("./Faqs"));
 export const Premium = lazy(() => import("./Premium"));
 export const Career = lazy(() => import("./Career"));
+export const Enquiries = lazy(() => import("./Enquiries"));
