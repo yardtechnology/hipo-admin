@@ -1,2 +1,2 @@
-const BASE_URL = "https://skyrise-api.herokuapp.com/api/v1";
+const BASE_URL = "https://hipo-rest-api.herokuapp.com/api";
 export default BASE_URL;

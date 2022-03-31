@@ -10,3 +10,4 @@ export { default as useCrowd } from "./useCrowd";
 export { default as useNotifications } from "./useNotifications";
 export { default as useDays } from "./useDays";
 export { default as useBookings } from "./useBookings";
+export { default as useCoupons } from "./useCoupons";
