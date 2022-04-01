@@ -10,18 +10,19 @@ const useCoupons = () => {
     const fetchPromoCodes = async () => {
       try {
         const response = await fetch(`${BASE_URL}/coupons/all`, {
-          // method: "GET",
+          method: "GET",
           // body: JSON.stringify({ ...values }),
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
         });
         const arr = await response.json();
         console.log(arr);
-        // const sortArr = arr?.success?.data?.sort(
-        //   (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
-        // );
-        isMounted.current && setCoupons(arr);
+        const sortArr = arr?.coupons?.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        isMounted.current && setCoupons(sortArr);
       } catch (error) {
         console.log(error);
       }
