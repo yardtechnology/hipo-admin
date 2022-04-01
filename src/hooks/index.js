@@ -12,3 +12,4 @@ export { default as useDays } from "./useDays";
 export { default as useBookings } from "./useBookings";
 export { default as useCoupons } from "./useCoupons";
 export { default as useEnquiries } from "./useEnquiries";
+export { default as usePartnerApplications } from "./usePartnerApplications";

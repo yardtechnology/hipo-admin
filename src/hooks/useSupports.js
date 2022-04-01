@@ -9,7 +9,7 @@ const useSupports = () => {
   useEffect(() => {
     const fetchSupports = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/support/all-supports`, {
+        const response = await fetch(`${BASE_URL}/support-forms/all`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           // headers: {
@@ -17,7 +17,7 @@ const useSupports = () => {
           // },
         });
         const arr = await response.json();
-        const sortArr = arr?.success?.data?.sort(
+        const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
         );
         isMounted.current && setSupports(sortArr);

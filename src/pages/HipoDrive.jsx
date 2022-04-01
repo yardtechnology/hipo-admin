@@ -10,9 +10,13 @@ import {
   ListItemText,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
+import { BASE_URL } from "configs";
+import { usePartnerApplications } from "hooks";
 import moment from "moment";
 import { useState } from "react";
+import Swal from "sweetalert2";
 const HipoDrive = () => {
+  const { partnerApplications, setRealtime } = usePartnerApplications();
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
   const handleBulkDelete = async (data) => {};
@@ -28,25 +32,29 @@ const HipoDrive = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Enquiries"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Partner Applications"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Enquiries"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Partner Applications"),
             },
           ],
         }}
         title={"Hipo Drive"}
-        data={[
-          {
-            userType: "Auto Driver",
-            displayName: "Aliva Priyadarshini",
-            phoneNumber: "7787654545",
-            message: "Hi, I am looking for a ride from Kolkata to Delhi",
-            sl: 1,
-            email: "alexa5@gmail.com",
-          },
-        ]}
+        data={
+          partnerApplications === null
+            ? []
+            : partnerApplications?.map((partnerApplication, i) => ({
+                ...partnerApplication,
+                sl: i + 1,
+                currentTimestamp: moment(partnerApplication.createdAt).format(
+                  "LL"
+                ),
+                //   createdAt: moment(enquiry.createdAt).format("LL"),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -58,16 +66,15 @@ const HipoDrive = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "35%",
             field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber, email }) => (
+            render: ({ photoURL, fullName, phoneNumber, email }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   {/* <ListItemAvatar>
                     <Avatar src={photoURL} alt={"img"} />
                   </ListItemAvatar> */}
                   <ListItemText
-                    primary={displayName}
+                    primary={fullName}
                     // secondary={email}
                     secondary={phoneNumber}
                   ></ListItemText>
@@ -81,8 +88,8 @@ const HipoDrive = () => {
           //   width: "5%",
           // },
           {
-            title: "User Type",
-            field: "userType",
+            title: "Type",
+            field: "type",
           },
           //   {
           //     title: "Message",
@@ -127,7 +134,31 @@ const HipoDrive = () => {
           },
         ]}
         editable={{
-          onRowDelete: async (oldData) => {},
+          onRowDelete: async (oldData) => {
+            try {
+              const result = await fetch(
+                `${BASE_URL}/partner-application-form/${oldData?._id}`,
+                {
+                  method: "DELETE",
+
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await result.json();
+              console.log(res);
+              result.status === 200
+                ? Swal.fire({ icon: "success", text: res.message })
+                : Swal.fire({ icon: "error", text: res.message });
+            } catch (error) {
+              Swal.fire({ icon: "error", text: error.message });
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         actions={[
           {
