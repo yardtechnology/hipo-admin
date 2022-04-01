@@ -20,7 +20,7 @@ const useCoupons = () => {
         const arr = await response.json();
         console.log(arr);
         const sortArr = arr?.coupons?.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
         isMounted.current && setCoupons(sortArr);
       } catch (error) {
