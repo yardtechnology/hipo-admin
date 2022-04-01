@@ -12,7 +12,10 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <ThemeProvider theme={CustomTheme}>
         <BrowserRouter>
-          {/* {window.localStorage.getItem("SAL") ? (
+          {/* {console.log("user", user)}
+          {console.log(window.localStorage.getItem("SAL"))} */}
+
+          {window.localStorage.getItem("SAL") ? (
             user?.email ? (
               <PrivateRoutes />
             ) : (
@@ -20,8 +23,8 @@ const App = () => {
             )
           ) : (
             <PublicRoutes />
-          )} */}
-          {!user?.email ? <PrivateRoutes /> : <PublicRoutes />}
+          )}
+          {/* {user?.email ? <PrivateRoutes /> : <PublicRoutes />} */}
         </BrowserRouter>
       </ThemeProvider>
     </Suspense>

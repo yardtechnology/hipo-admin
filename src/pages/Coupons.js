@@ -3,11 +3,13 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { formatCurrency } from "@ashirbad/js-core";
 import { Chip } from "@mui/material";
+import { useCoupons } from "hooks";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 
 const Coupons = () => {
-  // const { days, setRealtime } = useDays();
+  const { coupons } = useCoupons();
+  console.log(coupons);
   // const handleBulkDelete = async (data) => {};
   return (
     <>

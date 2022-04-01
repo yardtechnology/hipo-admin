@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { CardContent, CardHeader, Container, Card } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { LoginSchema } from "schemas";
+import { VerifyOtpSchema } from "schemas";
 import { Forward } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "contexts";
@@ -10,21 +10,26 @@ import { TextInput } from "components/core";
 import Swal from "sweetalert2";
 import { LOGO } from "assets";
 
-const Login = () => {
-  const { login } = useAppContext();
+const VerifyOtp = () => {
+  const { verifyOtp } = useAppContext();
   const navigate = useNavigate();
-  const initialValues = LoginSchema.reduce((accumulator, currentValue) => {
+  const initialValues = VerifyOtpSchema.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
   }, {});
-  const validationSchema = LoginSchema.reduce((accumulator, currentValue) => {
-    accumulator[currentValue.name] = currentValue.validationSchema;
-    return accumulator;
-  }, {});
+  const validationSchema = VerifyOtpSchema.reduce(
+    (accumulator, currentValue) => {
+      accumulator[currentValue.name] = currentValue.validationSchema;
+      return accumulator;
+    },
+    {}
+  );
   const handleLogin = async (values, submitProps) => {
     try {
-      await login(values?.phoneNumber, submitProps);
-      navigate("/verify-otp");
+      await verifyOtp(values?.OTP, submitProps);
+
+      navigate("/");
+      window.localStorage.removeItem("ID");
     } catch (error) {
       console.log(error);
       Swal.fire({ icon: "error", text: error.message });
@@ -42,7 +47,7 @@ const Login = () => {
           </div>
           <CardHeader
             title="Sign In To Access Panel"
-            subheader="Please enter your Phone Number to sign in"
+            subheader="Verify OTP and Sign In"
             titleTypographyProps={{
               gutterBottom: true,
               align: "center",
@@ -60,7 +65,7 @@ const Login = () => {
             {({ isSubmitting, isValid }) => (
               <Form>
                 <CardContent>
-                  {LoginSchema.map((inputItem) => (
+                  {VerifyOtpSchema.map((inputItem) => (
                     <TextInput
                       key={inputItem.key}
                       name={inputItem?.name}
@@ -89,10 +94,11 @@ const Login = () => {
                       disabled={isSubmitting || !isValid}
                       loading={isSubmitting}
                       loadingPosition="start"
-                      startIcon={<Forward />}
+                      endIcon={<Forward />}
                       fullWidth
+                      sx={{ textTransform: "none" }}
                     >
-                      Next
+                      Verify OTP
                     </LoadingButton>
                   </div>
                 </CardContent>
@@ -105,4 +111,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default VerifyOtp;

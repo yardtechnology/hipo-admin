@@ -1,7 +1,6 @@
-import { PhoneAndroid } from "@mui/icons-material";
 import * as Yup from "yup";
 
-const LoginSchema = [
+const VerifyOtpSchema = [
   // {
   //   key: "1",
   //   label: "Email",
@@ -26,12 +25,12 @@ const LoginSchema = [
   // },
   {
     key: "3",
-    label: "Phone Number",
-    name: "phoneNumber",
+    label: "Verification Code",
+    name: "OTP",
     type: "number",
-    validationSchema: Yup.number().required("Phone Number is Required"),
+    validationSchema: Yup.number().required("OTP is Required"),
     initialValue: "",
-    startIcon: <PhoneAndroid />,
+    // startIcon: <Ve />,
   },
 ];
-export default LoginSchema;
+export default VerifyOtpSchema;

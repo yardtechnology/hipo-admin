@@ -21,13 +21,19 @@ const useAppContext = () => {
     setRCInfo,
     vehicleBasicDetails,
     setVehicleBasicDetails,
+    verifyOtp,
+    userId,
+    setUserId,
   } = useContext(AppContext);
 
   return {
     user,
     setUser,
+    userId,
+    setUserId,
     login,
     logout,
+    verifyOtp,
     basicDetails,
     setBasicDetails,
     aadharCardInfo,

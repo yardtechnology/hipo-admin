@@ -31,7 +31,7 @@ const Dashboard = () => {
       ? []
       : bookings?.filter((booking) => booking?.status === "confirm");
   console.log(BOOKINGS);
-  const Revenue = BOOKINGS.reduce(function (accumulator, currentValue) {
+  const Revenue = BOOKINGS?.reduce(function (accumulator, currentValue) {
     return accumulator + +currentValue?.bookingPrice;
   }, 0);
   const janRevenue = BOOKINGS?.filter(
