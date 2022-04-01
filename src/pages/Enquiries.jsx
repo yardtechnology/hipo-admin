@@ -3,13 +3,10 @@ import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Reply } from "@mui/icons-material";
 import {
   //   Avatar,
-  Card,
-  CardContent,
   IconButton,
   ListItem,
   //   ListItemAvatar,
   ListItemText,
-  Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
 import { BASE_URL } from "configs";
@@ -177,49 +174,49 @@ const Enquiries = () => {
               handleBulkDelete(data.map((data) => data?._id)),
           },
         ]}
-        detailPanel={({ rowData }) => {
-          return (
-            <div
-              style={{
-                padding: "20px",
-                margin: "auto",
-                backgroundColor: "#eef5f9",
-              }}
-            >
-              <Card
-                sx={{
-                  minWidth: 275,
-                  maxWidth: 700,
-                  transition: "0.3s",
-                  margin: "auto",
-                  borderRadius: "10px",
-                  fontWeight: "bolder",
-                  wordWrap: "break-word",
-                  padding: "20px",
-                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-                  "&:hover": {
-                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-                  },
-                }}
-              >
-                <CardContent>
-                  <h2 style={{ marginBottom: "5px", color: "#c91c83" }}>
-                    Message
-                  </h2>
-                  <Typography
-                    style={{
-                      fontWeight: "bold",
-                      color: "#40559b",
-                      wordWrap: "break-word",
-                    }}
-                  >
-                    {rowData.message}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </div>
-          );
-        }}
+        // detailPanel={({ rowData }) => {
+        //   return (
+        //     <div
+        //       style={{
+        //         padding: "20px",
+        //         margin: "auto",
+        //         backgroundColor: "#eef5f9",
+        //       }}
+        //     >
+        //       <Card
+        //         sx={{
+        //           minWidth: 275,
+        //           maxWidth: 700,
+        //           transition: "0.3s",
+        //           margin: "auto",
+        //           borderRadius: "10px",
+        //           fontWeight: "bolder",
+        //           wordWrap: "break-word",
+        //           padding: "20px",
+        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+        //           "&:hover": {
+        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+        //           },
+        //         }}
+        //       >
+        //         <CardContent>
+        //           <h2 style={{ marginBottom: "5px", color: "#c91c83" }}>
+        //             Message
+        //           </h2>
+        //           <Typography
+        //             style={{
+        //               fontWeight: "bold",
+        //               color: "#40559b",
+        //               wordWrap: "break-word",
+        //             }}
+        //           >
+        //             {rowData.message}
+        //           </Typography>
+        //         </CardContent>
+        //       </Card>
+        //     </div>
+        //   );
+        // }}
         isLoading={enquiries === null}
       />
       <SendReply
