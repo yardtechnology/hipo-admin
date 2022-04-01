@@ -12,9 +12,14 @@ import {
   Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
+import { BASE_URL } from "configs";
+import { useEnquiries } from "hooks";
 import moment from "moment";
 import { useState } from "react";
+import Swal from "sweetalert2";
 const Enquiries = () => {
+  const { enquiries, setRealtime } = useEnquiries();
+  console.log(enquiries);
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
   const handleBulkDelete = async (data) => {};
@@ -39,16 +44,18 @@ const Enquiries = () => {
           ],
         }}
         title={"Enquiries"}
-        data={[
-          {
-            userType: "Driver",
-            displayName: "Aliva Priyadarshini",
-            phoneNumber: "7787654545",
-            message: "Hi, I am looking for a ride from Kolkata to Delhi",
-            sl: 1,
-            email: "alexa5@gmail.com",
-          },
-        ]}
+        data={
+          enquiries === null
+            ? []
+            : enquiries?.map((enquiry, i) => ({
+                ...enquiry,
+                sl: i + 1,
+                currentTimestamp: moment(enquiry.createdAt).format(
+                  "DD-MM-YYYY"
+                ),
+                //   createdAt: moment(enquiry.createdAt).format("LL"),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -60,53 +67,60 @@ const Enquiries = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "35%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber, email }) => (
+            field: "name",
+            render: ({ photoURL, name, phoneNumber, email }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   {/* <ListItemAvatar>
                     <Avatar src={photoURL} alt={"img"} />
                   </ListItemAvatar> */}
                   <ListItemText
-                    primary={displayName}
+                    primary={name}
                     // secondary={email}
-                    secondary={email}
+                    secondary={phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
-          // {
-          //   title: "Phone",
-          //   field: "phoneNumber",
-          //   width: "5%",
-          // },
           {
-            title: "User Type",
-            field: "userType",
-          },
-          {
-            title: "Message",
-            field: "message",
+            title: "Phone",
+            field: "phoneNumber",
             searchable: true,
-            render: ({ message }) =>
-              message?.length > 10 ? message?.slice(0, 7) + "..." : message,
             export: false,
+            hidden: true,
           },
           {
-            title: "Message",
-            field: "message",
+            title: "City",
+            field: "city",
             searchable: true,
-            hidden: true,
-            export: true,
           },
+          {
+            title: "Vehicle Type",
+            field: "vehicleType",
+            searchable: true,
+          },
+          // {
+          //   title: "Message",
+          //   field: "message",
+          //   searchable: true,
+          //   render: ({ message }) =>
+          //     message?.length > 10 ? message?.slice(0, 7) + "..." : message,
+          //   export: false,
+          // },
+          // {
+          //   title: "Message",
+          //   field: "message",
+          //   searchable: true,
+          //   hidden: true,
+          //   export: true,
+          // },
 
           {
             title: "Timestamp",
             searchable: true,
-            field: "timestamp",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            field: "createdAt",
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
           },
           {
@@ -129,7 +143,31 @@ const Enquiries = () => {
           },
         ]}
         editable={{
-          onRowDelete: async (oldData) => {},
+          onRowDelete: async (oldData) => {
+            try {
+              const result = await fetch(
+                `${BASE_URL}/enquiry-form/${oldData?._id}`,
+                {
+                  method: "DELETE",
+
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await result.json();
+              console.log(res);
+              result.status === 200
+                ? Swal.fire({ icon: "success", text: res.message })
+                : Swal.fire({ icon: "error", text: res.message });
+            } catch (error) {
+              Swal.fire({ icon: "error", text: error.message });
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         actions={[
           {
@@ -182,7 +220,7 @@ const Enquiries = () => {
             </div>
           );
         }}
-        // isLoading={supports === null}
+        isLoading={enquiries === null}
       />
       <SendReply
         selectedUsers={selectedUsers}

@@ -55,7 +55,7 @@ const SendReply = ({ selectedUsers, handleClose }) => {
   return (
     <>
       <Dialog
-        open={Boolean(selectedUsers?.displayName)}
+        open={Boolean(selectedUsers?._id)}
         onClose={handleClose}
         maxWidth="sm"
         fullWidth
