@@ -218,9 +218,6 @@ const Coupons = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
-            console.log(newData);
-            // const { data } = await axios.put(`${BASE_URL}/coupons/${newData.id}`, newData);
-            // console.log(data);
             try {
               const response = await fetch(
                 `${BASE_URL}/coupon/${oldData?._id}`,

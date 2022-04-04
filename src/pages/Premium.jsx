@@ -169,8 +169,57 @@ const Premium = () => {
               setRealtime((prev) => !prev);
             }
           },
-          onRowUpdate: async (newData, oldData) => {},
-          onRowDelete: async (oldData) => {},
+          onRowUpdate: async (newData, oldData) => {
+            try {
+              const response = await fetch(
+                `${BASE_URL}/premium/${oldData?._id}`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                  body: JSON.stringify({
+                    totalBooking: newData?.totalBooking,
+                    benefit: newData?.benefit,
+                    isActive: newData?.isActive,
+                  }),
+                }
+              );
+              const res = await response.json();
+              console.log(res);
+              res.status === 200
+                ? Swal.fire({ text: res.message, icon: "success" })
+                : Swal.fire({ text: res.message, icon: "error" });
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
+          onRowDelete: async (oldData) => {
+            try {
+              const response = await fetch(
+                `${BASE_URL}/premium/${oldData?._id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await response.json();
+              console.log(res);
+              res.status === 200
+                ? Swal.fire({ text: res.message, icon: "success" })
+                : Swal.fire({ text: res.message, icon: "error" });
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         // actions={[
         //   {
