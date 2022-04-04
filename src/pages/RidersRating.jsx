@@ -44,7 +44,7 @@ const RidersRating = () => {
             },
           ],
         }}
-        title={"Drivers Rating"}
+        title={"Riders Rating"}
         data={
           ratings === null
             ? []
@@ -160,7 +160,7 @@ const RidersRating = () => {
           //   },
           {
             title: "Comments",
-            field: "driverReview",
+            field: "riderReview",
             searchable: true,
             hidden: true,
             export: true,
@@ -239,7 +239,7 @@ const RidersRating = () => {
                       wordWrap: "break-word",
                     }}
                   >
-                    {rowData?.driverReview}
+                    {rowData?.riderReview}
                   </Typography>
                 </CardContent>
               </Card>
