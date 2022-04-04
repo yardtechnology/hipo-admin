@@ -10,9 +10,13 @@ import {
   Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
+import { useRatings } from "hooks";
 import moment from "moment";
 import { useState } from "react";
 const DriversRating = () => {
+  const { ratings } = useRatings();
+  console.log(ratings);
+
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
 
@@ -31,26 +35,17 @@ const DriversRating = () => {
             {
               label: "Export PDF",
               exportFunc: (cols, datas) =>
-                ExportPdf(cols, datas, "RidersRating"),
+                ExportPdf(cols, datas, "Drivers Rating"),
             },
             {
               label: "Export CSV",
               exportFunc: (cols, datas) =>
-                ExportCsv(cols, datas, "RidersRating"),
+                ExportCsv(cols, datas, "Drivers Rating"),
             },
           ],
         }}
         title={"Drivers Rating"}
-        data={[
-          {
-            displayName: "Aliva Priyadarshini",
-            phoneNumber: "7787654545",
-            comments: "very good service",
-            sl: 1,
-            ratings: 4.5,
-            rideId: "#12345",
-          },
-        ]}
+        data={ratings}
         columns={[
           {
             title: "#",

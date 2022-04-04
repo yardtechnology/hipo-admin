@@ -12,9 +12,13 @@ import {
   Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
+import { BASE_URL } from "configs";
+import { useSupports } from "hooks";
 import moment from "moment";
 import { useState } from "react";
+import Swal from "sweetalert2";
 const Supports = () => {
+  const { supports, setRealtime } = useSupports();
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
   const handleBulkDelete = async (data) => {};
@@ -39,16 +43,16 @@ const Supports = () => {
           ],
         }}
         title={"Supports"}
-        data={[
-          {
-            userType: "Driver",
-            displayName: "Aliva Priyadarshini",
-            phoneNumber: "7787654545",
-            message: "Hi, I am looking for a ride from Kolkata to Delhi",
-            sl: 1,
-            email: "alexa5@gmail.com",
-          },
-        ]}
+        data={
+          supports === null
+            ? []
+            : supports?.map((support, i) => ({
+                ...support,
+                sl: i + 1,
+                currentTimestamp: moment(support.createdAt).format("LL"),
+                //   createdAt: moment(enquiry.createdAt).format("LL"),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -60,8 +64,7 @@ const Supports = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "35%",
-            field: "firstName",
+            field: "email",
             render: ({ photoURL, displayName, phoneNumber, email }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
@@ -69,22 +72,29 @@ const Supports = () => {
                     <Avatar src={photoURL} alt={"img"} />
                   </ListItemAvatar> */}
                   <ListItemText
-                    primary={displayName}
+                    primary={email}
                     // secondary={email}
-                    secondary={email}
+                    secondary={phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
-          // {
-          //   title: "Phone",
-          //   field: "phoneNumber",
-          //   width: "5%",
-          // },
+          {
+            title: "Phone",
+            field: "phoneNumber",
+            searchable: true,
+            hidden: true,
+          },
           {
             title: "User Type",
-            field: "userType",
+            field: "type",
+            searchable: true,
+          },
+          {
+            title: "Subject",
+            field: "title",
+            searchable: true,
           },
           {
             title: "Message",
@@ -106,7 +116,7 @@ const Supports = () => {
             title: "Timestamp",
             searchable: true,
             field: "timestamp",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
           },
           {
@@ -129,7 +139,31 @@ const Supports = () => {
           },
         ]}
         editable={{
-          onRowDelete: async (oldData) => {},
+          onRowDelete: async (oldData) => {
+            try {
+              const result = await fetch(
+                `${BASE_URL}/support-form/${oldData?._id}`,
+                {
+                  method: "DELETE",
+
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await result.json();
+              console.log(res);
+              result.status === 200
+                ? Swal.fire({ icon: "success", text: res.message })
+                : Swal.fire({ icon: "error", text: res.message });
+            } catch (error) {
+              Swal.fire({ icon: "error", text: error.message });
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         actions={[
           {
