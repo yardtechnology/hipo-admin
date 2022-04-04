@@ -54,6 +54,7 @@ const RidersRating = () => {
                 currentTimestamp: moment(rating.createdAt).format("LL"),
                 rideId: rating?.ride?._id,
                 driverImg: rating?.driver?.photoURL,
+                
                 driverName: rating?.driver?.displayName,
                 driverEmail: rating?.driver?.email,
                 driverPhone: rating?.driver?.phoneNumber,
