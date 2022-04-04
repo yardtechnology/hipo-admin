@@ -10,9 +10,13 @@ import {
   Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
+import { useRatings } from "hooks";
 import moment from "moment";
 import { useState } from "react";
 const RidersRating = () => {
+  const { ratings } = useRatings();
+  console.log(ratings);
+
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
 
@@ -31,26 +35,34 @@ const RidersRating = () => {
             {
               label: "Export PDF",
               exportFunc: (cols, datas) =>
-                ExportPdf(cols, datas, "RidersRating"),
+                ExportPdf(cols, datas, "Drivers Rating"),
             },
             {
               label: "Export CSV",
               exportFunc: (cols, datas) =>
-                ExportCsv(cols, datas, "RidersRating"),
+                ExportCsv(cols, datas, "Drivers Rating"),
             },
           ],
         }}
-        title={"Riders Rating"}
-        data={[
-          {
-            displayName: "Aliva Priyadarshini",
-            phoneNumber: "7787654545",
-            comments: "very good service",
-            sl: 1,
-            ratings: 4.5,
-            rideId: "#12345",
-          },
-        ]}
+        title={"Drivers Rating"}
+        data={
+          ratings === null
+            ? []
+            : ratings?.map((rating, i) => ({
+                ...rating,
+                sl: i + 1,
+                currentTimestamp: moment(rating.createdAt).format("LL"),
+                rideId: rating?.ride?._id,
+                driverImg: rating?.driver?.photoURL,
+                driverName: rating?.driver?.displayName,
+                driverEmail: rating?.driver?.email,
+                driverPhone: rating?.driver?.phoneNumber,
+                riderImg: rating?.rider?.photoURL,
+                riderName: rating?.rider?.displayName,
+                riderEmail: rating?.rider?.email,
+                riderPhone: rating?.rider?.phoneNumber,
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -69,44 +81,57 @@ const RidersRating = () => {
             title: "Riders Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "30%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            field: "riderName",
+            render: ({ riderName, riderEmail, riderPhone, riderImg }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemAvatar>
-                    <Avatar src={photoURL} alt={"img"} />
+                    <Avatar src={riderImg} alt={"img"} />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={displayName}
+                    primary={riderName}
                     // secondary={email}
-                    secondary={phoneNumber}
+                    secondary={riderPhone}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
           {
+            title: "Rider Phone",
+            field: "riderPhone",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+          {
             title: "Drivers Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "30%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            field: "driverName",
+            render: ({ driverName, driverEmail, driverPhone, driverImg }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemAvatar>
-                    <Avatar src={photoURL} alt={"img"} />
+                    <Avatar src={driverImg} alt={"img"} />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={displayName}
+                    primary={driverName}
                     // secondary={email}
-                    secondary={phoneNumber}
+                    secondary={driverPhone}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
+          {
+            title: "Driver Phone",
+            field: "driverPhone",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+
           // {
           //   title: "Phone",
           //   field: "phoneNumber",
@@ -114,10 +139,15 @@ const RidersRating = () => {
           // },
           {
             title: "Ratings",
-            field: "ratings",
+            field: "driverRating",
             type: "numeric",
-            width: "2%",
             searchable: true,
+            cellStyle: {
+              textAlign: "center",
+            },
+            headerStyle: {
+              textAlign: "center",
+            },
           },
           //   {
           //     title: "Comments",
@@ -130,7 +160,7 @@ const RidersRating = () => {
           //   },
           {
             title: "Comments",
-            field: "comments",
+            field: "driverReview",
             searchable: true,
             hidden: true,
             export: true,
@@ -209,14 +239,14 @@ const RidersRating = () => {
                       wordWrap: "break-word",
                     }}
                   >
-                    {rowData?.comments}
+                    {rowData?.driverReview}
                   </Typography>
                 </CardContent>
               </Card>
             </div>
           );
         }}
-        // isLoading={supports === null}
+        isLoading={ratings === null}
       />
       <SendReply
         selectedUsers={selectedUsers}
