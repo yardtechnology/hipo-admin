@@ -14,3 +14,5 @@ export { default as useCoupons } from "./useCoupons";
 export { default as useEnquiries } from "./useEnquiries";
 export { default as usePartnerApplications } from "./usePartnerApplications";
 export { default as useRatings } from "./useRatings";
+export { default as usePremium } from "./usePremium";
+export { default as useContacts } from "./useContacts";

@@ -159,6 +159,13 @@ const Coupons = () => {
             ),
           },
           {
+            title: "Status",
+            field: "status",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+          {
             title: "Timestamp",
             // width: "70%",
             field: "createdAt",

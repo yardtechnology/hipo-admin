@@ -3,7 +3,7 @@ import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
 const usePremium = () => {
-  const [premium, setPremium] = useState(null);
+  const [premiums, setPremiums] = useState(null);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   useEffect(() => {
@@ -22,7 +22,7 @@ const usePremium = () => {
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
-        isMounted.current && setPremium(sortArr);
+        isMounted.current && setPremiums(sortArr);
       } catch (error) {
         console.log(error);
       }
@@ -30,7 +30,7 @@ const usePremium = () => {
     fetchPremiums();
   }, [isMounted, realtime]);
   return {
-    premium,
+    premiums,
     setRealtime,
   };
 };
