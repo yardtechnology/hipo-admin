@@ -2,19 +2,21 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Reply } from "@mui/icons-material";
 import {
-  Avatar,
   Card,
   CardContent,
   IconButton,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
+import { BASE_URL } from "configs";
+import { useContacts } from "hooks";
 import moment from "moment";
 import { useState } from "react";
 const Contacts = () => {
+  const { contacts, setRealtime } = useContacts();
+  console.log(contacts);
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
   const handleBulkDelete = async (data) => {};
@@ -30,23 +32,24 @@ const Contacts = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Supports"),
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Contacts"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Supports"),
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Contacts"),
             },
           ],
         }}
         title={"Contacts"}
-        data={[
-          {
-            displayName: "Aliva Priyadarshini",
-            phoneNumber: "7787654545",
-            message: "Hi, I am looking for a ride from Kolkata to Delhi",
-            sl: 1,
-          },
-        ]}
+        data={
+          contacts === null
+            ? []
+            : contacts.map((contact, i) => ({
+                ...contact,
+                sl: i + 1,
+                currentTimestamp: moment(contact.createdAt).format("LL"),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -58,28 +61,41 @@ const Contacts = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "35%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            field: "name",
+            render: ({ photoURL, name, email, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
-                  <ListItemAvatar>
+                  {/* <ListItemAvatar>
                     <Avatar src={photoURL} alt={"img"} />
-                  </ListItemAvatar>
+                  </ListItemAvatar> */}
                   <ListItemText
-                    primary={displayName}
+                    primary={name}
                     // secondary={email}
-                    secondary={phoneNumber}
+                    secondary={
+                      <>
+                        <div>{email}</div>
+                        <div>{phoneNumber}</div>
+                      </>
+                    }
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
-          // {
-          //   title: "Phone",
-          //   field: "phoneNumber",
-          //   width: "5%",
-          // },
+          {
+            title: "email",
+            field: "email",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+          {
+            title: "Phone",
+            field: "phoneNumber",
+            export: true,
+            hidden: true,
+            searchable: true,
+          },
           {
             title: "Message",
             field: "message",
@@ -123,7 +139,23 @@ const Contacts = () => {
           },
         ]}
         editable={{
-          onRowDelete: async (oldData) => {},
+          onRowDelete: async (oldData) => {
+            console.log(oldData);
+            // setRealtime(oldData);
+            try {
+              await fetch(`${BASE_URL}/contacts/${oldData.id}`, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              });
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         actions={[
           {
