@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 import * as Yup from "yup";
 const SendReply = ({ selectedUsers, handleClose }) => {
+  console.log(selectedUsers?.email);
   const initialValues = MessageSchema.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
@@ -31,6 +32,7 @@ const SendReply = ({ selectedUsers, handleClose }) => {
         body: JSON.stringify({
           content: values?.message,
           subject: values?.subject,
+          to: selectedUsers?.email,
         }),
         headers: {
           "Content-Type": "application/json",

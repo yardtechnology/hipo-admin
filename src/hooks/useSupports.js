@@ -12,13 +12,14 @@ const useSupports = () => {
         const response = await fetch(`${BASE_URL}/support-forms/all`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
         });
         const arr = await response.json();
         const sortArr = arr?.data?.sort(
-          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
         isMounted.current && setSupports(sortArr);
       } catch (error) {

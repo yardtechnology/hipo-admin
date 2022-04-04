@@ -216,7 +216,7 @@ const Supports = () => {
             </div>
           );
         }}
-        // isLoading={supports === null}
+        isLoading={supports === null}
       />
       <SendReply
         selectedUsers={selectedUsers}
