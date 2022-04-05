@@ -9,7 +9,7 @@ const useVehicleCategory = () => {
   useEffect(() => {
     const fetchVehicleCategory = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/contact-us-forms/all`, {
+        const response = await fetch(`${BASE_URL}/vehicle-categories/all`, {
           method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
@@ -19,7 +19,7 @@ const useVehicleCategory = () => {
         });
         const arr = await response.json();
         console.log(arr);
-        const sortArr = arr?.data?.sort(
+        const sortArr = arr?.allVehicleCategory?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
         isMounted.current && setVehicleCategory(sortArr);

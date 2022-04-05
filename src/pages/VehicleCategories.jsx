@@ -3,10 +3,16 @@ import { Avatar } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
+import { useVehicleCategory } from "hooks";
+import { PhotoUpload } from "components/core";
+import Swal from "sweetalert2";
+import { BASE_URL } from "configs";
 
 const VehicleCategories = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
+  const { vehicleCategory, setRealtime } = useVehicleCategory();
+  console.log(vehicleCategory);
   return (
     <>
       <MaterialTable
@@ -31,55 +37,83 @@ const VehicleCategories = () => {
           ],
         }}
         title={"Manage Vehicle Categories"}
-        data={[
-          {
-            sl: 1,
-            typeImage: "",
-            categoryName: "Auto",
-            featureName: "Pocket Friendly",
-            status: "On",
-            description:
-              "The all too familiar auto rides without the hassle of waiting and haggling for price",
-          },
-        ]}
+        data={
+          vehicleCategory === null
+            ? []
+            : vehicleCategory.map((item, index) => ({
+                ...item,
+                sl: index + 1,
+                categoryImage: item?.image,
+                categoryIcon: item?.icon,
+                currentTimestamp: moment(item?.createdAt).format("LL"),
+              }))
+        }
         columns={[
           {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
+            width: "2%",
           },
           {
-            title: "Category Image",
-            field: "typeImageUrl",
-            render: ({ typeImageUrl }) => (
+            title: "Icon",
+            field: "categoryIconUrl",
+            render: ({ categoryIcon }) => (
               <Avatar
-                variant="rounded"
-                sx={{ width: "12vh", height: "12vh" }}
+                src={categoryIcon?.url}
+                variant="square"
+                sx={{ width: 100, height: 65 }}
               />
             ),
+            editComponent: ({ value, onChange }) => {
+              return (
+                <>
+                  <PhotoUpload value={value} onChange={onChange} />
+                </>
+              );
+            },
             searchable: true,
           },
           {
-            title: "Category Name",
-            field: "categoryName",
+            title: "Image",
+            field: "categoryImageUrl",
+            render: ({ categoryImage }) => (
+              <Avatar
+                src={categoryImage?.url}
+                variant="square"
+                sx={{ width: 120, height: 70 }}
+              />
+            ),
+            editComponent: ({ value, onChange }) => {
+              return (
+                <>
+                  <PhotoUpload value={value} onChange={onChange} />
+                </>
+              );
+            },
             searchable: true,
+          },
+          {
+            title: "Name",
+            field: "name",
+            searchable: true,
+            width: "2%",
           },
           {
             title: "Brief",
             field: "description",
             searchable: true,
-            width: "40%",
           },
 
           {
             title: "Timestamp",
             // width: "70%",
-            field: "timestamp",
+            field: "createdAt",
             editable: "never",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
             searchable: true,
+            emptyValue: "--",
             // hidden: true,
           },
           {
@@ -93,7 +127,31 @@ const VehicleCategories = () => {
           },
         ]}
         editable={{
-          onRowAdd: async (data) => {},
+          onRowAdd: async (data) => {
+            const formdata = new FormData();
+            formdata.append("name", data?.name);
+            formdata.append("description", data?.description);
+            formdata.append("icon", data?.categoryIcon?.target?.files[0]);
+            formdata.append("image", data?.categoryImage?.target?.files[0]);
+            try {
+              const response = await fetch(`${BASE_URL}/vehicle-categories`, {
+                method: "POST",
+                body: formdata,
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                },
+              });
+              const res = await response.json();
+              res.status === 200
+                ? Swal.fire({ icon: "success", text: res.message })
+                : Swal.fire({ icon: "error", text: res.message });
+            } catch (error) {
+              Swal.fire({ icon: "error", text: error.message });
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
           onRowUpdate: async (newData, oldData) => {},
           onRowDelete: async (oldData) => {},
         }}
