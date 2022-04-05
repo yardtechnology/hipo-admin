@@ -123,7 +123,7 @@ const Premium = () => {
           {
             title: "Timestamp",
             // width: "70%",
-            field: "timestamp",
+            field: "createdAt",
             editable: "never",
             render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,

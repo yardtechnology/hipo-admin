@@ -110,8 +110,8 @@ const HipoDrive = () => {
           {
             title: "Timestamp",
             searchable: true,
-            field: "timestamp",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            field: "createdAt",
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
           },
           {
