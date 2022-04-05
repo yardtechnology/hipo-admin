@@ -10,11 +10,13 @@ import {
   Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
+import { BASE_URL } from "configs";
 import { useRatings } from "hooks";
 import moment from "moment";
 import { useState } from "react";
+import Swal from "sweetalert2";
 const RidersRating = () => {
-  const { ratings } = useRatings();
+  const { ratings, setRealtime } = useRatings();
   console.log(ratings);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -194,7 +196,31 @@ const RidersRating = () => {
           },
         ]}
         editable={{
-          onRowDelete: async (oldData) => {},
+          onRowDelete: async (oldData) => {
+            try {
+              const res = await fetch(`${BASE_URL}/ratings/${oldData._id}`, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                },
+              });
+              console.log(res);
+              res?.status === 200
+                ? Swal.fire({
+                    text: res?.message,
+                    icon: "success",
+                  })
+                : Swal.fire({
+                    text: res?.message,
+                    icon: "error",
+                  });
+            } catch (err) {
+              console.log(err);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         actions={[
           {

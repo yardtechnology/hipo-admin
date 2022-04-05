@@ -9,13 +9,36 @@ import {
   ListItemText,
   Tooltip,
   Typography,
+  IconButton,
 } from "@mui/material";
+import { BASE_URL } from "configs";
+import { useCareer } from "hooks";
 // import { BASE_URL } from "configs";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const Career = () => {
+  const { career, setRealtime } = useCareer();
+  console.log(career);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
+  const onRowDelete = async (oldData) => {
+    console.log(oldData);
+    try {
+      const response = await fetch(`${BASE_URL}/career-form/${oldData.id}`, {
+        method: "DELETE",
+      });
+      const res = await response.json();
+      res?.status === 200
+        ? Swal.fire({ text: res.message, icon: "success" })
+        : Swal.fire({ text: res.message, icon: "error" });
+    } catch (err) {
+      Swal.fire({ text: err.message, icon: "error" });
+      console.log(err);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
   return (
     <>
       <MaterialTable
@@ -28,36 +51,26 @@ const Career = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Counpons"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Career Forms"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Counpons"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Career Forms"),
             },
           ],
         }}
         title={"Manage Career"}
-        data={[
-          {
-            sl: 1,
-            amount: "100",
-            typeImage: "",
-            couponCode: "45#APR",
-            count: 5,
-            usedCount: 2,
-            costPerKm: 7,
-            seatingCapacity: 5,
-            status: "active",
-            maxCashback: 85,
-            discount: 15,
-            displayName: "Alexa Smith",
-            email: "alexa@gmail.com",
-            phoneNumber: "9876543210",
-            gender: "Male",
-            location: "Bhubaneswar",
-            experience: "Fresher",
-          },
-        ]}
+        data={
+          career === null
+            ? []
+            : career?.map((career, i) => ({
+                ...career,
+                sl: i + 1,
+                currentTimestamp: moment(career?.createdAt).format("LL"),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -70,8 +83,8 @@ const Career = () => {
             tooltip: "Profile",
             searchable: true,
             width: "25%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber, email }) => (
+            field: "name",
+            render: ({ photoURL, name, phoneNumber, email }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   {/* <ListItemAvatar
@@ -83,7 +96,7 @@ const Career = () => {
                     sx={{ paddingLeft: 0 }}
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {name || "Not Provided"}
                       </Typography>
                     }
                     // secondary={email}
@@ -135,9 +148,9 @@ const Career = () => {
           {
             title: "Timestamp",
             // width: "70%",
-            field: "timestamp",
+            field: "createdAt",
             editable: "never",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
             searchable: true,
             // hidden: true,
@@ -167,6 +180,7 @@ const Career = () => {
                       //   onClick={() =>
                       //     setOpenEditQADrawer(row)
                       //   }
+
                       sx={{
                         mr: ".4vw",
                         padding: "0px !important",
@@ -174,9 +188,11 @@ const Career = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <PictureAsPdfOutlined
-                        sx={{ padding: "0px !important" }}
-                      />
+                      <IconButton href={row?.resumeURL} target={"_blank"}>
+                        <PictureAsPdfOutlined
+                          sx={{ padding: "0px !important", color: "snow" }}
+                        />
+                      </IconButton>
                     </Avatar>
                   </Tooltip>
                   <Tooltip title="Delete">
@@ -189,7 +205,11 @@ const Career = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <Delete sx={{ padding: "0px !important" }} />
+                      <IconButton onClick={() => onRowDelete(row)}>
+                        <Delete
+                          sx={{ padding: "0px !important", color: "snow" }}
+                        />
+                      </IconButton>
                     </Avatar>
                   </Tooltip>
                 </div>

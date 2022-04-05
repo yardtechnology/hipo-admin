@@ -44,6 +44,8 @@ const VehicleCategories = () => {
                 ...item,
                 sl: index + 1,
                 categoryImage: item?.image,
+                categoryImageUrl: item?.image?.url,
+                categoryIconUrl: item?.icon?.url,
                 categoryIcon: item?.icon,
                 currentTimestamp: moment(item?.createdAt).format("LL"),
               }))
@@ -131,10 +133,10 @@ const VehicleCategories = () => {
             const formdata = new FormData();
             formdata.append("name", data?.name);
             formdata.append("description", data?.description);
-            formdata.append("icon", data?.categoryIcon?.target?.files[0]);
-            formdata.append("image", data?.categoryImage?.target?.files[0]);
+            formdata.append("icon", data?.categoryIconUrl?.target?.files[0]);
+            formdata.append("image", data?.categoryImageUrl?.target?.files[0]);
             try {
-              const response = await fetch(`${BASE_URL}/vehicle-categories`, {
+              const response = await fetch(`${BASE_URL}/vehicle-category`, {
                 method: "POST",
                 body: formdata,
                 headers: {
@@ -152,8 +154,59 @@ const VehicleCategories = () => {
               setRealtime((prev) => !prev);
             }
           },
-          onRowUpdate: async (newData, oldData) => {},
-          onRowDelete: async (oldData) => {},
+          onRowUpdate: async (newData, oldData) => {
+            const formdata = new FormData();
+            formdata.append("name", newData?.name);
+            formdata.append("description", newData?.description);
+            formdata.append("icon", newData?.categoryIconUrl?.target?.files[0]);
+            formdata.append(
+              "image",
+              newData?.categoryImageUrl?.target?.files[0]
+            );
+            try {
+              const response = await fetch(
+                `${BASE_URL}/vehicle-category/${oldData?._id}`,
+                {
+                  method: "PUT",
+                  body: formdata,
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await response.json();
+              res.status === 200
+                ? Swal.fire({ icon: "success", text: res.message })
+                : Swal.fire({ icon: "error", text: res.message });
+            } catch (error) {
+              Swal.fire({ icon: "error", text: error.message });
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
+          onRowDelete: async (oldData) => {
+            try {
+              const response = await fetch(
+                `${BASE_URL}/vehicle-category/${oldData?._id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await response.json();
+              res.status === 200
+                ? Swal.fire({ icon: "success", text: res.message })
+                : Swal.fire({ icon: "error", text: res.message });
+            } catch (error) {
+              Swal.fire({ icon: "error", text: error.message });
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         // actions={[
         //   {
