@@ -17,3 +17,5 @@ export { default as useRatings } from "./useRatings";
 export { default as usePremium } from "./usePremium";
 export { default as useContacts } from "./useContacts";
 export { default as useVehicleCategory } from "./useVehicleCategory";
+export { default as useCareer } from "./useCareer";
+export { default as useConfig } from "./useConfig";
