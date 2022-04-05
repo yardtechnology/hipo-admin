@@ -16,3 +16,4 @@ export { default as usePartnerApplications } from "./usePartnerApplications";
 export { default as useRatings } from "./useRatings";
 export { default as usePremium } from "./usePremium";
 export { default as useContacts } from "./useContacts";
+export { default as useVehicleCategory } from "./useVehicleCategory";

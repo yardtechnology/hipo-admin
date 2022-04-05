@@ -40,6 +40,7 @@ import {
   Phone,
   Support,
   RequestPage,
+  CategoryOutlined,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -156,6 +157,12 @@ const MenuItems = [
     title: "Vehicles",
     route: "/view-vehicles",
     submenus: [
+      {
+        key: "3",
+        title: "Vehicle Categories",
+        icon: <CategoryOutlined className="iconColor" sx={{ color: "#000" }} />,
+        route: "/vehicle-categories",
+      },
       {
         key: "1",
         title: "Add New Vehicle",
