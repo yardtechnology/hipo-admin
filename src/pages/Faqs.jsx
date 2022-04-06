@@ -1,11 +1,15 @@
+import { getArrFromObj } from "@ashirbad/js-core";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
 import { Avatar, Tooltip } from "@mui/material";
 import { AddQADrawer, EditQADrawer, ViewQADrawer } from "components";
+import { BASE_URL } from "configs";
+import { useFaqs } from "hooks";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const Faqs = () => {
   const [openViewQADrawer, setOpenViewQADrawer] = useState(false);
@@ -13,6 +17,8 @@ const Faqs = () => {
   const [openEditQADrawer, setOpenEditQADrawer] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
+  const { faqs, setRealtime } = useFaqs();
+  console.log(faqs);
   return (
     <>
       <ViewQADrawer
@@ -47,17 +53,15 @@ const Faqs = () => {
           ],
         }}
         title={"Manage Faqs"}
-        data={[
-          {
-            sl: 1,
-            typeImage: "",
-            categoryName: "Auto",
-            topics: "Rental",
-            status: "On",
-            topicTitle: "All about HIPO services",
-            userType: "Rider",
-          },
-        ]}
+        data={
+          faqs === null
+            ? []
+            : faqs?.map((faq, i) => ({
+                ...faq,
+                sl: i + 1,
+                currentTimestamp: moment(faq?.createdAt).format("LL"),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -83,16 +87,16 @@ const Faqs = () => {
           // },
           {
             title: "Topic Title",
-            field: "topicTitle",
+            field: "title",
             searchable: true,
           },
           {
             title: "User Type",
-            field: "userType",
+            field: "role",
             lookup: {
-              Rider: "Rider",
-              Driver: "Driver",
-              Operator: "Operator",
+              USER: "RIDER",
+              DRIVER: "DRIVER",
+              OPERATOR: "OPERATOR",
             },
             searchable: true,
           },
@@ -101,7 +105,7 @@ const Faqs = () => {
             // width: "70%",
             field: "timestamp",
             editable: "never",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
             searchable: true,
             // hidden: true,
@@ -117,6 +121,8 @@ const Faqs = () => {
           },
         ]}
         detailPanel={({ rowData }) => {
+          const Topics = getArrFromObj(rowData?.topics);
+          console.log("topics", Topics);
           return (
             <>
               <div style={{ marginTop: "2vh" }}>
@@ -132,26 +138,17 @@ const Faqs = () => {
                       {
                         label: "Export PDF",
                         exportFunc: (cols, datas) =>
-                          ExportPdf(cols, datas, "Vehicles"),
+                          ExportPdf(cols, datas, "Topics"),
                       },
                       {
                         label: "Export CSV",
                         exportFunc: (cols, datas) =>
-                          ExportCsv(cols, datas, "Vehicles"),
+                          ExportCsv(cols, datas, "Topics"),
                       },
                     ],
                   }}
-                  title={`Topics of ${rowData?.topicTitle}`}
-                  data={[
-                    {
-                      sl: 1,
-                      typeImage: "",
-                      featureName: "Auto",
-                      costPerKm: 7,
-                      status: "On",
-                      topics: "Rental",
-                    },
-                  ]}
+                  title={`Topics of ${rowData?.title}`}
+                  data={Topics}
                   columns={[
                     {
                       title: "#",
@@ -162,7 +159,7 @@ const Faqs = () => {
 
                     {
                       title: "Topics",
-                      field: "topics",
+                      field: "title",
                       searchable: true,
                     },
 
@@ -188,6 +185,8 @@ const Faqs = () => {
                     },
                   ]}
                   detailPanel={({ rowData }) => {
+                    const SUBTOPICS = rowData?.subtopics;
+                    console.log("subtopics", SUBTOPICS);
                     return (
                       <>
                         <div style={{ marginTop: "2vh" }}>
@@ -203,28 +202,24 @@ const Faqs = () => {
                                 {
                                   label: "Export PDF",
                                   exportFunc: (cols, datas) =>
-                                    ExportPdf(cols, datas, "Vehicles"),
+                                    ExportPdf(cols, datas, "Sub Topics"),
                                 },
                                 {
                                   label: "Export CSV",
                                   exportFunc: (cols, datas) =>
-                                    ExportCsv(cols, datas, "Vehicles"),
+                                    ExportCsv(cols, datas, "Sub Topics"),
                                 },
                               ],
                             }}
-                            title={`Sub Topics Of ${rowData?.topics} `}
-                            data={[
-                              {
-                                sl: 1,
-                                typeImage: "",
-                                featureName: "Auto",
-                                costPerKm: 7,
-                                status: "On",
-                                questions: "What is HIPO Rental?",
-                                answers:
-                                  "Whether you are heading out for multiple client meetings, planning a city trip for relatives, or just stepping out for a shopping trip across the city , HIPO Rental can be your trusted ride partner.  ",
-                              },
-                            ]}
+                            title={`Sub Topics Of ${rowData?.title} `}
+                            data={SUBTOPICS.map((subtopic, i) => ({
+                              ...subtopic,
+                              sl: i + 1,
+                              answers: subtopic?.answers?.answer,
+                              currentTimestamp: moment(
+                                SUBTOPICS?.createdAt
+                              ).format("LL"),
+                            }))}
                             columns={[
                               {
                                 title: "#",
@@ -235,7 +230,7 @@ const Faqs = () => {
 
                               {
                                 title: "Questions",
-                                field: "questions",
+                                field: "title",
                                 searchable: true,
                               },
                               {
@@ -252,8 +247,8 @@ const Faqs = () => {
                                 // width: "70%",
                                 field: "timestamp",
                                 editable: "never",
-                                render: ({ timestamp }) =>
-                                  moment(timestamp).format("lll"),
+                                render: ({ createdAt }) =>
+                                  moment(createdAt).format("lll"),
                                 export: false,
                                 searchable: true,
                                 // hidden: true,
@@ -382,8 +377,60 @@ const Faqs = () => {
           );
         }}
         editable={{
-          onRowAdd: async (data) => {},
-          onRowUpdate: async (newData, oldData) => {},
+          onRowAdd: async (data) => {
+            try {
+              const response = await fetch(`${BASE_URL}/support`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                },
+                body: JSON.stringify({
+                  title: data?.title,
+                  type: "SUPPORT",
+                  role: data?.role,
+                }),
+              });
+              const res = await response.json();
+              res?.status === 200
+                ? Swal.fire({ text: res?.message, icon: "success" })
+                : Swal.fire({ text: res?.message, icon: "error" });
+            } catch (err) {
+              Swal.fire({ text: err?.message, icon: "error" });
+              console.log(err);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
+          onRowUpdate: async (newData, oldData) => {
+            console.log(newData?.role);
+            try {
+              const response = await fetch(
+                `${BASE_URL}/support/${oldData?._id}`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                  body: JSON.stringify({
+                    title: newData?.title,
+                    type: "SUPPORT",
+                    role: newData?.role,
+                  }),
+                }
+              );
+              const res = await response.json();
+              res?.status === 200
+                ? Swal.fire({ text: res?.message, icon: "success" })
+                : Swal.fire({ text: res?.message, icon: "error" });
+            } catch (err) {
+              Swal.fire({ text: err?.message, icon: "error" });
+              console.log(err);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
           onRowDelete: async (oldData) => {},
         }}
         // actions={[

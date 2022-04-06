@@ -79,9 +79,9 @@ const EditQADrawer = ({ open, setOpenEditQADrawer }) => {
           </div> */}
           <Formik
             initialValues={
-              open.questions
+              open?.title
                 ? {
-                    questions: open.questions,
+                    questions: open.title,
                     answers: open.answers,
                   }
                 : initialValues

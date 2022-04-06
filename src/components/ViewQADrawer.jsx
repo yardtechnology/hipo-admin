@@ -24,20 +24,20 @@ const ViewQADrawer = ({ open, setOpenQADrawer }) => {
           </Typography> */}
           <div>
             {" "}
-            <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "1vh" }}>
+            <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "" }}>
               {/* <ListItemAvatar>
                 <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
               </ListItemAvatar> */}
               <ListItemText
-                primary={open?.questions}
+                primary={open?.title}
                 secondary={open?.answers}
                 primaryTypographyProps={{
                   fontWeight: "bold",
-                  fontSize: "2vw",
+                  fontSize: "1.5vw",
                   color: "#1877f2",
                 }}
                 secondaryTypographyProps={{
-                  fontSize: "1.5vw",
+                  fontSize: "1.3vw",
                   marginTop: "1vh",
                 }}
               />
