@@ -161,9 +161,9 @@ const AppContextProvider = ({ children }) => {
         const res = await result.json();
         console.log(res);
         result.status === 200
-          ? console.log(res?.userData)
+          ? console.log(res?.data)
           : Swal.fire({ icon: "error", text: res.message });
-        setUser(res?.userData);
+        setUser(res?.data);
         // isMounted.current && setUser();
         // document.cookie = res?.data;
       } catch (error) {

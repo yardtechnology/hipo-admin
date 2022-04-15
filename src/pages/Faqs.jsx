@@ -121,6 +121,7 @@ const Faqs = () => {
           },
         ]}
         detailPanel={({ rowData }) => {
+          // const ID = rowData?.id;
           const Topics = getArrFromObj(rowData?.topics);
           console.log("topics", Topics);
           return (
@@ -212,7 +213,7 @@ const Faqs = () => {
                               ],
                             }}
                             title={`Sub Topics Of ${rowData?.title} `}
-                            data={SUBTOPICS.map((subtopic, i) => ({
+                            data={SUBTOPICS?.map((subtopic, i) => ({
                               ...subtopic,
                               sl: i + 1,
                               answers: subtopic?.answers?.answer,
@@ -358,8 +359,86 @@ const Faqs = () => {
                     );
                   }}
                   editable={{
-                    onRowAdd: async (data) => {},
-                    onRowUpdate: async (newData, oldData) => {},
+                    onRowAdd: async (data) => {
+                      try {
+                        const response = await fetch(`${BASE_URL}/support`, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${localStorage.getItem(
+                              "SAL"
+                            )}`,
+                          },
+                          body: JSON.stringify({
+                            title: data.title,
+                            role: rowData?.role,
+                            type: "TOPIC",
+                          }),
+                        });
+                        const res = await response.json();
+                        console.log(res);
+                        const topicResponse = await fetch(
+                          `${BASE_URL}/support/${rowData?._id}`,
+                          {
+                            method: "PUT",
+                            headers: {
+                              "Content-Type": "application/json",
+                              Authorization: `Bearer ${localStorage.getItem(
+                                "SAL"
+                              )}`,
+                            },
+                            body: JSON.stringify({
+                              topics: res?.data?._id,
+                            }),
+                          }
+                        );
+                        const topicRes = await topicResponse.json();
+                        console.log(topicRes);
+                        topicRes?.status === 200
+                          ? Swal.fire({ text: res.message, icon: "success" })
+                          : Swal.fire({ text: res.message, icon: "error" });
+                      } catch (err) {
+                        Swal.fire({ text: err.message, icon: "error" });
+                        console.log(err);
+                      } finally {
+                        setRealtime((prev) => !prev);
+                      }
+                    },
+                    onRowUpdate: async (newData, oldData) => {
+                      try {
+                        const topicResponse = await fetch(
+                          `${BASE_URL}/support/${oldData?._id}`,
+                          {
+                            method: "PUT",
+                            headers: {
+                              "Content-Type": "application/json",
+                              Authorization: `Bearer ${localStorage.getItem(
+                                "SAL"
+                              )}`,
+                            },
+                            body: JSON.stringify({
+                              title: newData?.title,
+                            }),
+                          }
+                        );
+                        const topicRes = await topicResponse.json();
+                        console.log(topicRes);
+                        topicRes?.status === 200
+                          ? Swal.fire({
+                              text: topicRes.message,
+                              icon: "success",
+                            })
+                          : Swal.fire({
+                              text: topicRes.message,
+                              icon: "error",
+                            });
+                      } catch (err) {
+                        Swal.fire({ text: err.message, icon: "error" });
+                        console.log(err);
+                      } finally {
+                        setRealtime((prev) => !prev);
+                      }
+                    },
                     onRowDelete: async (oldData) => {},
                   }}
                   // actions={[
