@@ -236,11 +236,11 @@ const Faqs = () => {
                               },
                               {
                                 title: "Answers",
-                                field: "answers",
-                                render: ({ answers }) =>
-                                  answers?.length >= 60
-                                    ? answers.slice(0, 60) + "......"
-                                    : answers,
+                                field: "answer",
+                                render: ({ answer }) =>
+                                  answer?.length >= 60
+                                    ? answer.slice(0, 60) + "......"
+                                    : answer,
                                 searchable: true,
                               },
                               {
@@ -346,7 +346,7 @@ const Faqs = () => {
                                 icon: "add",
                                 isFreeAction: true,
                                 onClick: (evt, data) =>
-                                  setOpenAddQADrawer(true),
+                                  setOpenAddQADrawer(data),
                                 // handleBulkDelete(
                                 //   data.map((data) => data?.day)
                                 // ),

@@ -30,7 +30,7 @@ const ViewQADrawer = ({ open, setOpenQADrawer }) => {
               </ListItemAvatar> */}
               <ListItemText
                 primary={open?.title}
-                secondary={open?.answers}
+                secondary={open?.answer}
                 primaryTypographyProps={{
                   fontWeight: "bold",
                   fontSize: "1.5vw",

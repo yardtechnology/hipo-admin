@@ -17,11 +17,13 @@ import { QASchema } from "schemas";
 import { Done } from "@mui/icons-material";
 
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
+import { BASE_URL } from "configs";
 // import { PhotoUpload } from "./core";
 
 const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
-  const drawerData = open;
-  console.log(drawerData);
+  // const drawerData = open;
+  // console.log(drawerData);
   console.log(open);
 
   const initialValues = QASchema?.reduce((accumulator, currentValue) => {
@@ -33,9 +35,56 @@ const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
     return accumulator;
   }, {});
   const handleSend = async (values, submitProps) => {
+    // try {
+    //   const response = await fetch(`${BASE_URL}/support`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+    //     },
+    //     body: JSON.stringify({
+    //       title: values?.questions,
+    //       type: "SUBTOPIC",
+    //       answer: values?.answer,
+    //       role: open?.role,
+    //     }),
+    //   });
+    //   const res = await response.json();
+    //   res?.status === 200
+    //     ? Swal.fire({ text: res?.message, icon: "success" })
+    //     : Swal.fire({ text: res?.message, icon: "error" });
+    // }
     try {
-      console.log(values);
-      submitProps.resetForm();
+      const response = await fetch(`${BASE_URL}/support`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          title: values?.questions,
+          type: "SUBTOPIC",
+          answer: values?.answer,
+          role: open?.role,
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+      const subtopicResponse = await fetch(`${BASE_URL}/support/${open?._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          subtopics: res?.data?._id,
+        }),
+      });
+      const topicRes = await subtopicResponse.json();
+      console.log(topicRes);
+      topicRes?.status === 200
+        ? Swal.fire({ text: res.message, icon: "success" })
+        : Swal.fire({ text: res.message, icon: "error" });
     } catch (error) {
       console.log(error);
     } finally {

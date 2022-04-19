@@ -82,7 +82,7 @@ const EditQADrawer = ({ open, setOpenEditQADrawer }) => {
               open?.title
                 ? {
                     questions: open.title,
-                    answers: open.answers,
+                    answer: open.answer,
                   }
                 : initialValues
             }

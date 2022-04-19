@@ -40,7 +40,7 @@ const VehicleCategories = () => {
         data={
           vehicleCategory === null
             ? []
-            : vehicleCategory.map((item, index) => ({
+            : vehicleCategory?.map((item, index) => ({
                 ...item,
                 sl: index + 1,
                 categoryImage: item?.image,

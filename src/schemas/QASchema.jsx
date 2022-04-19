@@ -13,7 +13,7 @@ const QASchema = [
   {
     key: "2",
     label: "Answer",
-    name: "answers",
+    name: "answer",
     multiline: true,
     rows: 9,
     validationSchema: Yup.string().required("Answer is Required"),
