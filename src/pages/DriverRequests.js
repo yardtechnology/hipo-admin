@@ -11,20 +11,74 @@ import {
   Typography,
 } from "@mui/material";
 import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
+import { BASE_URL } from "configs";
+import { useDriverRequests } from "hooks";
 // import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const DriverRequests = () => {
+  const { driverRequests, setRealtime } = useDriverRequests();
+  console.log(driverRequests);
   // const navigate = useNavigate();
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
+  const handleDriverRequestAccept = async (ids) => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        body: JSON.stringify({
+          userIds: ids,
+          status: "APPROVED",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire({ text: res?.message, icon: "success" })
+        : Swal.fire({ text: res?.message, icon: "error" });
+
+      // navigate("/driver-requests");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+  const handleDriverRequestReject = async (ids) => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        body: JSON.stringify({
+          userIds: ids,
+          status: "REJECTED",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire({ text: res?.message, icon: "success" })
+        : Swal.fire({ text: res?.message, icon: "error" });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
 
   return (
     <>
-      {" "}
       <ReferralDrawer
         open={openReferralDrawer}
         setOpenReferralDrawer={setOpenReferralDrawer}
@@ -50,11 +104,13 @@ const DriverRequests = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Riders"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Driver Requests"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Riders"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Driver Requests"),
             },
           ],
           pageSize: 10,
@@ -64,19 +120,15 @@ const DriverRequests = () => {
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}
-        data={[
-          {
-            dateOfBirth: new Date().toString(),
-            displayName: "Alexa",
-            email: "alexa@gmail.com",
-            phoneNumber: "+91 7778876436",
-            city: "Bbsr",
-            joiningDate: new Date().toString(),
-            trips: "15",
-            profileImageUrl: "",
-            status: "Pending",
-          },
-        ]}
+        data={
+          driverRequests === null
+            ? []
+            : driverRequests?.map((item) => ({
+                ...item,
+                driverEmail: item?.driver?.email || "Not Provided",
+                countryName: item?.country?.name || "Not Provided",
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -104,7 +156,7 @@ const DriverRequests = () => {
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {displayName}
                       </Typography>
                     }
                     // secondary={email}
@@ -117,7 +169,16 @@ const DriverRequests = () => {
           {
             title: "Email",
             field: "email",
+            render: (newData) => newData.email || "Not Provided",
             searchable: true,
+            export: false,
+          },
+          {
+            title: "email",
+            field: "driverEmail",
+            searchable: true,
+            hidden: true,
+            export: true,
           },
           {
             title: "DOB",
@@ -128,8 +189,8 @@ const DriverRequests = () => {
             },
           },
           {
-            title: "City",
-            field: "city",
+            title: "Country",
+            field: "countryName",
           },
           // {
           //   title: "Trips",
@@ -164,7 +225,6 @@ const DriverRequests = () => {
             render: (row) => (
               <>
                 <div className="d-flex">
-                  {" "}
                   <Tooltip title="View Vehicles">
                     <Avatar
                       variant="rounded"
@@ -211,11 +271,15 @@ const DriverRequests = () => {
           {
             tooltip: "Accept All Driver Requests",
             icon: "done",
+            onClick: (evt, data) =>
+              handleDriverRequestAccept(data?.map((item) => item._id)),
             // onClick: (evt, data) => setSelectedUsers(data),
           },
           {
             tooltip: "Reject all Driver Requests",
             icon: "cancel",
+            onClick: (evt, data) =>
+              handleDriverRequestReject(data?.map((item) => item._id)),
             // onClick: (evt, data) => setSelectedUsers(data),
           },
         ]}

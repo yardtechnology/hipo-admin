@@ -13,10 +13,42 @@ import {
   Typography,
 } from "@mui/material";
 import { RC } from "assets";
+import { useState, useEffect } from "react";
+import { useIsMounted } from "hooks";
+import { BASE_URL } from "configs";
+
 const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
-  const drawerData = open;
-  console.log(drawerData);
-  console.log(open);
+  console.log(open?._id);
+  const { isMounted } = useIsMounted();
+  const [vehicleInfo, setVehicleInfo] = useState({});
+  useEffect(() => {
+    if (!isMounted.current) return;
+    const fetchVehicleInfo = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/driver/vehicles/${open?._id}`,
+          {
+            method: "GET",
+            // body: JSON.stringify({ ...values }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+            },
+          }
+        );
+        const arr = await response.json();
+        console.log(arr);
+        const sortArr = arr?.data?.sort(
+          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+        );
+        setVehicleInfo(sortArr);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchVehicleInfo();
+  }, [isMounted, open]);
+  console.log(vehicleInfo);
 
   return (
     <>
