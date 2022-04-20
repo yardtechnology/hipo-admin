@@ -159,7 +159,7 @@ const AppContextProvider = ({ children }) => {
           },
         });
         const res = await result.json();
-        console.log(res);
+        // console.log(res);
         result.status === 200
           ? console.log(res?.data)
           : Swal.fire({ icon: "error", text: res.message });

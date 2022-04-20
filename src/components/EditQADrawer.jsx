@@ -17,13 +17,11 @@ import { QASchema } from "schemas";
 import { Done } from "@mui/icons-material";
 
 import { LoadingButton } from "@mui/lab";
+import Swal from "sweetalert2";
+import { BASE_URL } from "configs";
 // import { PhotoUpload } from "./core";
 
 const EditQADrawer = ({ open, setOpenEditQADrawer }) => {
-  const drawerData = open;
-  console.log(drawerData);
-  console.log(open);
-
   const initialValues = QASchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
@@ -34,11 +32,34 @@ const EditQADrawer = ({ open, setOpenEditQADrawer }) => {
   }, {});
   const handleSend = async (values, submitProps) => {
     try {
-      console.log(values);
-      submitProps.resetForm();
+      const subtopicResponse = await fetch(`${BASE_URL}/support/${open?._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          title: values?.questions,
+          type: "SUBTOPIC",
+          answer: values?.answer,
+          role: open?.role,
+        }),
+      });
+      const subtopicRes = await subtopicResponse.json();
+      // console.log(subtopicRes);
+      subtopicRes?.status === 200
+        ? Swal.fire({
+            text: subtopicRes.message,
+            icon: "success",
+          })
+        : Swal.fire({
+            text: subtopicRes.message,
+            icon: "error",
+          });
     } catch (error) {
       console.log(error);
     } finally {
+      setOpenEditQADrawer(false);
       submitProps.setSubmitting(false);
     }
   };

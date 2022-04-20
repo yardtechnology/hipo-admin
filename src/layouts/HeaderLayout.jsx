@@ -25,11 +25,11 @@ import { useNotifications } from "hooks";
 const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
   const { user, logout } = useAppContext();
   const { notifications } = useNotifications();
-  console.log(notifications);
+  // console.log(notifications);
   const unreadMessage = notifications?.filter(
     (notification) => notification?.isRead === false
   );
-  console.log(user);
+  // console.log(user);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

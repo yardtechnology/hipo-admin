@@ -1,9 +1,7 @@
 import { Container, Drawer, ListItem, ListItemText } from "@mui/material";
 
 const ViewQADrawer = ({ open, setOpenQADrawer }) => {
-  const drawerData = open;
-  console.log(drawerData);
-  console.log(open);
+  // console.log(open);
 
   return (
     <>

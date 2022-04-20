@@ -18,7 +18,28 @@ const Faqs = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const { faqs, setRealtime } = useFaqs();
-  console.log(faqs);
+  // console.log(faqs);
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const response = await fetch(`${BASE_URL}/supports/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire({ text: res.message, icon: "success" })
+        : Swal.fire({ text: res.message, icon: "error" });
+      setRealtime((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <ViewQADrawer
@@ -35,7 +56,6 @@ const Faqs = () => {
       />
       <MaterialTable
         options={{
-          selection: "true",
           addRowPosition: "first",
           detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,
@@ -60,6 +80,7 @@ const Faqs = () => {
                 ...faq,
                 sl: i + 1,
                 currentTimestamp: moment(faq?.createdAt).format("LL"),
+                setRealtime,
               }))
         }
         columns={[
@@ -123,13 +144,11 @@ const Faqs = () => {
         detailPanel={({ rowData }) => {
           // const ID = rowData?.id;
           const Topics = getArrFromObj(rowData?.topics);
-          console.log("topics", Topics);
           return (
             <>
               <div style={{ marginTop: "2vh" }}>
                 <MaterialTable
                   options={{
-                    selection: "true",
                     addRowPosition: "first",
                     detailPanelColumnAlignment: "right",
                     actionsColumnIndex: -1,
@@ -169,8 +188,8 @@ const Faqs = () => {
                       // width: "70%",
                       field: "timestamp",
                       editable: "never",
-                      render: ({ timestamp }) =>
-                        moment(timestamp).format("lll"),
+                      render: ({ createdAt }) =>
+                        moment(createdAt).format("lll"),
                       export: false,
                       searchable: true,
                       // hidden: true,
@@ -187,13 +206,11 @@ const Faqs = () => {
                   ]}
                   detailPanel={({ rowData }) => {
                     const SUBTOPICS = rowData?.subtopics;
-                    console.log("subtopics", SUBTOPICS);
                     return (
                       <>
                         <div style={{ marginTop: "2vh" }}>
                           <MaterialTable
                             options={{
-                              selection: "true",
                               addRowPosition: "first",
                               detailPanelColumnAlignment: "right",
                               actionsColumnIndex: -1,
@@ -312,6 +329,7 @@ const Faqs = () => {
                                       <Tooltip title="Delete Questions & Answers">
                                         <Avatar
                                           variant="rounded"
+                                          onClick={() => handleDelete(row._id)}
                                           // onClick={() => setOpenDocumentDrawer(row)}
                                           sx={{
                                             padding: "0px !important",
@@ -345,14 +363,13 @@ const Faqs = () => {
                                 tooltip: "Add Questions & Answers",
                                 icon: "add",
                                 isFreeAction: true,
-                                onClick: (evt, data) =>
-                                  setOpenAddQADrawer(data),
+                                onClick: () => setOpenAddQADrawer(rowData),
                                 // handleBulkDelete(
                                 //   data.map((data) => data?.day)
                                 // ),
                               },
                             ]}
-                            // isLoading={days === null}
+                            isLoading={SUBTOPICS === null}
                           />
                         </div>
                       </>
@@ -376,7 +393,7 @@ const Faqs = () => {
                           }),
                         });
                         const res = await response.json();
-                        console.log(res);
+                        // console.log(res);
                         const topicResponse = await fetch(
                           `${BASE_URL}/support/${rowData?._id}`,
                           {
@@ -393,7 +410,7 @@ const Faqs = () => {
                           }
                         );
                         const topicRes = await topicResponse.json();
-                        console.log(topicRes);
+                        // console.log(topicRes);
                         topicRes?.status === 200
                           ? Swal.fire({ text: res.message, icon: "success" })
                           : Swal.fire({ text: res.message, icon: "error" });
@@ -422,7 +439,7 @@ const Faqs = () => {
                           }
                         );
                         const topicRes = await topicResponse.json();
-                        console.log(topicRes);
+                        // console.log(topicRes);
                         topicRes?.status === 200
                           ? Swal.fire({
                               text: topicRes.message,
@@ -439,7 +456,32 @@ const Faqs = () => {
                         setRealtime((prev) => !prev);
                       }
                     },
-                    onRowDelete: async (oldData) => {},
+                    onRowDelete: async (oldData) => {
+                      try {
+                        const response = await fetch(
+                          `${BASE_URL}/supports/${oldData?._id}`,
+                          {
+                            method: "DELETE",
+                            headers: {
+                              "Content-Type": "application/json",
+                              Authorization: `Bearer ${localStorage.getItem(
+                                "SAL"
+                              )}`,
+                            },
+                          }
+                        );
+                        const res = await response.json();
+                        // console.log(res);
+                        res?.status === 200
+                          ? Swal.fire({ text: res.message, icon: "success" })
+                          : Swal.fire({ text: res.message, icon: "error" });
+                      } catch (err) {
+                        Swal.fire({ text: err.message, icon: "error" });
+                        console.log(err);
+                      } finally {
+                        setRealtime((prev) => !prev);
+                      }
+                    },
                   }}
                   // actions={[
                   //   {
@@ -482,7 +524,6 @@ const Faqs = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
-            console.log(newData?.role);
             try {
               const response = await fetch(
                 `${BASE_URL}/support/${oldData?._id}`,
@@ -510,7 +551,29 @@ const Faqs = () => {
               setRealtime((prev) => !prev);
             }
           },
-          onRowDelete: async (oldData) => {},
+          onRowDelete: async (oldData) => {
+            try {
+              const response = await fetch(
+                `${BASE_URL}/supports/${oldData?._id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await response.json();
+              res?.status === 200
+                ? Swal.fire({ text: res?.message, icon: "success" })
+                : Swal.fire({ text: res?.message, icon: "error" });
+            } catch (err) {
+              Swal.fire({ text: err?.message, icon: "error" });
+              console.log(err);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
         // actions={[
         //   {

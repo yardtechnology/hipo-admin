@@ -19,12 +19,13 @@ import { Done } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
+import { useFaqs } from "hooks";
 // import { PhotoUpload } from "./core";
 
 const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
   // const drawerData = open;
   // console.log(drawerData);
-  console.log(open);
+  const { setRealtime } = useFaqs();
 
   const initialValues = QASchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
@@ -35,25 +36,6 @@ const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
     return accumulator;
   }, {});
   const handleSend = async (values, submitProps) => {
-    // try {
-    //   const response = await fetch(`${BASE_URL}/support`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-    //     },
-    //     body: JSON.stringify({
-    //       title: values?.questions,
-    //       type: "SUBTOPIC",
-    //       answer: values?.answer,
-    //       role: open?.role,
-    //     }),
-    //   });
-    //   const res = await response.json();
-    //   res?.status === 200
-    //     ? Swal.fire({ text: res?.message, icon: "success" })
-    //     : Swal.fire({ text: res?.message, icon: "error" });
-    // }
     try {
       const response = await fetch(`${BASE_URL}/support`, {
         method: "POST",
@@ -69,7 +51,7 @@ const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
         }),
       });
       const res = await response.json();
-      console.log(res);
+      // console.log(res);
       const subtopicResponse = await fetch(`${BASE_URL}/support/${open?._id}`, {
         method: "PUT",
         headers: {
@@ -80,14 +62,17 @@ const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
           subtopics: res?.data?._id,
         }),
       });
-      const topicRes = await subtopicResponse.json();
-      console.log(topicRes);
-      topicRes?.status === 200
+      const subtopicRes = await subtopicResponse.json();
+      // console.log(subtopicRes);
+      subtopicRes?.status === 200
         ? Swal.fire({ text: res.message, icon: "success" })
         : Swal.fire({ text: res.message, icon: "error" });
+      this.dataManager.setRealtime((prev) => !prev);
     } catch (error) {
       console.log(error);
     } finally {
+      setRealtime((prev) => !prev);
+      setOpenAddQADrawer(false);
       submitProps.setSubmitting(false);
     }
   };
