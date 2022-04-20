@@ -1,55 +1,73 @@
+import React, { useEffect } from "react";
 import MaterialTable from "@material-table/core";
-// import { Switch } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-// import { BASE_URL } from "configs";
+import { useIsMounted, useVehicleCategory } from "hooks";
+import { formatCurrency } from "@ashirbad/js-core";
 import moment from "moment";
-import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
-import { useCities } from "hooks";
-import { Cabs } from "components";
-const Localization = () => {
-  // const { days, setRealtime } = useDays();
-  // const handleBulkDelete = async (data) => {};
-  const { cities, setRealtime } = useCities();
+import Swal from "sweetalert2";
+const Cabs = ({ city }) => {
+  console.log(city);
+  const { vehicleCategory } = useVehicleCategory();
+  const { isMounted } = useIsMounted();
+  const [cabs, setCabs] = React.useState(null);
+  const [realtime, setRealtime] = React.useState(false);
+  useEffect(() => {
+    const fetchCabs = async () => {
+      if (!isMounted.current) return;
+
+      try {
+        const response = await fetch(`${BASE_URL}/city/cabs/${city?.name}`, {
+          // method: "GET",
+          // body: JSON.stringify({ ...values }),
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
+        });
+        const arr = await response.json();
+        console.log(arr);
+        const sortArr = arr?.data?.sort(
+          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+        );
+        setCabs(sortArr);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCabs();
+  }, [realtime, city, isMounted]);
+  console.log(cabs);
+
   return (
-    <>
+    <div style={{ marginTop: "2vh" }}>
       <MaterialTable
         options={{
-          whiteSpace: "nowrap",
           selection: "true",
           addRowPosition: "first",
+          detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,
           pageSize: 10,
           exportAllData: true,
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Cabs"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Cabs"),
             },
           ],
         }}
-        title={"Localization"}
-        // data={[
-        //   {
-        //     sl: 1,
-        //     city: "Bhubaneswar",
-        //     country: "India",
-        //     range: 25,
-        //     zipCode: 751030,
-        //     status: "On",
-        //   },
-        // ]}
+        title={`Cabs of ${city?.name}`}
         data={
-          cities === null
+          cabs === null
             ? []
-            : cities?.map((item, index) => ({
-                ...item,
-                sl: index + 1,
-                currentTimestamp: moment(item?.createdAt).format("DD-MM-YYYY"),
+            : cabs?.map((cab) => ({
+                ...cab,
+                // vehicleCategory: cab?.vehicleCategory?.name,
+                currentTimestamp: moment(cab.createdAt).format("DD-MM-YYYY"),
+                vehicleCategoryName: cab?.vehicleCategory?.name,
               }))
         }
         columns={[
@@ -57,66 +75,71 @@ const Localization = () => {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
           },
-          {
-            title: "City",
-            field: "name",
 
-            searchable: true,
-          },
           {
-            title: "Latitude",
-            field: "latitude",
-            searchable: true,
-          },
-          {
-            title: "Longitude",
-            field: "longitude",
-            searchable: true,
-          },
-          // {
-          //   title: "Country",
-          //   field: "country",
-          //   searchable: true,
-          // },
-          // {
-          //   title: "Zip Code",
-          //   field: "zipCode",
-          //   type: "numeric",
-          //   searchable: true,
-          // },
-          {
-            title: "Range",
-            field: "range",
-            type: "numeric",
-            render: ({ range }) => `${range} Km`,
-            searchable: true,
-            // type: "numeric",
-          },
-          {
-            title: "Status",
-            field: "isOperational",
-            searchable: true,
-            lookup: {
-              true: "Active",
-              false: "Inactive",
+            title: "Vehicle category",
+            field: "vehicleCategoryName",
+            // field: "vehicleCategory",
+            render: (rowData) => {
+              return rowData?.vehicleCategory?.name;
             },
-            // render: (row) => (
-            //   <>
-            //     <Switch
-            //     // size="small"
-            //     // variant="outlined"
-            //     // color="secondary"
-            //     // label={row?.status}
-            //     />
-            //   </>
-            // ),
+
+            // lookup: {
+            //   ...vehicleCategory?.reduce((acc, item) => {
+            //     acc[item?._id] = item?.name;
+            //     return acc;
+            //   }, {}),
+            // },
+            editComponent: (props) => {
+              return (
+                <select
+                  value={props.value}
+                  onChange={(e) => {
+                    props.onChange(e.target.value);
+                  }}
+                >
+                  {vehicleCategory?.map((item) => (
+                    <option key={item?._id} value={item?._id}>
+                      {item?.name}
+                    </option>
+                  ))}
+                </select>
+              );
+            },
+          },
+          {
+            title: "Price Per KM",
+            field: "perKilometer",
+            type: "numeric",
+            searchable: true,
+            render: ({ perKilometer }) => formatCurrency(perKilometer),
+          },
+          {
+            title: "Price Per Min",
+            field: "perMinute",
+            type: "numeric",
+            searchable: true,
+            render: ({ perMinute }) => formatCurrency(perMinute),
+          },
+          {
+            title: "Base Fare",
+            field: "baseFare",
+            type: "numeric",
+            searchable: true,
+            render: ({ baseFare }) => formatCurrency(baseFare),
+          },
+          {
+            title: "Allowance",
+            field: "allowance",
+            type: "numeric",
+            searchable: true,
+            render: ({ allowance }) => formatCurrency(allowance),
           },
           {
             title: "Timestamp",
             // width: "70%",
-            field: "createdAt",
+            field: "timestamp",
             editable: "never",
             render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
@@ -133,41 +156,23 @@ const Localization = () => {
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
         ]}
-        actions={[
-          // {
-          //   tooltip: "Send notification to all selected users",
-          //   icon: "send",
-          //   onClick: (evt, data) => setSelectedUsers(data),
-          // },
-          {
-            tooltip: "Turn On for Selected Cities",
-            icon: "toggle_on",
-            // onClick: (evt, data) => setSelectedUsers(data),
-          },
-          {
-            tooltip: "Turn Off for Selected Cities",
-            icon: "toggle_off",
-            // onClick: (evt, data) => setSelectedUsers(data),
-          },
-        ]}
-        detailPanel={({ rowData }) => {
-          return <Cabs city={rowData} />;
-        }}
         editable={{
           onRowAdd: async (data) => {
             try {
-              const response = await fetch(`${BASE_URL}/city`, {
+              console.log(data);
+              const response = await fetch(`${BASE_URL}/cab`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
                 body: JSON.stringify({
-                  name: data?.name,
-                  latitude: data?.latitude,
-                  longitude: data?.longitude,
-                  range: data?.range,
-                  isOperational: data?.isOperational,
+                  vehicleCategory: data?.vehicleCategory,
+                  perKilometer: data?.perKilometer,
+                  perMinute: data?.perMinute,
+                  baseFare: data?.baseFare,
+                  allowance: data?.allowance,
+                  city: city?._id,
                 }),
               });
               const res = await response.json();
@@ -183,18 +188,19 @@ const Localization = () => {
           },
           onRowUpdate: async (newData, oldData) => {
             try {
-              const response = await fetch(`${BASE_URL}/city/${oldData?._id}`, {
+              console.log(newData);
+              const response = await fetch(`${BASE_URL}/cab/${oldData?._id}`, {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
                 body: JSON.stringify({
-                  name: newData?.name,
-                  latitude: newData?.latitude,
-                  longitude: newData?.longitude,
-                  range: newData?.range,
-                  isOperational: newData?.isOperational,
+                  vehicleCategory: newData?.vehicleCategory,
+                  perKilometer: newData?.perKilometer,
+                  perMinute: newData?.perMinute,
+                  baseFare: newData?.baseFare,
+                  allowance: newData?.allowance,
                 }),
               });
               const res = await response.json();
@@ -210,7 +216,7 @@ const Localization = () => {
           },
           onRowDelete: async (oldData) => {
             try {
-              const response = await fetch(`${BASE_URL}/city/${oldData?._id}`, {
+              const response = await fetch(`${BASE_URL}/cab/${oldData?._id}`, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
@@ -239,8 +245,8 @@ const Localization = () => {
         // ]}
         // isLoading={days === null}
       />
-    </>
+    </div>
   );
 };
 
-export default Localization;
+export default Cabs;

@@ -11,6 +11,7 @@ import EditDriverDrawer from "./EditDriverDrawer";
 import ViewQADrawer from "./ViewQADrawer";
 import EditQADrawer from "./EditQADrawer";
 import AddQADrawer from "./AddQADrawer";
+import Cabs from "./Cabs";
 
 export {
   DETAILPANEL,
@@ -26,4 +27,5 @@ export {
   VehicleInfoDrawer,
   EditQADrawer,
   AddQADrawer,
+  Cabs,
 };
