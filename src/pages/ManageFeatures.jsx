@@ -3,13 +3,13 @@ import { Avatar } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
-import { useFeatures } from "hooks";
+import { useFeaturesList } from "hooks";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 import { PhotoUpload } from "components/core";
 
 const ManageFeatures = () => {
-  const { features, setRealtime } = useFeatures();
+  const { features, setRealtime } = useFeaturesList();
   console.log(features);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
@@ -185,6 +185,7 @@ const ManageFeatures = () => {
           },
           onRowDelete: async (oldData) => {
             try {
+              
               const response = await fetch(
                 `${BASE_URL}/feature/${oldData?._id}`,
                 {

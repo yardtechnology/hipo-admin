@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
-const useFeatures = () => {
+const useFeaturesList = () => {
   const [features, setFeatures] = useState(null);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   useEffect(() => {
-    const fetchPremiums = async () => {
+    const fetchFeatures = async () => {
       try {
         const response = await fetch(`${BASE_URL}/features/all`, {
           method: "GET",
@@ -19,7 +19,7 @@ const useFeatures = () => {
         });
         const arr = await response.json();
         console.log(arr);
-        const sortArr = arr?.allFeature?.sort(
+        const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
         isMounted.current && setFeatures(sortArr);
@@ -27,7 +27,7 @@ const useFeatures = () => {
         console.log(error);
       }
     };
-    fetchPremiums();
+    fetchFeatures();
   }, [isMounted, realtime]);
   return {
     features,
@@ -35,4 +35,4 @@ const useFeatures = () => {
   };
 };
 
-export default useFeatures;
+export default useFeaturesList;

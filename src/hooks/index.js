@@ -20,6 +20,6 @@ export { default as useVehicleCategory } from "./useVehicleCategory";
 export { default as useCareer } from "./useCareer";
 export { default as useConfig } from "./useConfig";
 export { default as useFaqs } from "./useFaqs";
-export { default as useFeatures } from "./useFeatures";
 export { default as useCities } from "./useCities";
 export { default as useDriverRequests } from "./useDriversRequests";
+export { default as useFeaturesList } from "./useFeaturesList";
