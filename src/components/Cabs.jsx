@@ -167,7 +167,7 @@ const Cabs = ({ city }) => {
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
                 body: JSON.stringify({
-                  vehicleCategory: data?.vehicleCategory,
+                  vehicleCategory: data?.vehicleCategoryName,
                   perKilometer: data?.perKilometer,
                   perMinute: data?.perMinute,
                   baseFare: data?.baseFare,
@@ -196,7 +196,7 @@ const Cabs = ({ city }) => {
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
                 body: JSON.stringify({
-                  vehicleCategory: newData?.vehicleCategory,
+                  vehicleCategory: newData?.vehicleCategoryName,
                   perKilometer: newData?.perKilometer,
                   perMinute: newData?.perMinute,
                   baseFare: newData?.baseFare,
