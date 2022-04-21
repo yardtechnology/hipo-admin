@@ -32,7 +32,7 @@ import {
   TwoWheeler,
   // TheaterComedy,
   VpnKey,
-  LocalAtm,
+  // LocalAtm,
   PriceCheck,
   Quiz,
   WorkspacePremium,
@@ -234,26 +234,26 @@ const MenuItems = [
       },
     ],
   },
-  {
-    key: "27",
-    icon: <LocalAtm className="iconColor" />,
-    title: "Incentives",
-    route: "/incentives",
-    submenus: [
-      {
-        key: "1",
-        title: "Driver Share",
-        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
-        route: "/driver-share",
-      },
-      {
-        key: "2",
-        title: "Operators Share",
-        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
-        route: "/operators-share",
-      },
-    ],
-  },
+  // {
+  //   key: "27",
+  //   icon: <LocalAtm className="iconColor" />,
+  //   title: "Incentives",
+  //   route: "/incentives",
+  //   submenus: [
+  //     {
+  //       key: "1",
+  //       title: "Driver Share",
+  //       icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+  //       route: "/driver-share",
+  //     },
+  //     {
+  //       key: "2",
+  //       title: "Operators Share",
+  //       icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+  //       route: "/operators-share",
+  //     },
+  //   ],
+  // },
   {
     key: "16",
     icon: <Money className="iconColor" />,
