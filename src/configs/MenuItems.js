@@ -254,12 +254,12 @@ const MenuItems = [
   //     },
   //   ],
   // },
-  {
-    key: "16",
-    icon: <Money className="iconColor" />,
-    title: "Pricing",
-    route: "/pricing",
-  },
+  // {
+  //   key: "16",
+  //   icon: <Money className="iconColor" />,
+  //   title: "Pricing",
+  //   route: "/pricing",
+  // },
 
   {
     key: "17",
