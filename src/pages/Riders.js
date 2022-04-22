@@ -80,13 +80,14 @@ const Riders = () => {
   const blockUser = async (user) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${BASE_URL}/user/${user._id}`, {
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
         body: JSON.stringify({
+          userIds: [user?._id],
           isBlocked: !user.isBlocked,
         }),
       });
@@ -113,13 +114,14 @@ const Riders = () => {
   const unblockUser = async (user) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${BASE_URL}/user/${user._id}`, {
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
         body: JSON.stringify({
+          userIds: [user?._id],
           isBlocked: !user.isBlocked,
         }),
       });
