@@ -80,7 +80,16 @@ $secondary-color: #1877f2;
   padding-top: 2vh;
   padding-bottom: 2vh;
 }
-
+.inline-block{
+  display: inline-block;
+}
+.my-1{
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+.mr-1{
+  margin-right: 1vh;
+}
 .selectedSubMenu {
   border-radius: 0px 40px 40px 0px !important;
   // background-color: rgb(224 22 213 / 25%) !important;

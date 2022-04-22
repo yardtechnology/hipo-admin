@@ -137,6 +137,13 @@ const Cabs = ({ city }) => {
             render: ({ allowance }) => formatCurrency(allowance),
           },
           {
+            title: "Tax",
+            field: "tax",
+            type: "numeric",
+            searchable: true,
+            render: ({ tax }) => `${tax}%`,
+          },
+          {
             title: "Timestamp",
             // width: "70%",
             field: "timestamp",

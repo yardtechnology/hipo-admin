@@ -1,5 +1,5 @@
 import MaterialTable from "@material-table/core";
-import { Avatar } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
@@ -7,14 +7,22 @@ import { useVehicleCategory } from "hooks";
 import { PhotoUpload } from "components/core";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
+import { Assignment } from "@mui/icons-material";
+import { AssignFeatureDrawer } from "components";
+import { useState } from "react";
 
 const VehicleCategories = () => {
+  const [openAssignFeatureDrawer, setOpenAssignFeatureDrawer] = useState({});
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const { vehicleCategory, setRealtime } = useVehicleCategory();
   console.log(vehicleCategory);
   return (
     <>
+      <AssignFeatureDrawer
+        open={openAssignFeatureDrawer}
+        setOpenAssignFeatureDrawer={setOpenAssignFeatureDrawer}
+      />
       <MaterialTable
         options={{
           selection: "true",
@@ -126,6 +134,22 @@ const VehicleCategories = () => {
             hidden: true,
             export: true,
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
+          },
+          {
+            // title: "Features",
+            field: "features",
+            render: (row) => {
+              return (
+                <IconButton
+                  onClick={() => {
+                    setOpenAssignFeatureDrawer(row);
+                  }}
+                >
+                  <Assignment />
+                </IconButton>
+              );
+            },
+            width: "2%",
           },
         ]}
         editable={{

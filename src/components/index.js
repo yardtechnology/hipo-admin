@@ -12,8 +12,10 @@ import ViewQADrawer from "./ViewQADrawer";
 import EditQADrawer from "./EditQADrawer";
 import AddQADrawer from "./AddQADrawer";
 import Cabs from "./Cabs";
+import AssignFeatureDrawer from "./AssignFeatureDrawer";
 
 export {
+  AssignFeatureDrawer,
   DETAILPANEL,
   ViewQADrawer,
   AddressDrawer,
