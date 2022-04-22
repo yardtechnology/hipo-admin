@@ -7,7 +7,7 @@ import moment from "moment";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 const Cabs = ({ city }) => {
-  console.log(city);
+  // console.log(city);
   const { vehicleCategory } = useVehicleCategory();
   const { isMounted } = useIsMounted();
   const [cabs, setCabs] = React.useState(null);
@@ -25,7 +25,7 @@ const Cabs = ({ city }) => {
           // },
         });
         const arr = await response.json();
-        console.log(arr);
+        // console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -36,7 +36,7 @@ const Cabs = ({ city }) => {
     };
     fetchCabs();
   }, [realtime, city, isMounted]);
-  console.log(cabs);
+  // console.log(cabs);
 
   return (
     <div style={{ marginTop: "2vh" }}>
@@ -68,6 +68,7 @@ const Cabs = ({ city }) => {
                 // vehicleCategory: cab?.vehicleCategory?.name,
                 currentTimestamp: moment(cab.createdAt).format("DD-MM-YYYY"),
                 vehicleCategoryName: cab?.vehicleCategory?.name,
+                vehicleCategoryId: cab?.vehicleCategory?._id,
               }))
         }
         columns={[
@@ -79,7 +80,7 @@ const Cabs = ({ city }) => {
 
           {
             title: "Vehicle category",
-            field: "vehicleCategoryName",
+            field: "vehicleCategoryId",
             // field: "vehicleCategory",
             render: (rowData) => {
               return rowData?.vehicleCategory?.name;
@@ -166,7 +167,7 @@ const Cabs = ({ city }) => {
         editable={{
           onRowAdd: async (data) => {
             try {
-              console.log(data);
+              // console.log(data);
               const response = await fetch(`${BASE_URL}/cab`, {
                 method: "POST",
                 headers: {
@@ -174,12 +175,13 @@ const Cabs = ({ city }) => {
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
                 body: JSON.stringify({
-                  vehicleCategory: data?.vehicleCategoryName,
+                  vehicleCategory: data?.vehicleCategoryId,
                   perKilometer: data?.perKilometer,
                   perMinute: data?.perMinute,
                   baseFare: data?.baseFare,
                   allowance: data?.allowance,
                   city: city?._id,
+                  tax: data?.tax,
                 }),
               });
               const res = await response.json();
@@ -195,7 +197,7 @@ const Cabs = ({ city }) => {
           },
           onRowUpdate: async (newData, oldData) => {
             try {
-              console.log(newData);
+              // console.log(newData);
               const response = await fetch(`${BASE_URL}/cab/${oldData?._id}`, {
                 method: "PUT",
                 headers: {
@@ -203,11 +205,12 @@ const Cabs = ({ city }) => {
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
                 body: JSON.stringify({
-                  vehicleCategory: newData?.vehicleCategoryName,
+                  vehicleCategory: newData?.vehicleCategoryId,
                   perKilometer: newData?.perKilometer,
                   perMinute: newData?.perMinute,
                   baseFare: newData?.baseFare,
                   allowance: newData?.allowance,
+                  tax: newData?.tax,
                 }),
               });
               const res = await response.json();
