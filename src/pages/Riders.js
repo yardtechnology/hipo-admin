@@ -16,6 +16,9 @@ import { SendNotification } from "components/dialog";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { useRiders } from "hooks";
+import Swal from "sweetalert2";
+import { BASE_URL } from "configs";
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
@@ -67,13 +70,80 @@ const IOSSwitch = styled((props) => (
   },
 }));
 const Riders = () => {
+  const { riders, setRealtime } = useRiders();
+  console.log(riders);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [openAddressDrawer, setOpenAddressDrawer] = useState(false);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
-
-  console.log(selectedUsers);
   const navigate = useNavigate();
-  console.log(new Date().toString());
+  const blockUser = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/user/${user._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          isBlocked: !user.isBlocked,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "User has been blocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+  const unblockUser = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/user/${user._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          isBlocked: !user.isBlocked,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "User has been unblocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+
   return (
     <>
       <AddressDrawer
@@ -116,19 +186,14 @@ const Riders = () => {
           selection: true,
           sorting: true,
         }}
-        data={[
-          {
-            displayName: "Mehmet",
-            email: "Baran@gmail.com",
-            phoneNumber: "777887643625",
-            address: "Bbsr",
-            trips: "15",
-            profileImageUrl: "",
-            status: "Unblocked",
-            creationTime: new Date().toString(),
-            lastSignInTime: "Mon Mar 28 2022 12:28:48 GMT+0530",
-          },
-        ]}
+        data={
+          riders === null
+            ? []
+            : riders.map((rider, index) => ({
+                ...rider,
+                sl: index + 1,
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -146,7 +211,7 @@ const Riders = () => {
             tooltip: "Profile",
             searchable: true,
             width: "20%",
-            field: "firstName",
+            field: "displayName",
             render: ({ photoURL, displayName, email }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
@@ -156,13 +221,13 @@ const Riders = () => {
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {displayName}
                       </Typography>
                     }
                     // secondary={email}
                     secondary={
                       <Typography sx={{}} component="h6" variant="subtitle2">
-                        {email || "Not Provided"} <br />
+                        {email} <br />
                       </Typography>
                     }
                   ></ListItemText>
@@ -189,22 +254,27 @@ const Riders = () => {
             width: "5%",
             render: (row) => (
               <>
-                {/* <Button
-                  sx={{ padding: "4px 5px", textTransform: "none" }}
-                  size="small"
-                  variant="contained"
-                  color="success"
-                >
-                  {row?.status}
-                </Button> */}
-                <IOSSwitch size="small" checked={true} onChange={false} />
+                <Tooltip title={row.isBlocked ? "Unblock User" : "Block User"}>
+                  <IOSSwitch
+                    size="small"
+                    checked={row?.isBlocked ? true : false}
+                    onChange={(e) => {
+                      console.log(e.target.checked);
+                      if (e.target.checked) {
+                        blockUser(row);
+                      } else {
+                        unblockUser(row);
+                      }
+                    }}
+                  />
+                </Tooltip>
               </>
             ),
           },
           {
-            title: "Creation Time",
-            field: "creationTime",
-            render: ({ creationTime }) => moment(creationTime).format("lll"),
+            title: "Created At",
+            field: "createdAt",
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             emptyValue: "--",
           },
           {
@@ -322,6 +392,7 @@ const Riders = () => {
             // onClick: (evt, data) => setSelectedUsers(data),
           },
         ]}
+        isLoading={riders === null || isLoading}
       />
       <SendNotification
         selectedUsers={selectedUsers}

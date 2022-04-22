@@ -23,3 +23,4 @@ export { default as useFaqs } from "./useFaqs";
 export { default as useCities } from "./useCities";
 export { default as useDriverRequests } from "./useDriversRequests";
 export { default as useFeaturesList } from "./useFeaturesList";
+export { default as useRiders } from "./useRiders";
