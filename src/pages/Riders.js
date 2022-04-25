@@ -77,6 +77,74 @@ const Riders = () => {
   const [openAddressDrawer, setOpenAddressDrawer] = useState(false);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const navigate = useNavigate();
+  const handleBlockAll = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          userIds: user,
+          isBlocked: true,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "Users has been blocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+  const handleUnblockAll = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          userIds: user,
+          isBlocked: false,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "Users has been unblocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
   const blockUser = async (user) => {
     try {
       setIsLoading(true);
@@ -386,11 +454,13 @@ const Riders = () => {
           {
             tooltip: "Block all selected users",
             icon: "block",
+            onClick: (evt, data) => handleBlockAll(data.map((d) => d._id)),
             // onClick: (evt, data) => setSelectedUsers(data),
           },
           {
             tooltip: "Unblock all selected users",
             icon: "done",
+            onClick: (evt, data) => handleUnblockAll(data.map((d) => d._id)),
             // onClick: (evt, data) => setSelectedUsers(data),
           },
         ]}

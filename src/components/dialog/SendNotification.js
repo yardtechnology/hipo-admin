@@ -52,7 +52,7 @@ const SendNotification = ({ selectedUsers, handleClose }) => {
       console.log(values, selectedUsers);
       submitProps.resetForm();
 
-      Swal.fire({ icon: "success", text: res?.message });
+      Swal.fire({ icon: "success", text: "Notification Sent Successfully" });
     } catch (error) {
       console.log(error);
       Swal.fire({ icon: "error", text: error.message });
