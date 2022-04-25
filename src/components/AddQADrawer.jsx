@@ -19,13 +19,11 @@ import { Done } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
-import { useFaqs } from "hooks";
 // import { PhotoUpload } from "./core";
 
-const AddQADrawer = ({ open, setOpenAddQADrawer }) => {
+const AddQADrawer = ({ open, setOpenAddQADrawer, setRealtime }) => {
   // const drawerData = open;
   // console.log(drawerData);
-  const { setRealtime } = useFaqs();
 
   const initialValues = QASchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;

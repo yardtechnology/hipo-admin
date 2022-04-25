@@ -311,7 +311,7 @@ const Riders = () => {
                   <Tooltip title="View Ride History">
                     <Avatar
                       variant="rounded"
-                      onClick={() => navigate("/rider-history")}
+                      onClick={() => navigate(`/rider-history/${row._id}`)}
                       sx={{
                         padding: " 0px !important",
                         backgroundColor: "#1877f2",

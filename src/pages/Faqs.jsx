@@ -44,13 +44,16 @@ const Faqs = () => {
     <>
       <ViewQADrawer
         open={openViewQADrawer}
+        setRealtime={setRealtime}
         setOpenQADrawer={setOpenViewQADrawer}
       />
       <AddQADrawer
         open={openAddQADrawer}
         setOpenAddQADrawer={setOpenAddQADrawer}
+        setRealtime={setRealtime}
       />
       <EditQADrawer
+        setRealtime={setRealtime}
         open={openEditQADrawer}
         setOpenEditQADrawer={setOpenEditQADrawer}
       />
@@ -205,7 +208,9 @@ const Faqs = () => {
                     },
                   ]}
                   detailPanel={({ rowData }) => {
-                    const SUBTOPICS = rowData?.subtopics;
+                    const SUBTOPICS = (rowData?.subtopics).sort(
+                      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                    );
                     return (
                       <>
                         <div style={{ marginTop: "2vh" }}>

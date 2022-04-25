@@ -20,6 +20,7 @@ const VehicleCategories = () => {
   return (
     <>
       <AssignFeatureDrawer
+        setRealtime={setRealtime}
         open={openAssignFeatureDrawer}
         setOpenAssignFeatureDrawer={setOpenAssignFeatureDrawer}
       />

@@ -21,7 +21,7 @@ import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
 // import { PhotoUpload } from "./core";
 
-const EditQADrawer = ({ open, setOpenEditQADrawer }) => {
+const EditQADrawer = ({ open, setOpenEditQADrawer, setRealtime }) => {
   const initialValues = QASchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
@@ -47,6 +47,7 @@ const EditQADrawer = ({ open, setOpenEditQADrawer }) => {
       });
       const subtopicRes = await subtopicResponse.json();
       // console.log(subtopicRes);
+      setRealtime((prev) => !prev);
       subtopicRes?.status === 200
         ? Swal.fire({
             text: subtopicRes.message,

@@ -2,9 +2,14 @@ import { Done } from "@mui/icons-material";
 import { Avatar, Chip, Container, Drawer, Typography } from "@mui/material";
 import { BASE_URL } from "configs";
 import { useFeaturesList } from "hooks";
-const AssignFeatureDrawer = ({ open, setOpenAssignFeatureDrawer }) => {
+const AssignFeatureDrawer = ({
+  open,
+  setOpenAssignFeatureDrawer,
+  setRealtime,
+}) => {
   console.log(open);
-  const { features, setRealtime } = useFeaturesList();
+  const { features } = useFeaturesList();
+  // const { setRealtime } = useVehicleCategory();
   console.log(features);
   const addFeature = async (item) => {
     try {
@@ -28,18 +33,21 @@ const AssignFeatureDrawer = ({ open, setOpenAssignFeatureDrawer }) => {
         ...open,
         features: updatedFeatures,
       });
+      // setOpenAssignFeatureDrawer(false);
     } catch (error) {
       console.log(error);
     }
   };
   const removeFeature = async (item) => {
     try {
-      const removedFeatures = open?.features?.filter(
+      const updatedFeatures = open?.features?.filter(
         (feature) => feature !== item?._id
       );
-
+      const removedFeatures = open?.features?.find(
+        (feature) => feature === item?._id
+      );
       console.log(removedFeatures);
-      const response = await fetch(`${BASE_URL}/vehicle-category/${open._id}`, {
+      const response = await fetch(`${BASE_URL}/features/remove/${open._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +63,7 @@ const AssignFeatureDrawer = ({ open, setOpenAssignFeatureDrawer }) => {
       setRealtime((prev) => !prev);
       setOpenAssignFeatureDrawer({
         ...open,
-        features: removedFeatures,
+        features: updatedFeatures,
       });
     } catch (error) {
       console.log(error);
@@ -104,10 +112,11 @@ const AssignFeatureDrawer = ({ open, setOpenAssignFeatureDrawer }) => {
             {/* </ListItem> */}
             {features === null
               ? []
-              : features.map((feature) => {
+              : features?.map((feature) => {
                   const hasFeature = open?.features
                     ? open?.features?.includes(feature?._id)
                     : false;
+                  console.log(open?.features);
                   return (
                     <div className="inline-block my-1 mr-1" key={feature?.key}>
                       <Chip
