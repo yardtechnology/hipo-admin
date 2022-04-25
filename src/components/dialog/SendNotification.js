@@ -8,15 +8,16 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { TextInput } from "components/core";
+import { BASE_URL } from "configs";
 // import { BASE_URL } from "configs";
 // import { useAppContext } from "contexts";
 import { Form, Formik } from "formik";
 import { MessageSchema } from "schemas";
+import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 import * as Yup from "yup";
 const SendNotification = ({ selectedUsers, handleClose }) => {
-  // const ICON = "https://sky-rise.s3.amazonaws.com/notification/superadmin.png";
-  // console.log(selectedUsers);
+  console.log(selectedUsers);
   // const { user } = useAppContext();
   const initialValues = MessageSchema.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
@@ -28,37 +29,35 @@ const SendNotification = ({ selectedUsers, handleClose }) => {
   }, {});
   //   const sendREPLY = () => {};
   const handleSendReply = async (values, submitProps) => {
-    // try {
-    //   for (let users of selectedUsers) {
-    //     const result = await fetch(`${BASE_URL}/notification/create`, {
-    //       method: "POST",
-    //       body: JSON.stringify({
-    //         sendToId: users?._id,
-    //         selfId: user?._id,
-    //         description: values?.message,
-    //         title: values?.subject,
-    //         iconUrl: ICON,
-    //       }),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     });
-    //     const res = await result.json();
-    //     console.log(res);
-    //     console.log(result.status);
-    //     result.status === 200
-    //       ? console.log(res?.success?.message)
-    //       : Swal.fire({ icon: "error", text: res?.error?.message });
-    //     handleClose();
-    //     console.log(values, selectedUsers);
-    //     submitProps.resetForm();
-    //   }
-    //   Swal.fire({ icon: "success", text: "Notification Sent Successfully" });
-    // } catch (error) {
-    //   console.log(error);
-    //   Swal.fire({ icon: "error", text: error.message });
-    //   submitProps.setSubmitting(false);
-    // }
+    try {
+      const result = await fetch(`${BASE_URL}/notifications/all`, {
+        method: "POST",
+        body: JSON.stringify({
+          users: selectedUsers,
+          description: values?.message,
+          title: values?.subject,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      const res = await result.json();
+      console.log(res);
+      console.log(result.status);
+      result.status === 200
+        ? console.log(res?.success?.message)
+        : Swal.fire({ icon: "error", text: res?.message });
+      handleClose();
+      console.log(values, selectedUsers);
+      submitProps.resetForm();
+
+      Swal.fire({ icon: "success", text: res?.message });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({ icon: "error", text: error.message });
+      submitProps.setSubmitting(false);
+    }
   };
   return (
     <>

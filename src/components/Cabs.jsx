@@ -20,9 +20,10 @@ const Cabs = ({ city }) => {
         const response = await fetch(`${BASE_URL}/city/cabs/${city?.name}`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
         });
         const arr = await response.json();
         // console.log(arr);

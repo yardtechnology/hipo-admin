@@ -311,7 +311,7 @@ const Riders = () => {
                   <Tooltip title="View Ride History">
                     <Avatar
                       variant="rounded"
-                      onClick={() => navigate(`/rider-history/${row._id}`)}
+                      onClick={() => navigate(`/ride-history/${row._id}`)}
                       sx={{
                         padding: " 0px !important",
                         backgroundColor: "#1877f2",
@@ -381,7 +381,7 @@ const Riders = () => {
           {
             tooltip: "Send notification to all selected users",
             icon: "send",
-            onClick: (evt, data) => setSelectedUsers(data),
+            onClick: (evt, data) => setSelectedUsers(data.map((d) => d._id)),
           },
           {
             tooltip: "Block all selected users",

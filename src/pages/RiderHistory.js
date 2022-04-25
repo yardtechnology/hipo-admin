@@ -10,19 +10,48 @@ import {
   ListItemText,
   IconButton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InvoiceDrawer } from "components";
+import { useIsMounted } from "hooks";
+import { BASE_URL } from "configs";
 const RiderHistory = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
-
+  const { riderId } = useParams();
+  console.log(riderId);
+  const { isMounted } = useIsMounted();
+  const [history, setHistory] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isMounted) return;
+      try {
+        const response = await fetch(`${BASE_URL}/rides/all/${riderId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
+        });
+        const arr = await response.json();
+        console.log(arr);
+        const sortArr = arr?.data?.sort(
+          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+        );
+        setHistory(sortArr);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [isMounted, riderId]);
+  console.log(history);
   return (
     <>
       <InvoiceDrawer
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
-      />{" "}
+      />
       <Breadcrumbs
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
