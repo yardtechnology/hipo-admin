@@ -54,7 +54,7 @@ const RiderHistory = () => {
       />
       <Breadcrumbs
         aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
+        sx={{ marginBottom: "2vh", marginTop: "0vh" }}
       >
         <Link underline="hover" color="inherit" to="/riders">
           Riders
@@ -84,27 +84,35 @@ const RiderHistory = () => {
           selection: true,
           sorting: true,
         }}
-        data={[
-          {
-            bookingTime: new Date().toString(),
-            pickAddress: "Sector-12, Noida",
-            dropAddress: "Sector-15, Noida",
-            invoiceNumber: "CRN-001121432546",
-            displayName: "Aliva Priyadarshini",
-            driverName: "Alexa",
-            pick: new Date().toString(),
-            drop: new Date().toString(),
-            distance: "10km",
-            rideId: "12345",
-            rideType: "Rental",
-            rideAmount: 245,
-            vehicleType: "Car",
-            phoneNumber: "+91 7887643625",
-            address: "Bbsr",
-            trips: "15",
-            status: "Completed",
-          },
-        ]}
+        data={
+          history === null
+            ? []
+            : history?.map((item) => ({
+                ...item,
+                amount: formatCurrency(item.amount),
+              }))
+          //   [
+          //   {
+          //     bookingTime: new Date().toString(),
+          //     pickAddress: "Sector-12, Noida",
+          //     dropAddress: "Sector-15, Noida",
+          //     invoiceNumber: "CRN-001121432546",
+          //     displayName: "Aliva Priyadarshini",
+          //     driverName: "Alexa",
+          //     pick: new Date().toString(),
+          //     drop: new Date().toString(),
+          //     distance: "10km",
+          //     rideId: "12345",
+          //     rideType: "Rental",
+          //     rideAmount: 245,
+          //     vehicleType: "Car",
+          //     phoneNumber: "+91 7887643625",
+          //     address: "Bbsr",
+          //     trips: "15",
+          //     status: "Completed",
+          //   },
+          // ]
+        }
         columns={[
           {
             title: "#",

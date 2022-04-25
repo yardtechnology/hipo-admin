@@ -259,7 +259,7 @@ const Riders = () => {
         data={
           riders === null
             ? []
-            : riders.map((rider, index) => ({
+            : riders?.map((rider, index) => ({
                 ...rider,
                 sl: index + 1,
               }))
