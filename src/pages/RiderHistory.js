@@ -89,7 +89,13 @@ const RiderHistory = () => {
             ? []
             : history?.map((item) => ({
                 ...item,
-                amount: formatCurrency(item.amount),
+                displayName: item?.rider?.displayName,
+                phoneNumber: item?.rider?.phoneNumber,
+                rideAmount: item?.billing?.subTotal,
+                pickupLatitude: item?.pickupLocation?.lat,
+                pickupLongitude: item?.pickupLocation?.lng,
+                dropLatitude: item?.dropLocation?.lat,
+                dropLongitude: item?.dropLocation?.lng,
               }))
           //   [
           //   {
@@ -144,7 +150,7 @@ const RiderHistory = () => {
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {displayName}
                       </Typography>
                     }
                     secondary={phoneNumber}
@@ -157,18 +163,19 @@ const RiderHistory = () => {
             title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
+            emptyValue: "N/A",
             width: "22%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            field: "driverPhoneNumber",
+            render: ({ photoURL, driverDisplayName, driverPhoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {driverDisplayName || "Not Provided"}
                       </Typography>
                     }
-                    secondary={phoneNumber}
+                    secondary={driverPhoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
@@ -181,6 +188,7 @@ const RiderHistory = () => {
           {
             title: "Vehicle",
             field: "vehicleType",
+            emptyValue: "--",
           },
           {
             title: "Pick Date/Time",
@@ -210,7 +218,7 @@ const RiderHistory = () => {
                   sx={{ padding: "4px 5px", textTransform: "none" }}
                   size="small"
                   variant="contained"
-                  color="success"
+                  color="info"
                 >
                   {row?.status}
                 </Button>
@@ -235,13 +243,15 @@ const RiderHistory = () => {
           },
           {
             title: "Distance",
-            field: "distance",
-            // render: (row) => formatCurrency(row.rideAmount),
+            field: "totalDistance",
+            emptyValue: "--",
+            render: ({ totalDistance }) => `${totalDistance} km`,
           },
           {
             title: "Fare",
             field: "rideAmount",
-            render: (row) => formatCurrency(row.rideAmount),
+            emptyValue: "--",
+            render: ({ rideAmount }) => formatCurrency(rideAmount),
           },
 
           {

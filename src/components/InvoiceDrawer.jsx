@@ -14,7 +14,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { MAP } from "assets";
+import { MAP_KEY } from "configs";
 import moment from "moment";
 const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
   const drawerData = rideDetails;
@@ -49,10 +49,10 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
               color=""
               sx={{
                 fontWeight: "",
-                marginTop: "2vh",
+                marginTop: "0vh",
                 paddingLeft: "1.10vw",
                 paddingBottom: "0px",
-                marginBottom: "0px",
+                marginBottom: "2vh",
               }}
               variant="body1"
             >
@@ -60,7 +60,19 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
               <br />
               {moment(rideDetails?.bookingTime)?.format("llll")}
             </Typography>
-            <img src={MAP} alt="p" />
+            <img
+              alt=""
+              style={{
+                width: "100%",
+                height: "auto",
+                marginTop: "0vh",
+                paddingLeft: "1.10vw",
+                paddingBottom: "0px",
+                marginBottom: "2vh",
+              }}
+              // src={`https://maps.googleapis.com/maps/api/staticmap?center=${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&zoom=14&size=330x200&maptype=roadmap&markers=color:red%7Clabel:A%7C${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&markers=color:blue%7Clabel:B%7C${rideDetails?.dropLatitude},${rideDetails?.dropLongitude}&key=${MAP_KEY}`}
+              src={`https://maps.googleapis.com/maps/api/staticmap?center=${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&zoom=14&size=400x200&markers=size:mid|color:red|${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&markers=size:mid|color:blue|${rideDetails?.dropLatitude},${rideDetails.dropLongitude}&key=${MAP_KEY}`}
+            />
           </div>
           <div>
             <Typography

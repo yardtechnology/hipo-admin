@@ -90,10 +90,7 @@ const PrivateRoutes = () => {
         <Route path="/manage-genres" element={<ManageGenre />} />
         <Route path="/manage-services" element={<ManageServices />} />
         <Route path="/features" element={<ManageFeatures />} />
-        <Route
-          path="/ride-history/:riderName/:riderId"
-          element={<RiderHistory />}
-        />
+        <Route path="/ride-history/:riderId" element={<RiderHistory />} />
         <Route path="/manage-artists" element={<ManageArtists />} />
         <Route path="/manage-managers" element={<ManageManagers />} />
         <Route path="/driver-statement" element={<DriverStatements />} />

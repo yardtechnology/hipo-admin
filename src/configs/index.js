@@ -1,2 +1,2 @@
 export { default as MenuItems } from "./MenuItems";
-export { default as BASE_URL } from "./api";
+export { BASE_URL, MAP_KEY } from "./api";
