@@ -9,18 +9,17 @@ const useNotifications = () => {
   useEffect(() => {
     const fetchSupports = async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}/notification/all-notification/61ee88a7f8d72eecd9f6c6f5`,
-          {
-            // method: "GET",
-            // body: JSON.stringify({ ...values }),
-            // headers: {
-            //   "Content-Type": "application/json",
-            // },
-          }
-        );
+        const response = await fetch(`${BASE_URL}/notifications/all`, {
+          // method: "GET",
+          // body: JSON.stringify({ ...values }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
+        });
         const arr = await response.json();
-        const sortArr = arr?.success?.data?.sort(
+        console.log(arr);
+        const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
         );
         isMounted.current && setNotifications(sortArr);

@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
 import { SendNotification } from "components/dialog";
+import { useOperators } from "hooks";
 import moment from "moment";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +29,8 @@ const Operators = () => {
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
-
+  const { operators } = useOperators();
+  console.log(operators);
   return (
     <>
       {" "}
@@ -71,19 +73,29 @@ const Operators = () => {
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}
-        data={[
-          {
-            dateOfBirth: "12/12/12",
-            displayName: "Alexa",
-            email: "alexa@gmail.com",
-            phoneNumber: "+91 7778876436",
-            city: "Bbsr",
-            joiningDate: new Date().toString(),
-            trips: "15",
-            profileImageUrl: "",
-            status: "Approved",
-          },
-        ]}
+        data={
+          operators === null
+            ? []
+            : operators.map((operator, i) => ({
+                ...operator,
+                sl: i + 1,
+                currentTimestamp: moment(operator.createdAt).format("ll"),
+              }))
+
+          //   [
+          //   {
+          //     dateOfBirth: "12/12/12",
+          //     displayName: "Alexa",
+          //     email: "alexa@gmail.com",
+          //     phoneNumber: "+91 7778876436",
+          //     city: "Bbsr",
+          //     joiningDate: new Date().toString(),
+          //     trips: "15",
+          //     profileImageUrl: "",
+          //     status: "Approved",
+          //   },
+          // ]
+        }
         columns={[
           {
             title: "#",
@@ -101,7 +113,7 @@ const Operators = () => {
             tooltip: "Profile",
             searchable: true,
             width: "25%",
-            field: "firstName",
+            field: "displayName",
             render: ({ photoURL, displayName, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
@@ -124,21 +136,29 @@ const Operators = () => {
           {
             title: "Email",
             field: "email",
+            searchable: true,
             // width: "5%",
           },
 
-          {
-            title: "City",
-            field: "city",
-          },
+          // {
+          //   title: "City",
+          //   field: "city",
+          // },
           // {
           //   title: "Trips",
           //   field: "trips",
           // },
           {
-            title: "Accepted Date",
-            field: "joiningDate",
-            render: (rowData) => moment(rowData.joiningDate).format("llll"),
+            title: "Joining Date",
+            field: "createdAt",
+            render: (rowData) => moment(rowData.createdAt).format("ll"),
+            export: false,
+          },
+          {
+            title: "Joining Date",
+            field: "currentTimestamp",
+            export: true,
+            hidden: true,
           },
           {
             title: "Status",

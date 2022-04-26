@@ -1,5 +1,13 @@
 import { Delete, Done, NotificationsTwoTone } from "@mui/icons-material";
-import { Alert, AlertTitle, Grid, IconButton, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Grid,
+  IconButton,
+  List,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { BASE_URL } from "configs";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -8,22 +16,73 @@ import { useNotifications } from "../hooks";
 const Notifications = () => {
   const { notifications, setRealtime } = useNotifications();
   console.log(notifications);
-  const readNotification = async (data) => {
+  const handleAllRead = async () => {
     try {
-      const result = await fetch(`${BASE_URL}/notification/make-read`, {
-        method: "PUT",
-        body: JSON.stringify({
-          notificationIds: data,
-        }),
+      const result = await fetch(
+        `${BASE_URL}/notifications/marked-as-seen/all`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
+        }
+      );
+      const res = await result.json();
+      console.log(res);
+      result.status === 200
+        ? Swal.fire({
+            icon: "success",
+            text: "All notifications have been read",
+          })
+        : Swal.fire({ icon: "error", text: res.message });
+    } catch (error) {
+      Swal.fire({ icon: "error", text: error.message });
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+
+  const handleDeleteAll = async () => {
+    try {
+      const result = await fetch(`${BASE_URL}/notifications/all`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
       });
       const res = await result.json();
       console.log(res);
       result.status === 200
-        ? Swal.fire({ icon: "success", text: res.success.message })
-        : Swal.fire({ icon: "error", text: res.error.message });
+        ? Swal.fire({ icon: "success", text: "Deleted All Notifications" })
+        : Swal.fire({ icon: "error", text: res.message });
+    } catch (error) {
+      Swal.fire({ icon: "error", text: error.message });
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+
+  const readNotification = async (data) => {
+    try {
+      const result = await fetch(`${BASE_URL}/notifications/marked-as-seen`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          ids: data,
+        }),
+      });
+      const res = await result.json();
+      console.log(res);
+      result.status === 200
+        ? Swal.fire({ icon: "success", text: "Marked as seen" })
+        : Swal.fire({ icon: "error", text: res.message });
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
@@ -33,20 +92,21 @@ const Notifications = () => {
   };
   const deleteNotification = async (data) => {
     try {
-      const result = await fetch(`${BASE_URL}/notification/delete`, {
-        method: "PUT",
+      const result = await fetch(`${BASE_URL}/notifications`, {
+        method: "DELETE",
         body: JSON.stringify({
-          notificationIds: data,
+          ids: data,
         }),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
       });
       const res = await result.json();
       console.log(res);
       result.status === 200
-        ? Swal.fire({ icon: "success", text: res.success.message })
-        : Swal.fire({ icon: "error", text: res.error.message });
+        ? Swal.fire({ icon: "success", text: "Deleted" })
+        : Swal.fire({ icon: "error", text: res.message });
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
@@ -56,40 +116,71 @@ const Notifications = () => {
   };
   return (
     <>
-      {notifications.length === false ? (
-        notifications.map((notification) => (
-          <section className="py-1">
+      {notifications?.length > 0 ? (
+        <>
+          <div
+            style={{
+              justifyContent: "right",
+              paddingRight: "1.9vh",
+              display: "flex",
+            }}
+          >
             <>
-              {" "}
-              <Alert
-                severity={notification.isRead ? "success" : "info"}
-                iconMapping={{
-                  success: <NotificationsTwoTone fontSize="inherit" />,
-                }}
-                action={
-                  <>
-                    <IconButton
-                      color="primary"
-                      onClick={() => readNotification(notification?._id)}
-                    >
-                      <Done />
-                    </IconButton>
-                    <IconButton
-                      color="error"
-                      onClick={() => deleteNotification(notification?._id)}
-                    >
-                      <Delete />
-                    </IconButton>
-                  </>
-                }
-              >
-                <AlertTitle>{notification?.title}</AlertTitle>
-                {notification?.description}{" "}
-                <strong>{moment(notification?.timestamp).format("lll")}</strong>
-              </Alert>
+              <Tooltip title="Mark as read all notifications">
+                <List>
+                  {" "}
+                  <IconButton color="primary" onClick={handleAllRead}>
+                    <Done sx={{}} />
+                  </IconButton>{" "}
+                </List>
+              </Tooltip>
+
+              <Tooltip title={"Delete all notifications"}>
+                <List>
+                  <IconButton color="error" onClick={handleDeleteAll}>
+                    {" "}
+                    <Delete />
+                  </IconButton>
+                </List>
+              </Tooltip>
             </>
-          </section>
-        ))
+          </div>
+          {notifications?.map((notification) => (
+            <section className="py-1">
+              <>
+                {" "}
+                <Alert
+                  severity={notification?.seen ? "success" : "info"}
+                  iconMapping={{
+                    success: <NotificationsTwoTone fontSize="inherit" />,
+                  }}
+                  action={
+                    <>
+                      <IconButton
+                        color="primary"
+                        onClick={() => readNotification(notification?._id)}
+                      >
+                        <Done />
+                      </IconButton>
+                      <IconButton
+                        color="error"
+                        onClick={() => deleteNotification(notification?._id)}
+                      >
+                        <Delete />
+                      </IconButton>
+                    </>
+                  }
+                >
+                  <AlertTitle>{notification?.title}</AlertTitle>
+                  {notification?.description}{" "}
+                  <strong>
+                    {moment(notification?.timestamp).format("lll")}
+                  </strong>
+                </Alert>
+              </>
+            </section>
+          ))}
+        </>
       ) : (
         <Grid container justifyContent={"center"}>
           <Grid

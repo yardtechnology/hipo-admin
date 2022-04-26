@@ -27,7 +27,7 @@ const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
   const { notifications } = useNotifications();
   // console.log(notifications);
   const unreadMessage = notifications?.filter(
-    (notification) => notification?.isRead === false
+    (notification) => notification?.seen === false
   );
   // console.log(user);
   const navigate = useNavigate();
