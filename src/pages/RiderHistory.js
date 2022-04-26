@@ -54,7 +54,7 @@ const RiderHistory = () => {
       />
       <Breadcrumbs
         aria-label="breadcrumb"
-        sx={{ marginBottom: "2vh", marginTop: "0vh" }}
+        sx={{ marginBottom: "vh", marginTop: "0vh" }}
       >
         <Link underline="hover" color="inherit" to="/riders">
           Riders
