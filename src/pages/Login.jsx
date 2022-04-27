@@ -1,10 +1,16 @@
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import { CardContent, CardHeader, Container, Card } from "@mui/material";
+import {
+  CardContent,
+  CardHeader,
+  Container,
+  Card,
+  Button,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { LoginSchema } from "schemas";
-import { Forward } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { LoginOutlined } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "contexts";
 import { TextInput } from "components/core";
 import Swal from "sweetalert2";
@@ -42,7 +48,7 @@ const Login = () => {
           </div>
           <CardHeader
             title="Sign In To Access Panel"
-            subheader="Please enter your Phone Number to sign in"
+            subheader="Please enter your credentials to sign in"
             titleTypographyProps={{
               gutterBottom: true,
               align: "center",
@@ -69,7 +75,7 @@ const Login = () => {
                       startIcon={inputItem?.startIcon}
                     />
                   ))}
-                  {/* <div className="d-flex place-content-end">
+                  <div className="d-flex place-content-end">
                     <Button
                       component={Link}
                       to="/forgot-password"
@@ -77,11 +83,8 @@ const Login = () => {
                     >
                       Forgot Password?
                     </Button>
-                  </div> */}
-                  <div
-                    className="place-content-center"
-                    style={{ marginTop: "2vh" }}
-                  >
+                  </div>
+                  <div className="place-content-center">
                     <LoadingButton
                       className="mt-1vh btn-background"
                       variant="contained"
@@ -89,10 +92,10 @@ const Login = () => {
                       disabled={isSubmitting || !isValid}
                       loading={isSubmitting}
                       loadingPosition="start"
-                      startIcon={<Forward />}
+                      startIcon={<LoginOutlined />}
                       fullWidth
                     >
-                      Next
+                      Access Panel
                     </LoadingButton>
                   </div>
                 </CardContent>

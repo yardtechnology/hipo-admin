@@ -16,16 +16,14 @@ import {
 } from "@mui/material";
 import { MAP_KEY } from "configs";
 import moment from "moment";
-const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
-  const drawerData = rideDetails;
-  console.log(drawerData);
-  console.log(rideDetails);
+const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
+  console.log(Details);
 
   return (
     <>
       <Drawer
         anchor="right"
-        open={rideDetails}
+        open={Details}
         onClose={() => setOpenInvoiceDrawer(false)}
       >
         <Container
@@ -56,9 +54,9 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
               }}
               variant="body1"
             >
-              {rideDetails?.rideId}
+              {Details?.rideId}
               <br />
-              {moment(rideDetails?.bookingTime)?.format("llll")}
+              {moment(Details?.createdAt)?.format("llll")}
             </Typography>
             <img
               alt=""
@@ -70,8 +68,8 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                 paddingBottom: "0px",
                 marginBottom: "2vh",
               }}
-              // src={`https://maps.googleapis.com/maps/api/staticmap?center=${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&zoom=14&size=330x200&maptype=roadmap&markers=color:red%7Clabel:A%7C${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&markers=color:blue%7Clabel:B%7C${rideDetails?.dropLatitude},${rideDetails?.dropLongitude}&key=${MAP_KEY}`}
-              src={`https://maps.googleapis.com/maps/api/staticmap?center=${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&zoom=14&size=400x200&markers=size:mid|color:red|${rideDetails?.pickupLatitude},${rideDetails?.pickupLongitude}&markers=size:mid|color:blue|${rideDetails?.dropLatitude},${rideDetails.dropLongitude}&key=${MAP_KEY}`}
+              // src={`https://maps.googleapis.com/maps/api/staticmap?center=${Details?.pickupLatitude},${Details?.pickupLongitude}&zoom=14&size=330x200&maptype=roadmap&markers=color:red%7Clabel:A%7C${Details?.pickupLatitude},${Details?.pickupLongitude}&markers=color:blue%7Clabel:B%7C${Details?.dropLatitude},${Details?.dropLongitude}&key=${MAP_KEY}`}
+              src={`https://maps.googleapis.com/maps/api/staticmap?center=${Details?.pickupLatitude},${Details?.pickupLongitude}&zoom=14&size=400x200&markers=size:mid|color:red|${Details?.pickupLatitude},${Details?.pickupLongitude}&markers=size:mid|color:blue|${Details?.dropLatitude},${Details?.dropLongitude}&key=${MAP_KEY}`}
             />
           </div>
           <div>
@@ -90,11 +88,14 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
             <Tooltip title="Rider Profile">
               <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "" }}>
                 <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
+                  <Avatar
+                    sx={{ backgroundColor: "#1877f2" }}
+                    src={Details?.rider?.photoURL}
+                  ></Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Aliva Priyadarshini"
-                  secondary="772634243264"
+                  primary={Details?.rider?.displayName}
+                  secondary={Details?.rider?.phoneNumber}
                 />
               </ListItem>
             </Tooltip>
@@ -112,9 +113,15 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
             <Tooltip title="Driver Profile">
               <ListItem sx={{ paddingLeft: "1.4vw" }}>
                 <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
+                  <Avatar
+                    sx={{ backgroundColor: "#1877f2" }}
+                    src={Details?.driver?.photoURL}
+                  ></Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Alexa Smith" secondary="772634243264" />
+                <ListItemText
+                  primary={Details?.driver?.displayName}
+                  secondary={Details?.driver?.phoneNumber}
+                />
               </ListItem>
             </Tooltip>
             <Divider />
@@ -126,7 +133,7 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary={rideDetails?.vehicleType}
+                  primary={Details?.vehicleType}
                   secondary={"Maruti Suzuki Baleno"}
                 />
               </ListItem>
@@ -140,7 +147,7 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  secondary={formatCurrency(rideDetails?.rideAmount)}
+                  secondary={formatCurrency(Details?.rideAmount)}
                   primary={"Total Price"}
                 />
               </ListItem>
@@ -159,11 +166,11 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
               }}
               variant="body1"
             >
-              Pick: {rideDetails?.pickAddress}{" "}
-              {moment(rideDetails?.pick)?.format("hh:mm a")}
+              Pick: {Details?.pickAddress}{" "}
+              {moment(Details?.pick)?.format("hh:mm a")}
               <br />
-              Drop: {rideDetails?.dropAddress}{" "}
-              {moment(rideDetails?.drop)?.format("hh:mm a")}
+              Drop: {Details?.dropAddress}{" "}
+              {moment(Details?.drop)?.format("hh:mm a")}
             </Typography>
             {/* </Tooltip> */}
             <Divider />
@@ -190,7 +197,7 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginBottom: "0vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.rideAmount)}
                 >
                   <ListItemText primary={"Your Trip"} />
                 </ListItem>
@@ -204,14 +211,14 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                     padding: "0vh 1.11vw",
                   }}
                   // disableGutters
-                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.rideAmount)}
                 >
                   <ListItemText primary={"Coupon Savings"} />
                 </ListItem>
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "0vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.rideAmount)}
                 >
                   <ListItemText primary={"Rounded Off"} />
                 </ListItem>
@@ -219,7 +226,7 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "0vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.rideAmount)}
                 >
                   <ListItemText
                     primary={"Total Bill"}
@@ -230,7 +237,7 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "1vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.rideAmount)}
                 >
                   <ListItemText
                     primary={"Total Payable"}
@@ -247,7 +254,7 @@ const InvoiceDrawer = ({ rideDetails, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "1vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(rideDetails?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.rideAmount)}
                 >
                   <ListItemText primary={"Cash"} />
                 </ListItem>

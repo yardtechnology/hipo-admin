@@ -49,12 +49,12 @@ const RiderHistory = () => {
   return (
     <>
       <InvoiceDrawer
-        rideDetails={openInvoiceDrawer}
+        Details={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />
       <Breadcrumbs
         aria-label="breadcrumb"
-        sx={{ marginBottom: "vh", marginTop: "0vh" }}
+        sx={{ marginBottom: "1vh", marginTop: "0vh" }}
       >
         <Link underline="hover" color="inherit" to="/riders">
           Riders
@@ -96,6 +96,8 @@ const RiderHistory = () => {
                 pickupLongitude: item?.pickupLocation?.lng,
                 dropLatitude: item?.dropLocation?.lat,
                 dropLongitude: item?.dropLocation?.lng,
+                driverDisplayName: item?.driver?.displayName,
+                driverPhoneNumber: item?.driver?.phoneNumber,
               }))
           //   [
           //   {
@@ -143,7 +145,7 @@ const RiderHistory = () => {
             tooltip: "Profile",
             searchable: true,
             width: "22%",
-            field: "firstName",
+            field: "displayName" || "phoneNumber",
             render: ({ photoURL, displayName, email, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>

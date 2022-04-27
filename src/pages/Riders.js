@@ -324,7 +324,7 @@ const Riders = () => {
             width: "5%",
             render: (row) => (
               <>
-                <Tooltip title={row.isBlocked ? "Unblock User" : "Block User"}>
+                <Tooltip title={row?.isBlocked ? "Unblock User" : "Block User"}>
                   <IOSSwitch
                     size="small"
                     checked={row?.isBlocked ? true : false}
