@@ -18,9 +18,12 @@ import {
 } from "@mui/material";
 import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
 import { SendNotification } from "components/dialog";
+import { BASE_URL } from "configs";
+import { useOperatorRequests } from "hooks";
 import moment from "moment";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const OperatorRequest = () => {
   const navigate = useNavigate();
@@ -28,6 +31,57 @@ const OperatorRequest = () => {
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
+  const { operatorRequests, setRealtime } = useOperatorRequests();
+  const handleOperatorRequestAccept = async (ids) => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        body: JSON.stringify({
+          userIds: ids,
+          status: "APPROVED",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire({ text: res?.message, icon: "success" })
+        : Swal.fire({ text: res?.message, icon: "error" });
+
+      // navigate("/driver-requests");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+  const handleOperatorRequestReject = async (ids) => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        body: JSON.stringify({
+          userIds: ids,
+          status: "REJECTED",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire({ text: res?.message, icon: "success" })
+        : Swal.fire({ text: res?.message, icon: "error" });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
   return (
     <>
       {" "}
@@ -70,19 +124,17 @@ const OperatorRequest = () => {
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}
-        data={[
-          {
-            dateOfBirth: "12/12/12",
-            displayName: "Alexa",
-            email: "alexa@gmail.com",
-            phoneNumber: "+91 7778876436",
-            city: "Bbsr",
-            joiningDate: new Date().toString(),
-            trips: "15",
-            profileImageUrl: "",
-            status: "Pending",
-          },
-        ]}
+        data={
+          operatorRequests === null
+            ? []
+            : operatorRequests?.map((operatorRequest, i) => ({
+                ...operatorRequest,
+                sl: i + 1,
+                currentTimestamp: moment(operatorRequest.createdAt).format(
+                  "ll"
+                ),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -124,20 +176,26 @@ const OperatorRequest = () => {
             title: "Email",
             field: "email",
             // width: "5%",
+            searchable: true,
           },
 
-          {
-            title: "City",
-            field: "city",
-          },
           // {
           //   title: "Trips",
           //   field: "trips",
           // },
           {
             title: "Requested At",
-            field: "joiningDate",
-            render: (rowData) => moment(rowData.joiningDate).format("llll"),
+            field: "createdAt",
+            render: (rowData) => moment(rowData.createdAt).format("llll"),
+            searchable: true,
+            export: false,
+          },
+          {
+            title: "Requested At",
+            field: "currentTimestamp",
+            searchable: true,
+            export: true,
+            hidden: true,
           },
           {
             title: "Status",
@@ -224,11 +282,15 @@ const OperatorRequest = () => {
           {
             tooltip: "Accept all selected operators",
             icon: "done",
+            onClick: (evt, data) =>
+              handleOperatorRequestAccept(data?.map((item) => item._id)),
             //   // onClick: (evt, data) => setSelectedUsers(data),
           },
           {
             tooltip: "Reject all selected operators",
             icon: "cancel",
+            onClick: (evt, data) =>
+              handleOperatorRequestReject(data?.map((item) => item._id)),
             //   // onClick: (evt, data) => setSelectedUsers(data),
           },
         ]}

@@ -576,17 +576,17 @@ const AllDrivers = () => {
         ]}
         actions={[
           {
-            tooltip: "Send notification to all selected users",
+            tooltip: "Send notification to all selected Drivers",
             icon: "send",
             onClick: (evt, data) => setSelectedUsers(data),
           },
           {
-            tooltip: "Block all selected users",
+            tooltip: "Block all selected Drivers",
             icon: "block",
             onClick: (evt, data) => handleBlockAll(data.map((d) => d._id)),
           },
           {
-            tooltip: "Unblock all selected users",
+            tooltip: "Unblock all selected Drivers",
             icon: "done",
             onClick: (evt, data) => handleUnblockAll(data.map((d) => d._id)),
           },

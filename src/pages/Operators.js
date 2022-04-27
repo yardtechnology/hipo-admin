@@ -9,28 +9,223 @@ import {
   Avatar,
   //   Card,
   //   CardContent,
-  Chip,
+  styled,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Tooltip,
   Typography,
+  Switch,
 } from "@mui/material";
 import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
 import { SendNotification } from "components/dialog";
+import { BASE_URL } from "configs";
 import { useOperators } from "hooks";
 import moment from "moment";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Operators = () => {
+  const IOSSwitch = styled((props) => (
+    <Switch
+      focusVisibleClassName=".Mui-focusVisible"
+      disableRipple
+      {...props}
+    />
+  ))(({ theme }) => ({
+    width: 42,
+    height: 26,
+    padding: 0,
+    "& .MuiSwitch-switchBase": {
+      padding: 0,
+      margin: 2,
+      transitionDuration: "300ms",
+      "&.Mui-checked": {
+        transform: "translateX(16px)",
+        color: "#fff",
+        "& + .MuiSwitch-track": {
+          backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "red",
+          opacity: 1,
+          border: 0,
+        },
+        "&.Mui-disabled + .MuiSwitch-track": {
+          opacity: 0.5,
+        },
+      },
+      "&.Mui-focusVisible .MuiSwitch-thumb": {
+        color: "#33cf4d",
+        border: "6px solid #fff",
+      },
+      "&.Mui-disabled .MuiSwitch-thumb": {
+        color:
+          theme.palette.mode === "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[600],
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+      },
+    },
+    "& .MuiSwitch-thumb": {
+      boxSizing: "border-box",
+      width: 22,
+      height: 22,
+    },
+    "& .MuiSwitch-track": {
+      borderRadius: 26 / 2,
+      backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+      opacity: 1,
+      transition: theme.transitions.create(["background-color"], {
+        duration: 500,
+      }),
+    },
+  }));
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
-  const { operators } = useOperators();
+  const [isLoading, setIsLoading] = useState(false);
+  const { operators, setRealtime } = useOperators();
   console.log(operators);
+
+  const handleBlockAll = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          userIds: user,
+          isBlocked: true,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "Drivers has been blocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+  const handleUnblockAll = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          userIds: user,
+          isBlocked: false,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "Drivers has been unblocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+  const blockOperator = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          userIds: [user],
+          isBlocked: true,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "Driver has been blocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
+  const unblockOperator = async (user) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/users/all/status-change`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          userIds: [user],
+          isBlocked: false,
+        }),
+      });
+      setIsLoading(false);
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "Driver has been unblocked",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res?.message,
+            icon: "error",
+          });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRealtime((prev) => !prev);
+    }
+  };
   return (
     <>
       {" "}
@@ -73,10 +268,11 @@ const Operators = () => {
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}
+        isLoading={operators === null || isLoading}
         data={
           operators === null
             ? []
-            : operators.map((operator, i) => ({
+            : operators?.map((operator, i) => ({
                 ...operator,
                 sl: i + 1,
                 currentTimestamp: moment(operator.createdAt).format("ll"),
@@ -165,12 +361,28 @@ const Operators = () => {
             field: "status",
             render: (row) => (
               <>
-                <Chip
+                {/* <Button
+                  sx={{ padding: "4px 5px", textTransform: "none" }}
                   size="small"
-                  variant="outlined"
-                  color="secondary"
-                  label={row?.status}
-                />
+                  variant="contained"
+                  color="success"
+                >
+                  {row?.status}
+                </Button> */}
+                <Tooltip
+                  placement="top"
+                  title={row?.isBlocked ? "Unblock Driver" : "Block Driver"}
+                >
+                  <IOSSwitch
+                    size="small"
+                    checked={row?.isBlocked === true ? true : false}
+                    onChange={
+                      row?.isBlocked === true
+                        ? () => unblockOperator(row?._id)
+                        : () => blockOperator(row?._id)
+                    }
+                  />
+                </Tooltip>
               </>
             ),
           },
@@ -238,93 +450,21 @@ const Operators = () => {
         ]}
         actions={[
           {
-            tooltip: "Send notification to all selected users",
+            tooltip: "Send notification to all selected operators",
             icon: "send",
             onClick: (evt, data) => setSelectedUsers(data),
           },
-          // {
-          //   tooltip: "Block all selected users",
-          //   icon: "block",
-          //   // onClick: (evt, data) => setSelectedUsers(data),
-          // },
-          // {
-          //   tooltip: "Unblock all selected users",
-          //   icon: "done",
-          //   // onClick: (evt, data) => setSelectedUsers(data),
-          // },
+          {
+            tooltip: "Block all selected operators",
+            icon: "block",
+            onClick: (evt, data) => handleBlockAll(data.map((d) => d._id)),
+          },
+          {
+            tooltip: "Unblock all selected operators",
+            icon: "done",
+            onClick: (evt, data) => handleUnblockAll(data.map((d) => d._id)),
+          },
         ]}
-        // detailPanel={({ rowData }) => {
-        //   return (
-        //     <div
-        //       style={{
-        //         padding: "20px",
-        //         margin: "auto",
-        //         backgroundColor: "#eef5f9",
-        //       }}
-        //     >
-        //       <Card
-        //         sx={{
-        //           minWidth: 500,
-        //           maxWidth: 550,
-        //           transition: "0.3s",
-        //           margin: "auto",
-        //           padding: "2vh 2vw",
-        //           borderRadius: "10px",
-        //           // fontFamily: italic,
-        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-        //           "&:hover": {
-        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-        //           },
-        //         }}
-        //       >
-        //         <CardContent>
-        //           <Typography
-        //             variant="body1"
-        //             component="p"
-        //             gutterBottom
-        //             align="left"
-        //           >
-        //             Email:{" "}
-        //             <span
-        //               style={{
-        //                 color: "rgb(30, 136, 229)",
-        //                 fontSize: "15px",
-        //               }}
-        //             >
-        //               {rowData?.email}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             DOB:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.dateOfBirth}
-        //             </span>
-        //           </Typography>
-        //           <Typography variant="body1" gutterBottom align="left">
-        //             City:{" "}
-        //             <span
-        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-        //             >
-        //               {rowData?.city}
-        //             </span>
-        //           </Typography>
-        //         </CardContent>
-        //       </Card>
-        //     </div>
-        //   );
-        // }}
-        // actions={[
-        //   {
-        //     // icon: () => <Visibility style={{ color: "#1991eb" }} />,
-        //     // tooltip: "View All Rides ",
-        //     // position: "toolbar",
-        //     // onClick: () => {
-        //     //   history.push("/users");
-        //     // },
-        //   },
-        // ]}
       />
       <SendNotification
         selectedUsers={selectedUsers}

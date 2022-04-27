@@ -108,6 +108,26 @@ const MenuItems = [
     ],
   },
   {
+    key: "5",
+    icon: <Person className="iconColor" />,
+    title: "Operators",
+    route: "/operators",
+    submenus: [
+      {
+        key: "1",
+        title: "View Operators",
+        icon: <Person className="iconColor" sx={{ color: "#000" }} />,
+        route: "/view-operators",
+      },
+      {
+        key: "2",
+        title: "Requests",
+        icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
+        route: "/operators-requests",
+      },
+    ],
+  },
+  {
     key: "2",
     icon: <TwoWheeler className="iconColor" />,
     title: "Rides",
