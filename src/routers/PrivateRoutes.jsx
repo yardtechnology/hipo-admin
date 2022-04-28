@@ -68,6 +68,7 @@ import {
   Enquiries,
   HipoDrive,
   VehicleCategories,
+  RiderConfig,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -156,6 +157,7 @@ const PrivateRoutes = () => {
         <Route path="/career" element={<Career />} />
         <Route path="/enquiries" element={<Enquiries />} />
         <Route path="/hipo-drive" element={<HipoDrive />} />
+        <Route path="/rider-config" element={<RiderConfig />} />
       </Routes>
     </PanelLayout>
   );

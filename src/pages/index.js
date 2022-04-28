@@ -80,3 +80,4 @@ export const Enquiries = lazy(() => import("./Enquiries"));
 export const HipoDrive = lazy(() => import("./HipoDrive"));
 export const VerifyOtp = lazy(() => import("./VerifyOtp"));
 export const VehicleCategories = lazy(() => import("./VehicleCategories"));
+export const RiderConfig = lazy(() => import("./RiderConfig"));

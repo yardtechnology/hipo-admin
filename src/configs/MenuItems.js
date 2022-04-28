@@ -41,6 +41,7 @@ import {
   Support,
   RequestPage,
   CategoryOutlined,
+  SystemUpdate,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -394,6 +395,32 @@ const MenuItems = [
     icon: <Notifications className="iconColor" />,
     title: "Notifications",
     route: "/notifications",
+  },
+  {
+    key: "67",
+    icon: <SystemUpdate className="iconColor" />,
+    title: "Configs",
+    // route: "/manage-reviews",
+    submenus: [
+      {
+        key: "1",
+        title: "Rider Config",
+        icon: <SystemUpdate className="iconColor" sx={{ color: "#000" }} />,
+        route: "/rider-config",
+      },
+      {
+        key: "2",
+        title: "Driver Config",
+        icon: <SystemUpdate className="iconColor" sx={{ color: "#000" }} />,
+        route: "/driver-config",
+      },
+      {
+        key: "3",
+        title: "Operator Config",
+        icon: <SystemUpdate className="iconColor" sx={{ color: "#000" }} />,
+        route: "/operator-config",
+      },
+    ],
   },
   {
     key: "10",

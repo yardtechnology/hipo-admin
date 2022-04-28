@@ -7,9 +7,9 @@ const useConfig = () => {
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   useEffect(() => {
-    const fetchCareer = async () => {
+    const fetchConfigs = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/api/config`, {
+        const response = await fetch(`${BASE_URL}/config`, {
           method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
@@ -19,15 +19,13 @@ const useConfig = () => {
         });
         const arr = await response.json();
         console.log(arr);
-        const sortArr = arr?.data?.sort(
-          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
-        );
+        const sortArr = arr?.data;
         isMounted.current && setConfig(sortArr);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchCareer();
+    fetchConfigs();
   }, [isMounted, realtime]);
   return {
     config,
