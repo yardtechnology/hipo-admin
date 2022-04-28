@@ -106,7 +106,7 @@ const OperatorConfig = () => {
         <Grid item lg={6} md={6}>
           <Card sx={{ width: { lg: 400, md: 400, sm: 400, sx: 300 } }}>
             <CardHeader
-              title="Rider Android App Update"
+              title="Operator Android App Update"
               //   subheader="Update your app"
               titleTypographyProps={{ variant: "h6", textAlign: "center" }}
               subheaderTypographyProps={{
@@ -217,7 +217,7 @@ const OperatorConfig = () => {
         <Grid item lg={6} md={6}>
           <Card sx={{ width: { lg: 400, md: 400, sm: 400, sx: 300 } }}>
             <CardHeader
-              title="Rider IOS App Update"
+              title="Operator IOS App Update"
               //   subheader="Update your app"
               titleTypographyProps={{ variant: "h6", textAlign: "center" }}
               subheaderTypographyProps={{
