@@ -12,9 +12,11 @@ import {
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
 import moment from "moment";
-const RiderHistory = () => {
+import { useActiveRides } from "hooks";
+const ActiveRides = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
-
+  const { activeRides } = useActiveRides();
+  console.log(activeRides);
   return (
     <>
       <InvoiceDrawer
@@ -223,4 +225,4 @@ const RiderHistory = () => {
   );
 };
 
-export default RiderHistory;
+export default ActiveRides;

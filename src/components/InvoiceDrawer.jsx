@@ -99,31 +99,35 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                 />
               </ListItem>
             </Tooltip>
-            <Typography
-              sx={{
-                color: "#1877f2",
-                paddingLeft: "1.4vw",
-                mb: 0,
-                marginTop: "1vh",
-                fontWeight: "bold",
-              }}
-            >
-              Driver Profile
-            </Typography>
-            <Tooltip title="Driver Profile">
-              <ListItem sx={{ paddingLeft: "1.4vw" }}>
-                <ListItemAvatar>
-                  <Avatar
-                    sx={{ backgroundColor: "#1877f2" }}
-                    src={Details?.driver?.photoURL}
-                  ></Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={Details?.driver?.displayName}
-                  secondary={Details?.driver?.phoneNumber}
-                />
-              </ListItem>
-            </Tooltip>
+            {Details?.driver?.phoneNumber && (
+              <>
+                <Typography
+                  sx={{
+                    color: "#1877f2",
+                    paddingLeft: "1.4vw",
+                    mb: 0,
+                    marginTop: "1vh",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Driver Profile
+                </Typography>
+                <Tooltip title="Driver Profile">
+                  <ListItem sx={{ paddingLeft: "1.4vw" }}>
+                    <ListItemAvatar>
+                      <Avatar
+                        sx={{ backgroundColor: "#1877f2" }}
+                        src={Details?.driver?.photoURL}
+                      ></Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={Details?.driver?.displayName}
+                      secondary={Details?.driver?.phoneNumber}
+                    />
+                  </ListItem>
+                </Tooltip>
+              </>
+            )}
             <Divider />
             <Tooltip title="Vehicle Type">
               <ListItem sx={{ paddingLeft: "1.4vw" }}>
@@ -139,19 +143,21 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
               </ListItem>
             </Tooltip>
             <Divider />
-            <Tooltip title="Ride Amount">
-              <ListItem sx={{ paddingLeft: "1.4vw" }}>
-                <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: "#1877f2" }}>
-                    <MonetizationOn />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  secondary={formatCurrency(Details?.rideAmount)}
-                  primary={"Total Price"}
-                />
-              </ListItem>
-            </Tooltip>
+            {Details?.billing?.totalFare && (
+              <Tooltip title="Ride Amount">
+                <ListItem sx={{ paddingLeft: "1.4vw" }}>
+                  <ListItemAvatar>
+                    <Avatar sx={{ backgroundColor: "#1877f2" }}>
+                      <MonetizationOn />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    secondary={formatCurrency(Details?.billing?.totalFare)}
+                    primary={"Total Price"}
+                  />
+                </ListItem>
+              </Tooltip>
+            )}
             <Divider />
             <Typography
               align="left"
@@ -197,14 +203,14 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginBottom: "0vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(Details?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.billing?.baseFare)}
                 >
-                  <ListItemText primary={"Your Trip"} />
+                  <ListItemText primary={"Base Fare"} />
                 </ListItem>
 
                 <Divider />
 
-                <ListItem
+                {/* <ListItem
                   sx={{
                     marginTop: "0vh",
                     marginBottom: "0vh",
@@ -214,30 +220,39 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                   secondaryAction={formatCurrency(Details?.rideAmount)}
                 >
                   <ListItemText primary={"Coupon Savings"} />
+                </ListItem> */}
+                {/* <ListItem
+                  sx={{ marginTop: "0vh", marginBottom: "0vh" }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(Details?.billing?.roundedOff)}
+                >
+                  <ListItemText primary={"Rounded Off"} />
+                </ListItem>
+                <Divider /> */}
+                <ListItem
+                  sx={{ marginTop: "0vh", marginBottom: "0vh" }}
+                  // disableGutters
+                  secondaryAction={formatCurrency(
+                    Details?.billing?.baseFare + Details?.billing?.totalTax
+                  )}
+                >
+                  <ListItemText
+                    primary={"Total Bill"}
+                    secondary={`includes ${Details?.billing?.totalTax} Taxes`}
+                  />
                 </ListItem>
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "0vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(Details?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.billing?.roundedOff)}
                 >
                   <ListItemText primary={"Rounded Off"} />
                 </ListItem>
                 <Divider />
                 <ListItem
-                  sx={{ marginTop: "0vh", marginBottom: "0vh" }}
-                  // disableGutters
-                  secondaryAction={formatCurrency(Details?.rideAmount)}
-                >
-                  <ListItemText
-                    primary={"Total Bill"}
-                    secondary={"includes 13.87 Taxes"}
-                  />
-                </ListItem>
-                <Divider />
-                <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "1vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(Details?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.billing?.totalFare)}
                 >
                   <ListItemText
                     primary={"Total Payable"}
@@ -254,7 +269,7 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "1vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(Details?.rideAmount)}
+                  secondaryAction={formatCurrency(Details?.billing?.totalFare)}
                 >
                   <ListItemText primary={"Cash"} />
                 </ListItem>

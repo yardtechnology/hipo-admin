@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
-const useCabs = () => {
-  const [cabs, setCabs] = useState(null);
+const useActiveRides = () => {
+  const [activeRides, setActiveRides] = useState(null);
   const { isMounted } = useIsMounted();
   const [realtime, setRealtime] = useState(false);
   useEffect(() => {
-    const fetchCabs = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/cities/all`, {
+        const response = await fetch(`${BASE_URL}/rides/all?status=PENDING`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
@@ -22,17 +22,17 @@ const useCabs = () => {
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
-        isMounted.current && setCabs(sortArr);
+        isMounted.current && setActiveRides(sortArr);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchCabs();
+    fetchData();
   }, [isMounted, realtime]);
   return {
-    cabs,
+    activeRides,
     setRealtime,
   };
 };
 
-export default useCabs;
+export default useActiveRides;
