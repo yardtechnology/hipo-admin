@@ -71,6 +71,9 @@ import {
   RiderConfig,
   DriverConfig,
   OperatorConfig,
+  CancellationCharge,
+  WaitingCharge,
+  Profit,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -162,6 +165,9 @@ const PrivateRoutes = () => {
         <Route path="/rider-config" element={<RiderConfig />} />
         <Route path="/driver-config" element={<DriverConfig />} />
         <Route path="/operator-config" element={<OperatorConfig />} />
+        <Route path="/cancellation-charge" element={<CancellationCharge />} />
+        <Route path="/waiting-charge" element={<WaitingCharge />} />
+        <Route path="/profit" element={<Profit />} />
       </Routes>
     </PanelLayout>
   );

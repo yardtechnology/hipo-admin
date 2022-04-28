@@ -42,6 +42,7 @@ import {
   RequestPage,
   CategoryOutlined,
   SystemUpdate,
+  AttachMoney,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -419,6 +420,24 @@ const MenuItems = [
         title: "Operator Config",
         icon: <SystemUpdate className="iconColor" sx={{ color: "#000" }} />,
         route: "/operator-config",
+      },
+      {
+        key: "4",
+        title: "Set Profit",
+        icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
+        route: "/profit",
+      },
+      {
+        key: "5",
+        title: "Waiting Charge",
+        icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
+        route: "/waiting-charge",
+      },
+      {
+        key: "6",
+        title: "Cancellation Charge",
+        icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
+        route: "/cancellation-charge",
       },
     ],
   },

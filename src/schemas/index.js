@@ -8,3 +8,4 @@ export { default as AccountInfoSchema } from "./AccountInfoSchema";
 export { default as VehicleBasicDetailsSchema } from "./VehicleBasicDetailsSchema";
 export { default as QASchema } from "./QASchema";
 export { default as VerifyOtpSchema } from "./VerifyOtpSchema";
+export { default as ProfitSchema } from "./ProfitSchema";

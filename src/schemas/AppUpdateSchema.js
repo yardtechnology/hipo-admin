@@ -5,7 +5,8 @@ const AppUpdateSchema = [
     key: "3",
     label: "App Version",
     name: "version",
-    validationSchema: Yup.string().required("Version is Required"),
+    type: "number",
+    validationSchema: Yup.number().required("Version is Required"),
     initialValue: "",
   },
   {

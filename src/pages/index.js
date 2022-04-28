@@ -83,3 +83,6 @@ export const VehicleCategories = lazy(() => import("./VehicleCategories"));
 export const RiderConfig = lazy(() => import("./RiderConfig"));
 export const DriverConfig = lazy(() => import("./DriverConfig"));
 export const OperatorConfig = lazy(() => import("./OperatorConfig"));
+export const CancellationCharge = lazy(() => import("./CancellationCharge"));
+export const WaitingCharge = lazy(() => import("./WaitingCharge"));
+export const Profit = lazy(() => import("./Profit"));
