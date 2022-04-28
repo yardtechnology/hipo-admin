@@ -81,3 +81,5 @@ export const HipoDrive = lazy(() => import("./HipoDrive"));
 export const VerifyOtp = lazy(() => import("./VerifyOtp"));
 export const VehicleCategories = lazy(() => import("./VehicleCategories"));
 export const RiderConfig = lazy(() => import("./RiderConfig"));
+export const DriverConfig = lazy(() => import("./DriverConfig"));
+export const OperatorConfig = lazy(() => import("./OperatorConfig"));
