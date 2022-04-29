@@ -1,68 +1,10 @@
 import { Done } from "@mui/icons-material";
-import { Avatar, Chip, Container, Drawer, Typography } from "@mui/material";
+import { Chip, Container, Drawer, Typography } from "@mui/material";
 import { BASE_URL } from "configs";
-import { useFeaturesList } from "hooks";
 const AssignTypeDrawer = ({ open, setOpenAssignTypeDrawer, setRealtime }) => {
   console.log(open);
   const RideTypes = ["DAILY_RIDE", "OUTSTATION_RIDE", "RENTAL_RIDE"];
-  //   const addFeature = async (item) => {
-  //     try {
-  //       const updatedFeatures = open?.features
-  //         ? [...new Set([item._id, ...open?.features])]
-  //         : [item?._id];
-  //       const response = await fetch(`${BASE_URL}/vehicle-category/${open._id}`, {
-  //         method: "PUT",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-  //         },
-  //         body: JSON.stringify({
-  //           features: updatedFeatures,
-  //         }),
-  //       });
-  //       const res = await response.json();
-  //       console.log(res);
-  //       setRealtime((prev) => !prev);
-  //       setOpenAssignTypeDrawer({
-  //         ...open,
-  //         features: updatedFeatures,
-  //       });
-  //       // setOpenAssignTypeDrawer(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   const removeFeature = async (item) => {
-  //     try {
-  //       const updatedFeatures = open?.features?.filter(
-  //         (feature) => feature !== item?._id
-  //       );
-  //       const removedFeatures = open?.features?.find(
-  //         (feature) => feature === item?._id
-  //       );
-  //       console.log(removedFeatures);
-  //       const response = await fetch(`${BASE_URL}/features/remove/${open._id}`, {
-  //         method: "PUT",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-  //         },
-  //         body: JSON.stringify({
-  //           features: removedFeatures,
-  //         }),
-  //       });
-  //       console.log(removedFeatures);
-  //       const res = await response.json();
-  //       console.log(res);
-  //       setRealtime((prev) => !prev);
-  //       setOpenAssignTypeDrawer({
-  //         ...open,
-  //         features: updatedFeatures,
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+
   const addRideType = async (item) => {
     try {
       const updatedRideTypes = open?.types
