@@ -6,7 +6,7 @@ const ProfitSchema = [
     label: "Set Profit",
     name: "margin",
     type: "number",
-    validationSchema: Yup.number().required("Version is Required"),
+    validationSchema: Yup.number().required("Profit is Required"),
     initialValue: "",
   },
 ];
