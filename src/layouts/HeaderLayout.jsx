@@ -20,15 +20,12 @@ import { useState } from "react";
 import { MenuItems } from "configs";
 import { useLocation, useNavigate } from "react-router";
 import { useAppContext } from "contexts";
-import { useNotifications } from "hooks";
 
 const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
-  const { user, logout } = useAppContext();
-  const { notifications } = useNotifications();
+  const { user, logout, not } = useAppContext();
+  console.log(not);
   // console.log(notifications);
-  const unreadMessage = notifications?.filter(
-    (notification) => notification?.seen === false
-  );
+
   // console.log(user);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -107,7 +104,16 @@ const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
                   navigate("/notifications");
                 }}
               >
-                <Badge badgeContent={unreadMessage?.length} color="error">
+                <Badge
+                  badgeContent={
+                    not?.length === 0
+                      ? not?.length
+                      : not?.filter(
+                          (notification) => notification?.seen === false
+                        )?.length
+                  }
+                  color="error"
+                >
                   <Notifications className="iconColor" />
                 </Badge>
               </IconButton>

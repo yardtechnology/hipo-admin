@@ -8,6 +8,7 @@ export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   // const navigate = useNavigate();
+  const [not, setNot] = useState([]);
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState({});
   //verify user
@@ -68,32 +69,6 @@ const AppContextProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       });
-      // const res = await result.json();
-      // console.log(res);
-      // console.log(res?.success?.user?.role);
-      // submitProps.resetForm();
-      // if (res.status === 200) {
-      //   window.localStorage.setItem("ID", res._id);
-      //   setUserId(window.localStorage.getItem("ID"));
-      //   console.log(userId);
-      //   Swal.fire({ icon: "success", text: res.message });
-      //   // navigate("/vetify-otp");
-      // } else {
-      //   return Swal.fire({ icon: "error", text: res.message });
-      // }
-
-      //   if (res?.success?.user?.role !== "admin") {
-      //     Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
-      //     submitProps.resetForm();
-      //     return;
-      //   }
-      //   window.localStorage.setItem("SAL", res?.success?.data);
-      //   setUser(res?.success?.user);
-      //   console.log(res?.success?.data);
-      // } else {
-      //   Swal.fire({ icon: "error", text: res.error.message });
-      // }
-      // document.cookie = res?.data;
 
       const res = await result.json();
       console.log(res);
@@ -116,52 +91,6 @@ const AppContextProvider = ({ children }) => {
       console.log(error);
     }
   };
-  // const verifyOtp = async (OTP, submitProps) => {
-  //   try {
-  //     const result = await fetch(`${BASE_URL}/verify-otp?userId=${ID}`, {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         OTP: OTP,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     const res = await result.json();
-  //     console.log(res);
-  //     console.log(res?.success?.user?.role);
-  //     submitProps.resetForm();
-  //     if (res.status === 200) {
-  //       // Swal.fire({ icon: "success", text: res.message });
-  //       if (res?.user?.role !== "ADMIN") {
-  //         Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
-  //         submitProps.resetForm();
-  //         return;
-  //       }
-  //       window.localStorage.setItem("SAL", res?.token);
-  //       setUser(res?.user);
-  //       console.log(res?.user);
-  //     } else {
-  //       Swal.fire({ icon: "error", text: res.error.message });
-  //     }
-  //     // navigate("/vetify-otp");
-  //   } catch (error) {
-  //     //   if (res?.success?.user?.role !== "admin") {
-  //     //     Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
-  //     //     submitProps.resetForm();
-  //     //     return;
-  //     //   }
-  //     //   window.localStorage.setItem("SAL", res?.success?.data);
-  //     //   setUser(res?.success?.user);
-  //     //   console.log(res?.success?.data);
-  //     // } else {
-  //     //   Swal.fire({ icon: "error", text: res.error.message });
-  //     // }
-  //     // document.cookie = res?.data;
-  //     submitProps.resetForm();
-  //     console.log(error);
-  //   }
-  // };
 
   useEffect(() => {
     const fetchFun = async () => {
@@ -198,6 +127,46 @@ const AppContextProvider = ({ children }) => {
       new Error(error);
     }
   };
+  const fetchNotifications = async () => {
+    try {
+      const result = await fetch(`${BASE_URL}/notifications/all`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      const res = await result.json();
+      console.log(res);
+      console.log(res.message);
+      res?.status === 200 ? console.log(res?.data) : console.log(res.message);
+      return setNot(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const result = await fetch(`${BASE_URL}/notifications/all`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
+        });
+        const res = await result.json();
+        console.log(res);
+        console.log(res.message);
+        res?.status === 200 ? console.log(res?.data) : console.log(res.message);
+        return setNot(res?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchNotifications();
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -221,6 +190,8 @@ const AppContextProvider = ({ children }) => {
         setRCInfo,
         vehicleBasicDetails,
         setVehicleBasicDetails,
+        fetchNotifications,
+        not,
         // verifyOtp,
       }}
     >

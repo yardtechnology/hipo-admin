@@ -7,7 +7,7 @@ const useNotifications = () => {
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   useEffect(() => {
-    const fetchSupports = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(`${BASE_URL}/notifications/all`, {
           // method: "GET",
@@ -26,11 +26,34 @@ const useNotifications = () => {
         console.log(error);
       }
     };
-    fetchSupports();
+    fetchData();
   }, [isMounted, realtime]);
+  const fetchNotifications = async () => {
+    try {
+      const result = await fetch(`${BASE_URL}/notifications/all`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      const res = await result.json();
+      console.log(res);
+      if (res.status === 200) {
+        console.log(res.data);
+        return setNotifications(res.data);
+      } else {
+        console.log(res.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     notifications,
     setRealtime,
+    fetchNotifications,
   };
 };
 

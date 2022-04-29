@@ -9,13 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import { BASE_URL } from "configs";
+import { useAppContext } from "contexts";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { useNotifications } from "../hooks";
 
 const Notifications = () => {
-  const { notifications, setRealtime } = useNotifications();
-  console.log(notifications);
+  const { setRealtime, notifications } = useNotifications();
+  const { fetchNotifications } = useAppContext();
   const handleAllRead = async () => {
     try {
       const result = await fetch(
@@ -40,6 +41,7 @@ const Notifications = () => {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
+      fetchNotifications();
       setRealtime((prev) => !prev);
     }
   };
@@ -62,6 +64,7 @@ const Notifications = () => {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
+      fetchNotifications();
       setRealtime((prev) => !prev);
     }
   };
@@ -87,6 +90,7 @@ const Notifications = () => {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
+      fetchNotifications();
       setRealtime((prev) => !prev);
     }
   };
@@ -111,6 +115,7 @@ const Notifications = () => {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
+      fetchNotifications();
       setRealtime((prev) => !prev);
     }
   };

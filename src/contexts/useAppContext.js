@@ -24,6 +24,8 @@ const useAppContext = () => {
     verifyOtp,
     userId,
     setUserId,
+    fetchNotifications,
+    not,
   } = useContext(AppContext);
 
   return {
@@ -48,6 +50,8 @@ const useAppContext = () => {
     setRCInfo,
     vehicleBasicDetails,
     setVehicleBasicDetails,
+    fetchNotifications,
+    not,
   };
 };
 
