@@ -20,7 +20,6 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 const WaitingCharge = () => {
   const { config, setRealtime } = useConfig();
-  console.log(config);
   const initialValues = WaitingChargeSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -36,7 +35,6 @@ const WaitingCharge = () => {
     {}
   );
   const handleSetProfit = async (values, submitProps) => {
-    console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -53,7 +51,6 @@ const WaitingCharge = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
       result.status === 200
         ? Swal.fire({
             icon: "success",

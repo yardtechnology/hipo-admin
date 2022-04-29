@@ -18,7 +18,6 @@ const useConfig = () => {
           },
         });
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data;
         isMounted.current && setConfig(sortArr);
       } catch (error) {

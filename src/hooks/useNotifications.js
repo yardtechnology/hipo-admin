@@ -18,7 +18,6 @@ const useNotifications = () => {
           },
         });
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
         );

@@ -21,7 +21,6 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 const DriverConfig = () => {
   const { config, setRealtime } = useConfig();
-  console.log(config);
   const initialValues = AppUpdateSchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
@@ -34,7 +33,6 @@ const DriverConfig = () => {
     {}
   );
   const handleSetAndroid = async (values, submitProps) => {
-    console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -53,7 +51,7 @@ const DriverConfig = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
+
       result.status === 200
         ? Swal.fire({ icon: "success", text: res?.message })
         : Swal.fire({ icon: "error", text: res?.message });
@@ -63,7 +61,6 @@ const DriverConfig = () => {
     }
   };
   const handleSetIos = async (values, submitProps) => {
-    console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -82,7 +79,7 @@ const DriverConfig = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
+
       result.status === 200
         ? Swal.fire({ icon: "success", text: res?.message })
         : Swal.fire({ icon: "error", text: res?.message });

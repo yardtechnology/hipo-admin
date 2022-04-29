@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 const CancellationCharge = () => {
   const { config, setRealtime } = useConfig();
-  console.log(config);
+
   const initialValues = CancellationChargeSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -36,7 +36,6 @@ const CancellationCharge = () => {
     {}
   );
   const handleSetProfit = async (values, submitProps) => {
-    console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -54,7 +53,6 @@ const CancellationCharge = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
       result.status === 200
         ? Swal.fire({
             icon: "success",
