@@ -29,8 +29,8 @@ const Login = () => {
   }, {});
   const handleLogin = async (values, submitProps) => {
     try {
-      await login(values?.phoneNumber, submitProps);
-      navigate("/verify-otp");
+      await login(values?.email, values?.password, submitProps);
+      navigate("/");
     } catch (error) {
       console.log(error);
       Swal.fire({ icon: "error", text: error.message });

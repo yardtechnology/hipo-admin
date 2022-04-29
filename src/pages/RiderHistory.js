@@ -84,6 +84,7 @@ const RiderHistory = () => {
           selection: true,
           sorting: true,
         }}
+        isLoading={history === null}
         data={
           history === null
             ? []

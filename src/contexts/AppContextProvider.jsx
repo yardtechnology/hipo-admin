@@ -11,7 +11,7 @@ const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState({});
   //verify user
-  const ID = window.localStorage.getItem("ID");
+  // const ID = window.localStorage.getItem("ID");
   const [vehicleBasicDetails, setVehicleBasicDetails] = useState({
     vehicleName: "",
     vehicleType: "",
@@ -56,30 +56,31 @@ const AppContextProvider = ({ children }) => {
     bankName: "",
   });
   // const { isMounted } = useIsMounted();
-  const login = async (phoneNumber, submitProps) => {
+  const login = async (email, password, submitProps) => {
     try {
-      const result = await fetch(`${BASE_URL}/send-otp`, {
+      const result = await fetch(`${BASE_URL}/admin-login`, {
         method: "POST",
         body: JSON.stringify({
-          phoneNumber: phoneNumber,
+          email: email,
+          password: password,
         }),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const res = await result.json();
-      console.log(res);
-      console.log(res?.success?.user?.role);
-      submitProps.resetForm();
-      if (res.status === 200) {
-        window.localStorage.setItem("ID", res._id);
-        setUserId(window.localStorage.getItem("ID"));
-        console.log(userId);
-        Swal.fire({ icon: "success", text: res.message });
-        // navigate("/vetify-otp");
-      } else {
-        return Swal.fire({ icon: "error", text: res.message });
-      }
+      // const res = await result.json();
+      // console.log(res);
+      // console.log(res?.success?.user?.role);
+      // submitProps.resetForm();
+      // if (res.status === 200) {
+      //   window.localStorage.setItem("ID", res._id);
+      //   setUserId(window.localStorage.getItem("ID"));
+      //   console.log(userId);
+      //   Swal.fire({ icon: "success", text: res.message });
+      //   // navigate("/vetify-otp");
+      // } else {
+      //   return Swal.fire({ icon: "error", text: res.message });
+      // }
 
       //   if (res?.success?.user?.role !== "admin") {
       //     Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
@@ -93,57 +94,74 @@ const AppContextProvider = ({ children }) => {
       //   Swal.fire({ icon: "error", text: res.error.message });
       // }
       // document.cookie = res?.data;
-    } catch (error) {
-      submitProps.resetForm();
-      console.log(error);
-    }
-  };
-  const verifyOtp = async (OTP, submitProps) => {
-    try {
-      const result = await fetch(`${BASE_URL}/verify-otp?userId=${ID}`, {
-        method: "POST",
-        body: JSON.stringify({
-          OTP: OTP,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+
       const res = await result.json();
       console.log(res);
-      console.log(res?.success?.user?.role);
       submitProps.resetForm();
       if (res.status === 200) {
         // Swal.fire({ icon: "success", text: res.message });
-        if (res?.user?.role !== "ADMIN") {
+        if (res?.data?.role !== "ADMIN") {
           Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
           submitProps.resetForm();
           return;
         }
         window.localStorage.setItem("SAL", res?.token);
-        setUser(res?.user);
-        console.log(res?.user);
+        setUser(res?.data);
+        console.log(res?.data);
       } else {
-        Swal.fire({ icon: "error", text: res.error.message });
+        Swal.fire({ icon: "error", text: res.message });
       }
       // navigate("/vetify-otp");
     } catch (error) {
-      //   if (res?.success?.user?.role !== "admin") {
-      //     Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
-      //     submitProps.resetForm();
-      //     return;
-      //   }
-      //   window.localStorage.setItem("SAL", res?.success?.data);
-      //   setUser(res?.success?.user);
-      //   console.log(res?.success?.data);
-      // } else {
-      //   Swal.fire({ icon: "error", text: res.error.message });
-      // }
-      // document.cookie = res?.data;
-      submitProps.resetForm();
       console.log(error);
     }
   };
+  // const verifyOtp = async (OTP, submitProps) => {
+  //   try {
+  //     const result = await fetch(`${BASE_URL}/verify-otp?userId=${ID}`, {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         OTP: OTP,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const res = await result.json();
+  //     console.log(res);
+  //     console.log(res?.success?.user?.role);
+  //     submitProps.resetForm();
+  //     if (res.status === 200) {
+  //       // Swal.fire({ icon: "success", text: res.message });
+  //       if (res?.user?.role !== "ADMIN") {
+  //         Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
+  //         submitProps.resetForm();
+  //         return;
+  //       }
+  //       window.localStorage.setItem("SAL", res?.token);
+  //       setUser(res?.user);
+  //       console.log(res?.user);
+  //     } else {
+  //       Swal.fire({ icon: "error", text: res.error.message });
+  //     }
+  //     // navigate("/vetify-otp");
+  //   } catch (error) {
+  //     //   if (res?.success?.user?.role !== "admin") {
+  //     //     Swal.fire({ icon: "error", text: "Please Login as SuperAdmin" });
+  //     //     submitProps.resetForm();
+  //     //     return;
+  //     //   }
+  //     //   window.localStorage.setItem("SAL", res?.success?.data);
+  //     //   setUser(res?.success?.user);
+  //     //   console.log(res?.success?.data);
+  //     // } else {
+  //     //   Swal.fire({ icon: "error", text: res.error.message });
+  //     // }
+  //     // document.cookie = res?.data;
+  //     submitProps.resetForm();
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchFun = async () => {
@@ -203,7 +221,7 @@ const AppContextProvider = ({ children }) => {
         setRCInfo,
         vehicleBasicDetails,
         setVehicleBasicDetails,
-        verifyOtp,
+        // verifyOtp,
       }}
     >
       {children}
