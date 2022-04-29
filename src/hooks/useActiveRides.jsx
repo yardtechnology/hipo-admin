@@ -9,7 +9,7 @@ const useActiveRides = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/rides/all?status=PENDING`, {
+        const response = await fetch(`${BASE_URL}/rides/all?status=ONGOING`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
@@ -18,7 +18,7 @@ const useActiveRides = () => {
           },
         });
         const arr = await response.json();
-        // console.log(arr);
+        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );

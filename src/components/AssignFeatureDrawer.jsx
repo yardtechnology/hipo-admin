@@ -7,10 +7,9 @@ const AssignFeatureDrawer = ({
   setOpenAssignFeatureDrawer,
   setRealtime,
 }) => {
-  console.log(open);
+  // console.log(open)
   const { features } = useFeaturesList();
   // const { setRealtime } = useVehicleCategory();
-  console.log(features);
   const addFeature = async (item) => {
     try {
       const updatedFeatures = open?.features
@@ -46,7 +45,6 @@ const AssignFeatureDrawer = ({
       const removedFeatures = open?.features?.find(
         (feature) => feature === item?._id
       );
-      console.log(removedFeatures);
       const response = await fetch(`${BASE_URL}/features/remove/${open._id}`, {
         method: "PUT",
         headers: {
@@ -57,7 +55,6 @@ const AssignFeatureDrawer = ({
           features: removedFeatures,
         }),
       });
-      console.log(removedFeatures);
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
@@ -116,7 +113,6 @@ const AssignFeatureDrawer = ({
                   const hasFeature = open?.features
                     ? open?.features?.includes(feature?._id)
                     : false;
-                  console.log(open?.features);
                   return (
                     <div className="inline-block my-1 mr-1" key={feature?.key}>
                       <Chip

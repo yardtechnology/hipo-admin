@@ -185,7 +185,6 @@ const ManageFeatures = () => {
           },
           onRowDelete: async (oldData) => {
             try {
-              
               const response = await fetch(
                 `${BASE_URL}/feature/${oldData?._id}`,
                 {

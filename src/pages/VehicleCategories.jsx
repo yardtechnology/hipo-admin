@@ -1,5 +1,5 @@
 import MaterialTable from "@material-table/core";
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
@@ -7,12 +7,13 @@ import { useVehicleCategory } from "hooks";
 import { PhotoUpload } from "components/core";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
-import { Assignment } from "@mui/icons-material";
-import { AssignFeatureDrawer } from "components";
+import { Assignment, CategoryOutlined } from "@mui/icons-material";
+import { AssignFeatureDrawer, AssignTypeDrawer } from "components";
 import { useState } from "react";
 
 const VehicleCategories = () => {
   const [openAssignFeatureDrawer, setOpenAssignFeatureDrawer] = useState({});
+  const [openAssignTypeDrawer, setOpenAssignTypeDrawer] = useState({});
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const { vehicleCategory, setRealtime } = useVehicleCategory();
@@ -23,6 +24,11 @@ const VehicleCategories = () => {
         setRealtime={setRealtime}
         open={openAssignFeatureDrawer}
         setOpenAssignFeatureDrawer={setOpenAssignFeatureDrawer}
+      />
+      <AssignTypeDrawer
+        setRealtime={setRealtime}
+        setOpenAssignTypeDrawer={setOpenAssignTypeDrawer}
+        open={openAssignTypeDrawer}
       />
       <MaterialTable
         options={{
@@ -141,13 +147,33 @@ const VehicleCategories = () => {
             field: "features",
             render: (row) => {
               return (
-                <IconButton
-                  onClick={() => {
-                    setOpenAssignFeatureDrawer(row);
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  <Assignment />
-                </IconButton>
+                  <Tooltip title={"Assign Features"}>
+                    <IconButton
+                      onClick={() => {
+                        setOpenAssignFeatureDrawer(row);
+                      }}
+                    >
+                      <Assignment />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title={"Assign Ride Type"}>
+                    <IconButton
+                      onClick={() => {
+                        setOpenAssignTypeDrawer(row);
+                      }}
+                    >
+                      <CategoryOutlined />
+                    </IconButton>
+                  </Tooltip>
+                </div>
               );
             },
             width: "2%",
