@@ -2,9 +2,9 @@ import {
   Box,
   Card,
   Container,
-  Step,
-  StepLabel,
-  Stepper,
+  // Step,
+  // StepLabel,
+  // Stepper,
   Typography,
 } from "@mui/material";
 
@@ -15,11 +15,11 @@ import {
   RCInfo,
   VehicleBasicDetails,
 } from "components/AddVehicle";
-const steps = [
-  "Add Vehicle Basic Details",
-  "Add Insurance Info",
-  "Add RC Info",
-];
+// const steps = [
+//   "Add Vehicle Basic Details",
+//   "Add Insurance Info",
+//   "Add RC Info",
+// ];
 const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -69,13 +69,13 @@ const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
             >
               Add New Vehicle Information
             </Typography>
-            <Stepper activeStep={activeStep} alternativeLabel>
+            {/* <Stepper activeStep={activeStep} alternativeLabel>
               {steps?.map((label) => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               ))}
-            </Stepper>
+            </Stepper> */}
             {handleSteps(activeStep)}
           </Card>
         </Box>
