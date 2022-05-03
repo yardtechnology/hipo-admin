@@ -1,6 +1,8 @@
 // import { countries } from "configs";
 import { Person } from "@mui/icons-material";
 import * as Yup from "yup";
+import { useVehicleCategory } from "hooks";
+import { useEffect, useState } from "react";
 
 const VehicleBasicDetailsSchema = [
   {
@@ -125,4 +127,30 @@ const VehicleBasicDetailsSchema = [
   //   required: true,
   // },
 ];
+export const useVehicletypeSchema = () => {
+  const [vehicletypeSchema, setVehicletypeSchema] = useState([]);
+  const { vehicleCategory } = useVehicleCategory();
+  useEffect(() => {
+    if (vehicleCategory) {
+      setVehicletypeSchema([
+        ...vehicletypeSchema,
+        {
+          key: "12",
+          label: "Vehicle Type",
+          validationSchema: Yup.string().required("Vehicle Type is required"),
+          name: "vehicleType",
+          // validationSchema: Yup.number().required("Requested Credit is Required"),
+          initialValue: "",
+          type: "select",
+          options: vehicleCategory.map((item) => ({
+            vehicleType: item?.vehicleType,
+            value: item?._id,
+            key: item?._id,
+          })),
+        },
+      ]);
+    }
+  }, [vehicletypeSchema, vehicleCategory]);
+  return vehicletypeSchema;
+};
 export default VehicleBasicDetailsSchema;

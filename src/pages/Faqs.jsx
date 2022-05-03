@@ -208,7 +208,7 @@ const Faqs = () => {
                     },
                   ]}
                   detailPanel={({ rowData }) => {
-                    const SUBTOPICS = (rowData?.subtopics).sort(
+                    const SUBTOPICS = rowData?.subtopics?.sort(
                       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                     );
                     return (
