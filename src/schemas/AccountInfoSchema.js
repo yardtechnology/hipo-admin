@@ -38,8 +38,19 @@ const AccountInfoSchema = [
     key: "11",
     label: "IFSC Code",
     name: "ifscCode",
-    type: number,
-    validationSchema: Yup.string().required("IFSC Code Is Required"),
+    type: "text",
+    validationSchema: Yup.string()
+      .required("IFSC Code Is Required")
+      .test(
+        "IFSC Code",
+        "IFSC Code must be of length 11",
+        (value) => value?.length === 11
+      )
+      .matches(
+        /^[A-Za-z]{4}[a-zA-Z0-9]{7}$/,
+        "First 4 characters must be alphabets and last 7 characters must be numbers"
+      ),
+
     initialValue: "",
     startIcon: <Person />,
   },

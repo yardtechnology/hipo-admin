@@ -22,9 +22,16 @@ const DrivingLicense = ({ handleNext, handleBack }) => {
     drivingLicenceNumber: "",
   };
   const validationSchema = {
-    drivingLicenceNumber: Yup.number().required(
-      "Driving License Number is Required"
-    ),
+    drivingLicenceNumber: Yup.string()
+      .required("Driving License Number is Required")
+      .min(12, "12 digits required")
+      .test(
+        "drivingLicenceNumber",
+        "Driving License Number Not More Than 12 Digits",
+        (value) => {
+          return value.length === 12;
+        }
+      ),
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {

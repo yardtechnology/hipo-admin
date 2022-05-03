@@ -1,7 +1,7 @@
 import { Person } from "@mui/icons-material";
 // import { countries } from "configs";
 import * as Yup from "yup";
-
+import moment from "moment";
 const AddDriverSchema = [
   {
     key: "2",
@@ -9,8 +9,8 @@ const AddDriverSchema = [
     name: "displayName",
     validationSchema: Yup.string()
       .required("Name is Required")
-      .min(3, "Name must be at least 3 characters")
-      .max(50, "Name must be less than 150 characters"),
+      .min(2, "Name must be at least 2 characters")
+      .max(50, "Name must be less than 50 characters"),
     initialValue: "",
     startIcon: <Person />,
     required: true,
@@ -61,7 +61,11 @@ const AddDriverSchema = [
     required: true,
     label: "Date of birth",
     name: "dob",
-    validationSchema: Yup.string().required("DOB is required "),
+    validationSchema: Yup.string()
+      .required("DOB is required ")
+      .test("DOB", "Please choose a valid date of birth", (value) => {
+        return moment().diff(moment(value), "years") >= 18;
+      }),
     type: "date",
     initialValue: "",
     startIcon: <Person />,

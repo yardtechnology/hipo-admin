@@ -134,7 +134,7 @@ const BasicDetails = ({ handleNext }) => {
                                   {option?.phone ? (
                                     <>{`${option.value} (${option.key}) +${option.phone} `}</>
                                   ) : (
-                                    option.value
+                                    option.dismiss
                                   )}
                                 </MenuItem>
                               ))}

@@ -1,12 +1,5 @@
-import { Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import {
-  CardContent,
-  TextField,
-  CardActions,
-  Button,
-  Grid,
-} from "@mui/material";
+import { Form, Formik } from "formik";
+import { CardActions, Button, Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Done } from "@mui/icons-material";
 import Swal from "sweetalert2";
@@ -23,12 +16,12 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
   const initialValues = {
     aadharCardNumber: "",
   };
-  const validationSchema = {
-    aadharCardNumber: Yup.number().required("Aadhar Card Number is Required"),
-  };
+  // const validationSchema = {
+  //   aadharCardNumber: Yup.number().required("Aadhar Card Number is Required"),
+  // };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
-      setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
+      setAadharCardInfo({ imgFile: value, imgFile1: value1 });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -70,12 +63,12 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
             : initialValues
         }
         enableReinitialize
-        validationSchema={Yup.object(validationSchema)}
+        // validationSchema={Yup.object(validationSchema)}
         onSubmit={handleAadharCardInfo}
       >
         {({ isSubmitting, isValid }) => (
           <Form>
-            <CardContent>
+            {/* <CardContent>
               <Field name={"aadharCardNumber"}>
                 {(props) => (
                   <TextField
@@ -89,7 +82,7 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
                   />
                 )}
               </Field>
-            </CardContent>
+            </CardContent> */}
             <CardActions style={{ justifyContent: "flex-end" }}>
               <Button
                 type="button"
@@ -104,7 +97,7 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
                 className=" btn-background"
                 variant="contained"
                 type="submit"
-                disabled={isSubmitting || !isValid || !value || !value1}
+                disabled={!value || !value1}
                 loading={isSubmitting}
                 loadingPosition="start"
                 startIcon={<Done />}
