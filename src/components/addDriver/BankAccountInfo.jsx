@@ -17,15 +17,22 @@ import { useAppContext } from "contexts";
 import React, { Fragment } from "react";
 import { AccountInfoSchema } from "schemas";
 import Swal from "sweetalert2";
+import { BASE_URL } from "configs";
 
 const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
   const {
     bankAccountInfo,
+    basicDetails,
+    drivingLicenceInfo,
+    aadharCardInfo,
     setBankAccountInfo,
     setBasicDetails,
     setAadharCardInfo,
     setDrivingLicenceInfo,
   } = useAppContext();
+  console.log("basicDetails", basicDetails);
+  console.log("drivingLicenceInfo", drivingLicenceInfo);
+  console.log("aadharCardInfo", aadharCardInfo);
   // const [value, setValue] = useState(basicDetails.imgFile);
   // console.log(value);
   console.log("bankAccountInfo", bankAccountInfo);
@@ -43,12 +50,66 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     },
     {}
   );
+
   const handleSend = async (values, submitProps) => {
+    const formdata = new FormData();
+    formdata.append("bankAccountNumber", values?.accountNo);
+    formdata.append("bankName", values?.bankName);
+    formdata.append("ifscCode", values?.ifscCode);
+    formdata.append("accountHolderName", values?.accountHolderName);
+    formdata.append("displayName", basicDetails?.displayName);
+    formdata.append("email", basicDetails?.email);
+    formdata.append("dateOfBirth", basicDetails?.dob);
+    formdata.append("phoneNumber", basicDetails?.phoneNumber);
+    formdata.append("avatar", basicDetails?.imgFile?.target.files[0]);
+    formdata.append("countryCode", basicDetails?.countryCode);
+    formdata.append("countryName", basicDetails?.country);
+
+    formdata.append(
+      "drivingLicenseNumber",
+      drivingLicenceInfo?.drivingLicenceNumber
+    );
+    formdata.append(
+      "drivingLicense",
+      drivingLicenceInfo?.drivingLicenceimage?.target.files[0]
+    );
+    // formdata.append("aadharCardNumber", aadharCardInfo?.aadharCardNumber);
+    formdata.append(
+      "aadharCardFront",
+      aadharCardInfo?.imgFile?.target.files[0]
+    );
+    formdata.append(
+      "aadharCardBack",
+      aadharCardInfo?.imgFile1?.target.files[0]
+    );
+
     try {
       console.log(values);
-      await setBankAccountInfo({
-        ...values,
+      // await setBankAccountInfo({
+      //   ...values,
+      // })
+      console.log(formdata);
+      const response = await fetch(`${BASE_URL}/driver`, {
+        method: "POST",
+        body: formdata,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
       });
+      const res = await response.json();
+      console.log(res);
+      res.status === 200
+        ? Swal.fire({
+            title: "Success",
+            text: "Driver added successfully",
+            icon: "success",
+          })
+        : Swal.fire({
+            title: "Error",
+            text: res.message,
+            icon: "error",
+          });
+
       setBasicDetails({ imgFile: "" });
     } catch (error) {
       console.log(error);
@@ -57,7 +118,6 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
       setBankAccountInfo();
       setAadharCardInfo();
       setDrivingLicenceInfo();
-      Swal.fire({ icon: "success", text: "Successfully Submitted" });
       handleReset();
 
       submitProps.setSubmitting(false);

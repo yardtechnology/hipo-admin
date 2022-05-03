@@ -30,8 +30,9 @@ const AppContextProvider = ({ children }) => {
     email: "",
     dob: "",
     gender: "",
-    city: "",
+    country: "",
     imgFile: "",
+    countryCode: "",
   });
   const [insuranceInfo, setInsuranceInfo] = useState({
     insuranceNumber: "",

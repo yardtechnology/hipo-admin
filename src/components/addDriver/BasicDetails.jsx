@@ -16,9 +16,13 @@ import React, { Fragment, useState } from "react";
 import { AddDriverSchema } from "schemas";
 
 import { PhotoUpload } from "components/core";
+import { CustomPhoneNumberPicker } from "components";
 const BasicDetails = ({ handleNext }) => {
   const { basicDetails, setBasicDetails } = useAppContext();
   console.log("basicDetails", basicDetails);
+  const [countryCode, setCountryCode] = useState(
+    basicDetails.countryCode || "+91"
+  );
   const [value, setValue] = useState(basicDetails?.imgFile);
   console.log(value);
 
@@ -39,6 +43,7 @@ const BasicDetails = ({ handleNext }) => {
       await setBasicDetails({
         ...values,
         imgFile: value,
+        countryCode: countryCode,
       });
       setValue("");
     } catch (error) {
@@ -67,7 +72,15 @@ const BasicDetails = ({ handleNext }) => {
       <Formik
         initialValues={
           basicDetails?.displayName
-            ? { displayName: basicDetails?.displayName }
+            ? {
+                displayName: basicDetails?.displayName,
+                phoneNumber: basicDetails?.phoneNumber,
+                email: basicDetails?.email,
+                dob: basicDetails?.dob,
+                country: basicDetails?.country,
+                gender: basicDetails?.gender,
+                countryCode: basicDetails?.countryCode,
+              }
             : initialValues
         }
         enableReinitialize
@@ -105,7 +118,7 @@ const BasicDetails = ({ handleNext }) => {
                               label={inputItem.label}
                               {...props.field}
                             >
-                              {inputItem.options.map((option) => (
+                              {inputItem?.options?.map((option) => (
                                 <MenuItem value={option.value} key={option.key}>
                                   {option?.phone && (
                                     <img
@@ -134,22 +147,61 @@ const BasicDetails = ({ handleNext }) => {
                       }
                       return (
                         <div>
-                          <TextField
-                            required={inputItem.required}
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            label={inputItem.label}
-                            type={inputItem.type}
-                            multiline={inputItem?.multiline}
-                            rows={inputItem?.rows}
-                            error={Boolean(
-                              props.meta.touched && props.meta.error
+                          <>
+                            {inputItem?.name !== "phoneNumber" && (
+                              <TextField
+                                required={inputItem?.required}
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                label={inputItem?.label}
+                                type={inputItem?.type}
+                                multiline={inputItem?.multiline}
+                                rows={inputItem?.rows}
+                                error={Boolean(
+                                  props.meta.touched && props.meta.error
+                                )}
+                                helperText={
+                                  props.meta.touched && props.meta.error
+                                }
+                                {...props.field}
+                                InputLabelProps={{ shrink: true }}
+                              />
                             )}
-                            helperText={props.meta.touched && props.meta.error}
-                            {...props.field}
-                            InputLabelProps={{ shrink: true }}
-                          />
+                            {inputItem.name === "phoneNumber" && (
+                              <CustomPhoneNumberPicker
+                                name="phoneNumber"
+                                label="Phone Number"
+                                value={
+                                  inputItem.phoneNumber ||
+                                  formik.values.phoneNumber
+                                }
+                                onChange={(e) => {
+                                  setCountryCode(e.target.value);
+                                  formik.setFieldValue(
+                                    "phoneNumber",
+                                    e.target.value
+                                  );
+                                  formik.setFieldTouched(
+                                    "phoneNumber",
+                                    true,
+                                    false
+                                  );
+                                }}
+                                countryCode={countryCode}
+                                onChangeCountryCode={(ev) => {
+                                  setCountryCode(ev.target.value);
+                                }}
+                                error={Boolean(formik.errors.phoneNumber)}
+                                helperText={
+                                  // formik.touched.phoneNumber &&
+                                  formik.errors.phoneNumber
+                                }
+                                countryCodeName="countryCode"
+                                type="tel"
+                              />
+                            )}
+                          </>
                         </div>
                       );
                     }}

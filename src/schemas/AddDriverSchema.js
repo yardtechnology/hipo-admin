@@ -32,6 +32,18 @@ const AddDriverSchema = [
       ),
     initialValue: "",
   },
+  // {
+  //   key: "45",
+  //   label: "countryCode",
+  //   required: true,
+  //   name: "countryCode",
+  //   type: "",
+  //   validationSchema: Yup.string()
+  //     .required("Email is required")
+  //     .email("Please enter a valid email"),
+  //   initialValue: "",
+  //   // startIcon: <Email />,
+  // },
   {
     key: "1",
     label: "Email",
@@ -83,10 +95,10 @@ const AddDriverSchema = [
   },
   {
     key: "11",
-    label: "City",
+    label: "Country",
     required: true,
-    name: "city",
-    validationSchema: Yup.string().required("City is required "),
+    name: "country",
+    validationSchema: Yup.string().required("Country "),
     type: "text",
     initialValue: "",
     // startIcon: <Person />,

@@ -14,8 +14,10 @@ import AddQADrawer from "./AddQADrawer";
 import Cabs from "./Cabs";
 import AssignFeatureDrawer from "./AssignFeatureDrawer";
 import AssignTypeDrawer from "./AssignTypeDrawer";
+import CustomPhoneNumberPicker from "./CustomPhoneNumberPicker";
 
 export {
+  CustomPhoneNumberPicker,
   AssignTypeDrawer,
   AssignFeatureDrawer,
   DETAILPANEL,
