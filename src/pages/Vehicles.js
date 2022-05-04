@@ -16,9 +16,12 @@ import { Delete, DocumentScanner, Edit } from "@mui/icons-material";
 import { useState } from "react";
 import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
 import { EditVehicle } from "components/AddVehicle";
+import { useVehicles } from "hooks";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const Vehicles = () => {
+  const { vehicles } = useVehicles();
+  console.log(vehicles);
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);
   const [openEditVehicleDocumentDrawer, setOpenEditVehicleDocumentDrawer] =
@@ -57,20 +60,17 @@ const Vehicles = () => {
           ],
         }}
         title={"Vehicles"}
-        data={[
-          {
-            sl: 1,
-            typeImage: "",
-            vehicleName: "Hyundai i20",
-            typeName: "SUV",
-            costPerKm: 7,
-            ownerName: "Alexa Smith",
-            seatingCapacity: 5,
-            status: "On",
-            purchaseOn: moment(new Date().toString()).format("LL"),
-            // fuel: "Gasoline",
-          },
-        ]}
+        data={
+          vehicles === null
+            ? []
+            : vehicles.map((vehicle, i) => ({
+                ...vehicle,
+                sl: i + 1,
+                type: vehicle?.vehicleType?.name,
+                ownerName: vehicle?.owner?.displayName,
+                currentTimestamp: moment(vehicle?.createdAt).format("lll"),
+              }))
+        }
         columns={[
           {
             title: "#",
@@ -78,17 +78,7 @@ const Vehicles = () => {
             editable: "never",
             width: "10%",
           },
-          {
-            title: "Image",
-            field: "typeImageUrl",
-            render: ({ typeImageUrl }) => (
-              <Avatar
-                variant="rounded"
-                sx={{ width: "12vh", height: "12vh" }}
-              />
-            ),
-            searchable: true,
-          },
+
           {
             title: "Name",
             field: "vehicleName",
@@ -96,7 +86,7 @@ const Vehicles = () => {
           },
           {
             title: "Type",
-            field: "typeName",
+            field: "type",
             searchable: true,
           },
           {
@@ -140,9 +130,9 @@ const Vehicles = () => {
           {
             title: "Timestamp",
             // width: "70%",
-            field: "timestamp",
+            field: "createdAt",
             editable: "never",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
             searchable: true,
             // hidden: true,
