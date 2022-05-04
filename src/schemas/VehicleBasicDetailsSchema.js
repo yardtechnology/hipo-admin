@@ -1,7 +1,7 @@
 // import { countries } from "configs";
 import { Person } from "@mui/icons-material";
 import * as Yup from "yup";
-import { useDrivers, useVehicleCategory } from "hooks";
+import { useVehicleCategory } from "hooks";
 import { useEffect, useState } from "react";
 
 const VehicleBasicDetailsSchema = [
@@ -18,11 +18,24 @@ const VehicleBasicDetailsSchema = [
     key: "52",
     label: "Vehicle Number",
     name: "vehicleNumber",
-    validationSchema: Yup.string().required("Vehicle Number is Required"),
+    validationSchema: Yup.string()
+      .required("Vehicle Number is Required")
+      .test(
+        "vehicleNumber",
+        "First two letters of the vehicle number should be capitalized and followed by a space, then the vehicle number should be in the format of 'AB 1234' or 'AB 1234 CDE'",
+        (value) => {
+          return /^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/i.test(
+            value
+          );
+        }
+      ),
+    // "",
+
     initialValue: "",
     startIcon: <Person />,
     required: true,
   },
+
   // {
   //   key: "12",
   //   label: "Vehicle Type",
@@ -131,7 +144,7 @@ const VehicleBasicDetailsSchema = [
 export const useVehicleTypeSchema = () => {
   const [addVehicleTypeSchema, setAddVehicleTypeSchema] = useState([]);
   const { vehicleCategory } = useVehicleCategory();
-  const { drivers } = useDrivers();
+  // const { drivers } = useDrivers();
   console.log("vehicleCategory", vehicleCategory);
   useEffect(() => {
     if (vehicleCategory) {
@@ -153,33 +166,33 @@ export const useVehicleTypeSchema = () => {
                   key: item?._id,
                 })),
         },
-        {
-          key: "27",
-          label: "Driver Name",
-          name: "driverName",
-          validationSchema: Yup.string()
-            // .required("Driver Name is Required")
-            ?.oneOf(
-              drivers == null ? [] : drivers?.map((item) => item?._id),
-              "Driver Name is Required"
-            ),
-          initialValue: "",
-          required: true,
-          type: "select",
-          options:
-            drivers === null
-              ? []
-              : drivers?.map((item) => ({
-                  driverName: item?.displayName,
-                  value: item?._id,
-                  key: item?._id,
-                })),
-        },
+        // {
+        //   key: "27",
+        //   label: "Driver Name",
+        //   name: "driverName",
+        //   validationSchema: Yup.string()
+        //     // .required("Driver Name is Required")
+        //     ?.oneOf(
+        //       drivers == null ? [] : drivers?.map((item) => item?._id),
+        //       "Driver Name is Required"
+        //     ),
+        //   initialValue: "",
+        //   required: true,
+        //   type: "select",
+        //   options:
+        //     drivers === null
+        //       ? []
+        //       : drivers?.map((item) => ({
+        //           driverName: item?.displayName,
+        //           value: item?._id,
+        //           key: item?._id,
+        //         })),
+        // },
       ]);
     } else {
       setAddVehicleTypeSchema(VehicleBasicDetailsSchema);
     }
-  }, [vehicleCategory, drivers]);
+  }, [vehicleCategory]);
   return { addVehicleTypeSchema };
 };
 

@@ -20,7 +20,7 @@ import { UPLOADINSURANCE, UPLOADRC } from "assets";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 const VehicleBasicDetails = ({ handleNext }) => {
-  const { vehicleBasicDetails, setVehicleBasicDetails } = useAppContext();
+  const { vehicleBasicDetails } = useAppContext();
   const { addVehicleTypeSchema } = useVehicleTypeSchema();
   const [value, setValue] = useState("");
   const [value1, setValue1] = useState("");
@@ -54,12 +54,6 @@ const VehicleBasicDetails = ({ handleNext }) => {
     formData.append("insurance", value1?.target?.files[0]);
 
     try {
-      await setVehicleBasicDetails({
-        ...values,
-        drivers: drivers,
-        imgFile: value,
-        imgFile1: value1,
-      });
       const response = await fetch(`${BASE_URL}/vehicle`, {
         method: "POST",
         body: formData,
@@ -70,13 +64,15 @@ const VehicleBasicDetails = ({ handleNext }) => {
       res.status === 200
         ? Swal.fire("Success", res.message, "success")
         : Swal.fire("Error", res.message, "error");
+      submitProps.resetForm();
     } catch (error) {
       console.log(error);
     } finally {
       setValue("");
       setValue1("");
       // handleNext();
-      // submitProps.setSubmitting(false);
+      submitProps.resetForm();
+      submitProps.setSubmitting(false);
     }
   };
   return (
@@ -130,7 +126,13 @@ const VehicleBasicDetails = ({ handleNext }) => {
           <Form>
             <Grid container spacing={0.5} justifyContent="center">
               {addVehicleTypeSchema?.map((inputItem) => (
-                <Grid item lg={6} md={12} sm={12} xs={12}>
+                <Grid
+                  item
+                  lg={inputItem?.name === "vehicleType" ? 12 : 6}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
                   <Field name={inputItem.name} key={inputItem.key}>
                     {(props) => {
                       if (
