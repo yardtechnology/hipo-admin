@@ -125,6 +125,15 @@ const Faqs = () => {
             searchable: true,
           },
           {
+            title: "Ride Type",
+            field: "rideStatus",
+            lookup: {
+              ALL_TYPE: "ALL_TYPE",
+              COMPLETED: "COMPLETED",
+              CANCELLED: "CANCELLED",
+            },
+          },
+          {
             title: "Timestamp",
             // width: "70%",
             field: "timestamp",
@@ -515,6 +524,7 @@ const Faqs = () => {
                   title: data?.title,
                   type: "SUPPORT",
                   role: data?.role,
+                  rideStatus: data?.rideStatus,
                 }),
               });
               const res = await response.json();
@@ -542,6 +552,7 @@ const Faqs = () => {
                     title: newData?.title,
                     type: "SUPPORT",
                     role: newData?.role,
+                    rideStatus: newData?.rideStatus,
                   }),
                 }
               );
