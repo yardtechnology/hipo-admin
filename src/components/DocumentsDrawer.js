@@ -12,7 +12,6 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import { RC } from "assets";
 import { useState } from "react";
 import {
   EditAadharCard,
@@ -21,10 +20,7 @@ import {
 } from "./addDriver";
 const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
   const [value, setValue] = useState(0);
-  const drawerData = open;
-  console.log(drawerData);
   console.log(open);
-
   return (
     <>
       <Drawer
@@ -126,8 +122,8 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                         >
                           {" "}
                           <Avatar
-                            alt="Remy Sharp"
-                            src={RC}
+                            alt=""
+                            src={open?.aadharCard?.front?.url}
                             variant="square"
                             sx={{
                               width: "auto",
@@ -155,8 +151,8 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                         >
                           {" "}
                           <Avatar
-                            alt="Remy Sharp"
-                            src={RC}
+                            alt=""
+                            src={open?.aadharCard?.back?.url}
                             variant="square"
                             sx={{
                               width: "auto",
@@ -228,7 +224,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                           p: "1.5vh 5vw 0vh 5vw ",
                         }}
                       >
-                        5555 7654 5425 5555
+                        {open?.drivingLicense?.number}
                       </Typography>
                       <Grid
                         container
@@ -260,8 +256,8 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                         >
                           {" "}
                           <Avatar
-                            alt="Remy Sharp"
-                            src={RC}
+                            alt=""
+                            src={open?.drivingLicense?.url}
                             variant="square"
                             sx={{
                               width: "auto",
@@ -342,22 +338,26 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                           marginBottom: "1vh",
                         }}
                       >
-                        Account Holder Name - Alexa Aryan
+                        {`Account Holder Name - ${open?.bankDetails?.accountHolderName}`}
+                      </Typography>
+                      {open?.bankDetails?.bankName ? (
+                        <Typography
+                          sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                        >
+                          {`Bank Name - ${open?.bankDetails?.bankName}`}
+                        </Typography>
+                      ) : (
+                        ""
+                      )}
+                      <Typography
+                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                      >
+                        {`IFSC code - ${open?.bankDetails?.ifscCode}`}
                       </Typography>
                       <Typography
                         sx={{ fontWeight: "bold", marginBottom: "1vh" }}
                       >
-                        Bank Name - State Bank Of India
-                      </Typography>
-                      <Typography
-                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
-                      >
-                        IFSC code - UTIB0000001
-                      </Typography>
-                      <Typography
-                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
-                      >
-                        Account Number - 123456789
+                        {`Account Number - ${open?.bankDetails?.accountNumber}`}
                       </Typography>
                     </>
                   )}
