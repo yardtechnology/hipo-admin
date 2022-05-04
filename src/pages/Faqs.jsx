@@ -124,15 +124,7 @@ const Faqs = () => {
             },
             searchable: true,
           },
-          {
-            title: "Ride Type",
-            field: "rideStatus",
-            lookup: {
-              ALL_TYPE: "ALL_TYPE",
-              COMPLETED: "COMPLETED",
-              CANCELLED: "CANCELLED",
-            },
-          },
+
           {
             title: "Timestamp",
             // width: "70%",
@@ -155,7 +147,9 @@ const Faqs = () => {
         ]}
         detailPanel={({ rowData }) => {
           // const ID = rowData?.id;
-          const Topics = getArrFromObj(rowData?.topics);
+          const Topics = getArrFromObj(rowData?.topics).sort((a, b) =>
+            a.timestamp > b.timestamp ? 1 : -1
+          );
           return (
             <>
               <div style={{ marginTop: "2vh" }}>
@@ -194,7 +188,16 @@ const Faqs = () => {
                       field: "title",
                       searchable: true,
                     },
-
+                    {
+                      title: "Ride Type",
+                      field: "rideStatus",
+                      lookup: {
+                        ALL_TYPE: "ALL TYPE",
+                        COMPLETED: "COMPLETED",
+                        CANCELLED: "CANCELLED",
+                      },
+                      emptyValue: "ALL TYPE",
+                    },
                     {
                       title: "Timestamp",
                       // width: "70%",
@@ -392,6 +395,7 @@ const Faqs = () => {
                   editable={{
                     onRowAdd: async (data) => {
                       try {
+                        console.log(data);
                         const response = await fetch(`${BASE_URL}/support`, {
                           method: "POST",
                           headers: {
@@ -404,11 +408,11 @@ const Faqs = () => {
                             title: data.title,
                             role: rowData?.role,
                             type: "TOPIC",
-                            rideStatus: rowData?.rideStatus,
+                            rideStatus: data?.rideStatus,
                           }),
                         });
                         const res = await response.json();
-                        // console.log(res);
+                        console.log(res);
                         const topicResponse = await fetch(
                           `${BASE_URL}/support/${rowData?._id}`,
                           {
@@ -450,6 +454,7 @@ const Faqs = () => {
                             },
                             body: JSON.stringify({
                               title: newData?.title,
+                              rideStatus: newData?.rideStatus,
                             }),
                           }
                         );
@@ -525,7 +530,6 @@ const Faqs = () => {
                   title: data?.title,
                   type: "SUPPORT",
                   role: data?.role,
-                  rideStatus: data?.rideStatus,
                 }),
               });
               const res = await response.json();

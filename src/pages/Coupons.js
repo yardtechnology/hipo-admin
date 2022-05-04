@@ -78,6 +78,7 @@ const Coupons = () => {
             title: "Valid From",
             field: "validFrom",
             type: "date",
+            width: "80%",
             // render: ({ startDate }) => moment(startDate).format("ll"),
           },
 
@@ -85,6 +86,7 @@ const Coupons = () => {
             title: "Valid Till",
             field: "validTo",
             type: "date",
+            width: "40%",
             // render: ({ endDate }) => moment(endDate).format("ll"),
           },
           {
@@ -107,6 +109,7 @@ const Coupons = () => {
             title: "Max Cashback",
             field: "maxDiscount",
             type: "numeric",
+            emptyValue: "--",
             render: ({ maxDiscount }) => formatCurrency(maxDiscount),
             export: false,
             searchable: true,
@@ -116,6 +119,8 @@ const Coupons = () => {
             field: "discount",
             type: "numeric",
             render: ({ discount }) => `${discount}%`,
+            emptyValue: "--",
+
             export: false,
             searchable: true,
           },
@@ -123,6 +128,7 @@ const Coupons = () => {
             title: "Max Uses",
             field: "maxUses",
             type: "numeric",
+            emptyValue: "--",
           },
           // {
           //   title: "Amount",
@@ -143,6 +149,8 @@ const Coupons = () => {
           {
             title: "Status",
             field: "isActive",
+            emptyValue: "--",
+
             lookup: {
               true: "Active",
               false: "Inactive",
