@@ -8,7 +8,6 @@ import { useCoupons } from "hooks";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import Swal from "sweetalert2";
-
 const Coupons = () => {
   const { coupons, setRealtime } = useCoupons();
   console.log(coupons);
@@ -78,7 +77,13 @@ const Coupons = () => {
             title: "Valid From",
             field: "validFrom",
             type: "date",
-            width: "80%",
+            width: "100%",
+            validate: (value) => {
+              if (value === null) {
+                return "Please select valid from date";
+              }
+            },
+
             // render: ({ startDate }) => moment(startDate).format("ll"),
           },
 
@@ -86,7 +91,12 @@ const Coupons = () => {
             title: "Valid Till",
             field: "validTo",
             type: "date",
-            width: "40%",
+            width: "100%",
+            validate: (rowData) => {
+              if (rowData.validFrom > rowData.validTo) {
+                return "Please select valid to date";
+              }
+            },
             // render: ({ endDate }) => moment(endDate).format("ll"),
           },
           {

@@ -18,7 +18,6 @@ const Premium = () => {
     <>
       <MaterialTable
         options={{
-          selection: "true",
           addRowPosition: "first",
           actionsColumnIndex: -1,
           pageSize: 10,
@@ -56,6 +55,11 @@ const Premium = () => {
             title: "Total Bookings",
             field: "totalBooking",
             type: "numeric",
+            required: true,
+            editPlaceholder: "",
+            validate: (rowData) =>
+              rowData?.totalBooking > 0 ? true : "Total Bookings Required",
+
             cellStyle: {
               textAlign: "center",
             },
@@ -64,12 +68,13 @@ const Premium = () => {
             },
             searchable: true,
           },
-
           {
             title: "Benefit",
             field: "benefit",
             render: ({ benefit }) => formatCurrency(benefit),
             type: "numeric",
+            validate: (rowData) =>
+              rowData?.benefit > 0 ? true : "Benefit Required",
             cellStyle: {
               textAlign: "center",
             },
@@ -161,8 +166,11 @@ const Premium = () => {
               const res = await response.json();
               console.log(res);
               res?.status === 200
-                ? Swal.fire({ text: res.message, icon: "success" })
-                : Swal.fire({ text: res.message, icon: "error" });
+                ? Swal.fire({
+                    text: "Premium added Successfully",
+                    icon: "success",
+                  })
+                : Swal.fire({ text: "Something went wrong", icon: "error" });
             } catch (error) {
               console.log(error);
             } finally {
@@ -188,9 +196,12 @@ const Premium = () => {
               );
               const res = await response.json();
               console.log(res);
-              res.status === 200
-                ? Swal.fire({ text: res.message, icon: "success" })
-                : Swal.fire({ text: res.message, icon: "error" });
+              res?.status === 200
+                ? Swal.fire({
+                    text: "Premium updated Successfully",
+                    icon: "success",
+                  })
+                : Swal.fire({ text: "Something went wrong", icon: "error" });
             } catch (error) {
               console.log(error);
             } finally {
@@ -211,9 +222,12 @@ const Premium = () => {
               );
               const res = await response.json();
               console.log(res);
-              res.status === 200
-                ? Swal.fire({ text: res.message, icon: "success" })
-                : Swal.fire({ text: res.message, icon: "error" });
+              res?.status === 200
+                ? Swal.fire({
+                    text: "Premium deleted Successfully",
+                    icon: "success",
+                  })
+                : Swal.fire({ text: "Something went wrong", icon: "error" });
             } catch (error) {
               console.log(error);
             } finally {
