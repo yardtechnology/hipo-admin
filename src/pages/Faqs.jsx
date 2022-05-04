@@ -404,6 +404,7 @@ const Faqs = () => {
                             title: data.title,
                             role: rowData?.role,
                             type: "TOPIC",
+                            rideStatus: rowData?.rideStatus,
                           }),
                         });
                         const res = await response.json();

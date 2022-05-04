@@ -43,6 +43,7 @@ const EditQADrawer = ({ open, setOpenEditQADrawer, setRealtime }) => {
           type: "SUBTOPIC",
           answer: values?.answer,
           role: open?.role,
+          rideStatus: open?.rideStatus,
         }),
       });
       const subtopicRes = await subtopicResponse.json();

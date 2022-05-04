@@ -46,6 +46,7 @@ const AddQADrawer = ({ open, setOpenAddQADrawer, setRealtime }) => {
           type: "SUBTOPIC",
           answer: values?.answer,
           role: open?.role,
+          rideStatus: open?.rideStatus,
         }),
       });
       const res = await response.json();
