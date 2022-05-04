@@ -269,14 +269,14 @@ const DriverRequests = () => {
           //   onClick: (evt, data) => setSelectedUsers(data),
           // },
           {
-            tooltip: "Accept All Driver Requests",
+            tooltip: "Accept Driver Request",
             icon: "done",
             onClick: (evt, data) =>
               handleDriverRequestAccept(data?.map((item) => item._id)),
             // onClick: (evt, data) => setSelectedUsers(data),
           },
           {
-            tooltip: "Reject all Driver Requests",
+            tooltip: "Reject Driver Request",
             icon: "cancel",
             onClick: (evt, data) =>
               handleDriverRequestReject(data?.map((item) => item._id)),
