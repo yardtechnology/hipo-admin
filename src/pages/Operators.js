@@ -110,7 +110,7 @@ const Operators = () => {
       res.status === 200
         ? Swal.fire({
             title: "Success",
-            text: "Drivers has been blocked",
+            text: "Operators has been blocked",
             icon: "success",
           })
         : Swal.fire({
@@ -144,7 +144,7 @@ const Operators = () => {
       res.status === 200
         ? Swal.fire({
             title: "Success",
-            text: "Drivers has been unblocked",
+            text: "Operators has been unblocked",
             icon: "success",
           })
         : Swal.fire({
@@ -178,7 +178,7 @@ const Operators = () => {
       res.status === 200
         ? Swal.fire({
             title: "Success",
-            text: "Driver has been blocked",
+            text: "Operator has been blocked",
             icon: "success",
           })
         : Swal.fire({
@@ -212,7 +212,7 @@ const Operators = () => {
       res.status === 200
         ? Swal.fire({
             title: "Success",
-            text: "Driver has been unblocked",
+            text: "Operator has been unblocked",
             icon: "success",
           })
         : Swal.fire({
@@ -371,7 +371,7 @@ const Operators = () => {
                 </Button> */}
                 <Tooltip
                   placement="top"
-                  title={row?.isBlocked ? "Unblock Driver" : "Block Driver"}
+                  title={row?.isBlocked ? "Unblock Operator" : "Block Operator"}
                 >
                   <IOSSwitch
                     size="small"
@@ -450,17 +450,17 @@ const Operators = () => {
         ]}
         actions={[
           {
-            tooltip: "Send notification to all selected operators",
+            tooltip: "Send notification to selected operators",
             icon: "send",
             onClick: (evt, data) => setSelectedUsers(data),
           },
           {
-            tooltip: "Block all selected operators",
+            tooltip: "Block selected operators",
             icon: "block",
             onClick: (evt, data) => handleBlockAll(data.map((d) => d._id)),
           },
           {
-            tooltip: "Unblock all selected operators",
+            tooltip: "Unblock selected operators",
             icon: "done",
             onClick: (evt, data) => handleUnblockAll(data.map((d) => d._id)),
           },
