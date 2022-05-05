@@ -25,8 +25,11 @@ const Career = () => {
   const onRowDelete = async (oldData) => {
     console.log(oldData);
     try {
-      const response = await fetch(`${BASE_URL}/career-form/${oldData.id}`, {
+      const response = await fetch(`${BASE_URL}/career-form/${oldData?._id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
       });
       const res = await response.json();
       res?.status === 200
