@@ -113,6 +113,18 @@ const Faqs = () => {
             title: "Topic Title",
             field: "title",
             searchable: true,
+            validate: (rowData) => {
+              if (
+                rowData?.title?.length <= 0 ||
+                rowData?.title?.length === undefined
+              ) {
+                return "Required";
+              }
+            },
+
+            // validate: (rowData) =>
+            //   rowData.title > 0 ? true : "Title is required",
+            // rowData?.title > 0 ? true : "Topic Title Required",
           },
           {
             title: "User Type",
@@ -187,6 +199,14 @@ const Faqs = () => {
                       title: "Topics",
                       field: "title",
                       searchable: true,
+                      validate: (rowData) => {
+                        if (
+                          rowData?.title?.length <= 0 ||
+                          rowData?.title?.length === undefined
+                        ) {
+                          return "Required";
+                        }
+                      },
                     },
                     {
                       title: "Ride Type",
