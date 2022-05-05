@@ -16,7 +16,6 @@ const Localization = () => {
       <MaterialTable
         options={{
           whiteSpace: "nowrap",
-          selection: "true",
           addRowPosition: "first",
           actionsColumnIndex: -1,
           pageSize: 10,
@@ -62,18 +61,40 @@ const Localization = () => {
           {
             title: "City",
             field: "name",
-
             searchable: true,
+            validate: (value) => {
+              if (
+                value?.name?.length <= 0 ||
+                value?.name?.length === undefined ||
+                value?.name?.length === null ||
+                value?.name?.length === "" ||
+                value?.name?.length === " "
+              ) {
+                return "Required";
+              }
+              return true;
+            },
           },
           {
             title: "Latitude",
             field: "latitude",
             searchable: true,
+            validate: (rowData) => (rowData?.latitude > 0 ? true : "Required"),
+            // validate: (value) => {
+            //   if (
+            //     value?.latitude?.length <= 0 ||
+            //     value?.latitude?.length === undefined
+            //   ) {
+            //     return "Required";
+            //   }
+            //   return false;
+            // },
           },
           {
             title: "Longitude",
             field: "longitude",
             searchable: true,
+            validate: (rowData) => (rowData?.longitude > 0 ? true : "Required"),
           },
           // {
           //   title: "Country",
@@ -92,6 +113,7 @@ const Localization = () => {
             type: "numeric",
             render: ({ range }) => `${range} Km`,
             searchable: true,
+            validate: (rowData) => (rowData?.range > 0 ? true : "Required"),
             // type: "numeric",
           },
           {
@@ -102,6 +124,7 @@ const Localization = () => {
               true: "Active",
               false: "Inactive",
             },
+            validate: (rowData) => (rowData?.isOperational ? true : "Required"),
             // render: (row) => (
             //   <>
             //     <Switch
@@ -131,23 +154,6 @@ const Localization = () => {
             hidden: true,
             export: true,
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
-          },
-        ]}
-        actions={[
-          // {
-          //   tooltip: "Send notification to all selected users",
-          //   icon: "send",
-          //   onClick: (evt, data) => setSelectedUsers(data),
-          // },
-          {
-            tooltip: "Turn On for Selected Cities",
-            icon: "toggle_on",
-            // onClick: (evt, data) => setSelectedUsers(data),
-          },
-          {
-            tooltip: "Turn Off for Selected Cities",
-            icon: "toggle_off",
-            // onClick: (evt, data) => setSelectedUsers(data),
           },
         ]}
         detailPanel={({ rowData }) => {

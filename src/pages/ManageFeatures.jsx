@@ -17,7 +17,6 @@ const ManageFeatures = () => {
     <>
       <MaterialTable
         options={{
-          selection: "true",
           addRowPosition: "first",
           detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,
@@ -42,7 +41,7 @@ const ManageFeatures = () => {
                 ...feature,
                 sl: i + 1,
                 featureImage: feature?.image,
-                featureImageUrl: feature?.image,
+                featureImageUrl: feature?.image?.url,
                 featureIconUrl: feature?.icon?.URL,
                 featureIcon: feature?.icon,
                 currentTimestamp: moment(feature?.createdAt).format("LL"),
@@ -73,13 +72,19 @@ const ManageFeatures = () => {
               );
             },
             searchable: true,
+            validate: (value) => {
+              if (value === null) {
+                return "Please select an icon";
+              }
+              return true;
+            },
           },
           {
             title: "Image",
             field: "featureImageUrl",
-            render: ({ featureImage }) => (
+            render: ({ featureImageUrl }) => (
               <Avatar
-                src={featureImage?.url}
+                src={featureImageUrl}
                 variant="square"
                 sx={{ width: 120, height: 70 }}
               />
@@ -98,11 +103,29 @@ const ManageFeatures = () => {
             field: "name",
             searchable: true,
             width: "2%",
+            validate: (value) => {
+              if (
+                value?.name?.length <= 0 ||
+                value?.name?.length === undefined
+              ) {
+                return "Required";
+              }
+              return true;
+            },
           },
           {
             title: "Brief",
             field: "description",
             searchable: true,
+            validate: (value) => {
+              if (
+                value?.name?.length <= 0 ||
+                value?.name?.length === undefined
+              ) {
+                return "Required";
+              }
+              return true;
+            },
           },
 
           {
