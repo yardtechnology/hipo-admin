@@ -42,7 +42,7 @@ const ManageFeatures = () => {
                 sl: i + 1,
                 featureImage: feature?.image,
                 featureImageUrl: feature?.image?.url,
-                featureIconUrl: feature?.icon?.URL,
+                featureIconUrl: feature?.icon?.url,
                 featureIcon: feature?.icon,
                 currentTimestamp: moment(feature?.createdAt).format("LL"),
               }))

@@ -227,7 +227,7 @@ const DriversRating = () => {
         editable={{
           onRowDelete: async (oldData) => {
             try {
-              const res = await fetch(`/api/rating/${oldData?._id}`, {
+              const res = await fetch(`${BASE_URL}/rating/${oldData?._id}`, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
@@ -237,11 +237,11 @@ const DriversRating = () => {
               console.log(res);
               res?.status === 200
                 ? Swal.fire({
-                    text: res?.message,
+                    text: "Rating Deleted Successfully",
                     icon: "success",
                   })
                 : Swal.fire({
-                    text: res?.message,
+                    text: "Rating Deletion Failed",
                     icon: "error",
                   });
             } catch (err) {
