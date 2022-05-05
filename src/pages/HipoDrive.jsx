@@ -91,6 +91,10 @@ const HipoDrive = () => {
             title: "Type",
             field: "type",
           },
+          {
+            title: "City",
+            field: "city",
+          },
           //   {
           //     title: "Message",
           //     field: "message",

@@ -16,11 +16,42 @@ import moment from "moment";
 import { useState } from "react";
 import Swal from "sweetalert2";
 const Contacts = () => {
+  const [loading, setLoading] = useState(false);
   const { contacts, setRealtime } = useContacts();
   console.log(contacts);
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
-  const handleBulkDelete = async (data) => {};
+  const handleBulkDelete = async (data) => {
+    console.log(data);
+    try {
+      setLoading(true);
+      const response = await fetch(`${BASE_URL}/contact-us-form/all`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          ids: data,
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+      response.status === 200
+        ? Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "Contact Deleted Successfully",
+          })
+        : Swal.fire({ icon: "error", text: "Something Went Wrong" });
+      console.log(res.error.message);
+      setLoading(false);
+      setRealtime((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
   return (
     <>
       <MaterialTable
@@ -178,7 +209,10 @@ const Contacts = () => {
             tooltip: "Delete selected contacts",
             icon: "delete",
             onClick: (evt, data) =>
-              handleBulkDelete(data.map((data) => data?._id)),
+              handleBulkDelete(
+                data.map((data) => data?._id),
+                setRealtime((prev) => !prev)
+              ),
           },
         ]}
         detailPanel={({ rowData }) => {
@@ -224,7 +258,7 @@ const Contacts = () => {
             </div>
           );
         }}
-        // isLoading={supports === null}
+        isLoading={contacts === null || loading}
       />
       <SendReply
         selectedUsers={selectedUsers}

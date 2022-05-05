@@ -203,7 +203,10 @@ const Supports = () => {
             tooltip: "Delete selected supports",
             icon: "delete",
             onClick: (evt, data) =>
-              handleBulkDelete(data.map((data) => data?._id)),
+              handleBulkDelete(
+                data.map((data) => data?._id),
+                setRealtime((prev) => !prev)
+              ),
           },
         ]}
         detailPanel={({ rowData }) => {

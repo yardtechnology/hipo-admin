@@ -15,11 +15,42 @@ import moment from "moment";
 import { useState } from "react";
 import Swal from "sweetalert2";
 const Enquiries = () => {
+  const [loading, setLoading] = useState(false);
   const { enquiries, setRealtime } = useEnquiries();
   console.log(enquiries);
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
-  const handleBulkDelete = async (data) => {};
+  const handleBulkDelete = async (data) => {
+    console.log(data);
+    try {
+      setLoading(true);
+      const response = await fetch(`${BASE_URL}/enquiry-form/all`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          ids: data,
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+      response.status === 200
+        ? Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "Enquiry Deleted Successfully",
+          })
+        : Swal.fire({ icon: "error", text: "Something Went Wrong" });
+      console.log(res.error.message);
+      setRealtime((prev) => !prev);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
   return (
     <>
       <MaterialTable
@@ -171,7 +202,10 @@ const Enquiries = () => {
             tooltip: "Delete selected enquiries",
             icon: "delete",
             onClick: (evt, data) =>
-              handleBulkDelete(data.map((data) => data?._id)),
+              handleBulkDelete(
+                data.map((data) => data?._id),
+                setRealtime((prev) => !prev)
+              ),
           },
         ]}
         // detailPanel={({ rowData }) => {
@@ -217,7 +251,7 @@ const Enquiries = () => {
         //     </div>
         //   );
         // }}
-        isLoading={enquiries === null}
+        isLoading={enquiries === null || loading}
       />
       <SendReply
         selectedUsers={selectedUsers}
