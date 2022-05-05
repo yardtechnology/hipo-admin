@@ -159,7 +159,7 @@ const Contacts = () => {
         }}
         actions={[
           {
-            tooltip: "Delete all selected users",
+            tooltip: "Delete selected contacts",
             icon: "delete",
             onClick: (evt, data) =>
               handleBulkDelete(data.map((data) => data?._id)),

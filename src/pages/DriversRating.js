@@ -221,7 +221,7 @@ const DriversRating = () => {
         }}
         actions={[
           {
-            tooltip: "Delete all selected users",
+            tooltip: "Delete selected driver rating",
             icon: "delete",
             onClick: (evt, data) =>
               handleBulkDelete(data.map((data) => data?._id)),

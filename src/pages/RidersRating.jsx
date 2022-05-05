@@ -224,7 +224,7 @@ const RidersRating = () => {
         }}
         actions={[
           {
-            tooltip: "Delete all selected users",
+            tooltip: "Delete selected riders",
             icon: "delete",
             onClick: (evt, data) =>
               handleBulkDelete(data.map((data) => data?._id)),
