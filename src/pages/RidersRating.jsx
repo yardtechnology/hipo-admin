@@ -73,13 +73,13 @@ const RidersRating = () => {
             editable: "never",
             width: "2%",
           },
-          {
-            title: "Ride Id",
-            field: "rideId",
-            export: true,
-            searchable: true,
-            width: "15%",
-          },
+          // {
+          //   title: "Ride Id",
+          //   field: "rideId",
+          //   export: true,
+          //   searchable: true,
+          //   width: "15%",
+          // },
           {
             title: "Riders Profile",
             tooltip: "Profile",
@@ -198,7 +198,7 @@ const RidersRating = () => {
         editable={{
           onRowDelete: async (oldData) => {
             try {
-              const res = await fetch(`${BASE_URL}/ratings/${oldData._id}`, {
+              const res = await fetch(`${BASE_URL}/rating/${oldData?._id}`, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
@@ -208,7 +208,7 @@ const RidersRating = () => {
               console.log(res);
               res?.status === 200
                 ? Swal.fire({
-                    text: res?.message,
+                    text: "Rating Deleted Successfully",
                     icon: "success",
                   })
                 : Swal.fire({
