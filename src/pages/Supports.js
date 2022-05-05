@@ -21,7 +21,39 @@ const Supports = () => {
   const { supports, setRealtime } = useSupports();
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
-  const handleBulkDelete = async (data) => {};
+  const [loading, setLoading] = useState(false);
+  const handleBulkDelete = async (data) => {
+    console.log(data);
+    try {
+      setLoading(true);
+      const response = await fetch(`${BASE_URL}/support-form/all`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          ids: data,
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+      response.status === 200
+        ? Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "Support Deleted Successfully",
+          })
+        : Swal.fire({ icon: "error", text: "Something Went Wrong" });
+      console.log(res.error.message);
+      setLoading(false);
+      setRealtime((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <MaterialTable
@@ -53,6 +85,7 @@ const Supports = () => {
                 //   createdAt: moment(enquiry.createdAt).format("LL"),
               }))
         }
+        isLoading={loading === true || supports === null}
         columns={[
           {
             title: "#",
@@ -216,7 +249,6 @@ const Supports = () => {
             </div>
           );
         }}
-        isLoading={supports === null}
       />
       <SendReply
         selectedUsers={selectedUsers}

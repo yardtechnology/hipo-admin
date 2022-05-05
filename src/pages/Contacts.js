@@ -14,6 +14,7 @@ import { BASE_URL } from "configs";
 import { useContacts } from "hooks";
 import moment from "moment";
 import { useState } from "react";
+import Swal from "sweetalert2";
 const Contacts = () => {
   const { contacts, setRealtime } = useContacts();
   console.log(contacts);
@@ -143,13 +144,28 @@ const Contacts = () => {
             console.log(oldData);
             // setRealtime(oldData);
             try {
-              await fetch(`${BASE_URL}/contacts/${oldData.id}`, {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              });
+              const response = await fetch(
+                `${BASE_URL}/contact-us-form/${oldData?._id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await response.json();
+              res?.status === 200
+                ? Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Contact deleted successfully",
+                  })
+                : Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Something went wrong",
+                  });
             } catch (error) {
               console.log(error);
             } finally {

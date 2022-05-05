@@ -45,7 +45,7 @@ const Profit = () => {
       const res = await result.json();
       console.log(res);
       result.status === 200
-        ? Swal.fire({ icon: "success", text: res?.message })
+        ? Swal.fire({ icon: "success", text: "Profit updated successfully" })
         : Swal.fire({ icon: "error", text: res?.message });
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });

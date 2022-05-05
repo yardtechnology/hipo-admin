@@ -343,17 +343,18 @@ const MenuItems = [
     ],
   },
   {
-    key: "92",
-    icon: <DocumentScanner className="iconColor" />,
-    title: "Career",
-    route: "/career",
-  },
-  {
     key: "87",
     icon: <RequestPage className="iconColor" />,
     title: "Hipo Drive",
     route: "/hipo-drive",
   },
+  {
+    key: "92",
+    icon: <DocumentScanner className="iconColor" />,
+    title: "Career",
+    route: "/career",
+  },
+
   {
     key: "21",
     icon: <ContactMail className="iconColor" />,

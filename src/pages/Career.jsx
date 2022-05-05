@@ -43,7 +43,6 @@ const Career = () => {
     <>
       <MaterialTable
         options={{
-          selection: "true",
           addRowPosition: "first",
           actionsColumnIndex: -1,
           pageSize: 10,

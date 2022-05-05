@@ -43,7 +43,6 @@ const Cabs = ({ city }) => {
     <div style={{ marginTop: "2vh" }}>
       <MaterialTable
         options={{
-          selection: "true",
           addRowPosition: "first",
           detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,
@@ -66,12 +65,14 @@ const Cabs = ({ city }) => {
             ? []
             : cabs?.map((cab) => ({
                 ...cab,
+                sl: cabs.indexOf(cab) + 1,
                 // vehicleCategory: cab?.vehicleCategory?.name,
                 currentTimestamp: moment(cab.createdAt).format("DD-MM-YYYY"),
                 vehicleCategoryName: cab?.vehicleCategory?.name,
                 vehicleCategoryId: cab?.vehicleCategory?._id,
               }))
         }
+        isLoading={cabs === null}
         columns={[
           {
             title: "#",
@@ -116,6 +117,8 @@ const Cabs = ({ city }) => {
             type: "numeric",
             searchable: true,
             render: ({ perKilometer }) => formatCurrency(perKilometer),
+            validate: (rowData) =>
+              rowData?.perKilometer > 0 ? true : "Required",
           },
           {
             title: "Price Per Min",
@@ -123,6 +126,7 @@ const Cabs = ({ city }) => {
             type: "numeric",
             searchable: true,
             render: ({ perMinute }) => formatCurrency(perMinute),
+            validate: (rowData) => (rowData?.perMinute > 0 ? true : "Required"),
           },
           {
             title: "Base Fare",
@@ -130,6 +134,7 @@ const Cabs = ({ city }) => {
             type: "numeric",
             searchable: true,
             render: ({ baseFare }) => formatCurrency(baseFare),
+            validate: (rowData) => (rowData?.baseFare > 0 ? true : "Required"),
           },
           {
             title: "Allowance",
@@ -137,6 +142,7 @@ const Cabs = ({ city }) => {
             type: "numeric",
             searchable: true,
             render: ({ allowance }) => formatCurrency(allowance),
+            validate: (rowData) => (rowData?.allowance > 0 ? true : "Required"),
           },
           {
             title: "Tax",
@@ -144,6 +150,7 @@ const Cabs = ({ city }) => {
             type: "numeric",
             searchable: true,
             render: ({ tax }) => `${tax}%`,
+            validate: (rowData) => (rowData?.tax > 0 ? true : "Required"),
           },
           {
             title: "Timestamp",
