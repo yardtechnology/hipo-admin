@@ -15,8 +15,10 @@ import Cabs from "./Cabs";
 import AssignFeatureDrawer from "./AssignFeatureDrawer";
 import AssignTypeDrawer from "./AssignTypeDrawer";
 import CustomPhoneNumberPicker from "./CustomPhoneNumberPicker";
+import AssignTypeDrawerFeature from "./AssignTypeDrawerFeature";
 
 export {
+  AssignTypeDrawerFeature,
   CustomPhoneNumberPicker,
   AssignTypeDrawer,
   AssignFeatureDrawer,

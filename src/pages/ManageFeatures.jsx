@@ -1,5 +1,5 @@
 import MaterialTable from "@material-table/core";
-import { Avatar } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
@@ -7,14 +7,24 @@ import { useFeaturesList } from "hooks";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 import { PhotoUpload } from "components/core";
+import { CategoryOutlined } from "@mui/icons-material";
+import { useState } from "react";
+import { AssignTypeDrawerFeature } from "components";
 
 const ManageFeatures = () => {
   const { features, setRealtime } = useFeaturesList();
   console.log(features);
+  const [openAssignTypeDrawer, setOpenAssignTypeDrawer] = useState({});
+
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
     <>
+      <AssignTypeDrawerFeature
+        setRealtime={setRealtime}
+        setOpenAssignTypeDrawer={setOpenAssignTypeDrawer}
+        open={openAssignTypeDrawer}
+      />
       <MaterialTable
         options={{
           addRowPosition: "first",
@@ -147,6 +157,35 @@ const ManageFeatures = () => {
             hidden: true,
             export: true,
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
+          },
+          {
+            // title: "Features",
+            field: "features",
+            render: (row) => {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Tooltip title={"Assign Ride Type"}>
+                    <IconButton
+                      onClick={() => {
+                        setOpenAssignTypeDrawer(row);
+                      }}
+                    >
+                      <CategoryOutlined />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              );
+            },
+            width: "2%",
+            editable: "never",
+            export: false,
           },
         ]}
         editable={{
