@@ -2,16 +2,48 @@ import { formatCurrency } from "@ashirbad/js-core";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { formatCurrency } from "@ashirbad/js-core";
-import { Chip } from "@mui/material";
+import { Chip, TextField } from "@mui/material";
 import { BASE_URL } from "configs";
 import { useCoupons } from "hooks";
 // import { BASE_URL } from "configs";
 import moment from "moment";
+import { useState } from "react";
 import Swal from "sweetalert2";
 const Coupons = () => {
   const { coupons, setRealtime } = useCoupons();
   console.log(coupons);
-  // const handleBulkDelete = async (data) => {};
+  const [loading, setLoading] = useState(false);
+  const handleBulkDelete = async (data) => {
+    console.log(data);
+    try {
+      setLoading(true);
+      const response = await fetch(`${BASE_URL}/coupon/all`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          ids: data,
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+      response.status === 200
+        ? Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "Coupon Deleted Successfully",
+          })
+        : Swal.fire({ icon: "error", text: "Something Went Wrong" });
+      console.log(res.error.message);
+      setLoading(false);
+      setRealtime((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
   return (
     <>
       <MaterialTable
@@ -39,8 +71,8 @@ const Coupons = () => {
             : coupons?.map((coupon, i) => ({
                 ...coupon,
                 sl: i + 1,
-                validFrom: moment(coupon?.startDate).format("LL"),
-                validTo: moment(coupon.endDate).format("LL"),
+                validFrom: coupon?.startDate,
+                validTill: coupon?.endDate,
                 status: coupon?.isActive ? "Active" : "Inactive",
                 Timestamp: moment(coupon?.createdAt).format("LL"),
                 cashback: formatCurrency(coupon?.maxDiscount),
@@ -72,30 +104,94 @@ const Coupons = () => {
           {
             title: "Code",
             field: "code",
+            validate: (value) => {
+              if (
+                value?.code?.length <= 0 ||
+                value?.code?.length === undefined ||
+                value?.code?.length === null ||
+                value?.code?.length === "" ||
+                value?.code?.length === " "
+              ) {
+                return "Required";
+              }
+              return true;
+            },
           },
           {
             title: "Valid From",
             field: "validFrom",
             type: "date",
-            width: "100%",
-            validate: (value) => {
-              if (value === null) {
-                return "Please select valid from date";
-              }
+            emptyValue: "--",
+            render: (rowData) => moment(rowData.validFrom).format("LL"),
+            editComponent: ({ value, onChange, rowData }) => {
+              return (
+                <>
+                  <TextField
+                    id="date"
+                    type="date"
+                    value={value?.split("T")[0]}
+                    onChange={(e) => onChange(e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    error={value === "" || value === undefined ? true : false}
+                    helperText={
+                      value === "" || value === undefined ? "Required" : ""
+                    }
+                    // required={value === "" ? true : false}
+                    // error={value === "" ? true : false}
+                  />
+                </>
+              );
             },
-
-            // render: ({ startDate }) => moment(startDate).format("ll"),
+            searchable: true,
           },
 
           {
             title: "Valid Till",
-            field: "validTo",
+            field: "validTill",
             type: "date",
-            width: "100%",
-            validate: (rowData) => {
-              if (rowData.validFrom > rowData.validTo) {
-                return "Please select valid to date";
-              }
+            emptyValue: "--",
+            render: (rowData) => moment(rowData.validTill).format("LL"),
+
+            // validate: (rowData) => {
+            //   if (rowData.validFrom > rowData.validTo) {
+            //     return "Please select valid to date";
+            //   }
+            // },
+            editComponent: ({ value, onChange, rowData }) => {
+              console.log(value);
+              return (
+                <>
+                  <TextField
+                    id="date"
+                    type="date"
+                    value={value?.split("T")[0]}
+                    onChange={(e) => onChange(e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    error={
+                      value === "" || value === undefined
+                        ? true
+                        : new Date(value) < new Date(rowData?.validFrom)
+                        ? true
+                        : `${new Date(value)} === ${new Date(
+                            rowData?.validFrom
+                          )}`
+                        ? false
+                        : false
+                    }
+                    helperText={
+                      value === "" || value === undefined
+                        ? "Required"
+                        : new Date(value) < new Date(rowData?.validFrom)
+                        ? "Valid Till should be greater than Valid From "
+                        : ""
+                    }
+                  />
+                </>
+              );
             },
             // render: ({ endDate }) => moment(endDate).format("ll"),
           },
@@ -130,6 +226,7 @@ const Coupons = () => {
             type: "numeric",
             render: ({ discount }) => `${discount}%`,
             emptyValue: "--",
+            validate: (rowData) => (rowData?.discount > 0 ? true : "Required"),
 
             export: false,
             searchable: true,
@@ -221,7 +318,7 @@ const Coupons = () => {
                   maxDiscount: data?.maxDiscount,
                   maxUses: data?.maxUses,
                   startDate: data?.validFrom,
-                  endDate: data?.validTo,
+                  endDate: data?.validTill,
                 }),
               });
               const res = await response.json();
@@ -236,6 +333,7 @@ const Coupons = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
+            console.log(newData);
             try {
               const response = await fetch(
                 `${BASE_URL}/coupon/${oldData?._id}`,
@@ -251,7 +349,7 @@ const Coupons = () => {
                     maxDiscount: newData?.maxDiscount,
                     maxUses: newData?.maxUses,
                     startDate: newData?.validFrom,
-                    endDate: newData?.validTo,
+                    endDate: newData?.validTill,
                     isActive: newData?.isActive,
                   }),
                 }
@@ -267,17 +365,43 @@ const Coupons = () => {
               setRealtime((prev) => !prev);
             }
           },
-          onRowDelete: async (oldData) => {},
+          onRowDelete: async (oldData) => {
+            console.log(oldData);
+            try {
+              const response = await fetch(
+                `${BASE_URL}/coupon/${oldData?._id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+                  },
+                }
+              );
+              const res = await response.json();
+              console.log(res);
+              res.status === 200
+                ? Swal.fire({ text: res.message, icon: "success" })
+                : Swal.fire({ text: res.message, icon: "error" });
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setRealtime((prev) => !prev);
+            }
+          },
         }}
-        // actions={[
-        //   {
-        //     tooltip: "Delete all selected Days",
-        //     icon: "delete",
-        //     onClick: (evt, data) =>
-        //       handleBulkDelete(data.map((data) => data?.day)),
-        //   },
-        // ]}
-        isLoading={coupons === null}
+        actions={[
+          {
+            tooltip: "Delete selected coupon",
+            icon: "delete",
+            onClick: (evt, data) =>
+              handleBulkDelete(
+                data.map((data) => data?._id),
+                setRealtime((prev) => !prev)
+              ),
+          },
+        ]}
+        isLoading={coupons === null || loading}
       />
     </>
   );
