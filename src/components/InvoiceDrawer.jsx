@@ -137,8 +137,8 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary={Details?.vehicleType}
-                  secondary={"Maruti Suzuki Baleno"}
+                  primary={Details?.driver?.vehicle?.vehicleType?.name}
+                  secondary={Details?.driver?.vehicle?.vehicleName}
                 />
               </ListItem>
             </Tooltip>
@@ -172,11 +172,13 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
               }}
               variant="body1"
             >
-              Pick: {Details?.pickAddress}{" "}
-              {moment(Details?.pick)?.format("hh:mm a")}
+              {/* Pick: {Details?.pickAddress}{" "}
+              {moment(Details?.pick)?.format("hh:mm a")} */}
+              Pick: {"--"}
               <br />
-              Drop: {Details?.dropAddress}{" "}
-              {moment(Details?.drop)?.format("hh:mm a")}
+              {/* Drop: {Details?.dropAddress}{" "}
+              {moment(Details?.drop)?.format("hh:mm a")} */}
+              Drop: {"--"}
             </Typography>
             {/* </Tooltip> */}
             <Divider />
@@ -269,9 +271,19 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "1vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(Details?.billing?.totalFare)}
+                  secondaryAction={formatCurrency(
+                    Details?.billing?.totalFare
+                      ? Details?.billing?.totalFare
+                      : "--"
+                  )}
                 >
-                  <ListItemText primary={"Cash"} />
+                  <ListItemText
+                    primary={
+                      Details?.billing?.paymentMethod
+                        ? Details?.billing?.paymentMethod
+                        : "--"
+                    }
+                  />
                 </ListItem>
               </AccordionDetails>
             </Accordion>

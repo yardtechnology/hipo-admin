@@ -262,6 +262,10 @@ const Riders = () => {
             : riders?.map((rider, index) => ({
                 ...rider,
                 sl: index + 1,
+                lastLogin: rider?.loginInfo?.createdAt,
+                lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
+                  "MMMM Do YYYY, h:mm:ss a"
+                ),
               }))
         }
         columns={[
@@ -349,8 +353,9 @@ const Riders = () => {
           },
           {
             title: "Last Login",
-            field: "lastSignInTime",
-            render: ({ lastSignInTime }) => moment(lastSignInTime).fromNow(),
+            field: "lastLoginInfo",
+            render: ({ lastLogin }) =>
+              lastLogin ? moment(lastLogin).fromNow() : "--",
             emptyValue: "--",
           },
 

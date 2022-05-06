@@ -92,13 +92,14 @@ const RiderHistory = () => {
                 ...item,
                 displayName: item?.rider?.displayName,
                 phoneNumber: item?.rider?.phoneNumber,
-                rideAmount: item?.billing?.subTotal,
+                rideAmount: item?.billing?.totalFare,
                 pickupLatitude: item?.pickupLocation?.lat,
                 pickupLongitude: item?.pickupLocation?.lng,
                 dropLatitude: item?.dropLocation?.lat,
                 dropLongitude: item?.dropLocation?.lng,
                 driverDisplayName: item?.driver?.displayName,
                 driverPhoneNumber: item?.driver?.phoneNumber,
+                vehicle: item?.driver?.vehicle?.vehicleType?.name,
               }))
           //   [
           //   {
@@ -190,7 +191,7 @@ const RiderHistory = () => {
           },
           {
             title: "Vehicle",
-            field: "vehicleType",
+            field: "vehicle",
             emptyValue: "--",
           },
           {
@@ -254,7 +255,7 @@ const RiderHistory = () => {
             title: "Fare",
             field: "rideAmount",
             emptyValue: "--",
-            render: ({ rideAmount }) => formatCurrency(rideAmount),
+            render: ({ billing }) => formatCurrency(billing?.totalFare),
           },
 
           {
