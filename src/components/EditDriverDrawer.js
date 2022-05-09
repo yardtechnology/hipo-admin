@@ -13,23 +13,23 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import { Fragment, useState } from "react";
-import { AddDriverSchema } from "schemas";
+import { useAddDriverSchema } from "schemas";
 import { Done } from "@mui/icons-material";
 
 import { LoadingButton } from "@mui/lab";
 import { PhotoUpload } from "./core";
+import { BASE_URL } from "configs";
+import Swal from "sweetalert2";
 
-const EditDriverDrawer = ({ open, setOpenEditDriverDrawer }) => {
+const EditDriverDrawer = ({ open, setOpenEditDriverDrawer, setRealtime }) => {
   const [value, setValue] = useState("");
-  const drawerData = open;
-  console.log(drawerData);
+  const { addDriverSchema } = useAddDriverSchema();
   console.log(open);
-
-  const initialValues = AddDriverSchema?.reduce((accumulator, currentValue) => {
+  const initialValues = addDriverSchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
   }, {});
-  const validationSchema = AddDriverSchema.reduce(
+  const validationSchema = addDriverSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
       return accumulator;
@@ -37,13 +37,47 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer }) => {
     {}
   );
   const handleSend = async (values, submitProps) => {
+    console.log(values);
+    const formdata = new FormData();
+    if (value) {
+      formdata.append("displayName", values?.displayName);
+      formdata.append("email", values?.email);
+      formdata.append("dateOfBirth", values?.dob);
+      formdata.append("phoneNumber", values?.phoneNumber);
+      formdata.append("avatar", value?.target.files[0]);
+      formdata.append("countryName", values?.country);
+      formdata.append("city", values?.city);
+      console.log("formdata", formdata);
+    } else {
+      formdata.append("displayName", values?.displayName);
+      formdata.append("email", values?.email);
+      formdata.append("dateOfBirth", values?.dob);
+      formdata.append("phoneNumber", values?.phoneNumber);
+      formdata.append("countryName", values?.country);
+      formdata.append("city", values?.city);
+      console.log("formdata", formdata);
+    }
     try {
       console.log(values);
+      const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: formdata,
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire("Success", "Driver Updated Successfully", "success")
+        : Swal.fire("Error", "Driver Not Updated", "error");
       submitProps.resetForm();
     } catch (error) {
       console.log(error);
     } finally {
       submitProps.setSubmitting(false);
+      setOpenEditDriverDrawer(false);
+      setRealtime((prev) => !prev);
     }
   };
   return (
@@ -72,18 +106,33 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer }) => {
           >
             <PhotoUpload
               variant={"circular"}
-              value={value || value?.imgFile}
+              value={value || open?.photoURL}
               onChange={setValue}
             />
           </div>
           <Formik
-            initialValues={initialValues}
             validationSchema={Yup.object(validationSchema)}
             onSubmit={handleSend}
+            enableReinitialize
+            initialValues={
+              open?.phoneNumber
+                ? {
+                    displayName: open?.displayName,
+                    phoneNumber: open?.phoneNumber,
+                    email: open?.email,
+                    dob: new Date(open?.dateOfBirth)
+                      .toISOString()
+                      .split("T")[0],
+                    // dob: open?.dateOfBirth,
+                    country: open?.country?.name,
+                    city: open?.city?._id,
+                  }
+                : initialValues
+            }
           >
             {(formik) => (
               <Form>
-                {AddDriverSchema?.map((inputItem) => (
+                {addDriverSchema?.map((inputItem) => (
                   <Field name={inputItem.name} key={inputItem.key}>
                     {(props) => {
                       if (inputItem.type === "select") {
@@ -127,7 +176,7 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer }) => {
                                   {option?.phone ? (
                                     <>{`${option.value} (${option.key}) +${option.phone} `}</>
                                   ) : (
-                                    option.value
+                                    option?.city
                                   )}
                                 </MenuItem>
                               ))}

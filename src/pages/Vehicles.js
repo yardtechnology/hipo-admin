@@ -20,7 +20,7 @@ import { useVehicles } from "hooks";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const Vehicles = () => {
-  const { vehicles } = useVehicles();
+  const { vehicles, setRealtime } = useVehicles();
   console.log(vehicles);
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);
@@ -32,6 +32,7 @@ const Vehicles = () => {
   return (
     <>
       <EditVehicle
+        setRealtime={setRealtime}
         open={openEditVehicleDocumentDrawer}
         setOpenEditVehicleDrawer={setOpenEditVehicleDocumentDrawer}
       />

@@ -287,6 +287,7 @@ const AllDrivers = () => {
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
       />
       <EditDriverDrawer
+        setRealtime={setRealtime}
         open={openEditDriverDrawer}
         setOpenEditDriverDrawer={setOpenEditDriverDrawer}
       />
@@ -323,7 +324,7 @@ const AllDrivers = () => {
             : drivers.map((driver, i) => ({
                 ...driver,
                 sl: i + 1,
-                city: driver?.city?.name,
+                cityName: driver?.city?.name,
                 currentTimestamp: moment(driver?.createdAt).format("ll"),
               }))
           //   [
@@ -398,7 +399,7 @@ const AllDrivers = () => {
           },
           {
             title: "City",
-            field: "city",
+            field: "cityName",
           },
           // {
           //   title: "Trips",

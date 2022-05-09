@@ -56,7 +56,7 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     formdata.append("bankAccountNumber", values?.accountNo);
     formdata.append("bankName", values?.bankName);
     formdata.append("ifscCode", values?.ifscCode);
-    formdata.append("accountHolderName", values?.accountHolderName);
+    formdata.append("bankAccountHolderName", values?.accountHolderName);
     formdata.append("displayName", basicDetails?.displayName);
     formdata.append("email", basicDetails?.email);
     formdata.append("dateOfBirth", basicDetails?.dob);

@@ -72,33 +72,33 @@ const AddDriverSchema = [
     initialValue: "",
     startIcon: <Person />,
   },
-  {
-    key: "12",
-    required: true,
-    label: "Gender",
-    validationSchema: Yup.string().required("Gender is required"),
-    name: "gender",
-    // validationSchema: Yup.number().required("Requested Credit is Required"),
-    initialValue: "",
-    type: "select",
-    options: [
-      {
-        dismiss: "Male",
-        value: "male",
-        key: "1",
-      },
-      {
-        dismiss: "Female",
-        value: "female",
-        key: "2",
-      },
-      {
-        dismiss: "Transgender",
-        value: "transgender",
-        key: "3",
-      },
-    ],
-  },
+  // {
+  //   key: "12",
+  //   // required: true,
+  //   label: "Gender",
+  //   validationSchema: Yup.string().required("Gender is required"),
+  //   name: "gender",
+  //   // validationSchema: Yup.number().required("Requested Credit is Required"),
+  //   initialValue: "",
+  //   type: "select",
+  //   options: [
+  //     {
+  //       dismiss: "Male",
+  //       value: "male",
+  //       key: "1",
+  //     },
+  //     {
+  //       dismiss: "Female",
+  //       value: "female",
+  //       key: "2",
+  //     },
+  //     {
+  //       dismiss: "Transgender",
+  //       value: "transgender",
+  //       key: "3",
+  //     },
+  //   ],
+  // },
   // {
   //   key: "115",
   //   label: "City",

@@ -13,25 +13,27 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import { Fragment } from "react";
-import { VehicleBasicDetailsSchema } from "schemas";
+import { useVehicleTypeSchema } from "schemas";
 import { Done } from "@mui/icons-material";
 
 import { LoadingButton } from "@mui/lab";
+import { BASE_URL } from "configs";
+import Swal from "sweetalert2";
 // import { PhotoUpload } from "./core";
 
-const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
-  const drawerData = open;
-  console.log(drawerData);
+const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
+  const { addVehicleTypeSchema } = useVehicleTypeSchema();
+
   console.log(open);
 
-  const initialValues = VehicleBasicDetailsSchema?.reduce(
+  const initialValues = addVehicleTypeSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
       return accumulator;
     },
     {}
   );
-  const validationSchema = VehicleBasicDetailsSchema.reduce(
+  const validationSchema = addVehicleTypeSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
       return accumulator;
@@ -40,12 +42,29 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
   );
   const handleSend = async (values, submitProps) => {
     try {
+      const response = await fetch(`${BASE_URL}/vehicle/${open?._id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: JSON.stringify({
+          vehicleName: values?.vehicleName,
+          vehicleType: values?.vehicleType,
+          vehicleNumber: values?.vehicleNumber,
+        }),
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire("Success", res?.message, "success")
+        : Swal.fire("Error", res?.message, "error");
       console.log(values);
-      submitProps.resetForm();
     } catch (error) {
       console.log(error);
     } finally {
       submitProps.setSubmitting(false);
+      setOpenEditVehicleDrawer(false);
+      setRealtime((prev) => !prev);
     }
   };
   return (
@@ -58,7 +77,7 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
         <Container
           style={{
             width: "40vw",
-            marginTop: "12vh",
+            marginTop: "18vh",
           }}
         >
           <Typography
@@ -84,13 +103,22 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
             />
           </div> */}
           <Formik
-            initialValues={initialValues}
+            initialValues={
+              open?.vehicleNumber
+                ? {
+                    vehicleNumber: open?.vehicleNumber,
+                    vehicleType: open?.vehicleType?._id,
+                    vehicleName: open?.vehicleName,
+                  }
+                : initialValues
+            }
             validationSchema={Yup.object(validationSchema)}
             onSubmit={handleSend}
+            enableReinitialize
           >
             {(formik) => (
               <Form>
-                {VehicleBasicDetailsSchema?.map((inputItem) => (
+                {addVehicleTypeSchema?.map((inputItem) => (
                   <Field name={inputItem.name} key={inputItem.key}>
                     {(props) => {
                       if (inputItem.type === "select") {
@@ -134,7 +162,7 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer }) => {
                                   {option?.phone ? (
                                     <>{`${option.value} (${option.key}) +${option.phone} `}</>
                                   ) : (
-                                    option.value
+                                    option?.vehicleType
                                   )}
                                 </MenuItem>
                               ))}
