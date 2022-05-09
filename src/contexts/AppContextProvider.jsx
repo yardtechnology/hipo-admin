@@ -32,6 +32,7 @@ const AppContextProvider = ({ children }) => {
     dob: "",
     gender: "",
     country: "",
+    city: "",
     imgFile: "",
     countryCode: "",
   });

@@ -13,12 +13,14 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useAppContext } from "contexts";
 import React, { Fragment, useState } from "react";
-import { AddDriverSchema } from "schemas";
+import { useAddDriverSchema } from "schemas";
 
 import { PhotoUpload } from "components/core";
 import { CustomPhoneNumberPicker } from "components";
+
 const BasicDetails = ({ handleNext }) => {
   const { basicDetails, setBasicDetails } = useAppContext();
+  const { addDriverSchema } = useAddDriverSchema();
   console.log("basicDetails", basicDetails);
   const [countryCode, setCountryCode] = useState(
     basicDetails.countryCode || "+91"
@@ -26,11 +28,11 @@ const BasicDetails = ({ handleNext }) => {
   const [value, setValue] = useState(basicDetails?.imgFile);
   console.log(value);
 
-  const initialValues = AddDriverSchema?.reduce((accumulator, currentValue) => {
+  const initialValues = addDriverSchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
   }, {});
-  const validationSchema = AddDriverSchema.reduce(
+  const validationSchema = addDriverSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
       return accumulator;
@@ -90,8 +92,14 @@ const BasicDetails = ({ handleNext }) => {
         {(formik) => (
           <Form>
             <Grid container spacing={0.5} justifyContent="center">
-              {AddDriverSchema?.map((inputItem) => (
-                <Grid item lg={6} md={12} sm={12} xs={12}>
+              {addDriverSchema?.map((inputItem) => (
+                <Grid
+                  item
+                  lg={inputItem?.name === "gender" ? 12 : 6}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
                   <Field name={inputItem.name} key={inputItem.key}>
                     {(props) => {
                       if (inputItem.type === "select") {
@@ -136,6 +144,7 @@ const BasicDetails = ({ handleNext }) => {
                                   ) : (
                                     option.dismiss
                                   )}
+                                  {option?.city && <>{option?.city}</>}
                                 </MenuItem>
                               ))}
                             </Select>

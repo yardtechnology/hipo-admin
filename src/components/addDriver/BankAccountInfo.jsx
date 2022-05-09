@@ -64,6 +64,7 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     formdata.append("avatar", basicDetails?.imgFile?.target.files[0]);
     formdata.append("countryCode", basicDetails?.countryCode);
     formdata.append("countryName", basicDetails?.country);
+    formdata.append("city", basicDetails?.city);
 
     formdata.append(
       "drivingLicenseNumber",

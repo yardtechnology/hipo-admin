@@ -2,6 +2,8 @@ import { Person } from "@mui/icons-material";
 // import { countries } from "configs";
 import * as Yup from "yup";
 import moment from "moment";
+import { useCities } from "hooks";
+import { useEffect, useState } from "react";
 const AddDriverSchema = [
   {
     key: "2",
@@ -97,6 +99,16 @@ const AddDriverSchema = [
       },
     ],
   },
+  // {
+  //   key: "115",
+  //   label: "City",
+  //   required: true,
+  //   name: "city",
+  //   validationSchema: Yup.string().required("City"),
+  //   type: "text",
+  //   initialValue: "",
+  //   // startIcon: <Person />,
+  // },
   {
     key: "11",
     label: "Country",
@@ -108,4 +120,59 @@ const AddDriverSchema = [
     // startIcon: <Person />,
   },
 ];
+export const useAddDriverSchema = () => {
+  const [addDriverSchema, setAddDriverSchema] = useState([]);
+  const { cities } = useCities();
+  console.log("cities", cities);
+  // const { drivers } = useDrivers();
+  console.log("Cities", cities);
+  useEffect(() => {
+    if (cities) {
+      setAddDriverSchema([
+        ...AddDriverSchema,
+        {
+          key: "12",
+          label: "City",
+          validationSchema: Yup.string().required("City is required"),
+          name: "city",
+          initialValue: "",
+          type: "select",
+          options:
+            cities === null
+              ? []
+              : cities?.map((item) => ({
+                  city: item?.name,
+                  value: item?._id,
+                  key: item?._id,
+                })),
+        },
+        // {
+        //   key: "27",
+        //   label: "Driver Name",
+        //   name: "driverName",
+        //   validationSchema: Yup.string()
+        //     // .required("Driver Name is Required")
+        //     ?.oneOf(
+        //       drivers == null ? [] : drivers?.map((item) => item?._id),
+        //       "Driver Name is Required"
+        //     ),
+        //   initialValue: "",
+        //   required: true,
+        //   type: "select",
+        //   options:
+        //     drivers === null
+        //       ? []
+        //       : drivers?.map((item) => ({
+        //           driverName: item?.displayName,
+        //           value: item?._id,
+        //           key: item?._id,
+        //         })),
+        // },
+      ]);
+    } else {
+      setAddDriverSchema(AddDriverSchema);
+    }
+  }, [cities]);
+  return { addDriverSchema };
+};
 export default AddDriverSchema;

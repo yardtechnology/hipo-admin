@@ -44,6 +44,7 @@ const AllDrivers = () => {
   const [openEditDriverDrawer, setOpenEditDriverDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { drivers, setRealtime } = useDrivers();
+  console.log("drivers", drivers);
   const handleDeleteDriver = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -656,6 +657,14 @@ const AllDrivers = () => {
                       {rowData?.trips}
                     </span>
                   </Typography> */}
+                  <Typography variant="body1" gutterBottom align="left">
+                    Country:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.country?.name}
+                    </span>
+                  </Typography>
                 </CardContent>
               </Card>
             </div>
