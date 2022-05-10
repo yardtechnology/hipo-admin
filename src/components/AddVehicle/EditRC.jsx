@@ -1,30 +1,42 @@
-import { Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { CardContent, TextField, CardActions, Grid } from "@mui/material";
+import { CardActions, Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Done } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useState } from "react";
 import { UPLOADRC } from "assets";
+import { BASE_URL } from "configs";
 
-const EditRC = () => {
+const EditRC = ({ details, setRealtime, setOpenVehicleDocumentDrawer }) => {
   const [value, setValue] = useState();
-  const initialValues = {
-    RCNumber: "",
-  };
-  const validationSchema = {
-    RCNumber: Yup.number().required("RC Number is Required"),
-  };
-  const handleAadharCardInfo = async (values, submitProps) => {
+  const [loading, setLoading] = useState(false);
+  const handleEditRC = async () => {
+    setLoading(true);
+    var formData = new FormData();
+    formData.append("rc", value?.target?.files[0]);
     try {
       //   setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
-      console.log(values);
+      const response = await fetch(
+        `${BASE_URL}/update-vehicle?vehicleId=${details?._id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
+          body: formData,
+        }
+      );
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire("Success", "RC updated", "success")
+        : Swal.fire("Error", "Something Went Wrong", "error");
     } catch (error) {
-      Swal.fire({ icon: "error", text: error.message });
-      console.log(error);
+      console.log(error.message);
     } finally {
-      submitProps.setSubmitting(false);
+      setRealtime((prev) => !prev);
+      setOpenVehicleDocumentDrawer(false);
+      setLoading(false);
     }
   };
   return (
@@ -41,50 +53,27 @@ const EditRC = () => {
         <Grid item lg={12} md={12} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || UPLOADRC}
+            height={"100%"}
+            value={value || details?.rc?.url || UPLOADRC}
             onChange={setValue}
           />
         </Grid>
       </Grid>
-      <Formik
-        initialValues={initialValues}
-        enableReinitialize
-        validationSchema={Yup.object(validationSchema)}
-        onSubmit={handleAadharCardInfo}
-      >
-        {({ isSubmitting, isValid }) => (
-          <Form>
-            <CardContent>
-              <Field name={"RCNumber"}>
-                {(props) => (
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label={"Enter Your RC Number"}
-                    type={"number"}
-                    error={Boolean(props.meta.touched && props.meta.error)}
-                    helperText={props.meta.touched && props.meta.error}
-                    {...props.field}
-                  />
-                )}
-              </Field>
-            </CardContent>
-            <CardActions style={{ justifyContent: "flex-end" }}>
-              <LoadingButton
-                className=" btn-background"
-                variant="contained"
-                type="submit"
-                disabled={isSubmitting || !isValid || !value}
-                loading={isSubmitting}
-                loadingPosition="start"
-                startIcon={<Done />}
-              >
-                Save
-              </LoadingButton>
-            </CardActions>
-          </Form>
-        )}
-      </Formik>
+
+      <CardActions style={{ justifyContent: "flex-end" }}>
+        <LoadingButton
+          onClick={handleEditRC}
+          className=" btn-background"
+          variant="contained"
+          type="submit"
+          disabled={!value || loading}
+          loading={loading}
+          loadingPosition="start"
+          startIcon={<Done />}
+        >
+          Save
+        </LoadingButton>
+      </CardActions>
     </>
   );
 };

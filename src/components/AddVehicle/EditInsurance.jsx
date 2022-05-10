@@ -1,30 +1,46 @@
-import { Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { CardContent, TextField, CardActions, Grid } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import { Done } from "@mui/icons-material";
+import { CardActions, Grid } from "@mui/material";
 import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useState } from "react";
 import { UPLOADINSURANCE } from "assets";
+import { LoadingButton } from "@mui/lab";
+import { Done } from "@mui/icons-material";
+import { BASE_URL } from "configs";
 
-const EditInsurance = () => {
+const EditInsurance = ({
+  details,
+  setRealtime,
+  setOpenVehicleDocumentDrawer,
+}) => {
   const [value, setValue] = useState();
-  const initialValues = {
-    insuranceNumber: "",
-  };
-  const validationSchema = {
-    insuranceNumber: Yup.number().required("Insurance Number is Required"),
-  };
-  const handleAadharCardInfo = async (values, submitProps) => {
+  const [loading, setLoading] = useState(false);
+  const handleEditInsurance = async () => {
+    setLoading(true);
+    var formData = new FormData();
+    formData.append("insurance", value?.target?.files[0]);
     try {
       //   setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
-      console.log(values);
+      const response = await fetch(
+        `${BASE_URL}/update-vehicle?vehicleId=${details?._id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+          },
+          body: formData,
+        }
+      );
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire("Success", "Insurance updated", "success")
+        : Swal.fire("Error", "Something Went Wrong", "error");
     } catch (error) {
-      Swal.fire({ icon: "error", text: error.message });
-      console.log(error);
+      console.log(error.message);
     } finally {
-      submitProps.setSubmitting(false);
+      setRealtime((prev) => !prev);
+      setOpenVehicleDocumentDrawer(false);
+      setLoading(false);
     }
   };
   return (
@@ -41,50 +57,26 @@ const EditInsurance = () => {
         <Grid item lg={12} md={12} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || UPLOADINSURANCE}
+            height={"100%"}
+            value={value || details?.insurance?.url || UPLOADINSURANCE}
             onChange={setValue}
           />
+          <CardActions style={{ justifyContent: "flex-end" }}>
+            <LoadingButton
+              onClick={handleEditInsurance}
+              className=" btn-background"
+              variant="contained"
+              type="submit"
+              disabled={loading || !value}
+              loading={loading}
+              loadingPosition="start"
+              startIcon={<Done />}
+            >
+              Save
+            </LoadingButton>
+          </CardActions>
         </Grid>
       </Grid>
-      <Formik
-        initialValues={initialValues}
-        enableReinitialize
-        validationSchema={Yup.object(validationSchema)}
-        onSubmit={handleAadharCardInfo}
-      >
-        {({ isSubmitting, isValid }) => (
-          <Form>
-            <CardContent>
-              <Field name={"insuranceNumber"}>
-                {(props) => (
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label={"Enter Your Insurance Number"}
-                    type={"number"}
-                    error={Boolean(props.meta.touched && props.meta.error)}
-                    helperText={props.meta.touched && props.meta.error}
-                    {...props.field}
-                  />
-                )}
-              </Field>
-            </CardContent>
-            <CardActions style={{ justifyContent: "flex-end" }}>
-              <LoadingButton
-                className=" btn-background"
-                variant="contained"
-                type="submit"
-                disabled={isSubmitting || !isValid || !value}
-                loading={isSubmitting}
-                loadingPosition="start"
-                startIcon={<Done />}
-              >
-                Save
-              </LoadingButton>
-            </CardActions>
-          </Form>
-        )}
-      </Formik>
     </>
   );
 };

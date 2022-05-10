@@ -36,6 +36,7 @@ const Vehicles = () => {
       <VehicleDocumentDrawer
         open={openVehicleDocumentDrawer}
         setOpenVehicleDocumentDrawer={setOpenVehicleDocumentDrawer}
+        setRealtime={setRealtime}
       />
 
       <MaterialTable

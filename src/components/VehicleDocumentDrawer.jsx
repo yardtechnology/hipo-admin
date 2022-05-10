@@ -14,7 +14,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { EditRC, EditInsurance } from "./AddVehicle";
-const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
+const VehicleDocumentDrawer = ({
+  open,
+  setOpenVehicleDocumentDrawer,
+  setRealtime,
+}) => {
   const [value, setValue] = useState(0);
   console.log(open);
 
@@ -137,7 +141,15 @@ const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditInsurance />}
+                  {value === 1 && (
+                    <EditInsurance
+                      details={open}
+                      setRealtime={setRealtime}
+                      setOpenVehicleDocumentDrawer={
+                        setOpenVehicleDocumentDrawer
+                      }
+                    />
+                  )}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
@@ -242,7 +254,15 @@ const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditRC />}
+                  {value === 1 && (
+                    <EditRC
+                      details={open}
+                      setOpenVehicleDocumentDrawer={
+                        setOpenVehicleDocumentDrawer
+                      }
+                      setRealtime={setRealtime}
+                    />
+                  )}
                 </CardContent>
               </AccordionDetails>
             </Accordion>{" "}
