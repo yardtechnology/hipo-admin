@@ -1,17 +1,14 @@
 import MaterialTable from "@material-table/core";
 import {
   Avatar,
-  Card,
-  CardContent,
+
   // Chip,
   Switch,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
-import { formatCurrency } from "@ashirbad/js-core";
 import { Delete, DocumentScanner, Edit } from "@mui/icons-material";
 import { useState } from "react";
 import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
@@ -86,6 +83,11 @@ const Vehicles = () => {
             searchable: true,
           },
           {
+            title: "Number",
+            field: "vehicleNumber",
+            searchable: true,
+          },
+          {
             title: "Type",
             field: "type",
             searchable: true,
@@ -95,23 +97,7 @@ const Vehicles = () => {
             field: "ownerName",
             searchable: true,
           },
-          {
-            title: "Cost Per Km",
-            field: "costPerKm",
-            type: "numeric",
-            // render: ({ costPerKm }) => formatCurrency(costPerKm),
-            searchable: true,
-            hidden: true,
-            export: "true",
-          },
-          {
-            title: "Seating Capacity",
-            field: "seatingCapacity",
-            searchable: true,
-            type: "numeric",
-            hidden: true,
-            export: true,
-          },
+
           {
             title: "Status",
             field: "status",
@@ -220,76 +206,76 @@ const Vehicles = () => {
             // onClick: (evt, data) => setSelectedUsers(data),
           },
         ]}
-        detailPanel={({ rowData }) => {
-          return (
-            <div
-              style={{
-                padding: "20px",
-                margin: "auto",
-                backgroundColor: "#eef5f9",
-              }}
-            >
-              <Card
-                sx={{
-                  minWidth: 500,
-                  maxWidth: 550,
-                  transition: "0.3s",
-                  margin: "auto",
-                  padding: "2vh 2vw",
-                  borderRadius: "10px",
-                  // fontFamily: italic,
-                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-                  "&:hover": {
-                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-                  },
-                }}
-              >
-                <CardContent>
-                  <Typography
-                    variant="body1"
-                    component="p"
-                    gutterBottom
-                    align="left"
-                  >
-                    Cost Per KM:{" "}
-                    <span
-                      style={{
-                        color: "rgb(30, 136, 229)",
-                        fontSize: "15px",
-                      }}
-                    >
-                      {formatCurrency(rowData?.costPerKm)}
-                    </span>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
-                    Seating Capacity:{" "}
-                    <span
-                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-                    >
-                      {rowData?.seatingCapacity}
-                    </span>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
-                    Purchase On:{" "}
-                    <span
-                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-                    >
-                      {rowData?.purchaseOn}
-                    </span>
-                  </Typography>
-                  {/* <Typography variant="body1" gutterBottom align="left">
-                    Fuel:{" "}
-                    <span
-                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-                    >
-                      {rowData?.fuel}
-                    </span>
-                  </Typography> */}
-                </CardContent>
-              </Card>
-            </div>
-          );
-        }}
+        // detailPanel={({ rowData }) => {
+        //   return (
+        //     <div
+        //       style={{
+        //         padding: "20px",
+        //         margin: "auto",
+        //         backgroundColor: "#eef5f9",
+        //       }}
+        //     >
+        //       <Card
+        //         sx={{
+        //           minWidth: 500,
+        //           maxWidth: 550,
+        //           transition: "0.3s",
+        //           margin: "auto",
+        //           padding: "2vh 2vw",
+        //           borderRadius: "10px",
+        //           // fontFamily: italic,
+        //           boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+        //           "&:hover": {
+        //             boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+        //           },
+        //         }}
+        //       >
+        //         <CardContent>
+        //           <Typography
+        //             variant="body1"
+        //             component="p"
+        //             gutterBottom
+        //             align="left"
+        //           >
+        //             Cost Per KM:{" "}
+        //             <span
+        //               style={{
+        //                 color: "rgb(30, 136, 229)",
+        //                 fontSize: "15px",
+        //               }}
+        //             >
+        //               {formatCurrency(rowData?.costPerKm)}
+        //             </span>
+        //           </Typography>
+        //           <Typography variant="body1" gutterBottom align="left">
+        //             Seating Capacity:{" "}
+        //             <span
+        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+        //             >
+        //               {rowData?.seatingCapacity}
+        //             </span>
+        //           </Typography>
+        //           <Typography variant="body1" gutterBottom align="left">
+        //             Purchase On:{" "}
+        //             <span
+        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+        //             >
+        //               {rowData?.purchaseOn}
+        //             </span>
+        //           </Typography>
+        //           {/* <Typography variant="body1" gutterBottom align="left">
+        //             Fuel:{" "}
+        //             <span
+        //               style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+        //             >
+        //               {rowData?.fuel}
+        //             </span>
+        //           </Typography> */}
+        //         </CardContent>
+        //       </Card>
+        //     </div>
+        //   );
+        // }}
 
         // actions={[
         //   {

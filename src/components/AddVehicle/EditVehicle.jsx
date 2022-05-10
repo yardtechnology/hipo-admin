@@ -45,6 +45,7 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
       const response = await fetch(`${BASE_URL}/vehicle/${open?._id}`, {
         method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
         body: JSON.stringify({

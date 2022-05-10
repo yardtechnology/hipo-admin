@@ -12,13 +12,10 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import { RC } from "assets";
 import { useState } from "react";
 import { EditRC, EditInsurance } from "./AddVehicle";
 const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
   const [value, setValue] = useState(0);
-  const drawerData = open;
-  console.log(drawerData);
   console.log(open);
 
   return (
@@ -97,15 +94,6 @@ const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
                   {value === 0 && (
                     <>
                       {" "}
-                      <Typography
-                        sx={{
-                          fontWeight: "bold",
-                          marginTop: "2vh",
-                          p: "1.5vh 5vw 0vh 5vw ",
-                        }}
-                      >
-                        5555 7654 5425 5555
-                      </Typography>
                       <Grid
                         container
                         spacing={1}
@@ -137,7 +125,7 @@ const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
                           {" "}
                           <Avatar
                             alt="Remy Sharp"
-                            src={RC}
+                            src={open?.insurance?.url}
                             variant="square"
                             sx={{
                               width: "auto",
@@ -211,15 +199,6 @@ const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
                   {value === 0 && (
                     <>
                       {" "}
-                      <Typography
-                        sx={{
-                          fontWeight: "bold",
-                          marginTop: "2vh",
-                          p: "1.5vh 5vw 0vh 5vw ",
-                        }}
-                      >
-                        5555 7654 5425 5555
-                      </Typography>
                       <Grid
                         container
                         spacing={1}
@@ -250,8 +229,8 @@ const VehicleDocumentDrawer = ({ open, setOpenVehicleDocumentDrawer }) => {
                         >
                           {" "}
                           <Avatar
-                            alt="Remy Sharp"
-                            src={RC}
+                            alt=""
+                            src={open?.rc?.url}
                             variant="square"
                             sx={{
                               width: "auto",
