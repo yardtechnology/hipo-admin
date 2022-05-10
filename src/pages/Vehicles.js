@@ -9,11 +9,17 @@ import {
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
-import { Delete, DocumentScanner, Edit } from "@mui/icons-material";
+import {
+  AssignmentInd,
+  Delete,
+  DocumentScanner,
+  Edit,
+} from "@mui/icons-material";
 import { useState } from "react";
 import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
 import { EditVehicle } from "components/AddVehicle";
 import { useVehicles } from "hooks";
+import { AssignDrivers } from "components";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const Vehicles = () => {
@@ -23,6 +29,7 @@ const Vehicles = () => {
     useState(false);
   const [openEditVehicleDocumentDrawer, setOpenEditVehicleDocumentDrawer] =
     useState(false);
+  const [openAssignDriverDrawer, setOpenAssignDriverDrawer] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
 
@@ -37,6 +44,11 @@ const Vehicles = () => {
         open={openVehicleDocumentDrawer}
         setOpenVehicleDocumentDrawer={setOpenVehicleDocumentDrawer}
         setRealtime={setRealtime}
+      />
+      <AssignDrivers
+        setRealtime={setRealtime}
+        open={openAssignDriverDrawer}
+        setOpenAssignDriverDrawer={setOpenAssignDriverDrawer}
       />
 
       <MaterialTable
@@ -170,6 +182,20 @@ const Vehicles = () => {
                       }}
                     >
                       <Edit sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Assign Driver">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => setOpenAssignDriverDrawer(row)}
+                      sx={{
+                        mr: ".4vw",
+                        padding: "0px !important",
+                        backgroundColor: "blue",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <AssignmentInd sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
                   <Tooltip title="Delete Driver">

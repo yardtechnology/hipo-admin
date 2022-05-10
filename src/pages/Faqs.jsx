@@ -4,6 +4,7 @@ import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Delete, Edit, Visibility } from "@mui/icons-material";
 import { Avatar, Tooltip } from "@mui/material";
 import { AddQADrawer, EditQADrawer, ViewQADrawer } from "components";
+import { PhotoUpload } from "components/core";
 import { BASE_URL } from "configs";
 import { useFaqs } from "hooks";
 // import { BASE_URL } from "configs";
@@ -82,6 +83,7 @@ const Faqs = () => {
             : faqs?.map((faq, i) => ({
                 ...faq,
                 sl: i + 1,
+                iconUrl: faq?.icon?.url,
                 currentTimestamp: moment(faq?.createdAt).format("LL"),
                 setRealtime,
               }))
@@ -127,10 +129,25 @@ const Faqs = () => {
             // rowData?.title > 0 ? true : "Topic Title Required",
           },
           {
+            title: "Icon",
+            field: "iconUrl",
+            searchable: true,
+            render: ({ icon }) => (
+              <Avatar sx={{ width: "12vh", height: "12vh" }} src={icon?.url} />
+            ),
+            editComponent: ({ value, onChange }) => {
+              return (
+                <>
+                  <PhotoUpload value={value} onChange={onChange} />
+                </>
+              );
+            },
+          },
+          {
             title: "User Type",
             field: "role",
             lookup: {
-              USER: "RIDER",
+              USER: "USER",
               DRIVER: "DRIVER",
               OPERATOR: "OPERATOR",
             },
@@ -539,18 +556,18 @@ const Faqs = () => {
         }}
         editable={{
           onRowAdd: async (data) => {
+            const formdata = new FormData();
+            formdata.append("title", data.title);
+            formdata.append("role", data.role);
+            formdata.append("type", "SUPPORT");
+            formdata.append("icon", data?.iconUrl?.target?.files[0]);
             try {
               const response = await fetch(`${BASE_URL}/support`, {
                 method: "POST",
                 headers: {
-                  "Content-Type": "application/json",
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
-                body: JSON.stringify({
-                  title: data?.title,
-                  type: "SUPPORT",
-                  role: data?.role,
-                }),
+                body: formdata,
               });
               const res = await response.json();
               res?.status === 200
@@ -564,21 +581,20 @@ const Faqs = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
+            const formdata = new FormData();
+            formdata.append("title", newData?.title);
+            formdata.append("role", newData?.role);
+            formdata.append("type", "SUPPORT");
+            formdata.append("icon", newData?.iconUrl?.target?.files[0]);
             try {
               const response = await fetch(
                 `${BASE_URL}/support/${oldData?._id}`,
                 {
                   method: "PUT",
                   headers: {
-                    "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                   },
-                  body: JSON.stringify({
-                    title: newData?.title,
-                    type: "SUPPORT",
-                    role: newData?.role,
-                    rideStatus: newData?.rideStatus,
-                  }),
+                  body: formdata,
                 }
               );
               const res = await response.json();
@@ -616,15 +632,6 @@ const Faqs = () => {
             }
           },
         }}
-        // actions={[
-        //   {
-        //     tooltip: "Delete all selected Days",
-        //     icon: "delete",
-        //     onClick: (evt, data) =>
-        //       handleBulkDelete(data.map((data) => data?.day)),
-        //   },
-        // ]}
-        // isLoading={days === null}
       />
     </>
   );
