@@ -3,18 +3,12 @@ import {
   Avatar,
 
   // Chip,
-  Switch,
   Tooltip,
 } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
-import {
-  AssignmentInd,
-  Delete,
-  DocumentScanner,
-  Edit,
-} from "@mui/icons-material";
+import { DocumentScanner } from "@mui/icons-material";
 import { useState } from "react";
 import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
 import { EditVehicle } from "components/AddVehicle";
@@ -35,51 +29,7 @@ const VehicleRequests = () => {
   const [loading, setLoading] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
-  const turnOnVehicle = async (item) => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${BASE_URL}/update-vehicle/is-active`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-        },
-        body: JSON.stringify({
-          vehicleIds: [item?._id],
-          isActive: true,
-        }),
-      });
-      const res = await response.json();
-      console.log(res);
-      setRealtime((prev) => !prev);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const turnOffVehicle = async (item) => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${BASE_URL}/update-vehicle/is-active`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-        },
-        body: JSON.stringify({
-          vehicleIds: [item?._id],
-          isActive: false,
-        }),
-      });
-      const res = await response.json();
-      console.log(res);
-      setRealtime((prev) => !prev);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const turnOnMultipleVehicles = async (data) => {
+  const acceptVehicles = async (data) => {
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/update-vehicle/is-active`, {
@@ -104,7 +54,7 @@ const VehicleRequests = () => {
       console.log(error);
     }
   };
-  const turnOffMultipleVehicles = async (data) => {
+  const rejectVehicles = async (data) => {
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/update-vehicle/is-active`, {
@@ -206,32 +156,6 @@ const VehicleRequests = () => {
             field: "ownerName",
             searchable: true,
           },
-
-          {
-            title: "Status",
-            field: "status",
-            render: (row) => (
-              <>
-                <Switch
-                  checked={row?.isActive ? true : false}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      turnOnVehicle(row);
-                    } else {
-                      turnOffVehicle(row);
-                    }
-                  }}
-                />
-                {/* <Chip
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  label={row?.status}
-                  sx={{ padding: "4px" }}
-                /> */}
-              </>
-            ),
-          },
           {
             title: "Timestamp",
             // width: "70%",
@@ -275,47 +199,6 @@ const VehicleRequests = () => {
                       <DocumentScanner sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
-                  <Tooltip title="Edit Vehicle Basic Details">
-                    <Avatar
-                      variant="rounded"
-                      onClick={() => setOpenEditVehicleDocumentDrawer(row)}
-                      sx={{
-                        mr: ".4vw",
-                        padding: "0px !important",
-                        backgroundColor: "gray",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <Edit sx={{ padding: "0px !important" }} />
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="Assign Driver">
-                    <Avatar
-                      variant="rounded"
-                      onClick={() => setOpenAssignDriverDrawer(row)}
-                      sx={{
-                        mr: ".4vw",
-                        padding: "0px !important",
-                        backgroundColor: "blue",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <AssignmentInd sx={{ padding: "0px !important" }} />
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="Delete Driver">
-                    <Avatar
-                      variant="rounded"
-                      // onClick={() => setOpenDocumentDrawer(row)}
-                      sx={{
-                        padding: "0px !important",
-                        backgroundColor: "red",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <Delete sx={{ padding: "0px !important" }} />
-                    </Avatar>
-                  </Tooltip>
                 </div>
               </>
             ),
@@ -329,19 +212,19 @@ const VehicleRequests = () => {
           //   onClick: (evt, data) => setSelectedUsers(data),
           // },
           {
-            tooltip: "Turn On",
-            icon: "toggle_on",
+            tooltip: "Accept Vehicle Request",
+            icon: "check",
             onClick: (evt, data) =>
-              turnOnMultipleVehicles(
+              acceptVehicles(
                 data?.map((d) => d?._id),
                 setRealtime((prev) => !prev)
               ),
           },
           {
-            tooltip: "Turn Off",
-            icon: "toggle_off",
+            tooltip: "Reject Vehicle Request",
+            icon: "close",
             onClick: (evt, data) =>
-              turnOffMultipleVehicles(
+              rejectVehicles(
                 data?.map((d) => d?._id),
                 setRealtime((prev) => !prev)
               ),
