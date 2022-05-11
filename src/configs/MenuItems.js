@@ -203,6 +203,12 @@ const MenuItems = [
         icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
         route: "/vehicle-requests",
       },
+      {
+        key: "5",
+        title: "Assign Models",
+        icon: <Add className="iconColor" sx={{ color: "#000" }} />,
+        route: "/assign-models",
+      },
     ],
   },
   // {

@@ -75,6 +75,7 @@ import {
   WaitingCharge,
   Profit,
   VehicleRequests,
+  AssignModels,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -170,6 +171,7 @@ const PrivateRoutes = () => {
         <Route path="/waiting-charge" element={<WaitingCharge />} />
         <Route path="/profit" element={<Profit />} />
         <Route path="/vehicle-requests" element={<VehicleRequests />} />
+        <Route path="/assign-models" element={<AssignModels />} />
       </Routes>
     </PanelLayout>
   );

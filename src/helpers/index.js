@@ -10,3 +10,6 @@ export const getImageSize = (url) => {
     img.onerror = reject;
   });
 };
+export const isValidOnlyAlphabates = (value) => {
+  return /^[a-zA-Z ]*$/.test(value);
+};
