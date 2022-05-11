@@ -24,7 +24,7 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
       console.log("updated drivers", updatedDrivers);
-      const response = await fetch(`${BASE_URL}/vehicle/${open._id}`, {
+      const response = await fetch(`${BASE_URL}/vehicle/${open?._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -37,10 +37,11 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
-      setOpenAssignDriverDrawer({
-        ...open,
-        drivers: updatedDrivers,
-      });
+      // setOpenAssignDriverDrawer({
+      //   ...open,
+      //   drivers: updatedDrivers,
+      // });
+      setOpenAssignDriverDrawer(false);
       // setOpenAssignFeatureDrawer(false);
     } catch (error) {
       console.log(error);
@@ -73,10 +74,11 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
-      setOpenAssignDriverDrawer({
-        ...open,
-        drivers: updatedDrivers,
-      });
+      // setOpenAssignDriverDrawer({
+      //   ...open,
+      //   drivers: updatedDrivers,
+      // });
+      setOpenAssignDriverDrawer(false);
     } catch (error) {
       console.log(error);
     }
