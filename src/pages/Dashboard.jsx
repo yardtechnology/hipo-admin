@@ -17,6 +17,7 @@ import { useBookings } from "hooks";
 import moment from "moment";
 import GoogleMapReact from "google-map-react";
 import Chart from "react-apexcharts";
+import { formatCurrency } from "@ashirbad/js-core";
 const Dashboard = () => {
   const { bookings } = useBookings();
   console.log(bookings);
@@ -339,7 +340,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={"$ " + Revenue}
+                  title={formatCurrency(2254)}
                   subtitle="Revenue"
                   icon={<Money className="iconColor" />}
                   iconAction={<MoreVert sx={{ color: "snow" }} />}

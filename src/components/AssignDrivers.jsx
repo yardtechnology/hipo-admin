@@ -23,6 +23,7 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
       const updatedDrivers = open?.drivers
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
+      console.log("updated drivers", updatedDrivers);
       const response = await fetch(`${BASE_URL}/vehicle/${open._id}`, {
         method: "PUT",
         headers: {
