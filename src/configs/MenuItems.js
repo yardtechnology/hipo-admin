@@ -197,6 +197,12 @@ const MenuItems = [
         icon: <Visibility className="iconColor" sx={{ color: "#000" }} />,
         route: "/vehicles",
       },
+      {
+        key: "4",
+        title: "Vehicle Requests",
+        icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
+        route: "/vehicle-requests",
+      },
     ],
   },
   // {

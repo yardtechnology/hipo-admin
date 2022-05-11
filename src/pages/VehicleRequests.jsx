@@ -24,7 +24,7 @@ import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 // import { formatCurrency } from "@ashirbad/js-core";
 
-const Vehicles = () => {
+const VehicleRequests = () => {
   const { vehicles, setRealtime } = useVehicles();
   console.log(vehicles);
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
@@ -432,4 +432,4 @@ const Vehicles = () => {
   );
 };
 
-export default Vehicles;
+export default VehicleRequests;

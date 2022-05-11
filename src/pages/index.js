@@ -86,3 +86,4 @@ export const OperatorConfig = lazy(() => import("./OperatorConfig"));
 export const CancellationCharge = lazy(() => import("./CancellationCharge"));
 export const WaitingCharge = lazy(() => import("./WaitingCharge"));
 export const Profit = lazy(() => import("./Profit"));
+export const VehicleRequests = lazy(() => import("./VehicleRequests"));
