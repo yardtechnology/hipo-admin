@@ -47,7 +47,7 @@ const DriverStatements = () => {
       <Grid container spacing={2} sx={{ marginBottom: "5vh" }}>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
-            title={"$ " + 555}
+            title={formatCurrency(555)}
             subtitle="Revenue"
             icon={<Money className="iconColor" />}
             // iconAction={<MoreVert sx={{ color: "snow" }} />}
