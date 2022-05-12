@@ -29,3 +29,4 @@ export { default as useOperators } from "./useOperators";
 export { default as useOperatorRequests } from "./useOperatorRequests";
 export { default as useActiveRides } from "./useActiveRides";
 export { default as useVehicles } from "./useVehicles";
+export { default as useVehicleMaker } from "./useVehicleMaker";

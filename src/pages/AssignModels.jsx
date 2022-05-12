@@ -1,9 +1,11 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
+import { Avatar } from "@mui/material";
+import { PhotoUpload } from "components/core";
 // import { formatCurrency } from "@ashirbad/js-core";
 import { BASE_URL } from "configs";
 import { isValidOnlyAlphabates } from "helpers";
-import { usePremium, useVehicleCategory } from "hooks";
+import { useVehicleCategory, useVehicleMaker } from "hooks";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -11,9 +13,9 @@ import Swal from "sweetalert2";
 const AssignModels = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
-  const { premiums, setRealtime } = usePremium();
-  console.log(premiums);
+  const { vehicleMaker, setRealtime } = useVehicleMaker();
   const { vehicleCategory } = useVehicleCategory();
+  console.log(vehicleMaker);
   return (
     <>
       <MaterialTable
@@ -34,26 +36,44 @@ const AssignModels = () => {
           ],
         }}
         title={"Assign Models"}
-        data={
-          premiums === null
-            ? []
-            : premiums?.map((premium, i) => ({
-                ...premium,
-                sl: i + 1,
-                currentTimestamp: moment(premium.createdAt).format("LL"),
-                active: premium?.isActive ? "Active" : "Inactive",
-              }))
-        }
+        data={vehicleMaker?.map((maker, i) => {
+          return {
+            ...maker,
+            sl: i + 1,
+            brandLogo: maker?.logo?.url,
+          };
+        })}
         columns={[
           {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
+          },
+          {
+            title: "Brand Logo",
+            field: "brandLogo",
+            render: (rowData) => {
+              return (
+                <Avatar
+                  src={rowData?.logo?.url}
+                  alt="brandLogo"
+                  variant="rounded"
+                  style={{ width: "100px", height: "100px" }}
+                />
+              );
+            },
+            editComponent: ({ value, onChange }) => {
+              return (
+                <>
+                  <PhotoUpload value={value} onChange={onChange} />
+                </>
+              );
+            },
+            searchable: true,
           },
           {
             title: "Vehicle Make",
-            field: "vehicleMake",
+            field: "name",
             required: true,
             editPlaceholder: "",
             cellStyle: {
@@ -62,56 +82,17 @@ const AssignModels = () => {
             headerStyle: {
               textAlign: "center",
             },
-            validate: ({ vehicleMake }) => {
-              if (!vehicleMake) {
-                return "Vehicle Make is required";
-              }
-              if (!isValidOnlyAlphabates(vehicleMake)) {
-                return "Vehicle Make should be alphabates";
-              }
-              return true;
-            },
+            // validate: ({ name }) => {
+            //   if (!name) {
+            //     return "Vehicle Make is required";
+            //   }
+            //   if (!isValidOnlyAlphabates(name)) {
+            //     return "Vehicle Make should be alphabates";
+            //   }
+            //   return true;
+            // },
             searchable: true,
           },
-          {
-            title: "Vehicle Model",
-            field: "vehicleModel",
-            headerStyle: {
-              textAlign: "center",
-            },
-            searchable: true,
-            validate: ({ vehicleModel }) => {
-              if (!vehicleModel) {
-                return "Vehicle Model is required";
-              }
-              if (!isValidOnlyAlphabates(vehicleModel)) {
-                return "Vehicle Model should be alphabates";
-              }
-              return true;
-            },
-          },
-          {
-            title: "Vehicle Category",
-            field: "vehicleCategory",
-            editComponent: (props) => {
-              return (
-                <select
-                  value={props.value}
-                  onChange={(e) => {
-                    props.onChange(e.target.value);
-                  }}
-                >
-                  {vehicleCategory?.map((item) => (
-                    <option key={item?._id} value={item?._id}>
-                      {item?.name}
-                    </option>
-                  ))}
-                </select>
-              );
-            },
-            searchable: true,
-          },
-
           // {
           //   title: "Amount",
           //   field: "amount",
@@ -149,29 +130,138 @@ const AssignModels = () => {
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
         ]}
+        detailPanel={({ rowData }) => {
+          const SUBTOPICS = rowData?.subtopics?.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          return (
+            <>
+              <div style={{ marginTop: "2vh" }}>
+                <MaterialTable
+                  options={{
+                    addRowPosition: "first",
+                    detailPanelColumnAlignment: "right",
+                    actionsColumnIndex: -1,
+                    pageSize: 10,
+                    exportAllData: true,
+                    exportMenu: [
+                      {
+                        label: "Export PDF",
+                        exportFunc: (cols, datas) =>
+                          ExportPdf(cols, datas, "Sub Topics"),
+                      },
+                      {
+                        label: "Export CSV",
+                        exportFunc: (cols, datas) =>
+                          ExportCsv(cols, datas, "Sub Topics"),
+                      },
+                    ],
+                  }}
+                  title={`Models of ${rowData.vehicleMake}`}
+                  data={SUBTOPICS?.map((subtopic, i) => ({
+                    ...subtopic,
+                    sl: i + 1,
+                    answers: subtopic?.answers?.answer,
+                    currentTimestamp: moment(SUBTOPICS?.createdAt).format("LL"),
+                  }))}
+                  columns={[
+                    {
+                      title: "#",
+                      field: "sl",
+                      editable: "never",
+                      width: "10%",
+                    },
+                    {
+                      title: "Vehicle Model",
+                      field: "vehicleModel",
+                      headerStyle: {
+                        textAlign: "center",
+                      },
+                      searchable: true,
+                      validate: ({ vehicleModel }) => {
+                        if (!vehicleModel) {
+                          return "Vehicle Model is required";
+                        }
+                        if (!isValidOnlyAlphabates(vehicleModel)) {
+                          return "Vehicle Model should be alphabates";
+                        }
+                        return true;
+                      },
+                    },
+                    {
+                      title: "Vehicle Category",
+                      field: "vehicleCategory",
+                      editComponent: (props) => {
+                        return (
+                          <select
+                            required
+                            value={props.value}
+                            onChange={(e) => {
+                              props.onChange(e.target.value);
+                            }}
+                          >
+                            {vehicleCategory?.map((item) => (
+                              <option key={item?._id} value={item?._id}>
+                                {item?.name}
+                              </option>
+                            ))}
+                          </select>
+                        );
+                      },
+                      searchable: true,
+                    },
+                    {
+                      title: "Timestamp",
+                      // width: "70%",
+                      field: "timestamp",
+                      editable: "never",
+                      render: ({ createdAt }) =>
+                        moment(createdAt).format("lll"),
+                      export: false,
+                      searchable: true,
+                      // hidden: true,
+                    },
+                    {
+                      title: "Timestamp",
+                      // width: "70%",
+                      field: "currentTimestamp",
+                      editable: "never",
+                      hidden: true,
+                      export: true,
+                      // render: ({ timestamp }) => moment(timestamp).format("lll"),
+                    },
+                  ]}
+                  editable={{
+                    onRowAdd: async (data) => {},
+                    onRowUpdate: async (newData, oldData) => {},
+                    onRowDelete: async (oldData) => {},
+                  }}
+
+                  // isLoading={SUBTOPICS === null}
+                />
+              </div>
+            </>
+          );
+        }}
         editable={{
           onRowAdd: async (data) => {
             console.log(data);
-            // const { data } = await axios.post(`${BASE_URL}/coupons`, data);
-            // console.log(data);
+            var formdata = new FormData();
+            formdata.append("name", "tata");
+            formdata.append("logo", data?.brandLogo.target.files[0]);
             try {
-              const response = await fetch(`${BASE_URL}/premium`, {
+              const response = await fetch(`${BASE_URL}/vehicle-maker`, {
                 method: "POST",
                 headers: {
-                  "Content-Type": "application/json",
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
-                body: JSON.stringify({
-                  totalBooking: data?.totalBooking,
-                  benefit: data?.benefit,
-                  isActive: data?.isActive,
-                }),
+                body: formdata,
               });
               const res = await response.json();
               console.log(res);
               res?.status === 200
                 ? Swal.fire({
-                    text: "Premium added Successfully",
+                    text: "Vehicle Maker added successfully",
                     icon: "success",
                   })
                 : Swal.fire({ text: "Something went wrong", icon: "error" });
@@ -182,27 +272,27 @@ const AssignModels = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
+            console.log(newData);
+            const formdata = new FormData();
+            formdata.append("name", newData?.name);
+            oldData?.brandLogo !== newData?.brandLogo &&
+              formdata.append("logo", newData?.brandLogo.target.files[0]);
             try {
               const response = await fetch(
-                `${BASE_URL}/premium/${oldData?._id}`,
+                `${BASE_URL}/vehicle-maker/${oldData?._id}`,
                 {
                   method: "PUT",
                   headers: {
-                    "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                   },
-                  body: JSON.stringify({
-                    totalBooking: newData?.totalBooking,
-                    benefit: newData?.benefit,
-                    isActive: newData?.isActive,
-                  }),
+                  body: formdata,
                 }
               );
               const res = await response.json();
               console.log(res);
               res?.status === 200
                 ? Swal.fire({
-                    text: "Premium updated Successfully",
+                    text: "Vehicle Maker updated Successfully",
                     icon: "success",
                   })
                 : Swal.fire({ text: "Something went wrong", icon: "error" });
@@ -215,7 +305,7 @@ const AssignModels = () => {
           onRowDelete: async (oldData) => {
             try {
               const response = await fetch(
-                `${BASE_URL}/premium/${oldData?._id}`,
+                `${BASE_URL}/vehicle-maker/${oldData?._id}`,
                 {
                   method: "DELETE",
                   headers: {
@@ -228,7 +318,7 @@ const AssignModels = () => {
               console.log(res);
               res?.status === 200
                 ? Swal.fire({
-                    text: "Premium deleted Successfully",
+                    text: "Vehicle Maker deleted Successfully",
                     icon: "success",
                   })
                 : Swal.fire({ text: "Something went wrong", icon: "error" });
