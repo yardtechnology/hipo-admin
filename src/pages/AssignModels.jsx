@@ -1,11 +1,10 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { Avatar } from "@mui/material";
-import { PhotoUpload } from "components/core";
+import { MenuItem, Select } from "@mui/material";
 // import { formatCurrency } from "@ashirbad/js-core";
 import { BASE_URL } from "configs";
 import { isValidOnlyAlphabates } from "helpers";
-import { useVehicleCategory, useVehicleMaker } from "hooks";
+import { useVehicleCategory, useVehicleMaker, useVehicleModels } from "hooks";
 // import { BASE_URL } from "configs";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -15,6 +14,7 @@ const AssignModels = () => {
   // const handleBulkDelete = async (data) => {};
   const { vehicleMaker, setRealtime } = useVehicleMaker();
   const { vehicleCategory } = useVehicleCategory();
+  const { vehicleModels, setRealtimeModel } = useVehicleModels();
   console.log(vehicleMaker);
   return (
     <>
@@ -40,7 +40,7 @@ const AssignModels = () => {
           return {
             ...maker,
             sl: i + 1,
-            brandLogo: maker?.logo?.url,
+            // brandLogo: maker?.logo?.url,
           };
         })}
         columns={[
@@ -48,29 +48,9 @@ const AssignModels = () => {
             title: "#",
             field: "sl",
             editable: "never",
+            width: "5%",
           },
-          {
-            title: "Brand Logo",
-            field: "brandLogo",
-            render: (rowData) => {
-              return (
-                <Avatar
-                  src={rowData?.logo?.url}
-                  alt="brandLogo"
-                  variant="rounded"
-                  style={{ width: "100px", height: "100px" }}
-                />
-              );
-            },
-            editComponent: ({ value, onChange }) => {
-              return (
-                <>
-                  <PhotoUpload value={value} onChange={onChange} />
-                </>
-              );
-            },
-            searchable: true,
-          },
+
           {
             title: "Vehicle Make",
             field: "name",
@@ -131,9 +111,6 @@ const AssignModels = () => {
           },
         ]}
         detailPanel={({ rowData }) => {
-          const SUBTOPICS = rowData?.subtopics?.sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          );
           return (
             <>
               <div style={{ marginTop: "2vh" }}>
@@ -157,32 +134,31 @@ const AssignModels = () => {
                       },
                     ],
                   }}
-                  title={`Models of ${rowData.vehicleMake}`}
-                  data={SUBTOPICS?.map((subtopic, i) => ({
-                    ...subtopic,
+                  title={`Models of ${rowData?.name}`}
+                  data={vehicleModels?.map((models, i) => ({
+                    ...models,
                     sl: i + 1,
-                    answers: subtopic?.answers?.answer,
-                    currentTimestamp: moment(SUBTOPICS?.createdAt).format("LL"),
+                    modelLogo: models?.image?.url,
+                    currentTimestamp: moment(models?.createdAt).format("LL"),
+                    vehicleCategoryId: models?.vehicleCategory?._id,
                   }))}
                   columns={[
                     {
                       title: "#",
                       field: "sl",
                       editable: "never",
-                      width: "10%",
                     },
+
                     {
                       title: "Vehicle Model",
-                      field: "vehicleModel",
-                      headerStyle: {
-                        textAlign: "center",
-                      },
+                      field: "name",
+
                       searchable: true,
-                      validate: ({ vehicleModel }) => {
-                        if (!vehicleModel) {
+                      validate: ({ name }) => {
+                        if (!name) {
                           return "Vehicle Model is required";
                         }
-                        if (!isValidOnlyAlphabates(vehicleModel)) {
+                        if (!isValidOnlyAlphabates(name)) {
                           return "Vehicle Model should be alphabates";
                         }
                         return true;
@@ -190,25 +166,44 @@ const AssignModels = () => {
                     },
                     {
                       title: "Vehicle Category",
-                      field: "vehicleCategory",
+                      field: "vehicleCategoryId",
+                      render: (rowData) => {
+                        return rowData?.vehicleCategory?.name;
+                      },
+                      validate: ({ vehicleCategoryId }) => {
+                        if (!vehicleCategoryId) {
+                          return "Vehicle Category is required";
+                        }
+                        return true;
+                      },
+                      searchable: true,
                       editComponent: (props) => {
                         return (
-                          <select
+                          <Select
                             required
                             value={props.value}
                             onChange={(e) => {
                               props.onChange(e.target.value);
                             }}
+                            error={
+                              props.value === "" || props.value === undefined
+                                ? true
+                                : false
+                            }
+                            helperText={
+                              props.value === "" || props.value === undefined
+                                ? "Required"
+                                : ""
+                            }
                           >
                             {vehicleCategory?.map((item) => (
-                              <option key={item?._id} value={item?._id}>
+                              <MenuItem key={item?._id} value={item?._id}>
                                 {item?.name}
-                              </option>
+                              </MenuItem>
                             ))}
-                          </select>
+                          </Select>
                         );
                       },
-                      searchable: true,
                     },
                     {
                       title: "Timestamp",
@@ -232,9 +227,117 @@ const AssignModels = () => {
                     },
                   ]}
                   editable={{
-                    onRowAdd: async (data) => {},
-                    onRowUpdate: async (newData, oldData) => {},
-                    onRowDelete: async (oldData) => {},
+                    onRowAdd: async (data) => {
+                      console.log(data);
+                      var formdata = new FormData();
+                      formdata.append("name", data?.name);
+                      formdata.append("make", rowData?._id);
+                      formdata?.append(
+                        "vehicleCategory",
+                        data?.vehicleCategoryId
+                      );
+                      try {
+                        const response = await fetch(
+                          `${BASE_URL}/vehicle-model`,
+                          {
+                            method: "POST",
+                            headers: {
+                              Authorization: `Bearer ${localStorage.getItem(
+                                "SAL"
+                              )}`,
+                            },
+                            body: formdata,
+                          }
+                        );
+                        const res = await response.json();
+                        console.log(res);
+                        res?.status === 200
+                          ? Swal.fire({
+                              text: "Vehicle Model Updated successfully",
+                              icon: "success",
+                            })
+                          : Swal.fire({
+                              text: "Something went wrong",
+                              icon: "error",
+                            });
+                      } catch (error) {
+                        console.log(error);
+                      } finally {
+                        setRealtimeModel((prev) => !prev);
+                        setRealtime((prev) => !prev);
+                      }
+                    },
+                    onRowUpdate: async (newData, oldData) => {
+                      console.log(newData);
+                      var formdata = new FormData();
+                      formdata.append("name", newData?.name);
+                      formdata.append("make", rowData?._id);
+                      formdata?.append(
+                        "vehicleCategory",
+                        newData?.vehicleCategoryId
+                      );
+                      try {
+                        const response = await fetch(
+                          `${BASE_URL}/vehicle-model/${oldData?._id}`,
+                          {
+                            method: "PUT",
+                            headers: {
+                              Authorization: `Bearer ${localStorage.getItem(
+                                "SAL"
+                              )}`,
+                            },
+                            body: formdata,
+                          }
+                        );
+                        const res = await response.json();
+                        console.log(res);
+                        res?.status === 200
+                          ? Swal.fire({
+                              text: "Vehicle Model updated successfully",
+                              icon: "success",
+                            })
+                          : Swal.fire({
+                              text: "Something went wrong",
+                              icon: "error",
+                            });
+                      } catch (error) {
+                        console.log(error);
+                      } finally {
+                        setRealtimeModel((prev) => !prev);
+                        setRealtime((prev) => !prev);
+                      }
+                    },
+                    onRowDelete: async (oldData) => {
+                      try {
+                        const response = await fetch(
+                          `${BASE_URL}/vehicle-model/${oldData?._id}`,
+                          {
+                            method: "DELETE",
+                            headers: {
+                              Authorization: `Bearer ${localStorage.getItem(
+                                "SAL"
+                              )}`,
+                            },
+                          }
+                        );
+                        const res = await response.json();
+                        console.log(res);
+                        res?.status === 200
+                          ? Swal.fire({
+                              text: "Vehicle Model deleted successfully",
+                              icon: "success",
+                            })
+                          : Swal.fire({
+                              text: "Something went wrong",
+                              icon: "error",
+                            });
+                      } catch (error) {
+                        console.log(error);
+                      } finally {
+                        setRealtimeModel((prev) => !prev);
+                        setRealtime((prev) => !prev);
+                      }
+                    },
                   }}
 
                   // isLoading={SUBTOPICS === null}
