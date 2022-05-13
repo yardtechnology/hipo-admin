@@ -433,6 +433,12 @@ const MenuItems = [
         icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
         route: "/cancellation-charge",
       },
+      {
+        key: "7",
+        title: "Referral Charge",
+        icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
+        route: "/referral-charge",
+      },
     ],
   },
   {

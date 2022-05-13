@@ -76,6 +76,7 @@ import {
   Profit,
   VehicleRequests,
   AssignModels,
+  ReferralCharge,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -172,6 +173,7 @@ const PrivateRoutes = () => {
         <Route path="/profit" element={<Profit />} />
         <Route path="/vehicle-requests" element={<VehicleRequests />} />
         <Route path="/assign-models" element={<AssignModels />} />
+        <Route path="/referral-charge" element={<ReferralCharge />} />
       </Routes>
     </PanelLayout>
   );

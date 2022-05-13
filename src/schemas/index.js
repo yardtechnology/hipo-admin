@@ -17,3 +17,4 @@ export { default as VerifyOtpSchema } from "./VerifyOtpSchema";
 export { default as ProfitSchema } from "./ProfitSchema";
 export { default as WaitingChargeSchema } from "./WaitingChargeSchema";
 export { default as CancellationChargeSchema } from "./CancellationChargeSchema";
+export { default as ReferralSchema } from "./ReferralSchema";

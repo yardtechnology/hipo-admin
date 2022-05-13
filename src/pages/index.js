@@ -88,3 +88,4 @@ export const WaitingCharge = lazy(() => import("./WaitingCharge"));
 export const Profit = lazy(() => import("./Profit"));
 export const VehicleRequests = lazy(() => import("./VehicleRequests"));
 export const AssignModels = lazy(() => import("./AssignModels"));
+export const ReferralCharge = lazy(() => import("./ReferralCharge"));
