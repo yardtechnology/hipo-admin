@@ -10,6 +10,7 @@ import {
   Switch,
   Tooltip,
   Typography,
+  Badge,
 } from "@mui/material";
 import { AddressDrawer, ReferralDrawer } from "components";
 import { SendNotification } from "components/dialog";
@@ -286,11 +287,26 @@ const Riders = () => {
             searchable: true,
             width: "20%",
             field: "displayName",
-            render: ({ photoURL, displayName, email }) => (
+            render: ({ photoURL, displayName, email, isOnline }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemAvatar>
-                    <Avatar src={photoURL} alt={"img"} />
+                    <Badge
+                      overlap="circle"
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      color={isOnline ? "success" : "error"}
+                      variant="dot"
+                      invisible={!isOnline}
+                    >
+                      <Avatar
+                        alt={displayName}
+                        src={photoURL}
+                        variant="circle"
+                      />
+                    </Badge>
                   </ListItemAvatar>
                   <ListItemText
                     primary={

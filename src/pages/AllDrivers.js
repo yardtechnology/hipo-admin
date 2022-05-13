@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import {
   Avatar,
+  Badge,
   Card,
   CardContent,
   ListItem,
@@ -360,11 +361,22 @@ const AllDrivers = () => {
             searchable: true,
             width: "25%",
             field: "displayName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            render: ({ photoURL, displayName, phoneNumber, isOnline }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemAvatar>
-                    <Avatar src={photoURL} alt={"img"} />
+                    <Badge
+                      overlap="circle"
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      variant="dot"
+                      color={isOnline ? "success" : "error"}
+                      invisible={!isOnline}
+                    >
+                      <Avatar src={photoURL} alt={"img"} />
+                    </Badge>
                   </ListItemAvatar>
                   <ListItemText
                     primary={
