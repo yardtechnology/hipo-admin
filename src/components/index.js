@@ -16,6 +16,7 @@ import AssignFeatureDrawer from "./AssignFeatureDrawer";
 import AssignTypeDrawer from "./AssignTypeDrawer";
 import CustomPhoneNumberPicker from "./CustomPhoneNumberPicker";
 import AssignTypeDrawerFeature from "./AssignTypeDrawerFeature";
+import Models from "./Models";
 export { default as AssignDrivers } from "./AssignDrivers";
 
 export {
@@ -37,4 +38,5 @@ export {
   EditQADrawer,
   AddQADrawer,
   Cabs,
+  Models,
 };
