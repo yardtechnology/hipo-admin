@@ -1,5 +1,11 @@
-import { Form, Formik } from "formik";
-import { CardActions, Button, Grid } from "@mui/material";
+import { Field, Form, Formik } from "formik";
+import {
+  CardActions,
+  Button,
+  Grid,
+  CardContent,
+  TextField,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Done } from "@mui/icons-material";
 import Swal from "sweetalert2";
@@ -7,7 +13,7 @@ import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
 import { BACK, FRONT } from "assets";
-
+import * as Yup from "yup";
 const AadharCardInfo = ({ handleNext, handleBack }) => {
   const { aadharCardInfo, setAadharCardInfo } = useAppContext();
   const [value, setValue] = useState(aadharCardInfo?.imgFile);
@@ -16,12 +22,20 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
   const initialValues = {
     aadharCardNumber: "",
   };
-  // const validationSchema = {
-  //   aadharCardNumber: Yup.number().required("Aadhar Card Number is Required"),
-  // };
+  const validationSchema = {
+    aadharCardNumber: Yup.string()
+      .required("Aadhar Card Number is Required")
+      .test(
+        "aadharCardNumber",
+        "Aadhar Card Number Not More Than 12 Digits",
+        (value) => {
+          return value?.length === 12;
+        }
+      ),
+  };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
-      setAadharCardInfo({ imgFile: value, imgFile1: value1 });
+      setAadharCardInfo({ imgFile: value, imgFile1: value1, ...values });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -63,12 +77,12 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
             : initialValues
         }
         enableReinitialize
-        // validationSchema={Yup.object(validationSchema)}
+        validationSchema={Yup.object(validationSchema)}
         onSubmit={handleAadharCardInfo}
       >
         {({ isSubmitting, isValid }) => (
           <Form>
-            {/* <CardContent>
+            <CardContent>
               <Field name={"aadharCardNumber"}>
                 {(props) => (
                   <TextField
@@ -82,7 +96,7 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
                   />
                 )}
               </Field>
-            </CardContent> */}
+            </CardContent>
             <CardActions style={{ justifyContent: "flex-end" }}>
               <Button
                 type="button"
@@ -97,7 +111,7 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
                 className=" btn-background"
                 variant="contained"
                 type="submit"
-                disabled={!value || !value1}
+                disabled={!value || !value1 || !isValid || isSubmitting}
                 loading={isSubmitting}
                 loadingPosition="start"
                 startIcon={<Done />}

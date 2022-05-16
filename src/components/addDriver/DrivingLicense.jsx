@@ -6,6 +6,11 @@ import {
   CardActions,
   Button,
   Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Done } from "@mui/icons-material";
@@ -14,26 +19,26 @@ import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
 import { DL } from "assets";
+import { DrivingLicenseSchema } from "schemas";
 
 const DrivingLicense = ({ handleNext, handleBack }) => {
   const { drivingLicenceInfo, setDrivingLicenceInfo } = useAppContext();
   const [value, setValue] = useState(drivingLicenceInfo?.imgFile);
-  const initialValues = {
-    drivingLicenceNumber: "",
-  };
-  const validationSchema = {
-    drivingLicenceNumber: Yup.string()
-      .required("Driving License Number is Required")
-      .min(12, "12 digits required")
-      .test(
-        "drivingLicenceNumber",
-        "Driving License Number Not More Than 12 Digits",
-        (value) => {
-          return value.length === 12;
-        }
-      ),
-  };
-  const handleAadharCardInfo = async (values, submitProps) => {
+  const initialValues = DrivingLicenseSchema?.reduce(
+    (accumulator, currentValue) => {
+      accumulator[currentValue.name] = currentValue.initialValue;
+      return accumulator;
+    },
+    {}
+  );
+  const validationSchema = DrivingLicenseSchema?.reduce(
+    (accumulator, currentValue) => {
+      accumulator[currentValue.name] = currentValue.validationSchema;
+      return accumulator;
+    },
+    {}
+  );
+  const handleDrivingLicenseInfo = async (values, submitProps) => {
     try {
       setDrivingLicenceInfo({ ...values, imgFile: value });
       console.log(values);
@@ -64,31 +69,80 @@ const DrivingLicense = ({ handleNext, handleBack }) => {
         </Grid>
       </Grid>
       <Formik
-        initialValues={
-          drivingLicenceInfo?.drivingLicenceNumber
-            ? { drivingLicenceNumber: drivingLicenceInfo?.drivingLicenceNumber }
-            : initialValues
-        }
-        enableReinitialize
+        initialValues={initialValues}
         validationSchema={Yup.object(validationSchema)}
-        onSubmit={handleAadharCardInfo}
+        onSubmit={handleDrivingLicenseInfo}
       >
         {({ isSubmitting, isValid }) => (
           <Form>
             <CardContent>
-              <Field name={"drivingLicenceNumber"}>
-                {(props) => (
-                  <TextField
-                    fullWidth
-                    margin="normal"
-                    label={"Enter Your Driving License Number"}
-                    type={"number"}
-                    error={Boolean(props.meta.touched && props.meta.error)}
-                    helperText={props.meta.touched && props.meta.error}
-                    {...props.field}
-                  />
-                )}
-              </Field>
+              {DrivingLicenseSchema?.map((inputItem) => (
+                <Field name={inputItem.name} key={inputItem.key}>
+                  {(props) => {
+                    if (inputItem.type === "select") {
+                      return (
+                        <FormControl
+                          required
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          error={Boolean(
+                            props.meta.touched && props.meta.error
+                          )}
+                        >
+                          <InputLabel
+                            id={`label-${inputItem.name}`}
+                            shrink={true}
+                          >
+                            {inputItem.label}
+                          </InputLabel>
+                          <Select
+                            notched
+                            labelId={`label-${inputItem.name}`}
+                            id={inputItem.name}
+                            label={inputItem.label}
+                            {...props.field}
+                          >
+                            {inputItem.options.map((option) => (
+                              <MenuItem value={option.value} key={option.key}>
+                                {option.category}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                          <FormHelperText>
+                            {props.meta.touched && props.meta.error}
+                          </FormHelperText>
+                        </FormControl>
+                      );
+                    }
+                    return (
+                      <div>
+                        <TextField
+                          variant="outlined"
+                          fullWidth
+                          required
+                          margin="normal"
+                          label={inputItem.label}
+                          type={inputItem.type}
+                          multiline={inputItem?.multiline}
+                          rows={inputItem?.rows}
+                          error={Boolean(
+                            props.meta.touched && props.meta.error
+                          )}
+                          helperText={props.meta.touched && props.meta.error}
+                          {...props.field}
+                          InputLabelProps={{ shrink: true }}
+                          inputProps={{
+                            min: inputItem?.min,
+                            max: inputItem?.max,
+                            // step: inputItem.step,
+                          }}
+                        />
+                      </div>
+                    );
+                  }}
+                </Field>
+              ))}
             </CardContent>
             <CardActions style={{ justifyContent: "flex-end" }}>
               <Button

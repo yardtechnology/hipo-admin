@@ -18,3 +18,4 @@ export { default as ProfitSchema } from "./ProfitSchema";
 export { default as WaitingChargeSchema } from "./WaitingChargeSchema";
 export { default as CancellationChargeSchema } from "./CancellationChargeSchema";
 export { default as ReferralSchema } from "./ReferralSchema";
+export { default as DrivingLicenseSchema } from "./DrivingLicenseSchema";

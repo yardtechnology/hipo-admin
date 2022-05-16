@@ -1,7 +1,6 @@
 import { Person } from "@mui/icons-material";
 // import { countries } from "configs";
 import * as Yup from "yup";
-import moment from "moment";
 import { useCities } from "hooks";
 import { useEffect, useState } from "react";
 const AddDriverSchema = [
@@ -63,11 +62,11 @@ const AddDriverSchema = [
     required: true,
     label: "Date of birth",
     name: "dob",
-    validationSchema: Yup.string()
-      .required("DOB is required ")
-      .test("DOB", "Please choose a valid date of birth", (value) => {
-        return moment().diff(moment(value), "years") >= 18;
-      }),
+    // validationSchema: Yup.string()
+    //   .required("DOB is required ")
+    //   .test("DOB", "Please choose a valid date of birth", (value) => {
+    //     return moment().diff(moment(value), "years") >= 18;
+    //   }),
     type: "date",
     initialValue: "",
     startIcon: <Person />,

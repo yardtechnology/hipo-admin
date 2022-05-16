@@ -82,6 +82,7 @@ const BasicDetails = ({ handleNext }) => {
                 country: basicDetails?.country,
                 gender: basicDetails?.gender,
                 countryCode: basicDetails?.countryCode,
+                city: basicDetails?.city,
               }
             : initialValues
         }
@@ -114,7 +115,7 @@ const BasicDetails = ({ handleNext }) => {
                             )}
                           >
                             <InputLabel
-                              shrink={true}
+
                               id={`label-${inputItem.name}`}
                             >
                               {inputItem.label}
