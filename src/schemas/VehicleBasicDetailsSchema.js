@@ -1,7 +1,7 @@
 // import { countries } from "configs";
 import { Person } from "@mui/icons-material";
 import * as Yup from "yup";
-import { useVehicleCategory } from "hooks";
+import { useVehicleCategory, useVehicleMaker } from "hooks";
 import { useEffect, useState } from "react";
 
 const VehicleBasicDetailsSchema = [
@@ -20,15 +20,13 @@ const VehicleBasicDetailsSchema = [
     name: "vehicleNumber",
     validationSchema: Yup.string()
       .required("Vehicle Number is Required")
+      .matches(/^[a-zA-Z0-9]{8,10}$/, "Invalid Vehicle Number")
       .test(
         "vehicleNumber",
-        "First two letters of the vehicle number should be capitalized and followed by a space, then the vehicle number should be in the format of 'AB 1234' or 'AB 1234 CDE'",
-        (value) => {
-          return /^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/i.test(
-            value
-          );
-        }
+        "Vehicle Number is min 8 and max 10 characters",
+        (value) => value?.length >= 8 && value?.length <= 10
       ),
+
     // "",
 
     initialValue: "",
@@ -141,9 +139,16 @@ const VehicleBasicDetailsSchema = [
   // },
 ];
 
-export const useVehicleTypeSchema = () => {
+export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
   const [addVehicleTypeSchema, setAddVehicleTypeSchema] = useState([]);
   const { vehicleCategory } = useVehicleCategory();
+  const { vehicleMaker, model, fetchVehicleModel } = useVehicleMaker();
+  console.log(model);
+  useEffect(() => {
+    if ((vehicleMakerId, categoryId)) {
+      fetchVehicleModel(vehicleMakerId, categoryId);
+    }
+  }, [categoryId, vehicleMakerId, fetchVehicleModel]);
   // const { drivers } = useDrivers();
   console.log("vehicleCategory", vehicleCategory);
   useEffect(() => {
@@ -165,6 +170,35 @@ export const useVehicleTypeSchema = () => {
                   value: item?._id,
                   key: item?._id,
                 })),
+        },
+        {
+          key: "13",
+          label: "Vehicle Maker",
+          validationSchema: Yup.string().required("Vehicle Maker is required"),
+          name: "vehicleMaker",
+          initialValue: "",
+          type: "select",
+          options:
+            vehicleMaker === null
+              ? []
+              : vehicleMaker?.map((item) => ({
+                  vehicleType: item?.name,
+                  value: item?._id,
+                  key: item?._id,
+                })),
+        },
+        {
+          key: "14",
+          label: "Vehicle Models",
+          // validationSchema: Yup.string().required("Vehicle Models is required"),
+          name: "vehicleModel",
+          initialValue: "",
+          type: "select",
+          options: model?.map((item) => ({
+            vehicleType: item?.name,
+            value: item?._id,
+            key: item?._id,
+          })),
         },
         // {
         //   key: "27",
@@ -192,7 +226,7 @@ export const useVehicleTypeSchema = () => {
     } else {
       setAddVehicleTypeSchema(VehicleBasicDetailsSchema);
     }
-  }, [vehicleCategory]);
+  }, [vehicleCategory, vehicleMaker, model]);
   return { addVehicleTypeSchema };
 };
 

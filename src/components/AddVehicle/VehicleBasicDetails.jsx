@@ -14,19 +14,19 @@ import * as Yup from "yup";
 import { useAppContext } from "contexts";
 import React, { Fragment, useState } from "react";
 import { useVehicleTypeSchema } from "schemas";
-
-import { AadharUpload } from "components/core";
-import { UPLOADINSURANCE, UPLOADRC } from "assets";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 const VehicleBasicDetails = ({ handleNext }) => {
+  const [vehicleMakerId, setVehicleMakerId] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const { vehicleBasicDetails } = useAppContext();
-  const { addVehicleTypeSchema } = useVehicleTypeSchema();
+  const { addVehicleTypeSchema } = useVehicleTypeSchema(
+    vehicleMakerId,
+    categoryId
+  );
   const [value, setValue] = useState("");
   const [value1, setValue1] = useState("");
 
-  console.log(value);
-  console.log(vehicleBasicDetails);
   // const [driverName, setDriverName] = useState(vehicleBasicDetails?.driverName);
   const [drivers, setDrivers] = useState([]);
   console.log(drivers);
@@ -75,6 +75,10 @@ const VehicleBasicDetails = ({ handleNext }) => {
       submitProps.setSubmitting(false);
     }
   };
+  console.log({ categoryId });
+  console.log({ vehicleMakerId });
+  console.log({ vehicleBasicDetails });
+
   return (
     <div style={{ marginTop: "4vh" }}>
       {/* <div
@@ -102,7 +106,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
           justifyContent: "center",
         }}
       >
-        <Grid item lg={6} md={6} sm={12} xs={12} sx={{ textAlign: "center" }}>
+        {/* <Grid item lg={6} md={6} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
             value={value || UPLOADRC}
@@ -115,7 +119,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
             value={value1 || UPLOADINSURANCE}
             onChange={setValue1}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
       <Formik
         initialValues={initialValues}
@@ -157,12 +161,36 @@ const VehicleBasicDetails = ({ handleNext }) => {
                             </InputLabel>
                             <Select
                               notched={true}
-                              labelId={`label-${inputItem.name}`}
-                              id={inputItem.name}
-                              label={inputItem.label}
-                              {...props.field}
+                              labelId={`label-${inputItem?.name}`}
+                              id={inputItem?.name}
+                              label={inputItem?.label}
+                              value={props.field.value}
+                              displayEmpty
+                              onChange={(e) => {
+                                if (inputItem?.name === "vehicleType") {
+                                  setCategoryId(e.target.value);
+                                  formik.setFieldValue(
+                                    "vehicleType",
+                                    e.target.value
+                                  );
+                                  return;
+                                }
+                                if (inputItem?.name === "vehicleMaker") {
+                                  setVehicleMakerId(e.target.value);
+                                  formik.setFieldValue(
+                                    "vehicleMaker",
+                                    e.target.value
+                                  );
+                                  return;
+                                }
+
+                                props?.input?.onChange(e.target.value);
+                              }}
                             >
-                              {inputItem.options.map((option) => (
+                              <MenuItem value="">
+                                <em>None</em>
+                              </MenuItem>
+                              {inputItem?.options?.map((option) => (
                                 <MenuItem
                                   value={option?.value}
                                   key={option.key}
@@ -229,7 +257,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
                               label={inputItem.label}
                               // {...props.field}
                             >
-                              {inputItem.options.map((option) => (
+                              {inputItem?.options?.map((option) => (
                                 <MenuItem
                                   value={option?.value}
                                   key={option.key}
@@ -303,13 +331,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
                   variant="contained"
                   sx={{ color: "snow" }}
                   type="submit"
-                  disabled={
-                    formik.isSubmitting ||
-                    !formik.isValid ||
-                    !value ||
-                    !value1 ||
-                    !drivers
-                  }
+                  disabled={formik.isSubmitting || !formik.isValid}
                   loading={formik.isSubmitting}
                   loadingPosition="start"
                   startIcon={<Done sx={{ color: "snow" }} />}

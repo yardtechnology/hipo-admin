@@ -50,8 +50,10 @@ const AppContextProvider = ({ children }) => {
     imgFile1: "",
   });
   const [drivingLicenceInfo, setDrivingLicenceInfo] = useState({
-    drivingLicenceNumber: "",
+    drivingLicenseNumber: "",
     drivingLicenceimage: "",
+    drivingLicenseExpiryDate: "",
+    category: "",
   });
   const [bankAccountInfo, setBankAccountInfo] = useState({
     accountHolderName: "",

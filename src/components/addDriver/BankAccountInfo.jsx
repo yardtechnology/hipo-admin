@@ -56,25 +56,30 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     formdata.append("bankAccountNumber", values?.accountNo);
     formdata.append("bankName", values?.bankName);
     formdata.append("ifscCode", values?.ifscCode);
+    formdata.append("bankAccountType", values?.bankAccountType);
     formdata.append("bankAccountHolderName", values?.accountHolderName);
     formdata.append("displayName", basicDetails?.displayName);
     formdata.append("email", basicDetails?.email);
     formdata.append("dateOfBirth", basicDetails?.dob);
     formdata.append("phoneNumber", basicDetails?.phoneNumber);
-    formdata.append("avatar", basicDetails?.imgFile?.target.files[0]);
+    basicDetails?.imgFile &&
+      formdata.append("avatar", basicDetails?.imgFile?.target.files[0]);
     formdata.append("countryCode", basicDetails?.countryCode);
     formdata.append("countryName", basicDetails?.country);
     formdata.append("city", basicDetails?.city);
-
     formdata.append(
       "drivingLicenseNumber",
-      drivingLicenceInfo?.drivingLicenceNumber
+      drivingLicenceInfo?.drivingLicenseNumber
     );
     formdata.append(
       "drivingLicense",
-      drivingLicenceInfo?.drivingLicenceimage?.target.files[0]
+      drivingLicenceInfo?.imgFile?.target?.files[0]
     );
-    // formdata.append("aadharCardNumber", aadharCardInfo?.aadharCardNumber);
+    formdata.append(
+      "drivingLicenseExpire",
+      drivingLicenceInfo?.drivingLicenseExpiryDate
+    );
+    formdata.append("drivingLicenseType", drivingLicenceInfo?.category);
     formdata.append(
       "aadharCardFront",
       aadharCardInfo?.imgFile?.target.files[0]
@@ -83,7 +88,7 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
       "aadharCardBack",
       aadharCardInfo?.imgFile1?.target.files[0]
     );
-
+    formdata.append("aadharCardNumber", aadharCardInfo?.aadharCardNumber);
     try {
       console.log(values);
       // await setBankAccountInfo({

@@ -55,5 +55,14 @@ const AccountInfoSchema = [
     initialValue: "",
     startIcon: <Person />,
   },
+  {
+    key: "41",
+    label: "Bank Account Type",
+    name: "bankAccountType",
+    type: "text",
+    validationSchema: Yup.string().required("Bank Account Type Is Required"),
+    initialValue: "",
+    startIcon: <Person />,
+  },
 ];
 export default AccountInfoSchema;

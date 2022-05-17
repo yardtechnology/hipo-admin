@@ -29,9 +29,11 @@ const DrivingLicenseSchema = [
       .required("Driving License Expiry Date is Required")
       .test(
         "drivingLicenseExpiryDate",
-        "Driving License Expiry Date must be greater than today",
+        "Driving License Expiry Date must be today or after",
         (value) => {
-          return moment(value).isAfter(moment(new Date()));
+          return moment(value).isSameOrAfter(
+            moment(new Date().toISOString().split("T")[0])
+          );
         }
       ),
     initialValue: "",

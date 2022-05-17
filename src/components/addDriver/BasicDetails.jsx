@@ -115,8 +115,8 @@ const BasicDetails = ({ handleNext }) => {
                             )}
                           >
                             <InputLabel
-
                               id={`label-${inputItem.name}`}
+                              shrink={true}
                             >
                               {inputItem.label}
                             </InputLabel>
@@ -232,7 +232,7 @@ const BasicDetails = ({ handleNext }) => {
                   variant="contained"
                   sx={{ color: "snow" }}
                   type="submit"
-                  disabled={formik.isSubmitting || !formik.isValid || !value}
+                  disabled={formik.isSubmitting || !formik.isValid}
                   loading={formik.isSubmitting}
                   loadingPosition="start"
                   startIcon={<Done sx={{ color: "snow" }} />}

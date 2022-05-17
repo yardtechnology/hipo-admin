@@ -49,6 +49,7 @@ const DrivingLicense = ({ handleNext, handleBack }) => {
       handleNext();
     }
   };
+  console.log(drivingLicenceInfo);
   return (
     <>
       <Grid
@@ -69,9 +70,19 @@ const DrivingLicense = ({ handleNext, handleBack }) => {
         </Grid>
       </Grid>
       <Formik
-        initialValues={initialValues}
+        initialValues={
+          drivingLicenceInfo?.drivingLicenseNumber
+            ? {
+                drivingLicenseNumber: drivingLicenceInfo?.drivingLicenseNumber,
+                drivingLicenseExpiryDate:
+                  drivingLicenceInfo?.drivingLicenseExpiryDate,
+                category: drivingLicenceInfo?.category,
+              }
+            : initialValues
+        }
         validationSchema={Yup.object(validationSchema)}
         onSubmit={handleDrivingLicenseInfo}
+        enableReinitialize
       >
         {({ isSubmitting, isValid }) => (
           <Form>
