@@ -16,7 +16,7 @@ import { useAppContext } from "contexts";
 import { useState } from "react";
 import { UPLOADRC } from "assets";
 
-const RCInfo = ({ handleNext, handleBack }) => {
+const RoutePermitInfo = ({ handleReset, handleBack }) => {
   const { RCInfo, setRCInfo, setInsuranceInfo, setVehicleBasicDetails } =
     useAppContext();
   const [value, setValue] = useState(RCInfo?.RCImage);
@@ -46,10 +46,9 @@ const RCInfo = ({ handleNext, handleBack }) => {
       setVehicleBasicDetails();
       setInsuranceInfo();
       setRCInfo();
-      // Swal.fire({ icon: "success", text: "Successfully Submitted" });
+      Swal.fire({ icon: "success", text: "Successfully Submitted" });
       submitProps.setSubmitting(false);
-      // handleReset();
-      handleNext();
+      handleReset();
     }
   };
   return (
@@ -147,4 +146,4 @@ const RCInfo = ({ handleNext, handleBack }) => {
   );
 };
 
-export default RCInfo;
+export default RoutePermitInfo;

@@ -11,14 +11,20 @@ import {
 import React, { Fragment } from "react";
 
 import {
+  FitnessInfo,
   InsuranceInfo,
+  PUCInfo,
   RCInfo,
+  RoutePermitInfo,
   VehicleBasicDetails,
 } from "components/AddVehicle";
 const steps = [
   "Add Vehicle Basic Details",
   "Add Insurance Info",
   "Add RC Info",
+  "Add Fitness Info",
+  "Add Route Permit Info",
+  "Add PUC Info",
 ];
 const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -40,10 +46,16 @@ const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
         );
       case 2:
         return <RCInfo handleReset={handleReset} handleBack={handleBack} />;
-      //   case 3:
-      //     return (
-      //       <BankAccountInfo handleBack={handleBack} handleReset={handleReset} />
-      //     );
+      case 3:
+        return (
+          <FitnessInfo handleBack={handleBack} handleReset={handleReset} />
+        );
+      case 4:
+        return (
+          <RoutePermitInfo handleBack={handleBack} handleReset={handleReset} />
+        );
+      case 5:
+        return <PUCInfo handleBack={handleBack} handleReset={handleReset} />;
 
       default:
         break;

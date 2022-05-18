@@ -3,7 +3,7 @@ import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
 const useVehicleMaker = () => {
-  const [vehicleMaker, setVehicleMaker] = useState(null);
+  const [vehicleMaker, setVehicleMaker] = useState([]);
   const [model, setModel] = useState([]);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();

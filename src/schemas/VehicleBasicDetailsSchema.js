@@ -5,21 +5,20 @@ import { useVehicleCategory, useVehicleMaker } from "hooks";
 import { useEffect, useState } from "react";
 
 const VehicleBasicDetailsSchema = [
-  {
-    key: "2",
-    label: "Vehicle Name",
-    name: "vehicleName",
-    validationSchema: Yup.string().required("Vehicle Name is Required"),
-    initialValue: "",
-    startIcon: <Person />,
-    required: true,
-  },
+  // {
+  //   key: "2",
+  //   label: "Vehicle Name",
+  //   name: "vehicleName",
+  //   validationSchema: Yup.string().required("Vehicle Name is Required"),
+  //   initialValue: "",
+  //   startIcon: <Person />,
+  //   required: true,
+  // },
   {
     key: "52",
     label: "Vehicle Number",
     name: "vehicleNumber",
     validationSchema: Yup.string()
-      .required("Vehicle Number is Required")
       .matches(/^[a-zA-Z0-9]{8,10}$/, "Invalid Vehicle Number")
       .test(
         "vehicleNumber",
@@ -144,6 +143,7 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
   const { vehicleCategory } = useVehicleCategory();
   const { vehicleMaker, model, fetchVehicleModel } = useVehicleMaker();
   console.log(model);
+
   useEffect(() => {
     if ((vehicleMakerId, categoryId)) {
       fetchVehicleModel(vehicleMakerId, categoryId);
@@ -158,10 +158,11 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
         {
           key: "12",
           label: "Vehicle Type",
-          validationSchema: Yup.string().required("Vehicle Type is required"),
+          // validationSchema: Yup.string().required("Vehicle Type is required"),
           name: "vehicleType",
           initialValue: "",
           type: "select",
+          required: true,
           options:
             vehicleCategory === null
               ? []
@@ -174,7 +175,8 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
         {
           key: "13",
           label: "Vehicle Maker",
-          validationSchema: Yup.string().required("Vehicle Maker is required"),
+          required: true,
+          // validationSchema: Yup.string().required("Vehicle Maker is required"),
           name: "vehicleMaker",
           initialValue: "",
           type: "select",
@@ -192,13 +194,16 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
           label: "Vehicle Models",
           // validationSchema: Yup.string().required("Vehicle Models is required"),
           name: "vehicleModel",
+          required: true,
           initialValue: "",
           type: "select",
-          options: model?.map((item) => ({
-            vehicleType: item?.name,
-            value: item?._id,
-            key: item?._id,
-          })),
+          options: !model?.length
+            ? []
+            : model?.map((item) => ({
+                vehicleType: item?.name,
+                value: item?._id,
+                key: item?._id,
+              })),
         },
         // {
         //   key: "27",

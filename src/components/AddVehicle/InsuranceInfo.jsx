@@ -14,7 +14,7 @@ import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
 import { UPLOADINSURANCE } from "assets";
-
+import moment from "moment";
 const InsuranceInfo = ({ handleNext, handleBack }) => {
   const { insuranceInfo, setInsuranceInfo } = useAppContext();
   const [value, setValue] = useState(insuranceInfo?.insuranceImage);
@@ -23,6 +23,15 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
   };
   const validationSchema = {
     insuranceNumber: Yup.number().required("Insurance Number is Required"),
+    validTill: Yup.string().test(
+      "validTill",
+      "Insurance Expiry Date Must Be Today or After",
+      (value) => {
+        return moment(value).isSameOrAfter(
+          moment(new Date().toISOString().split("T")[0])
+        );
+      }
+    ),
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
@@ -58,7 +67,10 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
       <Formik
         initialValues={
           insuranceInfo?.insuranceNumber
-            ? { insuranceNumber: insuranceInfo?.insuranceNumber }
+            ? {
+                insuranceNumber: insuranceInfo?.insuranceNumber,
+                validTill: insuranceInfo?.validTill,
+              }
             : initialValues
         }
         enableReinitialize
@@ -75,6 +87,26 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
                     margin="normal"
                     label={"Enter Your Insurance Number"}
                     type={"number"}
+                    InputLabelProps={{ shrink: true }}
+                    error={Boolean(props.meta.touched && props.meta.error)}
+                    helperText={props.meta.touched && props.meta.error}
+                    required
+                    {...props.field}
+                  />
+                )}
+              </Field>
+              <Field name={"validTill"}>
+                {(props) => (
+                  <TextField
+                    required
+                    InputLabelProps={{ shrink: true }}
+                    fullWidth
+                    margin="normal"
+                    label={"Enter Your Insurance Expiry Date"}
+                    type={"date"}
+                    inputProps={{
+                      min: new Date().toISOString().split("T")[0],
+                    }}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
                     {...props.field}

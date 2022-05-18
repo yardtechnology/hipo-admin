@@ -4,3 +4,6 @@ export { default as InsuranceInfo } from "./InsuranceInfo";
 export { default as EditRC } from "./EditRC";
 export { default as EditInsurance } from "./EditInsurance";
 export { default as EditVehicle } from "./EditVehicle";
+export { default as FitnessInfo } from "./FitnessInfo";
+export { default as PUCInfo } from "./PUCInfo";
+export { default as RoutePermitInfo } from "./RoutePermitInfo";

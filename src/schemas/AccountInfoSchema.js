@@ -31,7 +31,10 @@ const AccountInfoSchema = [
     label: "Account No",
     name: "accountNo",
     type: number,
-    validationSchema: Yup.number().required("Account No is required"),
+    validationSchema: Yup.number()
+      .required("Account No is required")
+      .min(9, "Account No must be at least 9 characters")
+      .max(18, "Account No must be at most 18 characters"),
     initialValue: "",
     startIcon: <Person />,
   },
