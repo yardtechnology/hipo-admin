@@ -45,14 +45,12 @@ const AddNewVehicle = ({ open, setOpenAddPaymentsDrawer }) => {
           <InsuranceInfo handleNext={handleNext} handleBack={handleBack} />
         );
       case 2:
-        return <RCInfo handleReset={handleReset} handleBack={handleBack} />;
+        return <RCInfo handleBack={handleBack} handleNext={handleNext} />;
       case 3:
-        return (
-          <FitnessInfo handleBack={handleBack} handleReset={handleReset} />
-        );
+        return <FitnessInfo handleBack={handleBack} handleNext={handleNext} />;
       case 4:
         return (
-          <RoutePermitInfo handleBack={handleBack} handleReset={handleReset} />
+          <RoutePermitInfo handleBack={handleBack} handleNext={handleNext} />
         );
       case 5:
         return <PUCInfo handleBack={handleBack} handleReset={handleReset} />;

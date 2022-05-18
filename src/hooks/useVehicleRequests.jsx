@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
-const useVehicles = () => {
-  const [vehicles, setVehicles] = useState(null);
+const useVehicleRequests = () => {
+  const [vehicleRequests, setVehicleRequests] = useState(null);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${BASE_URL}/admin-vehicles/all?status=approved`,
+          `${BASE_URL}/admin-vehicles/all?status=pending`,
           {
             method: "GET",
             // body: JSON.stringify({ ...values }),
@@ -22,10 +22,7 @@ const useVehicles = () => {
         );
         const arr = await response.json();
         console.log(arr);
-        const sortArr = arr?.data?.sort(
-          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
-        );
-        isMounted.current && setVehicles(sortArr);
+        isMounted.current && setVehicleRequests(arr?.data);
       } catch (error) {
         console.log(error);
       }
@@ -33,9 +30,9 @@ const useVehicles = () => {
     fetchData();
   }, [isMounted, realtime]);
   return {
-    vehicles,
+    vehicleRequests,
     setRealtime,
   };
 };
 
-export default useVehicles;
+export default useVehicleRequests;

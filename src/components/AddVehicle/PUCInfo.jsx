@@ -14,20 +14,26 @@ import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
-import { UPLOADRC } from "assets";
+import { UPLOADPUC } from "assets";
 
 const PUCInfo = ({ handleReset, handleBack }) => {
-  const { RCInfo, setRCInfo, setInsuranceInfo, setVehicleBasicDetails } =
-    useAppContext();
-  const [value, setValue] = useState(RCInfo?.RCImage);
+  const {
+    pucInfo,
+    setPucInfo,
+    setVehicleBasicDetails,
+    setRCInfo,
+    setInsuranceInfo,
+  } = useAppContext();
+  const [value, setValue] = useState(pucInfo?.pucImage);
   const initialValues = {
-    RCNumber: "",
+    pucNumber: "",
+    validTill: "",
   };
   const validationSchema = {
-    RCNumber: Yup.number().required("RC Number is Required"),
+    pucNumber: Yup.number().required("PUC Number is Required"),
     validTill: Yup.string().test(
       "validTill",
-      "RC Expiry Date Must Be Today or After",
+      "PUC Expiry Date Must Be Today or After",
       (value) => {
         return moment(value).isSameOrAfter(
           moment(new Date().toISOString().split("T")[0])
@@ -35,9 +41,9 @@ const PUCInfo = ({ handleReset, handleBack }) => {
       }
     ),
   };
-  const handleAadharCardInfo = async (values, submitProps) => {
+  const handlePUCInfo = async (values, submitProps) => {
     try {
-      setRCInfo({ ...values, RCImage: value });
+      setPucInfo({ ...values, pucImage: value });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -65,23 +71,23 @@ const PUCInfo = ({ handleReset, handleBack }) => {
         <Grid item lg={8} md={8} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || UPLOADRC}
+            value={value || UPLOADPUC}
             onChange={setValue}
           />
         </Grid>
       </Grid>
       <Formik
         initialValues={
-          RCInfo?.RCNumber ? { RCNumber: RCInfo?.RCNumber } : initialValues
+          pucInfo?.pucNumber ? { pucNumber: pucInfo?.pucNumber } : initialValues
         }
         enableReinitialize
         validationSchema={Yup.object(validationSchema)}
-        onSubmit={handleAadharCardInfo}
+        onSubmit={handlePUCInfo}
       >
         {({ isSubmitting, isValid }) => (
           <Form>
             <CardContent>
-              <Field name={"RCNumber"}>
+              <Field name={"pucNumber"}>
                 {(props) => (
                   <TextField
                     InputLabelProps={{
@@ -89,7 +95,7 @@ const PUCInfo = ({ handleReset, handleBack }) => {
                     }}
                     fullWidth
                     margin="normal"
-                    label={"Enter Your RC Number"}
+                    label={"Enter PUC Number"}
                     type={"number"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
@@ -105,7 +111,7 @@ const PUCInfo = ({ handleReset, handleBack }) => {
                       min: new Date().toISOString().split("T")[0],
                     }}
                     margin="normal"
-                    label={"Enter Your RC Expiry Date"}
+                    label={"Enter PUC Expiry Date"}
                     type={"date"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}

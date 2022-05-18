@@ -14,20 +14,20 @@ import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
-import { UPLOADRC } from "assets";
+import { UPLOADFITNESS } from "assets";
 
-const FitnessInfo = ({ handleReset, handleBack }) => {
-  const { RCInfo, setRCInfo, setInsuranceInfo, setVehicleBasicDetails } =
-    useAppContext();
-  const [value, setValue] = useState(RCInfo?.RCImage);
+const FitnessInfo = ({ handleNext, handleBack }) => {
+  const { fitnessInfo, setFitnessInfo } = useAppContext();
+  const [value, setValue] = useState(fitnessInfo?.fitnessImage);
   const initialValues = {
-    RCNumber: "",
+    fitnessNumber: "",
+    validTill: "",
   };
   const validationSchema = {
-    RCNumber: Yup.number().required("RC Number is Required"),
+    fitnessNumber: Yup.number().required("Fitness Number is Required"),
     validTill: Yup.string().test(
       "validTill",
-      "RC Expiry Date Must Be Today or After",
+      "Fitness Expiry Date Must Be Today or After",
       (value) => {
         return moment(value).isSameOrAfter(
           moment(new Date().toISOString().split("T")[0])
@@ -35,20 +35,16 @@ const FitnessInfo = ({ handleReset, handleBack }) => {
       }
     ),
   };
-  const handleAadharCardInfo = async (values, submitProps) => {
+  const handleFitnessInfo = async (values, submitProps) => {
     try {
-      setRCInfo({ ...values, RCImage: value });
+      setFitnessInfo({ ...values, fitnessImage: value });
       console.log(values);
+      handleNext();
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
-      setVehicleBasicDetails();
-      setInsuranceInfo();
-      setRCInfo();
-      Swal.fire({ icon: "success", text: "Successfully Submitted" });
       submitProps.setSubmitting(false);
-      handleReset();
     }
   };
   return (
@@ -65,23 +61,28 @@ const FitnessInfo = ({ handleReset, handleBack }) => {
         <Grid item lg={8} md={8} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || UPLOADRC}
+            value={value || UPLOADFITNESS}
             onChange={setValue}
           />
         </Grid>
       </Grid>
       <Formik
         initialValues={
-          RCInfo?.RCNumber ? { RCNumber: RCInfo?.RCNumber } : initialValues
+          fitnessInfo?.fitnessNumber
+            ? {
+                fitnessNumber: fitnessInfo?.fitnessNumber,
+                validTill: fitnessInfo?.validTill,
+              }
+            : initialValues
         }
         enableReinitialize
         validationSchema={Yup.object(validationSchema)}
-        onSubmit={handleAadharCardInfo}
+        onSubmit={handleFitnessInfo}
       >
         {({ isSubmitting, isValid }) => (
           <Form>
             <CardContent>
-              <Field name={"RCNumber"}>
+              <Field name={"fitnessNumber"}>
                 {(props) => (
                   <TextField
                     InputLabelProps={{
@@ -89,7 +90,7 @@ const FitnessInfo = ({ handleReset, handleBack }) => {
                     }}
                     fullWidth
                     margin="normal"
-                    label={"Enter Your RC Number"}
+                    label={"Enter Fitness Number"}
                     type={"number"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
@@ -105,7 +106,7 @@ const FitnessInfo = ({ handleReset, handleBack }) => {
                       min: new Date().toISOString().split("T")[0],
                     }}
                     margin="normal"
-                    label={"Enter Your RC Expiry Date"}
+                    label={"Enter Fitness Expiry Date"}
                     type={"date"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}

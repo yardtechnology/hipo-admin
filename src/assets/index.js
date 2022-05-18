@@ -9,6 +9,9 @@ import DL from "./Dl2.png";
 import UPLOADRC from "./uplaod_RC.png";
 import UPLOADINSURANCE from "./uplaod_insurance.png";
 import VEHICLE from "./Vehicle.png";
+import UPLOADRP from "./upload_RP.png";
+import UPLOADPUC from "./upload_Puc.png";
+import UPLOADFITNESS from "./upload_Fitness.png";
 
 export {
   LOGO,
@@ -21,4 +24,7 @@ export {
   UPLOADRC,
   UPLOADINSURANCE,
   VEHICLE,
+  UPLOADRP,
+  UPLOADPUC,
+  UPLOADFITNESS,
 };

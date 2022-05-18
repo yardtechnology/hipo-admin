@@ -26,6 +26,12 @@ const useAppContext = () => {
     setUserId,
     fetchNotifications,
     not,
+    fitnessInfo,
+    setFitnessInfo,
+    permitInfo,
+    setPermitInfo,
+    pucInfo,
+    setPucInfo,
   } = useContext(AppContext);
 
   return {
@@ -51,6 +57,12 @@ const useAppContext = () => {
     vehicleBasicDetails,
     setVehicleBasicDetails,
     fetchNotifications,
+    fitnessInfo,
+    setFitnessInfo,
+    permitInfo,
+    setPermitInfo,
+    pucInfo,
+    setPucInfo,
     not,
   };
 };

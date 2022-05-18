@@ -44,6 +44,21 @@ const AppContextProvider = ({ children }) => {
     RCNumber: "",
     RCImage: "",
   });
+  const [fitnessInfo, setFitnessInfo] = useState({
+    fitnessNumber: "",
+    fitnessImage: "",
+    validTill: "",
+  });
+  const [permitInfo, setPermitInfo] = useState({
+    permitNumber: "",
+    permitImage: "",
+    validTill: "",
+  });
+  const [pucInfo, setPucInfo] = useState({
+    pucNumber: "",
+    pucImage: "",
+    validTill: "",
+  });
   const [aadharCardInfo, setAadharCardInfo] = useState({
     aadharCardNumber: "",
     imgFile: "",
@@ -197,6 +212,12 @@ const AppContextProvider = ({ children }) => {
         setVehicleBasicDetails,
         fetchNotifications,
         not,
+        fitnessInfo,
+        setFitnessInfo,
+        permitInfo,
+        setPermitInfo,
+        pucInfo,
+        setPucInfo,
         // verifyOtp,
       }}
     >

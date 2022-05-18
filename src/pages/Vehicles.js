@@ -170,7 +170,7 @@ const Vehicles = () => {
         data={
           vehicles === null
             ? []
-            : vehicles.map((vehicle, i) => ({
+            : vehicles?.map((vehicle, i) => ({
                 ...vehicle,
                 sl: i + 1,
                 type: vehicle?.vehicleType?.name,

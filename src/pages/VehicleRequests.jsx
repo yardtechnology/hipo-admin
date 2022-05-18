@@ -11,28 +11,23 @@ import moment from "moment";
 import { DocumentScanner } from "@mui/icons-material";
 import { useState } from "react";
 import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
-import { EditVehicle } from "components/AddVehicle";
-import { useVehicles } from "hooks";
-import { AssignDrivers } from "components";
+import { useVehicleRequests } from "hooks";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const VehicleRequests = () => {
-  const { vehicles, setRealtime } = useVehicles();
-  console.log(vehicles);
+  const { vehicleRequests, setRealtime } = useVehicleRequests();
+  console.log(vehicleRequests);
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);
-  const [openEditVehicleDocumentDrawer, setOpenEditVehicleDocumentDrawer] =
-    useState(false);
-  const [openAssignDriverDrawer, setOpenAssignDriverDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
-  const acceptVehicles = async (data) => {
+  const rejectVehicles = async (data) => {
     try {
       setLoading(true);
-      const response = await fetch(`${BASE_URL}/update-vehicle/is-active`, {
+      const response = await fetch(`${BASE_URL}/vehicles/all/status-change`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -40,24 +35,24 @@ const VehicleRequests = () => {
         },
         body: JSON.stringify({
           vehicleIds: data,
-          isActive: true,
+          status: "REJECTED",
         }),
       });
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
-        ? Swal.fire("Success", "Vehicles turned on", "success")
+        ? Swal.fire("Success", "Vehicles Rejected", "success")
         : Swal.fire("Error", "Something went wrong", "error");
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
-  const rejectVehicles = async (data) => {
+  const acceptVehicles = async (data) => {
     try {
       setLoading(true);
-      const response = await fetch(`${BASE_URL}/update-vehicle/is-active`, {
+      const response = await fetch(`${BASE_URL}/vehicles/all/status-change`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -65,14 +60,14 @@ const VehicleRequests = () => {
         },
         body: JSON.stringify({
           vehicleIds: data,
-          isActive: false,
+          status: "APPROVED",
         }),
       });
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
-        ? Swal.fire("Success", "Vehicles turned off", "success")
+        ? Swal.fire("Success", "Vehicle Approved", "success")
         : Swal.fire("Error", "Something went wrong", "error");
       setLoading(false);
     } catch (error) {
@@ -81,20 +76,10 @@ const VehicleRequests = () => {
   };
   return (
     <>
-      <EditVehicle
-        setRealtime={setRealtime}
-        open={openEditVehicleDocumentDrawer}
-        setOpenEditVehicleDrawer={setOpenEditVehicleDocumentDrawer}
-      />
       <VehicleDocumentDrawer
         open={openVehicleDocumentDrawer}
         setOpenVehicleDocumentDrawer={setOpenVehicleDocumentDrawer}
         setRealtime={setRealtime}
-      />
-      <AssignDrivers
-        setRealtime={setRealtime}
-        open={openAssignDriverDrawer}
-        setOpenAssignDriverDrawer={setOpenAssignDriverDrawer}
       />
 
       <MaterialTable
@@ -118,12 +103,12 @@ const VehicleRequests = () => {
         }}
         title={"Vehicles"}
         data={
-          vehicles === null
+          vehicleRequests === null
             ? []
-            : vehicles.map((vehicle, i) => ({
+            : vehicleRequests?.map((vehicle, i) => ({
                 ...vehicle,
                 sl: i + 1,
-                type: vehicle?.vehicleType?.name,
+                type: vehicle?.model?.vehicleCategory?.name,
                 ownerName: vehicle?.owner?.displayName,
                 currentTimestamp: moment(vehicle?.createdAt).format("lll"),
               }))
@@ -140,6 +125,10 @@ const VehicleRequests = () => {
             title: "Name",
             field: "vehicleName",
             searchable: true,
+            render: (rowData) =>
+              `${rowData?.make?.name ? rowData?.make?.name : ""} ${
+                rowData?.model?.name ? rowData?.model?.name : ""
+              }`,
           },
           {
             title: "Number",
@@ -150,6 +139,8 @@ const VehicleRequests = () => {
             title: "Type",
             field: "type",
             searchable: true,
+            emptyValue: "--",
+            render: (rowData) => `${rowData?.model?.vehicleCategory?.name}`,
           },
           {
             title: "Owner",
@@ -204,7 +195,7 @@ const VehicleRequests = () => {
             ),
           },
         ]}
-        isLoading={loading || vehicles === null}
+        isLoading={loading || vehicleRequests === null}
         actions={[
           // {
           //   tooltip: "Send notification to all selected users",

@@ -17,8 +17,7 @@ import { useState } from "react";
 import { UPLOADRC } from "assets";
 
 const RCInfo = ({ handleNext, handleBack }) => {
-  const { RCInfo, setRCInfo, setInsuranceInfo, setVehicleBasicDetails } =
-    useAppContext();
+  const { RCInfo, setRCInfo } = useAppContext();
   const [value, setValue] = useState(RCInfo?.RCImage);
   const initialValues = {
     RCNumber: "",
@@ -39,17 +38,14 @@ const RCInfo = ({ handleNext, handleBack }) => {
     try {
       setRCInfo({ ...values, RCImage: value });
       console.log(values);
+      handleNext();
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
-      setVehicleBasicDetails();
-      setInsuranceInfo();
-      setRCInfo();
       // Swal.fire({ icon: "success", text: "Successfully Submitted" });
       submitProps.setSubmitting(false);
       // handleReset();
-      handleNext();
     }
   };
   return (
@@ -73,7 +69,9 @@ const RCInfo = ({ handleNext, handleBack }) => {
       </Grid>
       <Formik
         initialValues={
-          RCInfo?.RCNumber ? { RCNumber: RCInfo?.RCNumber } : initialValues
+          RCInfo?.RCNumber
+            ? { RCNumber: RCInfo?.RCNumber, validTill: RCInfo?.validTill }
+            : initialValues
         }
         enableReinitialize
         validationSchema={Yup.object(validationSchema)}
@@ -90,7 +88,7 @@ const RCInfo = ({ handleNext, handleBack }) => {
                     }}
                     fullWidth
                     margin="normal"
-                    label={"Enter Your RC Number"}
+                    label={"Enter RC Number"}
                     type={"number"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
@@ -106,7 +104,7 @@ const RCInfo = ({ handleNext, handleBack }) => {
                       min: new Date().toISOString().split("T")[0],
                     }}
                     margin="normal"
-                    label={"Enter Your RC Expiry Date"}
+                    label={"Enter RC Expiry Date"}
                     type={"date"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}

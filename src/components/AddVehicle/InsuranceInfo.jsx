@@ -85,7 +85,7 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
                   <TextField
                     fullWidth
                     margin="normal"
-                    label={"Enter Your Insurance Number"}
+                    label={"Enter Insurance Number"}
                     type={"number"}
                     InputLabelProps={{ shrink: true }}
                     error={Boolean(props.meta.touched && props.meta.error)}
@@ -102,7 +102,7 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
                     InputLabelProps={{ shrink: true }}
                     fullWidth
                     margin="normal"
-                    label={"Enter Your Insurance Expiry Date"}
+                    label={"Enter Insurance Expiry Date"}
                     type={"date"}
                     inputProps={{
                       min: new Date().toISOString().split("T")[0],

@@ -31,3 +31,4 @@ export { default as useActiveRides } from "./useActiveRides";
 export { default as useVehicles } from "./useVehicles";
 export { default as useVehicleMaker } from "./useVehicleMaker";
 export { default as useVehicleModels } from "./useVehicleModels";
+export { default as useVehicleRequests } from "./useVehicleRequests";

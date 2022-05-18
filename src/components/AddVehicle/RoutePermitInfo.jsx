@@ -14,20 +14,20 @@ import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
-import { UPLOADRC } from "assets";
+import { UPLOADRP } from "assets";
 
-const RoutePermitInfo = ({ handleReset, handleBack }) => {
-  const { RCInfo, setRCInfo, setInsuranceInfo, setVehicleBasicDetails } =
-    useAppContext();
-  const [value, setValue] = useState(RCInfo?.RCImage);
+const RoutePermitInfo = ({ handleReset, handleBack, handleNext }) => {
+  const { permitInfo, setPermitInfo } = useAppContext();
+  const [value, setValue] = useState(permitInfo?.permitImage);
   const initialValues = {
-    RCNumber: "",
+    permitNumber: "",
+    validTill: "",
   };
   const validationSchema = {
-    RCNumber: Yup.number().required("RC Number is Required"),
+    permitNumber: Yup.number().required("Permit Number is Required"),
     validTill: Yup.string().test(
       "validTill",
-      "RC Expiry Date Must Be Today or After",
+      "Route Permit Expiry Date Must Be Today or After",
       (value) => {
         return moment(value).isSameOrAfter(
           moment(new Date().toISOString().split("T")[0])
@@ -35,20 +35,16 @@ const RoutePermitInfo = ({ handleReset, handleBack }) => {
       }
     ),
   };
-  const handleAadharCardInfo = async (values, submitProps) => {
+  const handleRoutePermitInfo = async (values, submitProps) => {
     try {
-      setRCInfo({ ...values, RCImage: value });
+      setPermitInfo({ ...values, permitImage: value });
       console.log(values);
+      handleNext();
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
-      setVehicleBasicDetails();
-      setInsuranceInfo();
-      setRCInfo();
-      Swal.fire({ icon: "success", text: "Successfully Submitted" });
       submitProps.setSubmitting(false);
-      handleReset();
     }
   };
   return (
@@ -65,23 +61,28 @@ const RoutePermitInfo = ({ handleReset, handleBack }) => {
         <Grid item lg={8} md={8} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={value || UPLOADRC}
+            value={value || UPLOADRP}
             onChange={setValue}
           />
         </Grid>
       </Grid>
       <Formik
         initialValues={
-          RCInfo?.RCNumber ? { RCNumber: RCInfo?.RCNumber } : initialValues
+          permitInfo?.permitNumber
+            ? {
+                permitNumber: permitInfo?.permitNumber,
+                validTill: permitInfo?.validTill,
+              }
+            : initialValues
         }
         enableReinitialize
         validationSchema={Yup.object(validationSchema)}
-        onSubmit={handleAadharCardInfo}
+        onSubmit={handleRoutePermitInfo}
       >
         {({ isSubmitting, isValid }) => (
           <Form>
             <CardContent>
-              <Field name={"RCNumber"}>
+              <Field name={"permitNumber"}>
                 {(props) => (
                   <TextField
                     InputLabelProps={{
@@ -89,7 +90,7 @@ const RoutePermitInfo = ({ handleReset, handleBack }) => {
                     }}
                     fullWidth
                     margin="normal"
-                    label={"Enter Your RC Number"}
+                    label={"Enter Route Permit Number"}
                     type={"number"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
@@ -105,7 +106,7 @@ const RoutePermitInfo = ({ handleReset, handleBack }) => {
                       min: new Date().toISOString().split("T")[0],
                     }}
                     margin="normal"
-                    label={"Enter Your RC Expiry Date"}
+                    label={"Enter Route Permit Expiry Date"}
                     type={"date"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
