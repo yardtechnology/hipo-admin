@@ -27,8 +27,8 @@ const Dashboard = () => {
   const { driversNearby } = useDriversNearby();
   console.log(driversNearby);
   const [currentLocation, setCurrentLocation] = useState({
-    lat: 0,
-    lng: 0,
+    lat: 20.2682801,
+    lng: 85.7769064,
   });
   //Get current location
 
