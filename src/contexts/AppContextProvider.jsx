@@ -13,6 +13,7 @@ const AppContextProvider = ({ children }) => {
   const [userId, setUserId] = useState({});
   //verify user
   // const ID = window.localStorage.getItem("ID");
+
   const [vehicleBasicDetails, setVehicleBasicDetails] = useState({
     vehicleName: "",
     vehicleType: "",

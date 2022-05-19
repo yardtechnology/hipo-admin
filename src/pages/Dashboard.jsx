@@ -9,24 +9,45 @@ import {
   Cancel,
   Visibility,
   Done,
+  DriveEta,
 } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Card as DashboardCard } from "components/dashboard";
-import { useBookings } from "hooks";
+import { useBookings, useDriversNearby } from "hooks";
 import moment from "moment";
 import GoogleMapReact from "google-map-react";
 import Chart from "react-apexcharts";
 import { formatCurrency } from "@ashirbad/js-core";
+import { useEffect, useState } from "react";
+
 const Dashboard = () => {
   const { bookings } = useBookings();
   console.log(bookings);
-  const AnyReactComponent = ({ text }) => <div>{text}</div>;
-  const location = {
-    address: "1600 Amphitheatre Parkway, Mountain View, california.",
-    lat: 37.42216,
-    lng: -122.08427,
-  };
+  const { driversNearby } = useDriversNearby();
+  console.log(driversNearby);
+  const [currentLocation, setCurrentLocation] = useState({
+    lat: 0,
+    lng: 0,
+  });
+  //Get current location
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      const { latitude, longitude } = position.coords;
+      setCurrentLocation({
+        lat: latitude,
+        lng: longitude,
+      });
+    });
+  }, []);
+  console.log(currentLocation);
+  const AnyReactComponent = ({ icon }) => <div>{icon}</div>;
+  // const location = {
+  //   address: "1600 Amphitheatre Parkway, Mountain View, california.",
+  //   lat: 20.256266994936375,
+  //   lng: 85.77953439361694,
+  // };
   const BOOKINGS =
     bookings === null
       ? []
@@ -276,14 +297,16 @@ const Dashboard = () => {
             bootstrapURLKeys={{
               key: "AIzaSyC61d5ftTpAnHONe8k5tbo4mkSmzvDNO-4",
             }}
-            defaultCenter={location}
-            defaultZoom={15}
+            defaultCenter={currentLocation}
+            defaultZoom={13}
           >
-            <AnyReactComponent
-              lat={location.lat}
-              lng={location.lng}
-              text="My Location"
-            />
+            {driversNearby?.map((driver) => (
+              <AnyReactComponent
+                lat={driver?.currentLocation?.lat}
+                lng={driver?.currentLocation?.lng}
+                icon={<DriveEta sx={{ color: "Highlight" }} />}
+              />
+            ))}
           </GoogleMapReact>
         </div>
 

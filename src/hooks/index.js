@@ -32,3 +32,4 @@ export { default as useVehicles } from "./useVehicles";
 export { default as useVehicleMaker } from "./useVehicleMaker";
 export { default as useVehicleModels } from "./useVehicleModels";
 export { default as useVehicleRequests } from "./useVehicleRequests";
+export { default as useDriversNearby } from "./useDriversNearby";
