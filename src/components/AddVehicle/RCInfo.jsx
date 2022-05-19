@@ -21,6 +21,7 @@ const RCInfo = ({ handleNext, handleBack }) => {
   const [value, setValue] = useState(RCInfo?.RCImage);
   const initialValues = {
     RCNumber: "",
+    validTill: "",
   };
   const validationSchema = {
     RCNumber: Yup.number().required("RC Number is Required"),
@@ -89,7 +90,7 @@ const RCInfo = ({ handleNext, handleBack }) => {
                     fullWidth
                     margin="normal"
                     label={"Enter RC Number"}
-                    type={"number"}
+                    required
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
                     {...props.field}
@@ -108,6 +109,7 @@ const RCInfo = ({ handleNext, handleBack }) => {
                     type={"date"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
+                    required
                     {...props.field}
                     InputLabelProps={{
                       shrink: true,

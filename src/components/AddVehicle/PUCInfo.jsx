@@ -15,6 +15,7 @@ import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
 import { UPLOADPUC } from "assets";
+import { BASE_URL } from "configs";
 
 const PUCInfo = ({ handleReset, handleBack }) => {
   const {
@@ -23,6 +24,13 @@ const PUCInfo = ({ handleReset, handleBack }) => {
     setVehicleBasicDetails,
     setRCInfo,
     setInsuranceInfo,
+    setFitnessInfo,
+    setPermitInfo,
+    insuranceInfo,
+    vehicleBasicDetails,
+    fitnessInfo,
+    permitInfo,
+    RCInfo,
   } = useAppContext();
   const [value, setValue] = useState(pucInfo?.pucImage);
   const initialValues = {
@@ -42,8 +50,42 @@ const PUCInfo = ({ handleReset, handleBack }) => {
     ),
   };
   const handlePUCInfo = async (values, submitProps) => {
+    const formdata = new FormData();
+    formdata.append("vehicleType", vehicleBasicDetails?.vehicleType);
+    formdata.append("vehicleNumber", vehicleBasicDetails?.vehicleNumber);
+    formdata.append("make", vehicleBasicDetails?.vehicleMaker);
+    formdata.append("model", vehicleBasicDetails?.vehicleModel);
+    formdata.append("rc", RCInfo?.RCImage?.target.files[0]);
+    formdata.append("rcNumber", RCInfo?.RCNumber);
+    formdata.append("rcExpiry", RCInfo?.validTill);
+    formdata.append(
+      "insurance",
+      insuranceInfo?.insuranceImage?.target.files[0]
+    );
+    formdata.append("insuranceExpiry", insuranceInfo?.validTill);
+    formdata.append("insuranceNumber", insuranceInfo?.insuranceNumber);
+    formdata.append("pollution", value?.target.files[0]);
+    formdata.append("pollutionExpiry", values?.validTill);
+    formdata.append("pollutionNumber", values?.pucNumber);
+    formdata.append("fitness", fitnessInfo?.fitnessImage?.target.files[0]);
+    formdata.append("fitnessExpiry", fitnessInfo?.validTill);
+    formdata.append("fitnessNumber", fitnessInfo?.fitnessNumber);
+    formdata.append("routePermit", permitInfo?.permitImage?.target.files[0]);
+    formdata.append("routePermitExpiry", permitInfo?.validTill);
+    formdata.append("routetPermitNumber", permitInfo?.permitNumber);
     try {
-      setPucInfo({ ...values, pucImage: value });
+      const response = await fetch(`${BASE_URL}/vehicle`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: formdata,
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire({ icon: "success", text: "Vehicle added successfully" })
+        : Swal.fire({ icon: "error", text: "Something Went Wrong" });
       console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -52,7 +94,9 @@ const PUCInfo = ({ handleReset, handleBack }) => {
       setVehicleBasicDetails();
       setInsuranceInfo();
       setRCInfo();
-      Swal.fire({ icon: "success", text: "Successfully Submitted" });
+      setFitnessInfo();
+      setPermitInfo();
+      setPucInfo();
       submitProps.setSubmitting(false);
       handleReset();
     }
@@ -96,7 +140,7 @@ const PUCInfo = ({ handleReset, handleBack }) => {
                     fullWidth
                     margin="normal"
                     label={"Enter PUC Number"}
-                    type={"number"}
+                    required
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
                     {...props.field}
@@ -111,6 +155,7 @@ const PUCInfo = ({ handleReset, handleBack }) => {
                       min: new Date().toISOString().split("T")[0],
                     }}
                     margin="normal"
+                    required
                     label={"Enter PUC Expiry Date"}
                     type={"date"}
                     error={Boolean(props.meta.touched && props.meta.error)}

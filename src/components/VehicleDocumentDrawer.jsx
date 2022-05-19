@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { EditRC, EditInsurance } from "./AddVehicle";
+import moment from "moment";
 const VehicleDocumentDrawer = ({
   open,
   setOpenVehicleDocumentDrawer,
@@ -108,6 +109,24 @@ const VehicleDocumentDrawer = ({
                           marginTop: "2vh",
                         }}
                       >
+                        <Grid item lg={8} md={12} sm={12} xs={12}>
+                          <div>
+                            Number:
+                            {open ? open?.insurance?.number : "--"}
+                          </div>
+                          <div
+                            style={{
+                              marginBottom: "5vh",
+                            }}
+                          >
+                            Expiry:
+                            {open
+                              ? moment(open?.insurance?.expiry).format(
+                                  "DD/MM/YYYY"
+                                )
+                              : "--"}
+                          </div>
+                        </Grid>
                         <Grid
                           item
                           lg={10}
@@ -126,7 +145,6 @@ const VehicleDocumentDrawer = ({
                             },
                           }}
                         >
-                          {" "}
                           <Avatar
                             alt="Remy Sharp"
                             src={open?.insurance?.url}

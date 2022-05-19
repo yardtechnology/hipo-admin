@@ -173,8 +173,15 @@ const Vehicles = () => {
             : vehicles?.map((vehicle, i) => ({
                 ...vehicle,
                 sl: i + 1,
-                type: vehicle?.vehicleType?.name,
-                ownerName: vehicle?.owner?.displayName,
+                vehicleName: `${
+                  vehicle?.make?.name ? vehicle?.make?.name : "--"
+                } ${vehicle?.model?.name ? vehicle?.model?.name : ""}`,
+                type: vehicle?.model?.vehicleCategory?.name
+                  ? vehicle?.model?.vehicleCategory?.name
+                  : "--",
+                ownerName: vehicle?.owner?.displayName
+                  ? vehicle?.owner?.displayName
+                  : "--",
                 currentTimestamp: moment(vehicle?.createdAt).format("lll"),
               }))
         }

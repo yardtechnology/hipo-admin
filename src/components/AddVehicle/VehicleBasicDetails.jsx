@@ -161,6 +161,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  color: "Highlight",
                 }}
               >
                 *Note: All fields are mandatory

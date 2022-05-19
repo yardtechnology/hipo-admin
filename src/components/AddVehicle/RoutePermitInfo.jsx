@@ -88,6 +88,7 @@ const RoutePermitInfo = ({ handleReset, handleBack, handleNext }) => {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    required
                     fullWidth
                     margin="normal"
                     label={"Enter Route Permit Number"}
@@ -105,6 +106,7 @@ const RoutePermitInfo = ({ handleReset, handleBack, handleNext }) => {
                     inputProps={{
                       min: new Date().toISOString().split("T")[0],
                     }}
+                    required
                     margin="normal"
                     label={"Enter Route Permit Expiry Date"}
                     type={"date"}

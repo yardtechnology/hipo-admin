@@ -20,6 +20,7 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
   const [value, setValue] = useState(insuranceInfo?.insuranceImage);
   const initialValues = {
     insuranceNumber: "",
+    validTill: "",
   };
   const validationSchema = {
     insuranceNumber: Yup.number().required("Insurance Number is Required"),
@@ -86,7 +87,6 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
                     fullWidth
                     margin="normal"
                     label={"Enter Insurance Number"}
-                    type={"number"}
                     InputLabelProps={{ shrink: true }}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}

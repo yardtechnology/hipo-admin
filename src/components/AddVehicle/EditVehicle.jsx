@@ -108,8 +108,9 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
               open?.vehicleNumber
                 ? {
                     vehicleNumber: open?.vehicleNumber,
-                    vehicleType: open?.vehicleType?._id,
-                    vehicleName: open?.vehicleName,
+                    vehicleType: open?.vehicleType,
+                    vehicleMaker: open?.make?._id,
+                    vehicleModel: open?.model?._id,
                   }
                 : initialValues
             }

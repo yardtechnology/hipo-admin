@@ -15,6 +15,7 @@ import { AadharUpload } from "components/core";
 import { useAppContext } from "contexts";
 import { useState } from "react";
 import { UPLOADFITNESS } from "assets";
+import { Box } from "@mui/system";
 
 const FitnessInfo = ({ handleNext, handleBack }) => {
   const { fitnessInfo, setFitnessInfo } = useAppContext();
@@ -91,7 +92,7 @@ const FitnessInfo = ({ handleNext, handleBack }) => {
                     fullWidth
                     margin="normal"
                     label={"Enter Fitness Number"}
-                    type={"number"}
+                    required
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
                     {...props.field}
@@ -107,6 +108,7 @@ const FitnessInfo = ({ handleNext, handleBack }) => {
                     }}
                     margin="normal"
                     label={"Enter Fitness Expiry Date"}
+                    required
                     type={"date"}
                     error={Boolean(props.meta.touched && props.meta.error)}
                     helperText={props.meta.touched && props.meta.error}
@@ -117,6 +119,16 @@ const FitnessInfo = ({ handleNext, handleBack }) => {
                   />
                 )}
               </Field>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  color: "Highlight",
+                  mt: "2vh",
+                }}
+              >
+                *For newly registered vehicle, fitness certificate same as RC
+              </Box>
             </CardContent>
             <CardActions style={{ justifyContent: "flex-end" }}>
               <Button
