@@ -38,7 +38,7 @@ const Dashboard = () => {
   const { driversNearby } = useDriversNearby();
   console.log(driversNearby);
   const { adminData } = useDashboardStatistics();
-  console.log(adminData);
+  console.log(adminData?.monthlyTransaction?.timeLine);
   const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] = useState({
     lat: 20.2682801,
@@ -67,21 +67,7 @@ const Dashboard = () => {
     series: [
       {
         name: "Total Income",
-        data: [
-          // janRevenue,
-          // febRevenue,
-          // marRevenue,
-          // aprRevenue,
-          // mayRevenue,
-          // junRevenue,
-          // julRevenue,
-          // augRevenue,
-          // sepRevenue,
-          // octRevenue,
-          // novRevenue,
-          // decRevenue,
-          0, 20, 18, 45, 35, 25, 14, 75, 45, 55, 45, 15,
-        ],
+        data: adminData?.monthlyTransaction?.amount,
       },
     ],
     options: {
@@ -130,20 +116,7 @@ const Dashboard = () => {
         curve: "smooth",
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
+        categories: adminData?.monthlyTransaction?.timeLine,
       },
       legend: {
         position: "top",
