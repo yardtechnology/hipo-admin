@@ -14,7 +14,7 @@ import {
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Card as DashboardCard } from "components/dashboard";
-import { useBookings, useDriversNearby } from "hooks";
+import { useBookings, useDashboardStatistics, useDriversNearby } from "hooks";
 import moment from "moment";
 import GoogleMapReact from "google-map-react";
 import Chart from "react-apexcharts";
@@ -26,6 +26,8 @@ const Dashboard = () => {
   console.log(bookings);
   const { driversNearby } = useDriversNearby();
   console.log(driversNearby);
+  const { adminData } = useDashboardStatistics();
+  console.log(adminData);
   const [currentLocation, setCurrentLocation] = useState({
     lat: 20.2682801,
     lng: 85.7769064,
@@ -195,7 +197,7 @@ const Dashboard = () => {
           // octRevenue,
           // novRevenue,
           // decRevenue,
-          15, 20, 18, 45, 35, 25, 14, 75, 45, 55, 45, 15,
+          0, 20, 18, 45, 35, 25, 14, 75, 45, 55, 45, 15,
         ],
       },
     ],
@@ -336,7 +338,7 @@ const Dashboard = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={15}
+                  title={adminData?.metaData?.user_data || "00"}
                   subtitle="Riders"
                   icon={<People className="iconColor" />}
                   iconAction={"/riders"}
@@ -345,7 +347,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={12}
+                  title={adminData?.metaData?.driver_data || "00"}
                   subtitle="Drivers"
                   icon={<DirectionsCar className="iconColor" />}
                   iconAction={"/drivers/all-drivers"}
@@ -354,16 +356,20 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={14}
-                  subtitle="Vehicle Type"
+                  title={adminData?.metaData?.operator_data || "00"}
+                  subtitle="Operators"
                   icon={<Category className="iconColor" />}
-                  iconAction={"/vehicles"}
-                  menuName={"view Vehicle Type"}
+                  iconAction={"/view-operators"}
+                  menuName={"view Operators"}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={formatCurrency(2254)}
+                  title={formatCurrency(
+                    adminData?.metaData?.online_transaction +
+                      adminData?.metaData?.cash_transaction +
+                      adminData?.metaData?.wallet_transaction || 0
+                  )}
                   subtitle="Revenue"
                   icon={<Money className="iconColor" />}
                   iconAction={<MoreVert sx={{ color: "snow" }} />}
@@ -389,7 +395,10 @@ const Dashboard = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={16}
+                  title={
+                    adminData?.metaData?.on_the_way_rides +
+                      adminData?.metaData?.ongoing_rides || "00"
+                  }
                   subtitle="Active Rides"
                   icon={<ToggleOn className="iconColor" />}
                   iconAction={"/rides/active-rides"}
@@ -398,28 +407,33 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={18}
-                  subtitle="Completed Rides"
+                  title={adminData?.metaData?.pending_rides || "00"}
+                  subtitle="Pending Rides"
                   icon={<Done className="iconColor" />}
-                  iconAction={"/rides/completed-rides"}
-                  menuName={"view Completed Rides"}
+                  iconAction={""}
+                  menuName={"view Pending Rides"}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={21}
+                  title={
+                    adminData?.metaData?.cancelled_rides +
+                      adminData?.metaData?.on_the_way_rides +
+                      adminData?.metaData?.ongoing_rides +
+                      adminData?.metaData?.pending_rides || "00"
+                  }
                   subtitle="Total Rides"
                   icon={<DirectionsCar className="iconColor" />}
-                  iconAction={"/vehicles"}
+                  iconAction={""}
                   menuName={"view Total Rides"}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
-                  title={"15"}
+                  title={adminData?.metaData?.cancelled_rides || "00"}
                   subtitle="Cancelled Rides"
                   icon={<Cancel className="iconColor" />}
-                  iconAction={<MoreVert sx={{ color: "snow" }} />}
+                  iconAction={"/rides/cancelled-rides"}
                   menuName={"View Cancelled Rides"}
                 />
               </Grid>
