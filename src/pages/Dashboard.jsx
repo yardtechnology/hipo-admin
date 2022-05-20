@@ -11,23 +11,35 @@ import {
   Done,
   DriveEta,
 } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import {
+  Avatar,
+  Grid,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { Card as DashboardCard } from "components/dashboard";
-import { useBookings, useDashboardStatistics, useDriversNearby } from "hooks";
+import {
+  useActiveRides,
+  useDashboardStatistics,
+  useDriversNearby,
+} from "hooks";
 import moment from "moment";
 import GoogleMapReact from "google-map-react";
 import Chart from "react-apexcharts";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { bookings } = useBookings();
-  console.log(bookings);
+  const { activeRides } = useActiveRides();
   const { driversNearby } = useDriversNearby();
   console.log(driversNearby);
   const { adminData } = useDashboardStatistics();
   console.log(adminData);
+  const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] = useState({
     lat: 20.2682801,
     lng: 85.7769064,
@@ -50,135 +62,6 @@ const Dashboard = () => {
   //   lat: 20.256266994936375,
   //   lng: 85.77953439361694,
   // };
-  const BOOKINGS =
-    bookings === null
-      ? []
-      : bookings?.filter((booking) => booking?.status === "confirm");
-  console.log(BOOKINGS);
-  const Revenue = BOOKINGS?.reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  const janRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Jan 31,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Jan 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(janRevenue);
-  const febRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Feb 29,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Feb 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(febRevenue);
-  const marRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Mar 31,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Mar 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(marRevenue);
-  const aprRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Apr 30,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Apr 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(aprRevenue);
-  const mayRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `May 31,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `May 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(mayRevenue);
-  const junRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Jun 30,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Jun 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(junRevenue);
-  const julRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Jul 31,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Jul 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(julRevenue);
-  const augRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Aug 31,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Aug 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(augRevenue);
-  const sepRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Sep 30,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Sep 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(sepRevenue);
-  const octRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Oct 31,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Oct 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(octRevenue);
-  const novRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Nov 30,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Nov 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(novRevenue);
-  const decRevenue = BOOKINGS?.filter(
-    (booking) =>
-      moment(booking.timestamp).format("lll") <=
-        `Dec 30,${new Date().getFullYear()}` &&
-      moment(booking.timestamp).format("lll") >=
-        `Dec 01, ${new Date().getFullYear()}`
-  ).reduce(function (accumulator, currentValue) {
-    return accumulator + +currentValue?.bookingPrice;
-  }, 0);
-  console.log(decRevenue);
-  console.log(Revenue);
 
   const areaOptions = {
     series: [
@@ -495,7 +378,21 @@ const Dashboard = () => {
             sx={{ marginTop: "5vh" }}
           >
             <MaterialTable
-              title="Recent Rides"
+              title={
+                <Typography
+                  component={"h6"}
+                  variant="h6"
+                  style={{
+                    backgroundColor: "",
+                    // padding: "1vh 2vh",
+                    marginBottom: "2vh",
+                    color: "#000",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Recent Rides
+                </Typography>
+              }
               // onSelectionChange={(data) => {
               //   setSelectedUserFCMToken({
               //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -509,10 +406,12 @@ const Dashboard = () => {
                 search: false,
                 // selection: true,
                 sorting: true,
+
                 headerStyle: {
                   backgroundColor: "rgba(239,239,247,.7)",
                   color: "#3b3e66",
                   fontSize: 16,
+                  paddingLeft: "4vh",
                   fontWeight: 560,
                   textAlign: "left",
                   "&:hover": {
@@ -530,7 +429,32 @@ const Dashboard = () => {
                   textAlign: "left",
                 },
               }}
-              // data={}
+              data={
+                activeRides === null
+                  ? []
+                  : activeRides.length <= 3
+                  ? activeRides?.map((item, i) => ({
+                      ...item,
+                      sl: i + 1,
+                      profile: item?.rider?.displayName,
+                      driverProfile: item?.driver?.displayName,
+                      vehicleType: item?.cab?.vehicleCategory?.name,
+                      cityName: item?.city?.name,
+                      pick: moment(item?.pickupTime).format("hh:mm A"),
+                      rideId: item?._id,
+                      pickAddress: item?.pickupLocation?.address,
+                      dropAddress: item?.dropLocation?.address,
+                      currentTimestamp: moment(item?.createdAt).format("ll"),
+                    }))
+                  : activeRides?.slice(0, 3).map((item) => ({
+                      ...item,
+                      id: item.id,
+                      rideId: item.rideId,
+                      rideStatus: item.rideStatus,
+                      rideType: item.rideType,
+                      rideDate: item.rideDate,
+                    }))
+              }
               columns={[
                 // {
                 //   title: "Sl no",
@@ -542,52 +466,96 @@ const Dashboard = () => {
                 //   title: "Name",
                 //   field: "displayName",
                 // },
-                {
-                  title: "Ride Id",
-                  tooltip: "Ride Id",
-                  // field: "displayName",
-                  // render: ({ photoURL, displayName, email }) => (
-                  //   <>
-                  //     <ListItem>
-                  //       <ListItemAvatar>
-                  //         {" "}
-                  //         <Avatar src={photoURL} alt={displayName} />
-                  //       </ListItemAvatar>
-                  //       <ListItemText
-                  //         primary={
-                  //           <Typography component="span" variant="body2">
-                  //             {displayName || "Not Provided"}
-                  //           </Typography>
-                  //         }
-                  //         secondary={email}
-                  //       ></ListItemText>
-                  //     </ListItem>
-                  //   </>
-                  // ),
-                },
 
                 {
-                  title: "Rider Name",
-                  field: "phoneNumber",
+                  title: "Rider Profile",
+                  tooltip: "Profile",
+                  searchable: true,
+                  field: "profile",
+                  render: ({ rider }) => (
+                    <>
+                      <ListItem sx={{ paddingLeft: "0px" }}>
+                        <ListItemAvatar>
+                          <Avatar
+                            alt={rider?.displayName}
+                            src={rider?.photoURL}
+                            variant="circular"
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            <Typography component="span" variant="body2">
+                              {rider?.displayName || "Not Provided"}
+                            </Typography>
+                          }
+                          secondary={rider?.phoneNumber}
+                        ></ListItemText>
+                      </ListItem>
+                    </>
+                  ),
                 },
                 {
-                  title: "Driver Name",
-                  field: "Driver Name",
+                  title: "Driver Profile",
+                  tooltip: "driverProfile",
+                  searchable: true,
+                  field: "firstName",
+                  render: ({ driver }) => (
+                    <>
+                      <ListItem sx={{ paddingLeft: "0px" }}>
+                        <ListItemAvatar>
+                          <Avatar
+                            alt={driver?.displayName}
+                            src={driver?.photoURL}
+                            variant="circular"
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            <Typography component="span" variant="body2">
+                              {driver?.displayName || "Not Provided"}
+                            </Typography>
+                          }
+                          secondary={driver?.phoneNumber}
+                        ></ListItemText>
+                      </ListItem>
+                    </>
+                  ),
                 },
                 {
-                  title: "Pick Date/Time",
+                  title: "Ride Type",
+                  field: "rideType",
+                  emptyValue: "--",
+                  searchable: true,
+
+                  // width: "5%",
+                },
+                {
+                  title: "Vehicle Type",
+                  field: "vehicleType",
+                  emptyValue: "--",
+                  searchable: true,
+                  // width: "5%",
+                },
+                {
+                  title: "Pick Time",
                   field: "pick",
-                },
-                {
-                  title: "Drop Date/Time",
-                  field: "drop",
+                  emptyValue: "--",
+                  searchable: true,
+
+                  // hidden: true,
+                  export: true,
+                  render: (rowData) =>
+                    moment(rowData.pickupTime).format("llll"),
                 },
               ]}
               actions={[
                 {
                   icon: () => <Visibility style={{ color: "#1991eb" }} />,
-                  tooltip: "View All Rides ",
+                  tooltip: "View All Ongoing Rides ",
                   position: "toolbar",
+                  onClick: (event, rowData) => {
+                    navigate("/rides/active-rides");
+                  },
                   // onClick: () => {
                   //   history.push("/users");
                   // },
