@@ -94,7 +94,7 @@ const Contacts = () => {
             tooltip: "Profile",
             searchable: true,
             field: "name",
-            render: ({ photoURL, name, email, phoneNumber }) => (
+            render: ({ photoURL, name, email, countryCode, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   {/* <ListItemAvatar>
@@ -106,7 +106,10 @@ const Contacts = () => {
                     secondary={
                       <>
                         <div>{email}</div>
-                        <div>{phoneNumber}</div>
+                        <div>
+                          {"+" + countryCode}
+                          {phoneNumber}
+                        </div>
                       </>
                     }
                   ></ListItemText>
@@ -126,6 +129,11 @@ const Contacts = () => {
             field: "phoneNumber",
             export: true,
             hidden: true,
+            searchable: true,
+          },
+          {
+            title: "Subject",
+            field: "subject",
             searchable: true,
           },
           {
