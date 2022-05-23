@@ -256,3 +256,7 @@ $secondary-color: #1877f2;
   font-weight: 500;
   color: $secondary-color;
 }
+/* Swal2 ZIndex issue fixed */
+.swal2-container {
+  z-index: 3023 !important;
+}

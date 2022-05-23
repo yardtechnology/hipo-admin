@@ -96,7 +96,7 @@ const Enquiries = () => {
             tooltip: "Profile",
             searchable: true,
             field: "name",
-            render: ({ photoURL, name, phoneNumber, email }) => (
+            render: ({ photoURL, name, phoneNumber, email, countryCode }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   {/* <ListItemAvatar>
@@ -105,7 +105,15 @@ const Enquiries = () => {
                   <ListItemText
                     primary={name}
                     // secondary={email}
-                    secondary={phoneNumber}
+                    secondary={
+                      <>
+                        <div>{email}</div>
+                        <div>
+                          {countryCode ? `+${countryCode}` : ""}
+                          {phoneNumber}
+                        </div>
+                      </>
+                    }
                   ></ListItemText>
                 </ListItem>
               </>

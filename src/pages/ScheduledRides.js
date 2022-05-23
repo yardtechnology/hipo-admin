@@ -9,19 +9,26 @@ import {
   CardContent,
   ListItemAvatar,
   Avatar,
+  Tooltip,
 } from "@mui/material";
-import { AssignmentInd } from "@mui/icons-material";
+import { AssignmentInd, DriveEta } from "@mui/icons-material";
 import moment from "moment";
 import { useScheduledRides } from "hooks";
-import { AssignScheduleDriverDrawer } from "components";
+import { AssignScheduleDriverDrawer, AssignVehicleDrawer } from "components";
 import { useState } from "react";
 
 const ScheduledRides = () => {
   const { scheduledRides, setRealtime } = useScheduledRides();
   console.log(scheduledRides);
   const [openAssignDriverDrawer, setOpenAssignDriverDrawer] = useState(false);
+  const [openAssignVehicleDrawer, setOpenAssignVehicleDrawer] = useState(false);
   return (
     <>
+      <AssignVehicleDrawer
+        open={openAssignVehicleDrawer}
+        setOpenAssignDriverDrawer={setOpenAssignVehicleDrawer}
+        setRealtime={setRealtime}
+      />
       <AssignScheduleDriverDrawer
         open={openAssignDriverDrawer}
         setOpenAssignDriverDrawer={setOpenAssignDriverDrawer}
@@ -166,20 +173,39 @@ const ScheduledRides = () => {
             render: (rowData) => moment(rowData.pickupTime).format("llll"),
           },
           {
-            title: "Assign Driver",
+            title: "Actions",
             render: (rowData) => (
-              <Avatar
-                onClick={() => {
-                  setOpenAssignDriverDrawer(rowData);
-                }}
-                variant="rounded"
-                sx={{
-                  backgroundColor: "#3f51b5",
-                  cursor: "pointer",
-                }}
-              >
-                <AssignmentInd />
-              </Avatar>
+              <div className="d-flex">
+                <Tooltip title="Assign Driver">
+                  <Avatar
+                    onClick={() => {
+                      setOpenAssignDriverDrawer(rowData);
+                    }}
+                    variant="rounded"
+                    sx={{
+                      mr: ".4vw",
+                      backgroundColor: "#3f51b5",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <AssignmentInd />
+                  </Avatar>
+                </Tooltip>
+                <Tooltip title="Assign Vehicle">
+                  <Avatar
+                    variant="rounded"
+                    sx={{
+                      backgroundColor: "teal",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setOpenAssignVehicleDrawer(rowData);
+                    }}
+                  >
+                    <DriveEta />
+                  </Avatar>
+                </Tooltip>
+              </div>
             ),
           },
           // {
