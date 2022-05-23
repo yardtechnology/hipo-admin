@@ -1,4 +1,4 @@
-import { Close, Done } from "@mui/icons-material";
+import { Done } from "@mui/icons-material";
 import {
   Avatar,
   ListItem,
@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { BASE_URL } from "configs";
 import { useDrivers } from "hooks";
+import Swal from "sweetalert2";
 const AssignScheduleDriverDrawer = ({
   open,
   setOpenAssignDriverDrawer,
@@ -28,42 +29,8 @@ const AssignScheduleDriverDrawer = ({
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
       console.log("updated drivers", updatedDrivers);
-      const response = await fetch(`${BASE_URL}/vehicle/${open?._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-        },
-        body: JSON.stringify({
-          drivers: updatedDrivers,
-        }),
-      });
-      const res = await response.json();
-      console.log(res);
-      setRealtime((prev) => !prev);
-      // setOpenAssignDriverDrawer({
-      //   ...open,
-      //   drivers: updatedDrivers,
-      // });
-      setOpenAssignDriverDrawer(false);
-      // setOpenAssignFeatureDrawer(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const removeDriver = async (item) => {
-    console.log("driver", item);
-    try {
-      const updatedDrivers = open?.drivers?.filter(
-        (driver) => driver !== item?._id
-      );
-      const removedDrivers = open?.drivers?.find(
-        (driver) => driver === item?._id
-      );
-      console.log("removedDrivers", removedDrivers);
-      console.log("updatedDrivers", updatedDrivers);
       const response = await fetch(
-        `${BASE_URL}/vehicle/${open._id}/${item._id}`,
+        `${BASE_URL}/assign-driver-vehicle/${open?._id}`,
         {
           method: "PUT",
           headers: {
@@ -71,18 +38,23 @@ const AssignScheduleDriverDrawer = ({
             Authorization: `Bearer ${localStorage.getItem("SAL")}`,
           },
           body: JSON.stringify({
-            drivers: removedDrivers,
+            driver: updatedDrivers,
           }),
         }
       );
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
+      res?.status === 200
+        ? Swal.fire("Success", "Driver Assigned", "success")
+        : Swal.fire("Error", "Driver not assigned", "error");
+      setOpenAssignDriverDrawer(false);
+
       // setOpenAssignDriverDrawer({
       //   ...open,
       //   drivers: updatedDrivers,
       // });
-      setOpenAssignDriverDrawer(false);
+      // setOpenAssignFeatureDrawer(false);
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +79,7 @@ const AssignScheduleDriverDrawer = ({
             sx={{ fontWeight: "bold", paddingLeft: "1.10vw" }}
             variant="h5"
           >
-            Assign Drivers
+            Assign Driver
           </Typography>
           <div>
             {/* <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "" }}> */}
@@ -161,10 +133,8 @@ const AssignScheduleDriverDrawer = ({
             {drivers === null
               ? []
               : drivers?.map((driver) => {
-                  const hasDriver = open?.drivers
-                    ? open?.drivers
-                        ?.map((driver) => driver?._id)
-                        .includes(driver?._id)
+                  const hasDriver = open?.driver
+                    ? open?.driver?._id === driver?._id
                     : false;
                   console.log("hasDriver", hasDriver);
                   return (
@@ -203,12 +173,10 @@ const AssignScheduleDriverDrawer = ({
                               edge="end"
                               aria-label="delete"
                               onClick={() =>
-                                !hasDriver
-                                  ? addDriver(driver)
-                                  : removeDriver(driver)
+                                !hasDriver ? addDriver(driver) : ""
                               }
                             >
-                              {!hasDriver ? <Done /> : <Close />}
+                              {!hasDriver ? <Done /> : ""}
                             </IconButton>
                           </ListItemSecondaryAction>
                         </ListItem>
