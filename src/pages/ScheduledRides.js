@@ -7,20 +7,18 @@ import {
   ListItemText,
   Card,
   CardContent,
+  ListItemAvatar,
+  Avatar,
 } from "@mui/material";
-
-import { useState } from "react";
-import { InvoiceDrawer } from "components";
+import { AssignmentInd } from "@mui/icons-material";
 import moment from "moment";
-const ScheduledRides = () => {
-  const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
+import { useScheduledRides } from "hooks";
 
+const ScheduledRides = () => {
+  const { scheduledRides } = useScheduledRides();
+  console.log(scheduledRides);
   return (
     <>
-      <InvoiceDrawer
-        rideDetails={openInvoiceDrawer}
-        setOpenInvoiceDrawer={setOpenInvoiceDrawer}
-      />{" "}
       <MaterialTable
         title="Scheduled Rides"
         options={{
@@ -31,46 +29,43 @@ const ScheduledRides = () => {
             {
               label: "Export PDF",
               exportFunc: (cols, datas) =>
-                ExportPdf(cols, datas, "Ride History"),
+                ExportPdf(cols, datas, "Scheduled Rides"),
             },
             {
               label: "Export CSV",
               exportFunc: (cols, datas) =>
-                ExportCsv(cols, datas, "Ride History"),
+                ExportCsv(cols, datas, "Active Rides"),
             },
           ],
           pageSize: 10,
           actionsColumnIndex: -1,
-          selection: true,
           sorting: true,
         }}
-        data={[
-          {
-            bookingTime: new Date().toString(),
-            pickAddress: "Sector-12, Noida",
-            dropAddress: "Sector-15, Noida",
-            invoiceNumber: "CRN-001121432546",
-            displayName: "Aliva Priyadarshini",
-            driverName: "Alexa",
-            pick: new Date().toString(),
-            drop: new Date().toString(),
-            rideId: "12345",
-            rideType: "Rental",
-            rideAmount: 245,
-            vehicleType: "Car",
-            phoneNumber: "+91 7887643625",
-            address: "Bbsr",
-            trips: "15",
-            status: "Initiated",
-          },
-        ]}
+        data={
+          scheduledRides === null
+            ? []
+            : scheduledRides?.map((driver, i) => ({
+                ...driver,
+                sl: i + 1,
+                profile: driver?.rider?.displayName,
+                driverProfile: driver?.driver?.displayName,
+                vehicleType: driver?.cab?.vehicleCategory?.name,
+                cityName: driver?.city?.name,
+                pick: moment(driver?.pickupTime).format("hh:mm A"),
+                rideId: driver?._id,
+                pickAddress: driver?.pickupLocation?.address,
+                dropAddress: driver?.dropLocation?.address,
+                currentTimestamp: moment(driver?.createdAt).format("ll"),
+              }))
+        }
+        isLoading={scheduledRides === null}
         columns={[
           {
             title: "#",
             field: "sl",
             render: (newData) => newData.tableData.id + 1,
             editable: "never",
-            width: "5%",
+            width: "2%",
           },
           // {
           //   title: "Name",
@@ -87,68 +82,106 @@ const ScheduledRides = () => {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "22%",
-            field: "firstName",
-            render: ({ photoURL, displayName, email, phoneNumber }) => (
+            field: "profile",
+            render: ({ rider }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={rider?.displayName}
+                      src={rider?.photoURL}
+                      variant="circular"
+                    />
+                  </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {rider?.displayName || "Not Provided"}
                       </Typography>
                     }
-                    secondary={phoneNumber}
+                    secondary={rider?.phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
-          {
-            title: "Driver Profile",
-            tooltip: "Profile",
-            searchable: true,
-            width: "22%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
-              <>
-                <ListItem sx={{ paddingLeft: "0px" }}>
-                  <ListItemText
-                    primary={
-                      <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
-                      </Typography>
-                    }
-                    secondary={phoneNumber}
-                  ></ListItemText>
-                </ListItem>
-              </>
-            ),
-          },
+          // {
+          //   title: "Driver Profile",
+          //   tooltip: "driverProfile",
+          //   searchable: true,
+          //   field: "firstName",
+          //   render: ({ driver }) => (
+          //     <>
+          //       <ListItem sx={{ paddingLeft: "0px" }}>
+          //         <ListItemAvatar>
+          //           <Avatar
+          //             alt={driver?.displayName}
+          //             src={driver?.photoURL}
+          //             variant="circular"
+          //           />
+          //         </ListItemAvatar>
+          //         <ListItemText
+          //           primary={
+          //             <Typography component="span" variant="body2">
+          //               {driver?.displayName || "Not Provided"}
+          //             </Typography>
+          //           }
+          //           secondary={driver?.phoneNumber}
+          //         ></ListItemText>
+          //       </ListItem>
+          //     </>
+          //   ),
+          // },
           {
             title: "Ride Type",
             field: "rideType",
+            emptyValue: "--",
+            searchable: true,
+
             // width: "5%",
           },
-          {
-            title: "Vehicle",
-            field: "vehicleType",
-            // width: "5%",
-          },
+          // {
+          //   title: "Vehicle Type",
+          //   field: "vehicleType",
+          //   emptyValue: "--",
+          //   searchable: true,
+          //   // width: "5%",
+          // },
           {
             title: "Pick Time",
             field: "pick",
+            emptyValue: "--",
+            searchable: true,
+
             // hidden: true,
             export: true,
-            render: (rowData) => moment(rowData?.pick).format("llll"),
-            width: "25%",
+            render: (rowData) => moment(rowData.pickupTime).format("llll"),
           },
-
+          {
+            title: "Assign Driver",
+            render: (rowData) => (
+              <Avatar
+                variant="rounded"
+                sx={{
+                  backgroundColor: "#3f51b5",
+                }}
+              >
+                <AssignmentInd />
+              </Avatar>
+            ),
+          },
+          // {
+          //   title: "Drop Date/Time",
+          //   field: "drop",
+          //   hidden: true,
+          //   export: true,
+          // },
           {
             title: "Pick/Drop Address",
             field: "address",
             hidden: true,
             export: true,
+            searchable: true,
           },
         ]}
         detailPanel={({ rowData }) => {
@@ -197,7 +230,7 @@ const ScheduledRides = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.address}
+                      {rowData?.pickAddress}
                     </span>
                   </Typography>
                   <Typography variant="body1" gutterBottom align="left">
@@ -205,7 +238,7 @@ const ScheduledRides = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.address}
+                      {rowData?.dropAddress}
                     </span>
                   </Typography>
                 </CardContent>
