@@ -17,6 +17,7 @@ import AssignTypeDrawer from "./AssignTypeDrawer";
 import CustomPhoneNumberPicker from "./CustomPhoneNumberPicker";
 import AssignTypeDrawerFeature from "./AssignTypeDrawerFeature";
 import Models from "./Models";
+import AssignScheduleDriverDrawer from "./AssignScheduleDriverDrawer";
 export { default as AssignDrivers } from "./AssignDrivers";
 
 export {
@@ -39,4 +40,5 @@ export {
   AddQADrawer,
   Cabs,
   Models,
+  AssignScheduleDriverDrawer,
 };

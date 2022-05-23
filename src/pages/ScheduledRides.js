@@ -13,12 +13,20 @@ import {
 import { AssignmentInd } from "@mui/icons-material";
 import moment from "moment";
 import { useScheduledRides } from "hooks";
+import { AssignScheduleDriverDrawer } from "components";
+import { useState } from "react";
 
 const ScheduledRides = () => {
-  const { scheduledRides } = useScheduledRides();
+  const { scheduledRides, setRealtime } = useScheduledRides();
   console.log(scheduledRides);
+  const [openAssignDriverDrawer, setOpenAssignDriverDrawer] = useState(false);
   return (
     <>
+      <AssignScheduleDriverDrawer
+        open={openAssignDriverDrawer}
+        setOpenAssignDriverDrawer={setOpenAssignDriverDrawer}
+        setRealtime={setRealtime}
+      />
       <MaterialTable
         title="Scheduled Rides"
         options={{
@@ -161,9 +169,13 @@ const ScheduledRides = () => {
             title: "Assign Driver",
             render: (rowData) => (
               <Avatar
+                onClick={() => {
+                  setOpenAssignDriverDrawer(rowData);
+                }}
                 variant="rounded"
                 sx={{
                   backgroundColor: "#3f51b5",
+                  cursor: "pointer",
                 }}
               >
                 <AssignmentInd />
