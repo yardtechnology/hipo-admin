@@ -12,7 +12,10 @@ import {
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
+import { useCompletedRides } from "hooks";
 const CompletedRides = () => {
+  const { completedRides } = useCompletedRides();
+  console.log(completedRides);
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
 
   return (

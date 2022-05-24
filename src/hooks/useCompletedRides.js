@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
-const useRentalRides = () => {
-  const [rentalRides, setRentalRides] = useState(null);
+const useCompletedRides = () => {
+  const [completedRides, setCompletedRides] = useState(null);
+  console.log(completedRides);
   const { isMounted } = useIsMounted();
   const [realtime, setRealtime] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/rides/all?rideType=RENTAL`, {
+        const response = await fetch(`${BASE_URL}/rides/all?status=COMPLETED`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
@@ -22,7 +23,7 @@ const useRentalRides = () => {
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
-        isMounted.current && setRentalRides(sortArr);
+        isMounted.current && setCompletedRides(sortArr);
       } catch (error) {
         console.log(error);
       }
@@ -30,9 +31,9 @@ const useRentalRides = () => {
     fetchData();
   }, [isMounted, realtime]);
   return {
-    rentalRides,
+    completedRides,
     setRealtime,
   };
 };
 
-export default useRentalRides;
+export default useCompletedRides;

@@ -2,7 +2,6 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { PictureAsPdf, Visibility } from "@mui/icons-material";
 import {
-  Breadcrumbs,
   Button,
   Tooltip,
   Typography,
@@ -10,7 +9,6 @@ import {
   ListItemText,
   IconButton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
@@ -26,15 +24,7 @@ const RentalRides = () => {
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />
-      <Breadcrumbs
-        aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
-      >
-        <Link underline="hover" color="inherit" to="/riders">
-          Rides
-        </Link>
-        <Typography color="text.primary">Rental Rides</Typography>
-      </Breadcrumbs>
+
       <MaterialTable
         title="Rental Rides"
         options={{
