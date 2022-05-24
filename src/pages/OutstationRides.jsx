@@ -12,7 +12,10 @@ import {
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
+import { useOutstationRides } from "hooks";
 const OutstationRides = () => {
+  const { outstationRides } = useOutstationRides();
+  console.log(outstationRides);
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
 
   return (

@@ -205,7 +205,7 @@ const CancelledRides = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      --
+                      {rowData?.cancelledBy ? rowData?.cancelledBy : "--"}
                     </span>
                   </Typography>
                   <Typography variant="body1" gutterBottom align="left">

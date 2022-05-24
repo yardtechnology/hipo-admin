@@ -14,7 +14,10 @@ import { Link } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
+import { useRentalRides } from "hooks";
 const RentalRides = () => {
+  const { rentalRides } = useRentalRides();
+  console.log(rentalRides);
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
 
   return (
@@ -22,7 +25,7 @@ const RentalRides = () => {
       <InvoiceDrawer
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
-      />{" "}
+      />
       <Breadcrumbs
         aria-label="breadcrumb"
         sx={{ marginBottom: "4vh", marginTop: "0vh" }}
