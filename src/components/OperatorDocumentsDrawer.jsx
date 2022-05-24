@@ -13,11 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import {
-  EditAadharCard,
-  EditAccountInfo,
-  EditDrivingLicense,
-} from "./addDriver";
+import { EditAadharCard, EditAccountInfo } from "./addDriver";
 const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
   const [value, setValue] = useState(0);
   console.log(open);
@@ -76,32 +72,36 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   marginBottom: "2vh",
                 }}
               >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    {open?.status !== "PENDING" && (
+                      <Tab
+                        icon={<Visibility />}
+                        iconPosition="start"
+                        label="View"
+                      />
+                    )}
+                    {/* <Tab
                 icon={<Notifications />}
                 iconPosition="start"
                 label="Notification"
               /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
+                    {open?.status !== "PENDING" && (
+                      <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                    )}
+                  </Tabs>
+                )}
                 <CardContent>
                   {value === 0 && (
                     <>
-                      {" "}
-                      {/* <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
-                        5555 7654 5425 5555
-                      </Typography> */}
+                      <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
+                        {open?.aadharCard?.number}
+                      </Typography>
                       <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
-                        {" "}
                         <Grid
                           item
                           lg={6}
@@ -120,7 +120,6 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                             },
                           }}
                         >
-                          {" "}
                           <Avatar
                             alt=""
                             src={open?.aadharCard?.front?.url}
@@ -164,112 +163,9 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAadharCard />}
-                </CardContent>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion sx={{ marginTop: "3vh" }}>
-              <AccordionSummary
-                expandIcon={
-                  <>
-                    <ExpandMore />
-                  </>
-                }
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                sx={{ margin: "0vh" }}
-              >
-                <Typography
-                  component={"h6"}
-                  variant="h6"
-                  sx={{ color: "GrayText" }}
-                >
-                  {" "}
-                  Driving License Info
-                </Typography>
-              </AccordionSummary>
-
-              <AccordionDetails
-                sx={{
-                  marginTop: "0vh",
-                  paddingTop: "0vh",
-                  marginBottom: "2vh",
-                }}
-              >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
-                icon={<Notifications />}
-                iconPosition="start"
-                label="Notification"
-              /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
-                <CardContent>
-                  {value === 0 && (
-                    <>
-                      {" "}
-                      <Typography
-                        sx={{
-                          fontWeight: "bold",
-                          marginTop: "2vh",
-                          p: "1.5vh 5vw 0vh 5vw ",
-                        }}
-                      >
-                        {open?.drivingLicense?.number}
-                      </Typography>
-                      <Grid
-                        container
-                        spacing={1}
-                        sx={{
-                          p: "0vh 1.2vw 0vh 1.2vw ",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          marginTop: "2vh",
-                        }}
-                      >
-                        <Grid
-                          item
-                          lg={10}
-                          md={12}
-                          sm={12}
-                          xs={12}
-                          sx={{
-                            "&:hover": {
-                              cursor: "pointer",
-                              transform: "scale(1.5)",
-                              transition: "transform 0.5s",
-                              zIndex: "1",
-                              paddingLeft: "2vw",
-                              backdropFilter: "blur(5px)",
-                              paddingTop: "1vh",
-                            },
-                          }}
-                        >
-                          {" "}
-                          <Avatar
-                            alt=""
-                            src={open?.drivingLicense?.url}
-                            variant="square"
-                            sx={{
-                              width: "auto",
-                              height: "auto",
-                            }}
-                          />{" "}
-                        </Grid>
-                      </Grid>
-                    </>
+                  {open?.status !== "PENDING" && value === 1 && (
+                    <EditAadharCard />
                   )}
-                  {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditDrivingLicense />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
@@ -285,7 +181,6 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   variant="h6"
                   sx={{ color: "GrayText" }}
                 >
-                  {" "}
                   Bank Account Info
                 </Typography>
               </AccordionSummary>
@@ -310,31 +205,32 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   marginBottom: "2vh",
                 }}
               >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
                 icon={<Notifications />}
                 iconPosition="start"
                 label="Notification"
               /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
                 <CardContent>
                   {value === 0 && (
                     <>
-                      {" "}
                       <Typography
                         sx={{
                           fontWeight: "bold",
-                          marginTop: "4vh",
+                          marginTop: "2vh",
                           marginBottom: "1vh",
                         }}
                       >
@@ -358,6 +254,11 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                         sx={{ fontWeight: "bold", marginBottom: "1vh" }}
                       >
                         {`Account Number - ${open?.bankDetails?.accountNumber}`}
+                      </Typography>
+                      <Typography
+                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                      >
+                        {`Account Type - ${open?.bankDetails?.bankType}`}
                       </Typography>
                     </>
                   )}

@@ -16,7 +16,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
+import {
+  OperatorDocumentsDrawer,
+  ReferralDrawer,
+  VehicleInfoDrawer,
+} from "components";
 import { SendNotification } from "components/dialog";
 import { BASE_URL } from "configs";
 import { useOperatorRequests } from "hooks";
@@ -93,7 +97,7 @@ const OperatorRequest = () => {
         open={openVehicleInfoDrawer}
         setOpenVehicleInfoDrawer={setOpenVehicleInfoDrawer}
       />
-      <DocumentsDrawer
+      <OperatorDocumentsDrawer
         open={openDocumentDrawer}
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
       />

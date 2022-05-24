@@ -47,14 +47,14 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
               color=""
               sx={{
                 fontWeight: "",
-                marginTop: "0vh",
+                marginTop: "2vh",
                 paddingLeft: "1.10vw",
                 paddingBottom: "0px",
                 marginBottom: "2vh",
               }}
               variant="body1"
             >
-              {Details?.rideId}
+              {Details?._id}
               <br />
               {moment(Details?.createdAt)?.format("llll")}
             </Typography>
