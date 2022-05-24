@@ -36,3 +36,4 @@ export { default as useDriversNearby } from "./useDriversNearby";
 export { default as useDashboardStatistics } from "./useDashboardStatistics";
 export { default as useScheduledRides } from "./useScheduledRides";
 export { default as useCancelledRides } from "./useCancelledRides";
+export { default as useOutstationRides } from "./useOutstationRides";

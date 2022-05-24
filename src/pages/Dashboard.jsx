@@ -419,13 +419,18 @@ const Dashboard = () => {
                       dropAddress: item?.dropLocation?.address,
                       currentTimestamp: moment(item?.createdAt).format("ll"),
                     }))
-                  : activeRides?.slice(0, 3).map((item) => ({
+                  : activeRides?.slice(0, 3).map((item, i) => ({
                       ...item,
-                      id: item.id,
-                      rideId: item.rideId,
-                      rideStatus: item.rideStatus,
-                      rideType: item.rideType,
-                      rideDate: item.rideDate,
+                      sl: i + 1,
+                      profile: item?.rider?.displayName,
+                      driverProfile: item?.driver?.displayName,
+                      vehicleType: item?.cab?.vehicleCategory?.name,
+                      cityName: item?.city?.name,
+                      pick: moment(item?.pickupTime).format("hh:mm A"),
+                      rideId: item?._id,
+                      pickAddress: item?.pickupLocation?.address,
+                      dropAddress: item?.dropLocation?.address,
+                      currentTimestamp: moment(item?.createdAt).format("ll"),
                     }))
               }
               columns={[
