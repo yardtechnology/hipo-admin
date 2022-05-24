@@ -138,7 +138,15 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={Details?.driver?.vehicle?.vehicleType?.name}
-                  secondary={Details?.driver?.vehicle?.vehicleName}
+                  secondary={`${
+                    Details?.driver?.vehicle?.make?.name
+                      ? Details?.driver?.vehicle?.make?.name
+                      : "--"
+                  } ${
+                    Details?.driver?.vehicle?.model?.name
+                      ? Details?.driver?.vehicle?.model?.name
+                      : ""
+                  }`}
                 />
               </ListItem>
             </Tooltip>

@@ -19,6 +19,7 @@ import AssignTypeDrawerFeature from "./AssignTypeDrawerFeature";
 import Models from "./Models";
 import AssignScheduleDriverDrawer from "./AssignScheduleDriverDrawer";
 import AssignVehicleDrawer from "./AssignVehicleDrawer";
+import OperatorDocumentsDrawer from "./OperatorDocumentsDrawer";
 export { default as AssignDrivers } from "./AssignDrivers";
 
 export {
@@ -35,6 +36,7 @@ export {
   EditPaymentsDrawer,
   InvoiceDrawer,
   EditDriverDrawer,
+  OperatorDocumentsDrawer,
   StatementInvoiceDrawer,
   DocumentsDrawer,
   VehicleInfoDrawer,
