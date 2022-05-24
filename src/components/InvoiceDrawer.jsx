@@ -143,7 +143,7 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
               </ListItem>
             </Tooltip>
             <Divider />
-            {Details?.billing?.totalFare && (
+            {Details?.billing && (
               <Tooltip title="Ride Amount">
                 <ListItem sx={{ paddingLeft: "1.4vw" }}>
                   <ListItemAvatar>
@@ -174,11 +174,30 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
             >
               {/* Pick: {Details?.pickAddress}{" "}
               {moment(Details?.pick)?.format("hh:mm a")} */}
-              Pick: {"--"}
+              Pick:{" "}
+              <span
+                style={{
+                  color: "black",
+                }}
+              >
+                {" "}
+                {Details?.pickupLocation?.address
+                  ? Details?.pickupLocation?.address
+                  : "--"}
+              </span>
               <br />
               {/* Drop: {Details?.dropAddress}{" "}
               {moment(Details?.drop)?.format("hh:mm a")} */}
-              Drop: {"--"}
+              Drop:{" "}
+              <span
+                style={{
+                  color: "black",
+                }}
+              >
+                {Details?.dropLocation?.address
+                  ? Details?.dropLocation?.address
+                  : "--"}{" "}
+              </span>
             </Typography>
             {/* </Tooltip> */}
             <Divider />
@@ -240,7 +259,9 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                 >
                   <ListItemText
                     primary={"Total Bill"}
-                    secondary={`includes ${Details?.billing?.totalTax} Taxes`}
+                    secondary={`includes ${formatCurrency(
+                      Details?.billing?.totalTax
+                    )} Taxes`}
                   />
                 </ListItem>
                 <ListItem
@@ -271,11 +292,11 @@ const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
                 <ListItem
                   sx={{ marginTop: "0vh", marginBottom: "1vh" }}
                   // disableGutters
-                  secondaryAction={formatCurrency(
+                  secondaryAction={
                     Details?.billing?.totalFare
-                      ? Details?.billing?.totalFare
+                      ? formatCurrency(Details?.billing?.totalFare)
                       : "--"
-                  )}
+                  }
                 >
                   <ListItemText
                     primary={

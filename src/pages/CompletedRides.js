@@ -2,26 +2,29 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { PictureAsPdf, Visibility } from "@mui/icons-material";
 import {
-  Button,
   Tooltip,
   Typography,
   ListItem,
   ListItemText,
   IconButton,
+  ListItemAvatar,
+  Avatar,
 } from "@mui/material";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
 import { useCompletedRides } from "hooks";
+import moment from "moment";
 const CompletedRides = () => {
   const { completedRides } = useCompletedRides();
   console.log(completedRides);
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
+  console.log(openInvoiceDrawer);
 
   return (
     <>
       <InvoiceDrawer
-        rideDetails={openInvoiceDrawer}
+        Details={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />{" "}
       <MaterialTable
@@ -47,34 +50,22 @@ const CompletedRides = () => {
           selection: true,
           sorting: true,
         }}
-        data={[
-          {
-            bookingTime: new Date().toString(),
-            pickAddress: "Sector-12, Noida",
-            dropAddress: "Sector-15, Noida",
-            invoiceNumber: "CRN-001121432546",
-            displayName: "Aliva Priyadarshini",
-            driverName: "Alexa",
-            pick: new Date().toString(),
-            drop: new Date().toString(),
-            rideId: "12345",
-            rideType: "Rental",
-            rideAmount: 245,
-            vehicleType: "Car",
-            phoneNumber: "+91 7887643625",
-            address: "Bbsr",
-            trips: "15",
-            status: "Completed",
-            distance: "15km",
-          },
-        ]}
+        data={
+          completedRides === null
+            ? []
+            : completedRides?.map((ride, i) => ({
+                ...ride,
+                sl: i + 1,
+                vehicleType: ride?.cab?.vehicleCategory?.name,
+                rideAmount: ride?.billing?.totalFare,
+              }))
+        }
         columns={[
           {
             title: "#",
             field: "sl",
             render: (newData) => newData.tableData.id + 1,
             editable: "never",
-            width: "5%",
           },
           // {
           //   title: "Name",
@@ -91,18 +82,24 @@ const CompletedRides = () => {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
-            field: "firstName",
-            render: ({ photoURL, displayName, email, phoneNumber }) => (
+            field: "profile",
+            render: ({ rider }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={rider?.displayName}
+                      src={rider?.photoURL}
+                      variant="circular"
+                    />
+                  </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {rider?.displayName || "Not Provided"}
                       </Typography>
                     }
-                    secondary={phoneNumber}
+                    secondary={rider?.phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
@@ -110,20 +107,26 @@ const CompletedRides = () => {
           },
           {
             title: "Driver Profile",
-            tooltip: "Profile",
+            tooltip: "driverProfile",
             searchable: true,
-            width: "25%",
             field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            render: ({ driver }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={driver?.displayName}
+                      src={driver?.photoURL}
+                      variant="circular"
+                    />
+                  </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {driver?.displayName || "Not Provided"}
                       </Typography>
                     }
-                    secondary={phoneNumber}
+                    secondary={driver?.phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
@@ -134,7 +137,7 @@ const CompletedRides = () => {
             field: "rideType",
           },
           {
-            title: "Vehicle",
+            title: "Vehicle Type",
             field: "vehicleType",
           },
           {
@@ -155,50 +158,58 @@ const CompletedRides = () => {
             hidden: true,
             export: true,
           },
-          {
-            title: "Status",
-            field: "status",
-            // width: "5%",
-            render: (row) => (
-              <>
-                <Button
-                  sx={{ padding: "4px 5px", textTransform: "none" }}
-                  size="small"
-                  variant="contained"
-                  color="success"
-                >
-                  {row?.status}
-                </Button>
-                {/* <Button
-                  sx={{ padding: "4px 5px", textTransform: "none" }}
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                >
-                  initiated
-                </Button>
-                <Button
-                  sx={{ padding: "4px 5px", textTransform: "none" }}
-                  size="small"
-                  variant="contained"
-                  color="success"
-                >
-                  ongoing
-                </Button> */}
-              </>
-            ),
-          },
+          // {
+          //   title: "Status",
+          //   field: "status",
+          //   // width: "5%",
+          //   render: (row) => (
+          //     <>
+          //       <Button
+          //         sx={{ padding: "4px 5px", textTransform: "none" }}
+          //         size="small"
+          //         variant="contained"
+          //         color="success"
+          //       >
+          //         {row?.status}
+          //       </Button>
+          //       {/* <Button
+          //         sx={{ padding: "4px 5px", textTransform: "none" }}
+          //         size="small"
+          //         variant="contained"
+          //         color="primary"
+          //       >
+          //         initiated
+          //       </Button>
+          //       <Button
+          //         sx={{ padding: "4px 5px", textTransform: "none" }}
+          //         size="small"
+          //         variant="contained"
+          //         color="success"
+          //       >
+          //         ongoing
+          //       </Button> */}
+          //     </>
+          //   ),
+          // },
           {
             title: "Distance",
-            field: "distance",
+            field: "totalDistance",
+            render: (row) => `${row?.totalDistance} KM`,
+            emptyValue: "-",
             // render: (row) => formatCurrency(row.rideAmount),
           },
           {
             title: "Fare",
             field: "rideAmount",
-            render: (row) => formatCurrency(row.rideAmount),
+            render: (row) => formatCurrency(row?.billing?.totalFare),
           },
-
+          {
+            title: "Timestamp",
+            searchable: true,
+            field: "createdAt",
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
+            export: false,
+          },
           {
             title: "Actions",
             // field: "pick",
