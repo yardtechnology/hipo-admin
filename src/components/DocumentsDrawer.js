@@ -76,30 +76,32 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   marginBottom: "2vh",
                 }}
               >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
                 icon={<Notifications />}
                 iconPosition="start"
                 label="Notification"
               /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
                 <CardContent>
                   {value === 0 && (
                     <>
                       {" "}
-                      {/* <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
-                        5555 7654 5425 5555
-                      </Typography> */}
+                      <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
+                        {open?.aadharCard?.number}
+                      </Typography>
                       <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
                         {" "}
                         <Grid
@@ -196,23 +198,25 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   marginBottom: "2vh",
                 }}
               >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
                 icon={<Notifications />}
                 iconPosition="start"
                 label="Notification"
               /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
                 <CardContent>
                   {value === 0 && (
                     <>
@@ -310,27 +314,28 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   marginBottom: "2vh",
                 }}
               >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
                 icon={<Notifications />}
                 iconPosition="start"
                 label="Notification"
               /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
                 <CardContent>
                   {value === 0 && (
                     <>
-                      {" "}
                       <Typography
                         sx={{
                           fontWeight: "bold",
@@ -344,7 +349,11 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                         <Typography
                           sx={{ fontWeight: "bold", marginBottom: "1vh" }}
                         >
-                          {`Bank Name - ${open?.bankDetails?.bankName}`}
+                          {`Bank Name - ${
+                            open?.bankDetails?.bankName
+                              ? open?.bankDetails?.bankName
+                              : "Not Provided"
+                          }  `}
                         </Typography>
                       ) : (
                         ""
@@ -352,12 +361,29 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                       <Typography
                         sx={{ fontWeight: "bold", marginBottom: "1vh" }}
                       >
-                        {`IFSC code - ${open?.bankDetails?.ifscCode}`}
+                        {`IFSC code - ${
+                          open?.bankDetails?.ifscCode
+                            ? open?.bankDetails?.ifscCode
+                            : "Not Provided"
+                        }`}
                       </Typography>
                       <Typography
                         sx={{ fontWeight: "bold", marginBottom: "1vh" }}
                       >
-                        {`Account Number - ${open?.bankDetails?.accountNumber}`}
+                        {`Account Number - ${
+                          open?.bankDetails?.accountNumber
+                            ? open?.bankDetails?.accountNumber
+                            : "Not Provided"
+                        }`}
+                      </Typography>
+                      <Typography
+                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                      >
+                        {`Account Type - ${
+                          open?.bankDetails?.bankType
+                            ? open?.bankDetails?.bankType
+                            : "Not Provided"
+                        }`}
                       </Typography>
                     </>
                   )}
