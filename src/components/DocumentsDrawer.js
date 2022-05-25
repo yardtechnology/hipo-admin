@@ -18,7 +18,7 @@ import {
   EditAccountInfo,
   EditDrivingLicense,
 } from "./addDriver";
-const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
+const DocumentsDrawer = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
   const [value, setValue] = useState(0);
   console.log(open);
   return (
@@ -166,7 +166,13 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAadharCard open={open} />}
+                  {value === 1 && (
+                    <EditAadharCard
+                      open={open}
+                      setOpenDocumentsDrawer={setOpenDocumentsDrawer}
+                      setRealtime={setRealtime}
+                    />
+                  )}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
@@ -273,7 +279,13 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditDrivingLicense open={open} />}
+                  {value === 1 && (
+                    <EditDrivingLicense
+                      open={open}
+                      setOpenDocumentsDrawer={setOpenDocumentsDrawer}
+                      setRealtime={setRealtime}
+                    />
+                  )}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
@@ -388,7 +400,13 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAccountInfo open={open} />}
+                  {value === 1 && (
+                    <EditAccountInfo
+                      open={open}
+                      setOpenDocumentsDrawer={setOpenDocumentsDrawer}
+                      setRealtime={setRealtime}
+                    />
+                  )}
                 </CardContent>
               </AccordionDetails>
             </Accordion>{" "}

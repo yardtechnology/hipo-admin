@@ -18,8 +18,9 @@ import { AadharUpload } from "components/core";
 import { useState } from "react";
 import { DL } from "assets";
 import { DrivingLicenseSchema } from "schemas";
+import { BASE_URL } from "configs";
 
-const EditDrivingLicense = ({ open }) => {
+const EditDrivingLicense = ({ open, setRealtime, setOpenDocumentsDrawer }) => {
   const [value, setValue] = useState(open?.drivingLicense?.url);
   const initialValues = DrivingLicenseSchema?.reduce(
     (accumulator, currentValue) => {
@@ -36,14 +37,41 @@ const EditDrivingLicense = ({ open }) => {
     {}
   );
   const handleDrivingLicenseInfo = async (values, submitProps) => {
+    console.log(values);
+    const formdata = new FormData();
+    if (value) {
+      formdata.append("drivingLicenseNumber", values?.drivingLicenseNumber);
+      formdata.append("drivingLicense", value?.target?.files[0]);
+      formdata.append("drivingLicenseExpiry", values?.drivingLicenseExpiryDate);
+      formdata.append("licenseType", values?.category);
+      console.log("formdata", formdata);
+    } else {
+      formdata.append("drivingLicenseNumber", values?.drivingLicenseNumber);
+      formdata.append("drivingLicenseExpiry", values?.drivingLicenseExpiryDate);
+      formdata.append("licenseType", values?.category);
+      console.log("formdata", formdata);
+    }
     try {
-      //   setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
       console.log(values);
+      const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: formdata,
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire("Success", "Driver Updated Successfully", "success")
+        : Swal.fire("Error", "Driver Not Updated", "error");
+      submitProps.resetForm();
     } catch (error) {
-      Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
       submitProps.setSubmitting(false);
+      setOpenDocumentsDrawer(false);
+      setRealtime((prev) => !prev);
     }
   };
   return (

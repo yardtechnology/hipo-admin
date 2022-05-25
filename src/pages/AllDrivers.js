@@ -284,6 +284,7 @@ const AllDrivers = () => {
         setOpenVehicleInfoDrawer={setOpenVehicleInfoDrawer}
       />
       <DocumentsDrawer
+        setRealtime={setRealtime}
         open={openDocumentDrawer}
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
       />

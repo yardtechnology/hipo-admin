@@ -159,7 +159,7 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
               : drivers?.map((driver) => {
                   const hasDriver = open?.drivers
                     ? open?.drivers
-                        ?.map((driver) => driver?._id)
+                        ?.map((driver) => driver)
                         .includes(driver?._id)
                     : false;
                   console.log("hasDriver", hasDriver);

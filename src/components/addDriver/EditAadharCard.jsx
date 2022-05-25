@@ -7,7 +7,8 @@ import { useState } from "react";
 import { BACK, FRONT } from "assets";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-const EditAadharCard = ({ open }) => {
+import { BASE_URL } from "configs";
+const EditAadharCard = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
   console.log(open);
   const [value, setValue] = useState(open?.aadharCard?.front?.url);
   const [value1, setValue1] = useState(open?.aadharCard?.back?.url);
@@ -27,14 +28,42 @@ const EditAadharCard = ({ open }) => {
       ),
   };
   const handleAadharCardInfo = async (values, submitProps) => {
+    const formdata = new FormData();
+    if (value) {
+      formdata.append("aadharCardNumber", values?.aadharCardNumber);
+      formdata.append("aadharCardFront", value?.target?.files[0]);
+    } else if (value1) {
+      console.log("Alexa");
+      formdata.append("aadharCardNumber", values?.aadharCardNumber);
+      formdata.append("aadharCardBack", value1?.target?.files[0]);
+    } else if (value && value1) {
+      formdata.append("aadharCardNumber", values?.aadharCardNumber);
+      formdata.append("aadharCardBack", value1?.target?.files[0]);
+      formdata.append("aadharCardFront", value?.target?.files[0]);
+    } else {
+      formdata.append("aadharCardNumber", values?.aadharCardNumber);
+    }
     try {
-      // setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
       console.log(values);
+      const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: formdata,
+      });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire("Success", "Driver Updated Successfully", "success")
+        : Swal.fire("Error", "Driver Not Updated", "error");
+      submitProps.resetForm();
     } catch (error) {
-      Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     } finally {
       submitProps.setSubmitting(false);
+      setOpenDocumentsDrawer(false);
+      setRealtime((prev) => !prev);
     }
   };
   return (
@@ -51,14 +80,14 @@ const EditAadharCard = ({ open }) => {
         <Grid item lg={6} md={6} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            value={open?.aadharCard?.front?.url || value || FRONT}
+            value={value || FRONT}
             onChange={setValue}
           />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <AadharUpload
             width={"100%"}
-            value={open?.aadharCard?.back?.url || value1 || BACK}
+            value={value1 || BACK}
             onChange={setValue1}
           />
         </Grid>

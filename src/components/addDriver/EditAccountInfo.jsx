@@ -11,16 +11,14 @@ import {
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useAppContext } from "contexts";
 import React, { Fragment } from "react";
 import { AccountInfoSchema } from "schemas";
+import { BASE_URL } from "configs";
+import Swal from "sweetalert2";
 
-const EditAccountInfo = ({ open }) => {
-  const { bankAccountInfo, setBankAccountInfo, setBasicDetails } =
-    useAppContext();
+const EditAccountInfo = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
   // const [value, setValue] = useState(basicDetails.imgFile);
   // console.log(value);
-  console.log("bankAccountInfo", bankAccountInfo);
   const initialValues = AccountInfoSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -36,16 +34,32 @@ const EditAccountInfo = ({ open }) => {
     {}
   );
   const handleSend = async (values, submitProps) => {
+    const formdata = new FormData();
+    formdata.append("bankAccountNumber", values?.accountNo);
+    formdata.append("ifscCode", values?.ifscCode);
+    formdata.append("bankAccountType", values?.bankAccountType);
+    formdata.append("bankAccountHolderName", values?.accountHolderName);
     try {
       console.log(values);
-      await setBankAccountInfo({
-        ...values,
+      const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: formdata,
       });
-      setBasicDetails({ imgFile: "" });
+      const res = await response.json();
+      console.log(res);
+      res?.status === 200
+        ? Swal.fire("Success", "Driver Updated Successfully", "success")
+        : Swal.fire("Error", "Driver Not Updated", "error");
+      submitProps.resetForm();
     } catch (error) {
       console.log(error);
     } finally {
       submitProps.setSubmitting(false);
+      setOpenDocumentsDrawer(false);
+      setRealtime((prev) => !prev);
     }
   };
 
