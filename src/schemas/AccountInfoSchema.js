@@ -15,16 +15,16 @@ const AccountInfoSchema = [
     initialValue: "",
     startIcon: <Person />,
   },
-  {
-    key: "8",
-    label: "Bank Name",
-    name: "bankName",
-    validationSchema: Yup.string()
-      .required("Bank name is required")
-      .min(2, "Bank Name must be at least 2 characters"),
-    initialValue: "",
-    startIcon: <Person />,
-  },
+  // {
+  //   key: "8",
+  //   label: "Bank Name",
+  //   name: "bankName",
+  //   validationSchema: Yup.string()
+  //     .required("Bank name is required")
+  //     .min(2, "Bank Name must be at least 2 characters"),
+  //   initialValue: "",
+  //   startIcon: <Person />,
+  // },
 
   {
     key: "10",
@@ -62,10 +62,22 @@ const AccountInfoSchema = [
     key: "41",
     label: "Bank Account Type",
     name: "bankAccountType",
-    type: "text",
+    type: "select",
     validationSchema: Yup.string().required("Bank Account Type Is Required"),
     initialValue: "",
     startIcon: <Person />,
+    options: [
+      {
+        category: "SAVINGS",
+        value: "savings",
+        key: "1",
+      },
+      {
+        category: "CURRENT",
+        value: "current",
+        key: "2",
+      },
+    ],
   },
 ];
 export default AccountInfoSchema;

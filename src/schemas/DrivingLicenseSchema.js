@@ -48,12 +48,12 @@ const DrivingLicenseSchema = [
     options: [
       {
         category: "Motorcycle",
-        value: "motorcycle",
+        value: "MOTORCYCLE",
         key: "1",
       },
       {
         category: "LMV",
-        value: "lmv",
+        value: "LMV",
         key: "2",
       },
     ],

@@ -166,7 +166,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAadharCard />}
+                  {value === 1 && <EditAadharCard open={open} />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
@@ -273,7 +273,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditDrivingLicense />}
+                  {value === 1 && <EditDrivingLicense open={open} />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>
@@ -388,7 +388,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                     </>
                   )}
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAccountInfo />}
+                  {value === 1 && <EditAccountInfo open={open} />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>{" "}

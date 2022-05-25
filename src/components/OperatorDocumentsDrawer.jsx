@@ -1,4 +1,4 @@
-import { Edit, ExpandMore, Visibility } from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -8,14 +8,9 @@ import {
   Container,
   Drawer,
   Grid,
-  Tab,
-  Tabs,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { EditAadharCard, EditAccountInfo } from "./addDriver";
 const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
-  const [value, setValue] = useState(0);
   console.log(open);
   return (
     <>
@@ -72,100 +67,71 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   marginBottom: "2vh",
                 }}
               >
-                {open?.status !== "PENDING" && (
-                  <Tabs
-                    value={value}
-                    onChange={(e, i) => setValue(i)}
-                    aria-label="icon position tabs example"
-                  >
-                    {open?.status !== "PENDING" && (
-                      <Tab
-                        icon={<Visibility />}
-                        iconPosition="start"
-                        label="View"
-                      />
-                    )}
-                    {/* <Tab
-                icon={<Notifications />}
-                iconPosition="start"
-                label="Notification"
-              /> */}
-                    {open?.status !== "PENDING" && (
-                      <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                    )}
-                  </Tabs>
-                )}
                 <CardContent>
-                  {value === 0 && (
-                    <>
-                      <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
-                        {open?.aadharCard?.number}
-                      </Typography>
-                      <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
-                        <Grid
-                          item
-                          lg={6}
-                          md={6}
-                          sm={6}
-                          xs={6}
+                  <>
+                    <Typography sx={{ fontWeight: "bold", marginTop: "2vh" }}>
+                      {open?.aadharCard?.number}
+                    </Typography>
+                    <Grid container spacing={1} sx={{ marginTop: "2vh" }}>
+                      <Grid
+                        item
+                        lg={6}
+                        md={6}
+                        sm={6}
+                        xs={6}
+                        sx={{
+                          "&:hover": {
+                            cursor: "pointer",
+                            transform: "scale(3.1)",
+                            transition: "transform 0.5s",
+                            zIndex: "1",
+                            paddingLeft: "6vw",
+                            backdropFilter: "blur(5px)",
+                            paddingTop: "6vh",
+                          },
+                        }}
+                      >
+                        <Avatar
+                          alt=""
+                          src={open?.aadharCard?.front?.url}
+                          variant="square"
                           sx={{
-                            "&:hover": {
-                              cursor: "pointer",
-                              transform: "scale(3.1)",
-                              transition: "transform 0.5s",
-                              zIndex: "1",
-                              paddingLeft: "6vw",
-                              backdropFilter: "blur(5px)",
-                              paddingTop: "6vh",
-                            },
+                            width: "auto",
+                            height: "auto",
                           }}
-                        >
-                          <Avatar
-                            alt=""
-                            src={open?.aadharCard?.front?.url}
-                            variant="square"
-                            sx={{
-                              width: "auto",
-                              height: "auto",
-                            }}
-                          />{" "}
-                        </Grid>
-                        <Grid
-                          item
-                          lg={6}
-                          md={6}
-                          sm={6}
-                          xs={6}
-                          sx={{
-                            "&:hover": {
-                              cursor: "pointer",
-                              transform: "scale(3.2)",
-                              transition: "transform 0.5s",
-                              zIndex: "1",
-                              paddingRight: "6vw",
-                              backdropFilter: "blur(5px)",
-                              paddingTop: "5vh",
-                            },
-                          }}
-                        >
-                          {" "}
-                          <Avatar
-                            alt=""
-                            src={open?.aadharCard?.back?.url}
-                            variant="square"
-                            sx={{
-                              width: "auto",
-                              height: "auto",
-                            }}
-                          />
-                        </Grid>
+                        />{" "}
                       </Grid>
-                    </>
-                  )}
-                  {/* {value === 1 && <Notification />} */}
-                  {open?.status !== "PENDING" && value === 1 && (
-                    <EditAadharCard />
-                  )}
+                      <Grid
+                        item
+                        lg={6}
+                        md={6}
+                        sm={6}
+                        xs={6}
+                        sx={{
+                          "&:hover": {
+                            cursor: "pointer",
+                            transform: "scale(3.2)",
+                            transition: "transform 0.5s",
+                            zIndex: "1",
+                            paddingRight: "6vw",
+                            backdropFilter: "blur(5px)",
+                            paddingTop: "5vh",
+                          },
+                        }}
+                      >
+                        {" "}
+                        <Avatar
+                          alt=""
+                          src={open?.aadharCard?.back?.url}
+                          variant="square"
+                          sx={{
+                            width: "auto",
+                            height: "auto",
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  </>
                 </CardContent>
               </AccordionDetails>
             </Accordion>
@@ -205,65 +171,43 @@ const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
                   marginBottom: "2vh",
                 }}
               >
-                {open?.status !== "PENDING" && (
-                  <Tabs
-                    value={value}
-                    onChange={(e, i) => setValue(i)}
-                    aria-label="icon position tabs example"
-                  >
-                    <Tab
-                      icon={<Visibility />}
-                      iconPosition="start"
-                      label="View"
-                    />
-                    {/* <Tab
-                icon={<Notifications />}
-                iconPosition="start"
-                label="Notification"
-              /> */}
-                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                  </Tabs>
-                )}
                 <CardContent>
-                  {value === 0 && (
-                    <>
-                      <Typography
-                        sx={{
-                          fontWeight: "bold",
-                          marginTop: "2vh",
-                          marginBottom: "1vh",
-                        }}
-                      >
-                        {`Account Holder Name - ${open?.bankDetails?.accountHolderName}`}
-                      </Typography>
-                      {open?.bankDetails?.bankName ? (
-                        <Typography
-                          sx={{ fontWeight: "bold", marginBottom: "1vh" }}
-                        >
-                          {`Bank Name - ${open?.bankDetails?.bankName}`}
-                        </Typography>
-                      ) : (
-                        ""
-                      )}
+                  <>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        marginTop: "2vh",
+                        marginBottom: "1vh",
+                      }}
+                    >
+                      {`Account Holder Name - ${open?.bankDetails?.accountHolderName}`}
+                    </Typography>
+                    {open?.bankDetails?.bankName ? (
                       <Typography
                         sx={{ fontWeight: "bold", marginBottom: "1vh" }}
                       >
-                        {`IFSC code - ${open?.bankDetails?.ifscCode}`}
+                        {`Bank Name - ${open?.bankDetails?.bankName}`}
                       </Typography>
-                      <Typography
-                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
-                      >
-                        {`Account Number - ${open?.bankDetails?.accountNumber}`}
-                      </Typography>
-                      <Typography
-                        sx={{ fontWeight: "bold", marginBottom: "1vh" }}
-                      >
-                        {`Account Type - ${open?.bankDetails?.bankType}`}
-                      </Typography>
-                    </>
-                  )}
+                    ) : (
+                      ""
+                    )}
+                    <Typography
+                      sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                    >
+                      {`IFSC code - ${open?.bankDetails?.ifscCode}`}
+                    </Typography>
+                    <Typography
+                      sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                    >
+                      {`Account Number - ${open?.bankDetails?.accountNumber}`}
+                    </Typography>
+                    <Typography
+                      sx={{ fontWeight: "bold", marginBottom: "1vh" }}
+                    >
+                      {`Account Type - ${open?.bankDetails?.bankType}`}
+                    </Typography>
+                  </>
                   {/* {value === 1 && <Notification />} */}
-                  {value === 1 && <EditAccountInfo />}
                 </CardContent>
               </AccordionDetails>
             </Accordion>{" "}

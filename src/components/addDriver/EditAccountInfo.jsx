@@ -14,16 +14,10 @@ import * as Yup from "yup";
 import { useAppContext } from "contexts";
 import React, { Fragment } from "react";
 import { AccountInfoSchema } from "schemas";
-import Swal from "sweetalert2";
 
-const EditAccountInfo = ({ handleBack, handleNext, handleReset }) => {
-  const {
-    bankAccountInfo,
-    setBankAccountInfo,
-    setBasicDetails,
-    setAadharCardInfo,
-    setDrivingLicenceInfo,
-  } = useAppContext();
+const EditAccountInfo = ({ open }) => {
+  const { bankAccountInfo, setBankAccountInfo, setBasicDetails } =
+    useAppContext();
   // const [value, setValue] = useState(basicDetails.imgFile);
   // console.log(value);
   console.log("bankAccountInfo", bankAccountInfo);
@@ -51,13 +45,6 @@ const EditAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      setBasicDetails("");
-      setBankAccountInfo();
-      setAadharCardInfo();
-      setDrivingLicenceInfo();
-      Swal.fire({ icon: "success", text: "Successfully Submitted" });
-      handleReset();
-
       submitProps.setSubmitting(false);
     }
   };
@@ -66,12 +53,13 @@ const EditAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     <div>
       <Formik
         initialValues={
-          bankAccountInfo?.bankName
+          open?.bankDetails
             ? {
-                accountHolderName: bankAccountInfo?.accountHolderName,
-                bankName: bankAccountInfo?.bankName,
-                accountNo: bankAccountInfo?.accountNo,
-                ifscCode: bankAccountInfo?.ifscCode,
+                accountHolderName: open?.bankDetails?.accountHolderName,
+                // bankName: open?.bankDetails?.bankName,
+                accountNo: open?.bankDetails?.accountNumber,
+                ifscCode: open?.bankDetails?.ifscCode,
+                bankAccountType: open?.bankDetails?.bankType,
               }
             : initialValues
         }
