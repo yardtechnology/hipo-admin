@@ -127,7 +127,7 @@ const PrivateRoutes = () => {
         <Route path="/drivers/driver-requests" element={<DriverRequests />} />
         <Route path="/drivers/driver-requests" element={<DriverRequests />} />
         <Route path="/view-documents" element={<ViewDocuments />} />
-        <Route path="/driver-history" element={<DriverHistory />} />
+        <Route path="/driver-history/:driverId" element={<DriverHistory />} />
         <Route path="/view-operators" element={<Operators />} />
         <Route path="/operators-requests" element={<OperatorRequest />} />
         <Route

@@ -10,22 +10,54 @@ import {
   ListItemText,
   IconButton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { formatCurrency } from "@ashirbad/js-core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InvoiceDrawer } from "components";
+import { useIsMounted } from "hooks";
+import { BASE_URL } from "configs";
 const DriverHistory = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
-
+  const { driverId } = useParams();
+  console.log(driverId);
+  const { isMounted } = useIsMounted();
+  const [history, setHistory] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isMounted) return;
+      try {
+        const response = await fetch(
+          `${BASE_URL}/driver/all-ride/${driverId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+            },
+          }
+        );
+        const arr = await response.json();
+        console.log(arr);
+        const sortArr = arr?.data?.sort(
+          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+        );
+        setHistory(sortArr);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [isMounted, driverId]);
+  console.log(history);
   return (
     <>
       <InvoiceDrawer
-        rideDetails={openInvoiceDrawer}
+        Details={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
-      />{" "}
+      />
       <Breadcrumbs
         aria-label="breadcrumb"
-        sx={{ marginBottom: "4vh", marginTop: "0vh" }}
+        sx={{ marginBottom: "1vh", marginTop: "0vh" }}
       >
         <Link underline="hover" color="inherit" to="/drivers/all-drivers">
           All Drivers
@@ -33,7 +65,7 @@ const DriverHistory = () => {
         <Typography color="text.primary">Driver History</Typography>
       </Breadcrumbs>
       <MaterialTable
-        title="History Of Alexa"
+        title="History Of Driver"
         options={{
           exportAllData: true,
           search: true,
@@ -42,12 +74,12 @@ const DriverHistory = () => {
             {
               label: "Export PDF",
               exportFunc: (cols, datas) =>
-                ExportPdf(cols, datas, "Ride History"),
+                ExportPdf(cols, datas, "Driver History"),
             },
             {
               label: "Export CSV",
               exportFunc: (cols, datas) =>
-                ExportCsv(cols, datas, "Ride History"),
+                ExportCsv(cols, datas, "Driver History"),
             },
           ],
           pageSize: 10,
@@ -55,27 +87,45 @@ const DriverHistory = () => {
           selection: true,
           sorting: true,
         }}
-        data={[
-          {
-            bookingTime: new Date().toString(),
-            pickAddress: "Sector-12, Noida",
-            dropAddress: "Sector-15, Noida",
-            invoiceNumber: "CRN-001121432546",
-            displayName: "Aliva Priyadarshini",
-            driverName: "Alexa",
-            pick: new Date().toString(),
-            drop: new Date().toString(),
-            distance: "10km",
-            rideId: "12345",
-            rideType: "Rental",
-            rideAmount: 245,
-            vehicleType: "Car",
-            phoneNumber: "+91 7887643625",
-            address: "Bbsr",
-            trips: "15",
-            status: "Initiated",
-          },
-        ]}
+        isLoading={history === null}
+        data={
+          history === null
+            ? []
+            : history?.map((item) => ({
+                ...item,
+                displayName: item?.rider?.displayName,
+                phoneNumber: item?.rider?.phoneNumber,
+                rideAmount: item?.billing?.totalFare,
+                pickupLatitude: item?.pickupLocation?.lat,
+                pickupLongitude: item?.pickupLocation?.lng,
+                dropLatitude: item?.dropLocation?.lat,
+                dropLongitude: item?.dropLocation?.lng,
+                driverDisplayName: item?.driver?.displayName,
+                driverPhoneNumber: item?.driver?.phoneNumber,
+                vehicle: item?.driver?.vehicle?.vehicleType?.name,
+              }))
+          //   [
+          //   {
+          //     bookingTime: new Date().toString(),
+          //     pickAddress: "Sector-12, Noida",
+          //     dropAddress: "Sector-15, Noida",
+          //     invoiceNumber: "CRN-001121432546",
+          //     displayName: "Aliva Priyadarshini",
+          //     driverName: "Alexa",
+          //     pick: new Date().toString(),
+          //     drop: new Date().toString(),
+          //     distance: "10km",
+          //     rideId: "12345",
+          //     rideType: "Rental",
+          //     rideAmount: 245,
+          //     vehicleType: "Car",
+          //     phoneNumber: "+91 7887643625",
+          //     address: "Bbsr",
+          //     trips: "15",
+          //     status: "Completed",
+          //   },
+          // ]
+        }
         columns={[
           {
             title: "#",
@@ -94,20 +144,42 @@ const DriverHistory = () => {
             export: true,
             hidden: true,
           },
+          {
+            title: "Driver Profile",
+            tooltip: "Profile",
+            searchable: true,
+            emptyValue: "N/A",
+            width: "22%",
+            field: "driverPhoneNumber",
+            render: ({ photoURL, driverDisplayName, driverPhoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {driverDisplayName || "Not Provided"}
+                      </Typography>
+                    }
+                    secondary={driverPhoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
+          },
 
           {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
             width: "22%",
-            field: "firstName",
+            field: "displayName" || "phoneNumber",
             render: ({ photoURL, displayName, email, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {displayName}
                       </Typography>
                     }
                     secondary={phoneNumber}
@@ -116,34 +188,15 @@ const DriverHistory = () => {
               </>
             ),
           },
-          //   {
-          //     title: "Driver Profile",
-          //     tooltip: "Profile",
-          //     searchable: true,
-          //     width: "22%",
-          //     field: "firstName",
-          //     render: ({ photoURL, displayName, phoneNumber }) => (
-          //       <>
-          //         <ListItem sx={{ paddingLeft: "0px" }}>
-          //           <ListItemText
-          //             primary={
-          //               <Typography component="span" variant="body2">
-          //                 {displayName || "Not Provided"}
-          //               </Typography>
-          //             }
-          //             secondary={phoneNumber}
-          //           ></ListItemText>
-          //         </ListItem>
-          //       </>
-          //     ),
-          //   },
+
           {
             title: "Ride Type",
             field: "rideType",
           },
           {
             title: "Vehicle",
-            field: "vehicleType",
+            field: "vehicle",
+            emptyValue: "--",
           },
           {
             title: "Pick Date/Time",
@@ -173,7 +226,7 @@ const DriverHistory = () => {
                   sx={{ padding: "4px 5px", textTransform: "none" }}
                   size="small"
                   variant="contained"
-                  color="success"
+                  color="info"
                 >
                   {row?.status}
                 </Button>
@@ -198,13 +251,15 @@ const DriverHistory = () => {
           },
           {
             title: "Distance",
-            field: "distance",
-            // render: (row) => formatCurrency(row.rideAmount),
+            field: "totalDistance",
+            emptyValue: "--",
+            render: ({ totalDistance }) => `${totalDistance?.toFixed(2)} km`,
           },
           {
             title: "Fare",
             field: "rideAmount",
-            render: (row) => formatCurrency(row.rideAmount),
+            emptyValue: "--",
+            render: ({ billing }) => formatCurrency(billing?.totalFare),
           },
 
           {
