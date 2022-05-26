@@ -29,20 +29,25 @@ const EditAadharCard = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
   };
   const handleAadharCardInfo = async (values, submitProps) => {
     const formdata = new FormData();
-    if (value) {
-      formdata.append("aadharCardNumber", values?.aadharCardNumber);
-      formdata.append("aadharCardFront", value?.target?.files[0]);
-    } else if (value1) {
-      console.log("Alexa");
-      formdata.append("aadharCardNumber", values?.aadharCardNumber);
-      formdata.append("aadharCardBack", value1?.target?.files[0]);
-    } else if (value && value1) {
-      formdata.append("aadharCardNumber", values?.aadharCardNumber);
-      formdata.append("aadharCardBack", value1?.target?.files[0]);
-      formdata.append("aadharCardFront", value?.target?.files[0]);
-    } else {
-      formdata.append("aadharCardNumber", values?.aadharCardNumber);
-    }
+    // if (value) {
+    //   formdata.append("aadharCardNumber", values?.aadharCardNumber);
+    //   formdata.append("aadharCardFront", value?.target?.files[0]);
+    // }
+    // else if (value1) {
+    //   console.log("Alexa");
+    //   formdata.append("aadharCardNumber", values?.aadharCardNumber);
+    //   formdata.append("aadharCardBack", value1?.target?.files[0]);
+    // } else if (value && value1) {
+    //   formdata.append("aadharCardNumber", values?.aadharCardNumber);
+    //   formdata.append("aadharCardBack", value1?.target?.files[0]);
+    //   formdata.append("aadharCardFront", value?.target?.files[0]);
+    // } else {
+    //   formdata.append("aadharCardNumber", values?.aadharCardNumber);
+    // }
+    formdata.append("aadharCardNumber", values?.aadharCardNumber);
+    value && formdata.append("aadharCardFront", value?.target?.files[0]);
+    value1 && formdata.append("aadharCardBack", value1?.target?.files[0]);
+
     try {
       console.log(values);
       const response = await fetch(`${BASE_URL}/driver/${open._id}`, {

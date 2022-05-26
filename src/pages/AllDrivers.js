@@ -498,7 +498,7 @@ const AllDrivers = () => {
                   <Tooltip title="View Driver History">
                     <Avatar
                       variant="rounded"
-                      onClick={() => navigate("/driver-history")}
+                      onClick={() => navigate(`/driver-history/${row._id}`)}
                       sx={{
                         padding: " 0px !important",
                         backgroundColor: "#1877f2",
