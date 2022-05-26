@@ -490,7 +490,10 @@ const AllDrivers = () => {
                         mr: ".4vw",
                         cursor: "pointer",
                       }}
-                      onClick={() => setOpenVehicleInfoDrawer(row)}
+                      onClick={() =>
+                        navigate(`/driver-vehicle-list/${row._id}`)
+                      }
+                      // onClick={() => setOpenVehicleInfoDrawer(row)}
                     >
                       <TwoWheeler />
                     </Avatar>
