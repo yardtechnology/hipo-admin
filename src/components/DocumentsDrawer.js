@@ -226,7 +226,6 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
                 <CardContent>
                   {value === 0 && (
                     <>
-                      {" "}
                       <Typography
                         sx={{
                           fontWeight: "bold",
@@ -234,7 +233,20 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
                           p: "1.5vh 5vw 0vh 5vw ",
                         }}
                       >
+                        Number:{""}
                         {open?.drivingLicense?.number}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          marginBottom: "2vh",
+                          p: "1.5vh 5vw 0vh 5vw ",
+                        }}
+                      >
+                        Expiry:{""}
+                        {new Date(
+                          `${open?.drivingLicense?.expiry}`
+                        ).toLocaleDateString() || "Not Provided"}
                       </Typography>
                       <Grid
                         container

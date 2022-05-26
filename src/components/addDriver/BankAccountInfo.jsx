@@ -76,10 +76,10 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
       drivingLicenceInfo?.imgFile?.target?.files[0]
     );
     formdata.append(
-      "drivingLicenseExpire",
+      "drivingLicenseExpiry",
       drivingLicenceInfo?.drivingLicenseExpiryDate
     );
-    formdata.append("drivingLicenseType", drivingLicenceInfo?.category);
+    formdata.append("licenseType", drivingLicenceInfo?.category);
     formdata.append(
       "aadharCardFront",
       aadharCardInfo?.imgFile?.target.files[0]

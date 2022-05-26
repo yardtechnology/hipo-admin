@@ -198,7 +198,7 @@ const BasicDetails = ({ handleNext }) => {
                                     false
                                   );
                                 }}
-                                countryCode={countryCode}
+                                countryCode={countryCode || "+91"}
                                 onChangeCountryCode={(ev) => {
                                   setCountryCode(ev.target.value);
                                 }}

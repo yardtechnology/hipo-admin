@@ -38,7 +38,7 @@ const CustomPhoneNumberPicker = ({
             <FormControl>
               <div>
                 <Select
-                  value={countryCode}
+                  value={countryCode || "+91"}
                   onChange={onChangeCountryCode}
                   autoWidth
                   variant="standard"

@@ -1,3 +1,4 @@
+import { getIn } from "formik";
 export const getImageSize = (url) => {
   const img = document.createElement("img");
   img.src = url;
@@ -12,4 +13,11 @@ export const getImageSize = (url) => {
 };
 export const isValidOnlyAlphabates = (value) => {
   return /^[a-zA-Z ]*$/.test(value);
+};
+export const getStyles = (errors, fieldName) => {
+  if (getIn(errors, fieldName)) {
+    return {
+      border: "1px solid red",
+    };
+  }
 };
