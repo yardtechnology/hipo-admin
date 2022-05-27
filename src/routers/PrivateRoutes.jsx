@@ -78,6 +78,7 @@ import {
   AssignModels,
   ReferralCharge,
   DriverVehicleList,
+  RequestedDriverVehicleList,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -178,6 +179,10 @@ const PrivateRoutes = () => {
         <Route
           path="/driver-vehicle-list/:driverId"
           element={<DriverVehicleList />}
+        />
+        <Route
+          path="/requested-driver-vehicle-list/:driverId"
+          element={<RequestedDriverVehicleList />}
         />
       </Routes>
     </PanelLayout>

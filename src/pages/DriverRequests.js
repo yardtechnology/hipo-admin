@@ -16,12 +16,13 @@ import { useDriverRequests } from "hooks";
 // import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const DriverRequests = () => {
   const { driverRequests, setRealtime } = useDriverRequests();
   console.log(driverRequests);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
@@ -234,7 +235,10 @@ const DriverRequests = () => {
                         mr: ".4vw",
                         cursor: "pointer",
                       }}
-                      onClick={() => setOpenVehicleInfoDrawer(row)}
+                      // onClick={() => setOpenVehicleInfoDrawer(row)}
+                      onClick={() =>
+                        navigate(`/requested-driver-vehicle-list/${row._id}`)
+                      }
                     >
                       <TwoWheeler />
                     </Avatar>
