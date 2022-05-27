@@ -93,3 +93,11 @@ export const DriverVehicleList = lazy(() => import("./DriverVehicleList"));
 export const RequestedDriverVehicleList = lazy(() =>
   import("./RequestedDriverVehicleList")
 );
+export const OperatorVehicleList = lazy(() => import("./OperatorVehicleList"));
+export const RequestedOperatorVehicleList = lazy(() =>
+  import("./RequestedOperatorVehicleList")
+);
+// export const OperatorDriverList = lazy(() => import("./OperatorDriverList"));
+// export const OperatorRequestedDriverList = lazy(() =>
+//   import("./OperatorRequestedDriverList")
+// );

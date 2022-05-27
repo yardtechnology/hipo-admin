@@ -249,7 +249,10 @@ const OperatorRequest = () => {
                         mr: ".4vw",
                         cursor: "pointer",
                       }}
-                      onClick={() => setOpenVehicleInfoDrawer(row)}
+                      // onClick={() => setOpenVehicleInfoDrawer(row)}
+                      onClick={() =>
+                        navigate(`/requested-operator-vehicle-list/${row._id}`)
+                      }
                     >
                       <TwoWheeler />
                     </Avatar>

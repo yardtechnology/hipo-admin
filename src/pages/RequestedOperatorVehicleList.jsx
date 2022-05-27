@@ -22,9 +22,9 @@ import Swal from "sweetalert2";
 import { Link, useParams } from "react-router-dom";
 // import { formatCurrency } from "@ashirbad/js-core";
 
-const RequestedDriverVehicleList = () => {
-  const { driverId } = useParams();
-  console.log(driverId);
+const RequestedOperatorVehicleList = () => {
+  const { operatorId } = useParams();
+  console.log(operatorId);
   const { isMounted } = useIsMounted();
   const { vehicles, setRealtime } = useVehicles();
   const [vehicleList, setVehicleList] = useState(null);
@@ -33,7 +33,7 @@ const RequestedDriverVehicleList = () => {
       if (!isMounted) return;
       try {
         const response = await fetch(
-          `${BASE_URL}/vehicles/driver/${driverId}`,
+          `${BASE_URL}/vehicles/driver/${operatorId}`,
           {
             method: "GET",
             headers: {
@@ -53,7 +53,7 @@ const RequestedDriverVehicleList = () => {
       }
     };
     fetchData();
-  }, [isMounted, driverId]);
+  }, [isMounted, operatorId]);
   console.log(vehicleList);
 
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
@@ -179,10 +179,10 @@ const RequestedDriverVehicleList = () => {
         aria-label="breadcrumb"
         sx={{ marginBottom: "2vh", marginTop: "0vh" }}
       >
-        <Link underline="hover" color="inherit" to="/drivers/driver-requests">
-          Driver Requests
+        <Link underline="hover" color="inherit" to="/operators-requests">
+          Operator Requests
         </Link>
-        <Typography color="text.primary">Driver Vehicle List</Typography>
+        <Typography color="text.primary">Operator Vehicle List</Typography>
       </Breadcrumbs>
 
       <MaterialTable
@@ -203,7 +203,7 @@ const RequestedDriverVehicleList = () => {
             },
           ],
         }}
-        title={"Requested Driver Vehicle List"}
+        title={"Requested Operator Vehicle List"}
         data={
           vehicles === null
             ? []
@@ -435,4 +435,4 @@ const RequestedDriverVehicleList = () => {
   );
 };
 
-export default RequestedDriverVehicleList;
+export default RequestedOperatorVehicleList;

@@ -79,6 +79,8 @@ import {
   ReferralCharge,
   DriverVehicleList,
   RequestedDriverVehicleList,
+  RequestedOperatorVehicleList,
+  OperatorVehicleList,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -183,6 +185,14 @@ const PrivateRoutes = () => {
         <Route
           path="/requested-driver-vehicle-list/:driverId"
           element={<RequestedDriverVehicleList />}
+        />
+        <Route
+          path="/operator-vehicle-list/:operatorId"
+          element={<OperatorVehicleList />}
+        />
+        <Route
+          path="/requested-operator-vehicle-list/:operatorId"
+          element={<RequestedOperatorVehicleList />}
         />
       </Routes>
     </PanelLayout>

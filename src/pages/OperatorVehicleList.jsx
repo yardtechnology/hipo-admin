@@ -11,7 +11,12 @@ import {
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
 import moment from "moment";
-import { DocumentScanner } from "@mui/icons-material";
+import {
+  AssignmentInd,
+  Delete,
+  DocumentScanner,
+  Edit,
+} from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import VehicleDocumentDrawer from "components/VehicleDocumentDrawer";
 import { EditVehicle } from "components/AddVehicle";
@@ -22,9 +27,9 @@ import Swal from "sweetalert2";
 import { Link, useParams } from "react-router-dom";
 // import { formatCurrency } from "@ashirbad/js-core";
 
-const RequestedDriverVehicleList = () => {
-  const { driverId } = useParams();
-  console.log(driverId);
+const OperatorVehicleList = () => {
+  const { operatorId } = useParams();
+  console.log(operatorId);
   const { isMounted } = useIsMounted();
   const { vehicles, setRealtime } = useVehicles();
   const [vehicleList, setVehicleList] = useState(null);
@@ -33,7 +38,7 @@ const RequestedDriverVehicleList = () => {
       if (!isMounted) return;
       try {
         const response = await fetch(
-          `${BASE_URL}/vehicles/driver/${driverId}`,
+          `${BASE_URL}/vehicles/driver/${operatorId}`,
           {
             method: "GET",
             headers: {
@@ -53,7 +58,7 @@ const RequestedDriverVehicleList = () => {
       }
     };
     fetchData();
-  }, [isMounted, driverId]);
+  }, [isMounted, operatorId]);
   console.log(vehicleList);
 
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
@@ -179,14 +184,15 @@ const RequestedDriverVehicleList = () => {
         aria-label="breadcrumb"
         sx={{ marginBottom: "2vh", marginTop: "0vh" }}
       >
-        <Link underline="hover" color="inherit" to="/drivers/driver-requests">
-          Driver Requests
+        <Link underline="hover" color="inherit" to="/view-operators">
+          View Operators
         </Link>
-        <Typography color="text.primary">Driver Vehicle List</Typography>
+        <Typography color="text.primary">Operator Vehicle List</Typography>
       </Breadcrumbs>
 
       <MaterialTable
         options={{
+          selection: "true",
           addRowPosition: "first",
           actionsColumnIndex: -1,
           detailPanelColumnAlignment: "right",
@@ -203,7 +209,7 @@ const RequestedDriverVehicleList = () => {
             },
           ],
         }}
-        title={"Requested Driver Vehicle List"}
+        title={"Operator Vehicle List"}
         data={
           vehicles === null
             ? []
@@ -317,6 +323,47 @@ const RequestedDriverVehicleList = () => {
                       }}
                     >
                       <DocumentScanner sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Edit Vehicle Basic Details">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => setOpenEditVehicleDocumentDrawer(row)}
+                      sx={{
+                        mr: ".4vw",
+                        padding: "0px !important",
+                        backgroundColor: "gray",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Edit sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Assign Driver">
+                    <Avatar
+                      variant="rounded"
+                      onClick={() => setOpenAssignDriverDrawer(row)}
+                      sx={{
+                        mr: ".4vw",
+                        padding: "0px !important",
+                        backgroundColor: "blue",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <AssignmentInd sx={{ padding: "0px !important" }} />
+                    </Avatar>
+                  </Tooltip>
+                  <Tooltip title="Delete Driver">
+                    <Avatar
+                      variant="rounded"
+                      // onClick={() => setOpenDocumentDrawer(row)}
+                      sx={{
+                        padding: "0px !important",
+                        backgroundColor: "red",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Delete sx={{ padding: "0px !important" }} />
                     </Avatar>
                   </Tooltip>
                 </div>
@@ -435,4 +482,4 @@ const RequestedDriverVehicleList = () => {
   );
 };
 
-export default RequestedDriverVehicleList;
+export default OperatorVehicleList;
