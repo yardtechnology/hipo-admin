@@ -9,7 +9,7 @@ const useCoupons = () => {
   useEffect(() => {
     const fetchPromoCodes = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/coupons/all`, {
+        const response = await fetch(`${BASE_URL}/admin-coupons/all`, {
           method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {

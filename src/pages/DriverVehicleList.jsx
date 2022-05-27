@@ -1,10 +1,12 @@
 import MaterialTable from "@material-table/core";
 import {
   Avatar,
+  Breadcrumbs,
 
   // Chip,
   Switch,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 // import { BASE_URL } from "configs";
@@ -22,7 +24,7 @@ import { useIsMounted, useVehicles } from "hooks";
 import { AssignDrivers } from "components";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import { formatCurrency } from "@ashirbad/js-core";
 
 const DriverVehicleList = () => {
@@ -178,6 +180,15 @@ const DriverVehicleList = () => {
         open={openAssignDriverDrawer}
         setOpenAssignDriverDrawer={setOpenAssignDriverDrawer}
       />
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        sx={{ marginBottom: "2vh", marginTop: "0vh" }}
+      >
+        <Link underline="hover" color="inherit" to="/drivers/all-drivers">
+          All Drivers
+        </Link>
+        <Typography color="text.primary">Driver Vehicle List</Typography>
+      </Breadcrumbs>
 
       <MaterialTable
         options={{
