@@ -81,6 +81,7 @@ import {
   RequestedDriverVehicleList,
   RequestedOperatorVehicleList,
   OperatorVehicleList,
+  TeamNumberConfig,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -178,6 +179,7 @@ const PrivateRoutes = () => {
         <Route path="/vehicle-requests" element={<VehicleRequests />} />
         <Route path="/assign-models" element={<AssignModels />} />
         <Route path="/referral-charge" element={<ReferralCharge />} />
+        <Route path="/team-number-config" element={<TeamNumberConfig />} />
         <Route
           path="/driver-vehicle-list/:driverId"
           element={<DriverVehicleList />}

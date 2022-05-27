@@ -89,6 +89,7 @@ export const Profit = lazy(() => import("./Profit"));
 export const VehicleRequests = lazy(() => import("./VehicleRequests"));
 export const AssignModels = lazy(() => import("./AssignModels"));
 export const ReferralCharge = lazy(() => import("./ReferralCharge"));
+export const TeamNumberConfig = lazy(() => import("./TeamNumberConfig"));
 export const DriverVehicleList = lazy(() => import("./DriverVehicleList"));
 export const RequestedDriverVehicleList = lazy(() =>
   import("./RequestedDriverVehicleList")

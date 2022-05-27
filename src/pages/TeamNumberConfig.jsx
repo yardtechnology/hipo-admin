@@ -15,16 +15,20 @@ import {
 import { BASE_URL } from "configs";
 import { Field, Form, Formik } from "formik";
 import { useConfig } from "hooks";
-import { ReferralSchema } from "schemas";
+import { TeamNumberSchema } from "schemas";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
-const ReferralCharge = () => {
+const TeamNumberConfig = () => {
   const { config, setRealtime } = useConfig();
-  const initialValues = ReferralSchema?.reduce((accumulator, currentValue) => {
-    accumulator[currentValue.name] = currentValue.initialValue;
-    return accumulator;
-  }, {});
-  const validationSchema = ReferralSchema.reduce(
+  console.log(config);
+  const initialValues = TeamNumberSchema?.reduce(
+    (accumulator, currentValue) => {
+      accumulator[currentValue.name] = currentValue.initialValue;
+      return accumulator;
+    },
+    {}
+  );
+  const validationSchema = TeamNumberSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
       return accumulator;
@@ -37,7 +41,7 @@ const ReferralCharge = () => {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
         body: JSON.stringify({
-          referral: values?.referral,
+          hipoTeamNumber: values?.hipoTeamNumber,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +54,7 @@ const ReferralCharge = () => {
       result.status === 200
         ? Swal.fire({
             icon: "success",
-            text: "Referral Charge Updated Successfully",
+            text: "Hipo Team Number Updated Successfully",
           })
         : Swal.fire({ icon: "error", text: res?.message });
     } catch (error) {
@@ -65,8 +69,8 @@ const ReferralCharge = () => {
     >
       <Card sx={{ width: { lg: 500, md: 500, sm: 400, sx: 300 }, mt: "8vh" }}>
         <CardHeader
-          title="Set Referral Charge"
-          subheader="Set the referral charge for your users"
+          title="Set Team Number"
+          subheader="Set team number for your customers"
           titleTypographyProps={{ variant: "h6", textAlign: "center" }}
           subheaderTypographyProps={{
             variant: "subtitle1",
@@ -79,9 +83,9 @@ const ReferralCharge = () => {
           onSubmit={handleSetProfit}
           enableReinitialize
           initialValues={
-            config?.referral
+            config?.hipoTeamNumber
               ? {
-                  referral: config?.referral,
+                  hipoTeamNumber: config?.hipoTeamNumber,
                 }
               : initialValues
           }
@@ -89,7 +93,7 @@ const ReferralCharge = () => {
           {({ isSubmitting, isValid }) => (
             <Form>
               <CardContent>
-                {ReferralSchema?.map((inputItem) => (
+                {TeamNumberSchema?.map((inputItem) => (
                   <Field name={inputItem.name} key={inputItem.key}>
                     {(props) => {
                       if (inputItem.type === "select") {
@@ -168,4 +172,4 @@ const ReferralCharge = () => {
   );
 };
 
-export default ReferralCharge;
+export default TeamNumberConfig;

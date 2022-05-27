@@ -398,6 +398,12 @@ const MenuItems = [
     // route: "/manage-reviews",
     submenus: [
       {
+        key: "8",
+        title: "Team Number",
+        icon: <Phone className="iconColor" sx={{ color: "#000" }} />,
+        route: "/team-number-config",
+      },
+      {
         key: "1",
         title: "Rider Config",
         icon: <SystemUpdate className="iconColor" sx={{ color: "#000" }} />,
