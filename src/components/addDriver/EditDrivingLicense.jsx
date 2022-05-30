@@ -98,9 +98,11 @@ const EditDrivingLicense = ({ open, setRealtime, setOpenDocumentsDrawer }) => {
           open?.drivingLicense
             ? {
                 drivingLicenseNumber: open?.drivingLicense?.number,
-                drivingLicenseExpiryDate: new Date(open?.drivingLicense?.expiry)
-                  .toISOString()
-                  .split("T")[0],
+                drivingLicenseExpiryDate:
+                  open?.drivingLicense?.expiry &&
+                  new Date(open?.drivingLicense?.expiry)
+                    .toISOString()
+                    .split("T")[0],
                 category: open?.drivingLicense?.licenseType,
               }
             : initialValues
