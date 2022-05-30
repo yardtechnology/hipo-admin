@@ -530,7 +530,7 @@ const AllDrivers = () => {
                   <Tooltip title="View Statements">
                     <Avatar
                       variant="rounded"
-                      onClick={() => navigate("/driver-statement")}
+                      onClick={() => navigate(`/driver-statement/${row._id}`)}
                       sx={{
                         padding: "0px !important",
                         backgroundColor: "indigo",

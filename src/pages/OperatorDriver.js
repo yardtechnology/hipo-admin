@@ -18,7 +18,7 @@ import {
 import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
 import { SendNotification } from "components/dialog";
 import { BASE_URL } from "configs";
-import { useDrivers, useIsMounted } from "hooks";
+import { useIsMounted } from "hooks";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";

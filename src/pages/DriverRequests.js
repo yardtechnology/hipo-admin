@@ -16,13 +16,11 @@ import { useDriverRequests } from "hooks";
 // import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const DriverRequests = () => {
   const { driverRequests, setRealtime } = useDriverRequests();
   console.log(driverRequests);
-  const navigate = useNavigate();
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);

@@ -16,10 +16,44 @@ import {
   Typography,
 } from "@mui/material";
 import { Card as DashboardCard } from "components/dashboard";
+import { BASE_URL } from "configs";
+import { useIsMounted } from "hooks";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const DriverStatements = () => {
+  const { driverId } = useParams();
+  console.log(driverId);
+  const { isMounted } = useIsMounted();
+  const [statement, setStatement] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isMounted) return;
+      try {
+        const response = await fetch(
+          `${BASE_URL}/driver/ride-earning/${driverId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+            },
+          }
+        );
+        const arr = await response.json();
+        console.log(arr);
+        // const sortArr = arr?.data?.sort(
+        //   (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+        // );
+        setStatement(arr?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [isMounted, driverId]);
+  console.log(statement?.metaData?.revenue);
   return (
     <>
       <Breadcrumbs
@@ -47,7 +81,7 @@ const DriverStatements = () => {
       <Grid container spacing={2} sx={{ marginBottom: "5vh" }}>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
-            title={formatCurrency(555)}
+            title={formatCurrency(statement?.metaData?.revenue) || "00"}
             subtitle="Revenue"
             icon={<Money className="iconColor" />}
             // iconAction={<MoreVert sx={{ color: "snow" }} />}
@@ -56,7 +90,7 @@ const DriverStatements = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
-            title={18}
+            title={statement?.metaData?.completed_ride || "00"}
             subtitle="Completed Rides"
             icon={<Done className="iconColor" />}
             iconAction={"/rides/completed-rides"}
@@ -65,7 +99,7 @@ const DriverStatements = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
-            title={21}
+            title={statement?.metaData?.total_ride || "00"}
             subtitle="Total Rides"
             icon={<DirectionsCar className="iconColor" />}
             iconAction={"/vehicles"}
@@ -74,7 +108,7 @@ const DriverStatements = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
-            title={"15"}
+            title={statement?.metaData?.cancelled_ride || "00"}
             subtitle="Cancelled Rides"
             icon={<Cancel className="iconColor" />}
             iconAction={<MoreVert sx={{ color: "snow" }} />}
@@ -111,30 +145,18 @@ const DriverStatements = () => {
           exportAllData: true,
           sorting: true,
         }}
-        data={[
-          {
-            bookingTime: new Date().toString(),
-            pickAddress: "Sector-12, Noida",
-            dropAddress: "Sector-15, Noida",
-            invoiceNumber: "CRN-001121432546",
-            displayName: "Aliva Priyadarshini",
-            driverName: "Alexa",
-            pick: new Date().toString(),
-            dateOn: new Date().toString(),
-            paymentMode: "Cash",
-            collected: "555",
-            earned: "575",
-            drop: new Date().toString(),
-            rideId: "12345",
-            rideType: "Rental",
-            rideAmount: 245,
-            vehicleType: "Car",
-            phoneNumber: "+91 7887643625",
-            address: "Bbsr",
-            trips: "15",
-            status: "Initiated",
-          },
-        ]}
+        data={
+          statement?.rides === null
+            ? []
+            : statement?.rides
+                ?.sort(
+                  (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+                )
+                ?.map((item, i) => ({
+                  ...item,
+                  sl: i + 1,
+                }))
+        }
         columns={[
           {
             title: "#",
@@ -151,6 +173,8 @@ const DriverStatements = () => {
             title: "Ride Id",
             tooltip: "Ride Id",
             field: "rideId",
+            hidden: true,
+            export: true,
             // field: "displayName",
             // render: ({ photoURL, displayName, email }) => (
             //   <>
@@ -183,21 +207,21 @@ const DriverStatements = () => {
           {
             title: "Date On",
             field: "dateOn",
-            render: (rowData) => moment(rowData.dateOn).format("LL"),
+            render: (rowData) => moment(rowData.createdAt).format("LL"),
           },
           {
             title: "Payment Mode",
-            field: "paymentMode",
+            field: "paymentMethod",
           },
-          {
-            title: "Collected",
-            field: "collected",
-            render: (rowData) => formatCurrency(rowData?.collected),
-          },
+          // {
+          //   title: "Collected",
+          //   field: "collected",
+          //   render: (rowData) => formatCurrency(rowData?.collected),
+          // },
           {
             title: "Earned",
             field: "earned",
-            render: (rowData) => formatCurrency(rowData?.earned),
+            render: (rowData) => formatCurrency(rowData?.amount),
           },
         ]}
         // actions={[
@@ -241,6 +265,22 @@ const DriverStatements = () => {
                     gutterBottom
                     align="left"
                   >
+                    Ride Id:{" "}
+                    <span
+                      style={{
+                        color: "rgb(30, 136, 229)",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {rowData?._id}
+                    </span>
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    gutterBottom
+                    align="left"
+                  >
                     Pickup Time:{" "}
                     <span
                       style={{
@@ -248,7 +288,7 @@ const DriverStatements = () => {
                         fontSize: "15px",
                       }}
                     >
-                      {moment(rowData?.pick).format("llll")}
+                      {moment(rowData?.pickupTime).format("llll")}
                     </span>
                   </Typography>
                   <Typography
@@ -264,7 +304,7 @@ const DriverStatements = () => {
                         fontSize: "15px",
                       }}
                     >
-                      {moment(rowData?.drop).format("llll")}
+                      {moment(rowData?.dropTime).format("llll")}
                     </span>
                   </Typography>
                   <Typography variant="body1" gutterBottom align="left">
@@ -272,7 +312,7 @@ const DriverStatements = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.pickAddress}
+                      {rowData?.pickupLocation?.address}
                     </span>
                   </Typography>
                   <Typography variant="body1" gutterBottom align="left">
@@ -280,7 +320,7 @@ const DriverStatements = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.dropAddress}
+                      {rowData?.dropLocation?.address}
                     </span>
                   </Typography>
                 </CardContent>

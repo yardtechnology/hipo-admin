@@ -1,10 +1,6 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import {
-  DocumentScanner,
-  SupervisorAccount,
-  TwoWheeler,
-} from "@mui/icons-material";
+import { DocumentScanner } from "@mui/icons-material";
 import {
   Avatar,
   //   Card,
@@ -26,11 +22,9 @@ import { BASE_URL } from "configs";
 import { useOperatorRequests } from "hooks";
 import moment from "moment";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const OperatorRequest = () => {
-  const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
