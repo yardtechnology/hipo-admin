@@ -422,7 +422,7 @@ const Operators = () => {
                         mr: ".4vw",
                         cursor: "pointer",
                       }}
-                      onClick={() => navigate(`/operator-driver`)}
+                      onClick={() => navigate(`/operator-driver/${row._id}`)}
                     >
                       <SupervisorAccount />
                     </Avatar>

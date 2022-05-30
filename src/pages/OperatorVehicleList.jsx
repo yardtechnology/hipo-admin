@@ -31,7 +31,7 @@ const OperatorVehicleList = () => {
   const { operatorId } = useParams();
   console.log(operatorId);
   const { isMounted } = useIsMounted();
-  const { vehicles, setRealtime } = useVehicles();
+  const { setRealtime } = useVehicles();
   const [vehicleList, setVehicleList] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -211,7 +211,7 @@ const OperatorVehicleList = () => {
         }}
         title={"Operator Vehicle List"}
         data={
-          vehicles === null
+          vehicleList === null
             ? []
             : vehicleList?.map((vehicle, i) => ({
                 ...vehicle,
@@ -371,7 +371,7 @@ const OperatorVehicleList = () => {
             ),
           },
         ]}
-        isLoading={loading || vehicles === null}
+        isLoading={loading || vehicleList === null}
         actions={[
           // {
           //   tooltip: "Send notification to all selected users",

@@ -144,7 +144,10 @@ const PrivateRoutes = () => {
         <Route path="vehicle-categories" element={<VehicleCategories />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/incentives" element={<Incentives />} />
-        <Route path="/operator-driver" element={<OperatorDriver />} />
+        <Route
+          path="/operator-driver/:operatorId"
+          element={<OperatorDriver />}
+        />
         <Route path="/coupons" element={<Coupons />} />
         <Route path="/localization" element={<Localization />} />
         <Route path="/rides" element={<Rides />} />

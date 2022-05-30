@@ -226,37 +226,6 @@ const OperatorRequest = () => {
               <>
                 <div className="d-flex">
                   {" "}
-                  <Tooltip title="View Drivers">
-                    <Avatar
-                      variant="rounded"
-                      sx={{
-                        padding: " 0px !important",
-                        backgroundColor: "#f50057",
-                        mr: ".4vw",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => navigate(`/operator-requested-drivers`)}
-                    >
-                      <SupervisorAccount />
-                    </Avatar>
-                  </Tooltip>
-                  <Tooltip title="View Vehicles">
-                    <Avatar
-                      variant="rounded"
-                      sx={{
-                        padding: " 0px !important",
-                        backgroundColor: "blueViolet",
-                        mr: ".4vw",
-                        cursor: "pointer",
-                      }}
-                      // onClick={() => setOpenVehicleInfoDrawer(row)}
-                      onClick={() =>
-                        navigate(`/requested-operator-vehicle-list/${row._id}`)
-                      }
-                    >
-                      <TwoWheeler />
-                    </Avatar>
-                  </Tooltip>
                   <Tooltip title="View Documents">
                     <Avatar
                       variant="rounded"

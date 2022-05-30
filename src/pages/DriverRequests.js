@@ -1,6 +1,6 @@
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { DocumentScanner, TwoWheeler } from "@mui/icons-material";
+import { DocumentScanner } from "@mui/icons-material";
 import {
   Avatar,
   Chip,
@@ -226,23 +226,6 @@ const DriverRequests = () => {
             render: (row) => (
               <>
                 <div className="d-flex">
-                  <Tooltip title="View Vehicles">
-                    <Avatar
-                      variant="rounded"
-                      sx={{
-                        padding: " 0px !important",
-                        backgroundColor: "blueViolet",
-                        mr: ".4vw",
-                        cursor: "pointer",
-                      }}
-                      // onClick={() => setOpenVehicleInfoDrawer(row)}
-                      onClick={() =>
-                        navigate(`/requested-driver-vehicle-list/${row._id}`)
-                      }
-                    >
-                      <TwoWheeler />
-                    </Avatar>
-                  </Tooltip>
                   <Tooltip title="View Documents">
                     <Avatar
                       variant="rounded"
