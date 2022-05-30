@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const DriverStatements = () => {
-  const { driverId } = useParams();
+  const { driverId, driverName } = useParams();
   console.log(driverId);
   const { isMounted } = useIsMounted();
   const [statement, setStatement] = useState(null);
@@ -76,7 +76,7 @@ const DriverStatements = () => {
           fontWeight: "bold",
         }}
       >
-        Statements of Alexa
+        {driverName && `Statements of ${driverName}`}
       </Typography>
       <Grid container spacing={2} sx={{ marginBottom: "5vh" }}>
         <Grid item xs={12} sm={12} md={3} lg={3}>
@@ -288,7 +288,9 @@ const DriverStatements = () => {
                         fontSize: "15px",
                       }}
                     >
-                      {moment(rowData?.pickupTime).format("llll")}
+                      {rowData.pickupTime
+                        ? moment(rowData?.pickupTime).format("llll")
+                        : "Not Provided"}
                     </span>
                   </Typography>
                   <Typography
@@ -304,7 +306,9 @@ const DriverStatements = () => {
                         fontSize: "15px",
                       }}
                     >
-                      {moment(rowData?.dropTime).format("llll")}
+                      {rowData?.dropTime
+                        ? moment(rowData?.dropTime).format("llll")
+                        : "Not Provided"}
                     </span>
                   </Typography>
                   <Typography variant="body1" gutterBottom align="left">

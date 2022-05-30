@@ -8,6 +8,7 @@ import {
   ListItem,
   //   ListItemAvatar,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import { SendReply } from "components/dialog";
 import { BASE_URL } from "configs";
@@ -80,7 +81,7 @@ const HipoDrive = () => {
             : partnerApplications?.map((partnerApplication, i) => ({
                 ...partnerApplication,
                 sl: i + 1,
-                currentTimestamp: moment(partnerApplication.createdAt).format(
+                currentTimestamp: moment(partnerApplication?.createdAt).format(
                   "LL"
                 ),
                 //   createdAt: moment(enquiry.createdAt).format("LL"),
@@ -107,7 +108,13 @@ const HipoDrive = () => {
                   <ListItemText
                     primary={fullName}
                     // secondary={email}
-                    secondary={phoneNumber}
+                    secondary={
+                      <Typography>
+                        {phoneNumber}
+                        <br />
+                        {email}
+                      </Typography>
+                    }
                   ></ListItemText>
                 </ListItem>
               </>
