@@ -39,3 +39,4 @@ export { default as useCancelledRides } from "./useCancelledRides";
 export { default as useOutstationRides } from "./useOutstationRides";
 export { default as useRentalRides } from "./useRentalRides";
 export { default as useCompletedRides } from "./useCompletedRides";
+export { default as useDriverPayments } from "./useDriverPayments";

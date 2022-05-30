@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
+import { useDriverPayments } from "hooks";
 // import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
@@ -22,7 +23,8 @@ const DriverPayment = () => {
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
-
+  const { driverPayments } = useDriverPayments();
+  console.log(driverPayments);
   return (
     <>
       {" "}

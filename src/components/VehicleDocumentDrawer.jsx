@@ -49,7 +49,6 @@ const VehicleDocumentDrawer = ({
             Documents
           </Typography>
           <div>
-            {" "}
             <Accordion sx={{ marginTop: "3vh" }}>
               <AccordionSummary
                 expandIcon={
@@ -111,20 +110,20 @@ const VehicleDocumentDrawer = ({
                       >
                         <Grid item lg={8} md={12} sm={12} xs={12}>
                           <div>
-                            Number:
-                            {open ? open?.insurance?.number : "--"}
+                            {open?.insurance?.number
+                              ? `Number:   ${open?.insurance?.number}`
+                              : ""}
                           </div>
                           <div
                             style={{
                               marginBottom: "5vh",
                             }}
                           >
-                            Expiry:
-                            {open
-                              ? moment(open?.insurance?.expiry).format(
-                                  "DD/MM/YYYY"
-                                )
-                              : "--"}
+                            {open?.insurance?.expiry
+                              ? `Expiry:   ${moment(
+                                  open?.insurance?.expiry
+                                ).format("DD/MM/YYYY")}`
+                              : ""}
                           </div>
                         </Grid>
                         <Grid
