@@ -234,7 +234,7 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
                         }}
                       >
                         Number:{""}
-                        {open?.drivingLicense?.number}
+                        {open?.drivingLicense?.number || "Not Provided"}
                       </Typography>
                       <Typography
                         sx={{
@@ -244,9 +244,21 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
                         }}
                       >
                         Expiry:{""}
-                        {new Date(
-                          `${open?.drivingLicense?.expiry}`
-                        ).toLocaleDateString() || "Not Provided"}
+                        {open?.drivingLicense?.expiry
+                          ? new Date(
+                              `${open?.drivingLicense?.expiry}`
+                            ).toLocaleDateString()
+                          : "Not Provided"}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          marginTop: "2vh",
+                          p: "1.5vh 5vw 0vh 5vw ",
+                        }}
+                      >
+                        License Type:{""}
+                        {open?.drivingLicense?.licenseType || "Not Provided"}
                       </Typography>
                       <Grid
                         container

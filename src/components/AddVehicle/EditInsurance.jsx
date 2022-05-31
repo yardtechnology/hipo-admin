@@ -36,13 +36,14 @@ const EditInsuranceInfo = ({
   const handleEditInsurance = async (values, submitProps) => {
     console.log(values);
     const formdata = new FormData();
-    value && formdata.append("insurance", value?.target.files[0]);
+    value !== details?.insurance?.url &&
+      formdata.append("insurance", value?.target.files[0]);
     formdata.append("insuranceExpiry", values?.validTill);
     formdata.append("insuranceNumber", values?.insuranceNumber);
 
     try {
       console.log(values);
-      const response = await fetch(`${BASE_URL}/driver/${details?._id}`, {
+      const response = await fetch(`${BASE_URL}/vehicle/${details?._id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
@@ -116,26 +117,25 @@ const EditInsuranceInfo = ({
                   />
                 )}
               </Field>
-              {details?.insurance?.expiry && (
-                <Field name={"validTill"}>
-                  {(props) => (
-                    <TextField
-                      required
-                      InputLabelProps={{ shrink: true }}
-                      fullWidth
-                      margin="normal"
-                      label={"Enter Insurance Expiry Date"}
-                      type={"date"}
-                      inputProps={{
-                        min: new Date().toISOString().split("T")[0],
-                      }}
-                      error={Boolean(props.meta.touched && props.meta.error)}
-                      helperText={props.meta.touched && props.meta.error}
-                      {...props.field}
-                    />
-                  )}
-                </Field>
-              )}
+
+              <Field name={"validTill"}>
+                {(props) => (
+                  <TextField
+                    required
+                    InputLabelProps={{ shrink: true }}
+                    fullWidth
+                    margin="normal"
+                    label={"Enter Insurance Expiry Date"}
+                    type={"date"}
+                    inputProps={{
+                      min: new Date().toISOString().split("T")[0],
+                    }}
+                    error={Boolean(props.meta.touched && props.meta.error)}
+                    helperText={props.meta.touched && props.meta.error}
+                    {...props.field}
+                  />
+                )}
+              </Field>
             </CardContent>
             <CardActions style={{ justifyContent: "flex-end" }}>
               <LoadingButton

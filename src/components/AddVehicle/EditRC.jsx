@@ -1,42 +1,61 @@
-import { CardActions, Grid } from "@mui/material";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { CardContent, TextField, CardActions, Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Done } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import { AadharUpload } from "components/core";
 import { useState } from "react";
 import { UPLOADRC } from "assets";
+import moment from "moment";
 import { BASE_URL } from "configs";
-
 const EditRC = ({ details, setRealtime, setOpenVehicleDocumentDrawer }) => {
-  const [value, setValue] = useState();
-  const [loading, setLoading] = useState(false);
-  const handleEditRC = async () => {
-    setLoading(true);
-    var formData = new FormData();
-    formData.append("rc", value?.target?.files[0]);
+  console.log(details);
+  const [value, setValue] = useState(details?.rc?.url);
+  const initialValues = {
+    rcNumber: "",
+    validTill: "",
+  };
+  const validationSchema = {
+    rcNumber: Yup.string().required("Rc Number is Required"),
+    validTill: Yup.string().test(
+      "validTill",
+      "RC Expiry Date Must Be Today or After",
+      (value) => {
+        return moment(value).isSameOrAfter(
+          moment(new Date().toISOString().split("T")[0])
+        );
+      }
+    ),
+  };
+  const handleEditRc = async (values, submitProps) => {
+    console.log(values);
+    const formdata = new FormData();
+    value !== details?.rc?.url && formdata.append("rc", value?.target.files[0]);
+    formdata.append("rcExpiry", values?.validTill);
+    formdata.append("rcNumber", values?.rcNumber);
+
     try {
-      //   setAadharCardInfo({ ...values, imgFile: value, imgFile1: value1 });
-      const response = await fetch(
-        `${BASE_URL}/update-vehicle?vehicleId=${details?._id}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-          },
-          body: formData,
-        }
-      );
+      console.log(values);
+      const response = await fetch(`${BASE_URL}/vehicle/${details?._id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+        body: formdata,
+      });
       const res = await response.json();
       console.log(res);
       res?.status === 200
-        ? Swal.fire("Success", "RC updated", "success")
-        : Swal.fire("Error", "Something Went Wrong", "error");
+        ? Swal.fire("Success", "RC Updated", "success")
+        : Swal.fire("Error", "RC Not Updated", "error");
+      submitProps.resetForm();
     } catch (error) {
-      console.log(error.message);
+      Swal.fire({ icon: "error", text: error.message });
+      console.log(error);
     } finally {
-      setRealtime((prev) => !prev);
       setOpenVehicleDocumentDrawer(false);
-      setLoading(false);
+      setRealtime((prev) => !prev);
     }
   };
   return (
@@ -45,35 +64,87 @@ const EditRC = ({ details, setRealtime, setOpenVehicleDocumentDrawer }) => {
         container
         spacing={2}
         sx={{
-          p: "2vh 1.2vw 0vh 1.2vw ",
+          p: "4vh 2vw 0vh 2vw ",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Grid item lg={12} md={12} sm={12} xs={12} sx={{ textAlign: "center" }}>
+        <Grid item lg={8} md={8} sm={12} xs={12} sx={{ textAlign: "center" }}>
           <AadharUpload
             width={"100%"}
-            height={"100%"}
-            value={value || details?.rc?.url || UPLOADRC}
+            value={value || UPLOADRC}
             onChange={setValue}
           />
         </Grid>
       </Grid>
+      <Formik
+        initialValues={
+          details?.rc
+            ? {
+                rcNumber: details?.rc?.number,
+                validTill:
+                  details?.rc?.expiry &&
+                  new Date(details?.rc?.expiry).toISOString().split("T")[0],
+              }
+            : initialValues
+        }
+        enableReinitialize
+        validationSchema={Yup.object(validationSchema)}
+        onSubmit={handleEditRc}
+      >
+        {({ isSubmitting, isValid }) => (
+          <Form>
+            <CardContent>
+              <Field name={"rcNumber"}>
+                {(props) => (
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    label={"Enter RC Number"}
+                    InputLabelProps={{ shrink: true }}
+                    error={Boolean(props.meta.touched && props.meta.error)}
+                    helperText={props.meta.touched && props.meta.error}
+                    required
+                    {...props.field}
+                  />
+                )}
+              </Field>
 
-      <CardActions style={{ justifyContent: "flex-end" }}>
-        <LoadingButton
-          onClick={handleEditRC}
-          className=" btn-background"
-          variant="contained"
-          type="submit"
-          disabled={!value || loading}
-          loading={loading}
-          loadingPosition="start"
-          startIcon={<Done />}
-        >
-          Save
-        </LoadingButton>
-      </CardActions>
+              <Field name={"validTill"}>
+                {(props) => (
+                  <TextField
+                    required
+                    InputLabelProps={{ shrink: true }}
+                    fullWidth
+                    margin="normal"
+                    label={"Enter RC Expiry Date"}
+                    type={"date"}
+                    inputProps={{
+                      min: new Date().toISOString().split("T")[0],
+                    }}
+                    error={Boolean(props.meta.touched && props.meta.error)}
+                    helperText={props.meta.touched && props.meta.error}
+                    {...props.field}
+                  />
+                )}
+              </Field>
+            </CardContent>
+            <CardActions style={{ justifyContent: "flex-end" }}>
+              <LoadingButton
+                className="btn-background"
+                variant="contained"
+                type="submit"
+                disabled={isSubmitting || !isValid || !value}
+                loading={isSubmitting}
+                loadingPosition="start"
+                startIcon={<Done />}
+              >
+                Save
+              </LoadingButton>
+            </CardActions>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 };

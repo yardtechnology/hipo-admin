@@ -238,6 +238,24 @@ const VehicleDocumentDrawer = ({
                           marginTop: "2vh",
                         }}
                       >
+                        <Grid item lg={8} md={12} sm={12} xs={12}>
+                          <div>
+                            {open?.rc?.number
+                              ? `Number:   ${open?.rc?.number}`
+                              : ""}
+                          </div>
+                          <div
+                            style={{
+                              marginBottom: "5vh",
+                            }}
+                          >
+                            {open?.rc?.expiry
+                              ? `Expiry:   ${moment(open?.rc?.expiry).format(
+                                  "DD/MM/YYYY"
+                                )}`
+                              : ""}
+                          </div>
+                        </Grid>
                         <Grid
                           item
                           lg={10}
