@@ -36,7 +36,7 @@ const EditInsuranceInfo = ({
   const handleEditInsurance = async (values, submitProps) => {
     console.log(values);
     const formdata = new FormData();
-    // value && formdata.append("insurance", value?.target.files[0]);
+    value && formdata.append("insurance", value?.target.files[0]);
     formdata.append("insuranceExpiry", values?.validTill);
     formdata.append("insuranceNumber", values?.insuranceNumber);
 

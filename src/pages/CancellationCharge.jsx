@@ -36,11 +36,12 @@ const CancellationCharge = () => {
     {}
   );
   const handleSetProfit = async (values, submitProps) => {
+    console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
         body: JSON.stringify({
-          cancellationCharge: {
+          cancellation: {
             percentage: values?.percentage,
             maxCharge: values?.maxCharge,
             minTimePercentage: values?.minTimePercentage,
@@ -53,7 +54,8 @@ const CancellationCharge = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      result.status === 200
+      console.log(res);
+      result?.status === 200
         ? Swal.fire({
             icon: "success",
             text: "Cancellation Charge Updated Successfully",
