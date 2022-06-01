@@ -191,20 +191,25 @@ const ScheduledRides = () => {
                     <AssignmentInd />
                   </Avatar>
                 </Tooltip>
-                <Tooltip title="Assign Vehicle">
-                  <Avatar
-                    variant="rounded"
-                    sx={{
-                      backgroundColor: "teal",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      setOpenAssignVehicleDrawer(rowData);
-                    }}
-                  >
-                    <DriveEta />
-                  </Avatar>
-                </Tooltip>
+                {rowData?.rideType === "RENTAL_RIDE" &&
+                rowData?.rentalType === "SELF_DRIVE" ? (
+                  <Tooltip title="Assign Vehicle">
+                    <Avatar
+                      variant="rounded"
+                      sx={{
+                        backgroundColor: "teal",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setOpenAssignVehicleDrawer(rowData);
+                      }}
+                    >
+                      <DriveEta />
+                    </Avatar>
+                  </Tooltip>
+                ) : (
+                  ""
+                )}
               </div>
             ),
           },
