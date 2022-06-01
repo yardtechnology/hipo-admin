@@ -13,7 +13,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { EditRC, EditInsurance } from "./AddVehicle";
+import {
+  EditRC,
+  EditInsurance,
+  EditFitness,
+  EditRoutePermit,
+  EditPUC,
+} from "./AddVehicle";
 import moment from "moment";
 const VehicleDocumentDrawer = ({
   open,
@@ -77,23 +83,25 @@ const VehicleDocumentDrawer = ({
                   marginBottom: "2vh",
                 }}
               >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
                 icon={<Notifications />}
                 iconPosition="start"
                 label="Notification"
               /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
                 <CardContent>
                   {value === 0 && (
                     <>
@@ -207,23 +215,25 @@ const VehicleDocumentDrawer = ({
                   marginBottom: "2vh",
                 }}
               >
-                <Tabs
-                  value={value}
-                  onChange={(e, i) => setValue(i)}
-                  aria-label="icon position tabs example"
-                >
-                  <Tab
-                    icon={<Visibility />}
-                    iconPosition="start"
-                    label="View"
-                  />
-                  {/* <Tab
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
                 icon={<Notifications />}
                 iconPosition="start"
                 label="Notification"
               /> */}
-                  <Tab icon={<Edit />} iconPosition="start" label="Edit" />
-                </Tabs>
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
                 <CardContent>
                   {value === 0 && (
                     <>
@@ -300,7 +310,406 @@ const VehicleDocumentDrawer = ({
                   )}
                 </CardContent>
               </AccordionDetails>
-            </Accordion>{" "}
+            </Accordion>
+            <Accordion sx={{ marginTop: "3vh" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMore />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{ margin: "0vh" }}
+              >
+                <Typography
+                  component={"h6"}
+                  variant="h6"
+                  sx={{ color: "GrayText" }}
+                >
+                  {" "}
+                  Fitness Info
+                </Typography>
+              </AccordionSummary>
+              {/* <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Holder Name - Alexa Aryan
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Bank Name - State Bank Of India
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  IFSC code - UTIB0000001
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Number - 123456789
+                </Typography>
+              </AccordionDetails> */}
+              <AccordionDetails
+                sx={{
+                  marginTop: "0vh",
+                  paddingTop: "0vh",
+                  marginBottom: "2vh",
+                }}
+              >
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
+                icon={<Notifications />}
+                iconPosition="start"
+                label="Notification"
+              /> */}
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
+                <CardContent>
+                  {value === 0 && (
+                    <>
+                      {" "}
+                      <Grid
+                        container
+                        spacing={1}
+                        sx={{
+                          p: "0vh 1.2vw 0vh 1.2vw ",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: "2vh",
+                        }}
+                      >
+                        <Grid item lg={8} md={12} sm={12} xs={12}>
+                          <div>
+                            {open?.fitness?.number
+                              ? `Number:   ${open?.fitness?.number}`
+                              : ""}
+                          </div>
+                          <div
+                            style={{
+                              marginBottom: "5vh",
+                            }}
+                          >
+                            {open?.fitness?.expiry
+                              ? `Expiry:   ${moment(
+                                  open?.fitness?.expiry
+                                ).format("DD/MM/YYYY")}`
+                              : ""}
+                          </div>
+                        </Grid>
+                        <Grid
+                          item
+                          lg={10}
+                          md={12}
+                          sm={12}
+                          xs={12}
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                              transform: "scale(1.5)",
+                              transition: "transform 0.5s",
+                              zIndex: "1",
+                              paddingLeft: "2vw",
+                              backdropFilter: "blur(5px)",
+                              paddingTop: "1vh",
+                            },
+                          }}
+                        >
+                          {" "}
+                          <Avatar
+                            alt=""
+                            src={open?.fitness?.url}
+                            variant="square"
+                            sx={{
+                              width: "auto",
+                              height: "auto",
+                            }}
+                          />{" "}
+                        </Grid>
+                      </Grid>
+                    </>
+                  )}
+                  {/* {value === 1 && <Notification />} */}
+                  {value === 1 && (
+                    <EditFitness
+                      details={open}
+                      setOpenVehicleDocumentDrawer={
+                        setOpenVehicleDocumentDrawer
+                      }
+                      setRealtime={setRealtime}
+                    />
+                  )}
+                </CardContent>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion sx={{ marginTop: "3vh" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMore />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{ margin: "0vh" }}
+              >
+                <Typography
+                  component={"h6"}
+                  variant="h6"
+                  sx={{ color: "GrayText" }}
+                >
+                  {" "}
+                  Route Permit Info
+                </Typography>
+              </AccordionSummary>
+              {/* <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Holder Name - Alexa Aryan
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Bank Name - State Bank Of India
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  IFSC code - UTIB0000001
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Number - 123456789
+                </Typography>
+              </AccordionDetails> */}
+              <AccordionDetails
+                sx={{
+                  marginTop: "0vh",
+                  paddingTop: "0vh",
+                  marginBottom: "2vh",
+                }}
+              >
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
+                icon={<Notifications />}
+                iconPosition="start"
+                label="Notification"
+              /> */}
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
+                <CardContent>
+                  {value === 0 && (
+                    <>
+                      {" "}
+                      <Grid
+                        container
+                        spacing={1}
+                        sx={{
+                          p: "0vh 1.2vw 0vh 1.2vw ",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: "2vh",
+                        }}
+                      >
+                        <Grid item lg={8} md={12} sm={12} xs={12}>
+                          <div>
+                            {open?.routePermit?.number
+                              ? `Number:   ${open?.routePermit?.number}`
+                              : ""}
+                          </div>
+                          <div
+                            style={{
+                              marginBottom: "5vh",
+                            }}
+                          >
+                            {open?.routePermit?.expiry
+                              ? `Expiry:   ${moment(
+                                  open?.routePermit?.expiry
+                                ).format("DD/MM/YYYY")}`
+                              : ""}
+                          </div>
+                        </Grid>
+                        <Grid
+                          item
+                          lg={10}
+                          md={12}
+                          sm={12}
+                          xs={12}
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                              transform: "scale(1.5)",
+                              transition: "transform 0.5s",
+                              zIndex: "1",
+                              paddingLeft: "2vw",
+                              backdropFilter: "blur(5px)",
+                              paddingTop: "1vh",
+                            },
+                          }}
+                        >
+                          {" "}
+                          <Avatar
+                            alt=""
+                            src={open?.routePermit?.url}
+                            variant="square"
+                            sx={{
+                              width: "auto",
+                              height: "auto",
+                            }}
+                          />{" "}
+                        </Grid>
+                      </Grid>
+                    </>
+                  )}
+                  {/* {value === 1 && <Notification />} */}
+                  {value === 1 && (
+                    <EditRoutePermit
+                      details={open}
+                      setOpenVehicleDocumentDrawer={
+                        setOpenVehicleDocumentDrawer
+                      }
+                      setRealtime={setRealtime}
+                    />
+                  )}
+                </CardContent>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion sx={{ marginTop: "3vh" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMore />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{ margin: "0vh" }}
+              >
+                <Typography
+                  component={"h6"}
+                  variant="h6"
+                  sx={{ color: "GrayText" }}
+                >
+                  {" "}
+                  PUC Info
+                </Typography>
+              </AccordionSummary>
+              {/* <AccordionDetails sx={{ marginTop: "0vh", paddingTop: "0vh" }}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Holder Name - Alexa Aryan
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Bank Name - State Bank Of India
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  IFSC code - UTIB0000001
+                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Account Number - 123456789
+                </Typography>
+              </AccordionDetails> */}
+              <AccordionDetails
+                sx={{
+                  marginTop: "0vh",
+                  paddingTop: "0vh",
+                  marginBottom: "2vh",
+                }}
+              >
+                {open?.status !== "PENDING" && (
+                  <Tabs
+                    value={value}
+                    onChange={(e, i) => setValue(i)}
+                    aria-label="icon position tabs example"
+                  >
+                    <Tab
+                      icon={<Visibility />}
+                      iconPosition="start"
+                      label="View"
+                    />
+                    {/* <Tab
+                icon={<Notifications />}
+                iconPosition="start"
+                label="Notification"
+              /> */}
+                    <Tab icon={<Edit />} iconPosition="start" label="Edit" />
+                  </Tabs>
+                )}
+                <CardContent>
+                  {value === 0 && (
+                    <>
+                      {" "}
+                      <Grid
+                        container
+                        spacing={1}
+                        sx={{
+                          p: "0vh 1.2vw 0vh 1.2vw ",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginTop: "2vh",
+                        }}
+                      >
+                        <Grid item lg={8} md={12} sm={12} xs={12}>
+                          <div>
+                            {open?.pollution?.number
+                              ? `Number:   ${open?.pollution?.number}`
+                              : ""}
+                          </div>
+                          <div
+                            style={{
+                              marginBottom: "5vh",
+                            }}
+                          >
+                            {open?.pollution?.expiry
+                              ? `Expiry:   ${moment(
+                                  open?.pollution?.expiry
+                                ).format("DD/MM/YYYY")}`
+                              : ""}
+                          </div>
+                        </Grid>
+                        <Grid
+                          item
+                          lg={10}
+                          md={12}
+                          sm={12}
+                          xs={12}
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                              transform: "scale(1.5)",
+                              transition: "transform 0.5s",
+                              zIndex: "1",
+                              paddingLeft: "2vw",
+                              backdropFilter: "blur(5px)",
+                              paddingTop: "1vh",
+                            },
+                          }}
+                        >
+                          {" "}
+                          <Avatar
+                            alt=""
+                            src={open?.pollution?.url}
+                            variant="square"
+                            sx={{
+                              width: "auto",
+                              height: "auto",
+                            }}
+                          />{" "}
+                        </Grid>
+                      </Grid>
+                    </>
+                  )}
+                  {/* {value === 1 && <Notification />} */}
+                  {value === 1 && (
+                    <EditPUC
+                      details={open}
+                      setOpenVehicleDocumentDrawer={
+                        setOpenVehicleDocumentDrawer
+                      }
+                      setRealtime={setRealtime}
+                    />
+                  )}
+                </CardContent>
+              </AccordionDetails>
+            </Accordion>
           </div>
 
           {/* <Typography

@@ -51,6 +51,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
   );
 
   const handleSend = async (values, submitProps) => {
+    console.log(values);
     // const formData = new FormData();
     // formData.append("vehicleType", values.vehicleType);
     // formData.append("vehicleNumber", values.vehicleNumber);
@@ -147,7 +148,8 @@ const VehicleBasicDetails = ({ handleNext }) => {
                 vehicleType: vehicleBasicDetails?.vehicleType,
                 vehicleNumber: vehicleBasicDetails?.vehicleNumber,
                 vehicleModel: vehicleBasicDetails?.vehicleModel,
-                vehicleMaker: vehicleBasicDetails?.vehicleMaker,
+                vehicleMaker:
+                  vehicleBasicDetails?.vehicleMaker || vehicleMakerId,
               }
             : initialValues
         }
@@ -262,11 +264,19 @@ const VehicleBasicDetails = ({ handleNext }) => {
                               mb: "2vh",
                             }}
                             id="combo-box-demo"
-                            options={inputItem?.options}
+                            options={
+                              inputItem?.options
+                                ? inputItem?.options.map((option) => ({
+                                    value: option?.value,
+                                    key: option?.key,
+                                  }))
+                                : []
+                            }
                             getOptionLabel={(option) => option?.vehicleType}
-                            clearText="Clear"
                             value={props.field.value}
                             onChange={(e, value) => {
+                              console.log({ props });
+                              console.log({ value });
                               setVehicleMakerId(value?.key);
                               formik.setFieldValue("vehicleMaker", value?.key);
                               formik.setFieldTouched("vehicleMaker", true);

@@ -72,7 +72,7 @@ const PUCInfo = ({ handleReset, handleBack }) => {
     formdata.append("fitnessNumber", fitnessInfo?.fitnessNumber);
     formdata.append("routePermit", permitInfo?.permitImage?.target.files[0]);
     formdata.append("routePermitExpiry", permitInfo?.validTill);
-    formdata.append("routetPermitNumber", permitInfo?.permitNumber);
+    formdata.append("routePermitNumber", permitInfo?.permitNumber);
     try {
       const response = await fetch(`${BASE_URL}/vehicle`, {
         method: "POST",
