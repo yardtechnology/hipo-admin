@@ -10,12 +10,13 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Email, Send } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { withAuthLayout } from "layouts";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
   const initialValues = {
     email: "",
   };
@@ -26,27 +27,28 @@ const ForgotPassword = () => {
   };
   const handleForgotPassword = async (values, submitProps) => {
     try {
-      const result = await fetch(
-        `${BASE_URL}/auth/set-password/forgetpassword`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            email: values?.email,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      console.log(values?.email);
+      const result = await fetch(`${BASE_URL}/forgot-password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values?.email,
+        }),
+      });
       const res = await result.json();
       console.log(res);
       result.status === 200
-        ? Swal.fire({ icon: "success", text: res?.success?.message })
-        : Swal.fire({ icon: "error", text: res.error.message });
+        ? Swal.fire({ icon: "success", text: res?.message })
+        : Swal.fire({ icon: "error", text: res?.message });
       submitProps.resetForm();
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
+    } finally {
+      navigate(`/set-password/${values?.email}`);
+      submitProps.setSubmitting(false);
     }
   };
   return (
@@ -55,7 +57,7 @@ const ForgotPassword = () => {
         <>
           <CardHeader
             title="Forgot your password?"
-            subheader="Please enter the email address associated with your account and We will email you a link to reset your password."
+            subheader="Please enter the email address associated with your account and We will email you an otp to reset your password."
             titleTypographyProps={{
               gutterBottom: true,
               align: "center",

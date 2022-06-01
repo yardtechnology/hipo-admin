@@ -1,26 +1,37 @@
-import { Container, Card, CardHeader, CardContent } from "@mui/material";
+import {
+  Container,
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+  CardActions,
+} from "@mui/material";
 import { LOGO } from "assets";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "components/core";
 import { LoadingButton } from "@mui/lab";
 import { VpnKey } from "@mui/icons-material";
-import { ChangePasswordSchema } from "schemas";
+import { SetPasswordSchema } from "schemas";
 import { useAppContext } from "contexts";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-const ChangePassword = () => {
+const SetPassword = () => {
+  const navigate = useNavigate();
   const { user } = useAppContext();
   console.log(user);
-  const initialValues = ChangePasswordSchema.reduce(
+  const { email } = useParams();
+  console.log(email);
+  const initialValues = SetPasswordSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
       return accumulator;
     },
     {}
   );
-  const validationSchema = ChangePasswordSchema.reduce(
+  const validationSchema = SetPasswordSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
       return accumulator;
@@ -29,16 +40,16 @@ const ChangePassword = () => {
   );
   const handleChangePassword = async (values, submitProps) => {
     try {
+      console.log(values);
       const result = await fetch(`${BASE_URL}/change-password`, {
         method: "PUT",
         body: JSON.stringify({
-          email: user?.email,
+          email: email,
           newPassword: values?.newPassword,
-          oldPassword: values?.currentPassword,
+          OTP: values?.currentPassword,
         }),
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
       });
       const res = await result.json();
@@ -47,6 +58,7 @@ const ChangePassword = () => {
         ? Swal.fire({ icon: "success", text: res?.message })
         : Swal.fire({ icon: "error", text: res?.message });
       submitProps.resetForm();
+      result?.status === 200 && navigate("/");
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
@@ -59,20 +71,24 @@ const ChangePassword = () => {
           maxWidth="sm"
           className="d-flex place-content-center place-items-center"
         >
-          <Card>
-            <div className="" style={{ textAlign: "center", marginTop: "2vh" }}>
+          <Card
+            sx={{
+              mt: "2vh",
+            }}
+          >
+            <div className="" style={{ textAlign: "center", marginTop: "1vh" }}>
               <img src={LOGO} alt="logo" width="150" />
             </div>
 
             <CardHeader
-              title="Change Password"
-              subheader="Enter a New Password Below to change your Password"
+              title="Set Password"
+              subheader="Enter your otp and a new password below to set your password"
               titleTypographyProps={{
                 gutterBottom: true,
                 align: "center",
               }}
               subheaderTypographyProps={{
-                gutterBottom: true,
+                // gutterBottom: true,
                 align: "center",
               }}
             />
@@ -83,8 +99,13 @@ const ChangePassword = () => {
             >
               {({ isSubmitting, isValid }) => (
                 <Form>
-                  <CardContent>
-                    {ChangePasswordSchema.map((inputItem) => (
+                  <CardContent
+                    sx={{
+                      paddingTop: "0vh",
+                      paddingBottom: "0vh",
+                    }}
+                  >
+                    {SetPasswordSchema.map((inputItem) => (
                       <TextInput
                         key={inputItem.key}
                         name={inputItem?.name}
@@ -109,6 +130,15 @@ const ChangePassword = () => {
                       </LoadingButton>
                     </div>
                   </CardContent>
+                  <CardActions className="place-content-center">
+                    <Button
+                      component={Link}
+                      to="/login"
+                      sx={{ color: "#1877f2" }}
+                    >
+                      Back to Login
+                    </Button>
+                  </CardActions>
                 </Form>
               )}
             </Formik>
@@ -119,4 +149,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default SetPassword;

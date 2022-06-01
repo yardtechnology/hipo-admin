@@ -264,14 +264,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
                               mb: "2vh",
                             }}
                             id="combo-box-demo"
-                            options={
-                              inputItem?.options
-                                ? inputItem?.options.map((option) => ({
-                                    value: option?.value,
-                                    key: option?.key,
-                                  }))
-                                : []
-                            }
+                            options={inputItem?.options}
                             getOptionLabel={(option) => option?.vehicleType}
                             value={props.field.value}
                             onChange={(e, value) => {

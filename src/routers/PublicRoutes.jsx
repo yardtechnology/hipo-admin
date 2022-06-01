@@ -1,4 +1,4 @@
-import { ForgotPassword, Login, VerifyOtp } from "pages";
+import { ForgotPassword, Login, SetPassword, VerifyOtp } from "pages";
 import { Routes, Route } from "react-router-dom";
 
 const PublicRoutes = () => {
@@ -8,6 +8,7 @@ const PublicRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/verify-otp" element={<VerifyOtp />} />
+      <Route path="/set-password/:email" element={<SetPassword />} />
     </Routes>
   );
 };

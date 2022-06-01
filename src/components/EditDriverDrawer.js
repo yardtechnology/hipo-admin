@@ -71,13 +71,12 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer, setRealtime }) => {
       res?.status === 200
         ? Swal.fire("Success", "Driver Updated Successfully", "success")
         : Swal.fire("Error", "Driver Not Updated", "error");
-      submitProps.resetForm();
     } catch (error) {
       console.log(error);
     } finally {
       submitProps.setSubmitting(false);
-      setOpenEditDriverDrawer(false);
       setRealtime((prev) => !prev);
+      setOpenEditDriverDrawer(false);
     }
   };
   return (
