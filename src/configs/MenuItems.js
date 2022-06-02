@@ -445,6 +445,12 @@ const MenuItems = [
         icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
         route: "/referral-charge",
       },
+      {
+        key: "9",
+        title: "Set Rental Package",
+        icon: <CarRental className="iconColor" sx={{ color: "#000" }} />,
+        route: "/rental-package",
+      },
     ],
   },
   {

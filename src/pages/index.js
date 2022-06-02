@@ -99,6 +99,7 @@ export const RequestedOperatorVehicleList = lazy(() =>
   import("./RequestedOperatorVehicleList")
 );
 export const SetPassword = lazy(() => import("./SetPassword"));
+export const SetRentalPackage = lazy(() => import("./SetRentalPackage"));
 // export const OperatorDriverList = lazy(() => import("./OperatorDriverList"));
 // export const OperatorRequestedDriverList = lazy(() =>
 //   import("./OperatorRequestedDriverList")

@@ -40,3 +40,4 @@ export { default as useOutstationRides } from "./useOutstationRides";
 export { default as useRentalRides } from "./useRentalRides";
 export { default as useCompletedRides } from "./useCompletedRides";
 export { default as useDriverPayments } from "./useDriverPayments";
+export { default as useRentalPackages } from "./useRentalPackages";

@@ -82,6 +82,7 @@ import {
   RequestedOperatorVehicleList,
   OperatorVehicleList,
   TeamNumberConfig,
+  SetRentalPackage,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -202,6 +203,7 @@ const PrivateRoutes = () => {
           path="/requested-operator-vehicle-list/:operatorId"
           element={<RequestedOperatorVehicleList />}
         />
+        <Route path="/rental-package" element={<SetRentalPackage />} />
       </Routes>
     </PanelLayout>
   );
