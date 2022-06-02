@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
 const useSupports = () => {
-  const [supports, setSupports] = useState(null);
+  const [supports, setSupports] = useState([]);
+  console.log(supports);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
-  useEffect(() => {
-    const fetchSupports = async () => {
+  const fetchSupports = useCallback(
+    async (pageSize, page) => {
       try {
+        console.log(pageSize, page);
         const response = await fetch(`${BASE_URL}/support-forms/all`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
@@ -22,15 +24,21 @@ const useSupports = () => {
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
         isMounted.current && setSupports(sortArr);
+        return sortArr;
       } catch (error) {
         console.log(error);
       }
-    };
+    },
+    [isMounted]
+  );
+
+  useEffect(() => {
     fetchSupports();
-  }, [isMounted, realtime]);
+  }, [fetchSupports, isMounted, realtime]);
   return {
     supports,
     setRealtime,
+    fetchSupports,
   };
 };
 

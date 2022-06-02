@@ -75,17 +75,31 @@ const Supports = () => {
           ],
         }}
         title={"Supports"}
+        // data={
+        //   async (query) => {
+        //     const data = await fetchSupports(query?.pageSize, query?.page);
+        //     console.log(data);
+        //     return data === null
+        //       ? []
+        //       : data?.map((supports) => ({
+        //           ...supports,
+        //           // createdAt: moment(supports.createdAt).format("DD-MM-YYYY"),
+        //           // updatedAt: moment(supports.updatedAt).format("DD-MM-YYYY"),
+        //         }));
+        //   }
+
+        // }
         data={
           supports === null
             ? []
-            : supports?.map((support, i) => ({
-                ...support,
+            : supports.map((supports, i) => ({
+                ...supports,
                 sl: i + 1,
-                currentTimestamp: moment(support.createdAt).format("LL"),
-                //   createdAt: moment(enquiry.createdAt).format("LL"),
+                // createdAt: moment(supports.createdAt).format("DD-MM-YYYY"),
+                // updatedAt: moment(supports.updatedAt).format("DD-MM-YYYY"),
               }))
         }
-        isLoading={loading === true || supports === null}
+        isLoading={loading === true}
         columns={[
           {
             title: "#",

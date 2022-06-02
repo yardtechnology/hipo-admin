@@ -17,7 +17,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 const DriversRating = () => {
   const [loading, setLoading] = useState(false);
-  const { ratings, setRealtime } = useRatings();
+  const { ratings, setRealtime, fetchRatings } = useRatings();
   console.log(ratings);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -78,24 +78,32 @@ const DriversRating = () => {
           ],
         }}
         title={"Drivers Rating"}
-        data={
-          ratings === null
-            ? []
-            : ratings?.map((rating, i) => ({
-                ...rating,
-                sl: i + 1,
-                currentTimestamp: moment(rating.createdAt).format("LL"),
-                rideId: rating?.ride?._id,
-                driverImg: rating?.driver?.photoURL,
-                driverName: rating?.driver?.displayName,
-                driverEmail: rating?.driver?.email,
-                driverPhone: rating?.driver?.phoneNumber,
-                riderImg: rating?.rider?.photoURL,
-                riderName: rating?.rider?.displayName,
-                riderEmail: rating?.rider?.email,
-                riderPhone: rating?.rider?.phoneNumber,
-              }))
-        }
+        data={async (query) => {
+          const data = await fetchRatings(
+            query?.pageSize,
+            query?.page,
+            query?.totalCount
+          );
+          console.log(data);
+          return {
+            data: data?.map((rating, i) => ({
+              ...rating,
+              sl: query.page * query.pageSize + i + 1,
+              currentTimestamp: moment(rating.createdAt).format("LL"),
+              rideId: rating?.ride?._id,
+              driverImg: rating?.driver?.photoURL,
+              driverName: rating?.driver?.displayName,
+              driverEmail: rating?.driver?.email,
+              driverPhone: rating?.driver?.phoneNumber,
+              riderImg: rating?.rider?.photoURL,
+              riderName: rating?.rider?.displayName,
+              riderEmail: rating?.rider?.email,
+              riderPhone: rating?.rider?.phoneNumber,
+            })),
+            page: query?.page,
+            totalCount: 12,
+          };
+        }}
         columns={[
           {
             title: "#",

@@ -17,8 +17,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 const RidersRating = () => {
   const [loading, setLoading] = useState(false);
-  const { ratings, setRealtime } = useRatings();
-  console.log(ratings);
+  const { ratings, setRealtime, fetchRatings } = useRatings();
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   console.log(selectedUsers);
@@ -62,7 +61,7 @@ const RidersRating = () => {
           detailPanelColumnAlignment: "right",
           addRowPosition: "first",
           actionsColumnIndex: -1,
-          pageSize: 10,
+          pageSize: 5,
           exportAllData: true,
           exportMenu: [
             {
@@ -78,25 +77,92 @@ const RidersRating = () => {
           ],
         }}
         title={"Riders Rating"}
-        data={
-          ratings === null
-            ? []
-            : ratings?.map((rating, i) => ({
-                ...rating,
-                sl: i + 1,
-                currentTimestamp: moment(rating.createdAt).format("LL"),
-                rideId: rating?.ride?._id,
-                driverImg: rating?.driver?.photoURL,
+        // data={async (query) => {
+        //   const data = await fetchRatings(
+        //     query?.pageSize,
+        //     query?.page,
+        //     query?.totalCount
+        //   );
+        //   console.log(data);
+        //   return data === null
+        //     ? []
+        //     : data?.map((rating, i) => ({
+        //         ...rating,
+        //         sl: i + 1,
+        //         currentTimestamp: moment(rating.createdAt).format("LL"),
+        //         rideId: rating?.ride?._id,
+        //         driverImg: rating?.driver?.photoURL,
 
-                driverName: rating?.driver?.displayName,
-                driverEmail: rating?.driver?.email,
-                driverPhone: rating?.driver?.phoneNumber,
-                riderImg: rating?.rider?.photoURL,
-                riderName: rating?.rider?.displayName,
-                riderEmail: rating?.rider?.email,
-                riderPhone: rating?.rider?.phoneNumber,
-              }))
-        }
+        //         driverName: rating?.driver?.displayName,
+        //         driverEmail: rating?.driver?.email,
+        //         driverPhone: rating?.driver?.phoneNumber,
+        //         riderImg: rating?.rider?.photoURL,
+        //         riderName: rating?.rider?.displayName,
+        //         riderEmail: rating?.rider?.email,
+        //         riderPhone: rating?.rider?.phoneNumber,
+        //       }));
+        // }}
+        // data={(query) =>
+        //   new Promise((resolve, reject) => {
+        //     let url = `${BASE_URL}/ratings/all?`;
+        //     url += "limit=" + query.pageSize;
+        //     url += "&skip=" + query.page * query.pageSize;
+        //     fetch(url, {
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        //       },
+        //     })
+        //       .then((response) => response.json())
+        //       .then((result) => {
+        //         console.log(result);
+        //         resolve({
+        //           data: result?.data?.map((rating, i) => ({
+        //             ...rating,
+        //             sl: query.page * query.pageSize + i + 1,
+        //             currentTimestamp: moment(rating.createdAt).format("LL"),
+        //             rideId: rating?.ride?._id,
+        //             driverImg: rating?.driver?.photoURL,
+        //             driverName: rating?.driver?.displayName,
+        //             driverEmail: rating?.driver?.email,
+        //             driverPhone: rating?.driver?.phoneNumber,
+        //             riderImg: rating?.rider?.photoURL,
+        //             riderName: rating?.rider?.displayName,
+        //             riderEmail: rating?.rider?.email,
+        //             riderPhone: rating?.rider?.phoneNumber,
+        //           })),
+        //           page: query?.page,
+        //           totalCount: 12,
+        //         });
+        //       });
+        //   })
+        // }
+        data={async (query) => {
+          const data = await fetchRatings(
+            query?.pageSize,
+            query?.page,
+            query?.totalCount
+          );
+          console.log(data);
+          return {
+            data: data?.map((rating, i) => ({
+              ...rating,
+              sl: query.page * query.pageSize + i + 1,
+              currentTimestamp: moment(rating.createdAt).format("LL"),
+              rideId: rating?.ride?._id,
+              driverImg: rating?.driver?.photoURL,
+              driverName: rating?.driver?.displayName,
+              driverEmail: rating?.driver?.email,
+              driverPhone: rating?.driver?.phoneNumber,
+              riderImg: rating?.rider?.photoURL,
+              riderName: rating?.rider?.displayName,
+              riderEmail: rating?.rider?.email,
+              riderPhone: rating?.rider?.phoneNumber,
+            })),
+            page: query?.page,
+            totalCount: 12,
+          };
+        }}
         columns={[
           {
             title: "#",
