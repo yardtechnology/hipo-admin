@@ -21,3 +21,6 @@ export { default as ReferralSchema } from "./ReferralSchema";
 export { default as DrivingLicenseSchema } from "./DrivingLicenseSchema";
 export { default as TeamNumberSchema } from "./TeamNumberSchema";
 export { default as SetPasswordSchema } from "./SetPasswordSchema";
+export { default as AccessFeeSchema } from "./AccessFeeSchema";
+export { default as ConvenienceFeeSchema } from "./ConvenienceFeeSchema";
+export { default as GSTSchema } from "./GSTSchema";

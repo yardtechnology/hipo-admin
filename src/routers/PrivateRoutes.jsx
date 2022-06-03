@@ -83,6 +83,7 @@ import {
   OperatorVehicleList,
   TeamNumberConfig,
   SetRentalPackage,
+  SetBilling,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -204,6 +205,7 @@ const PrivateRoutes = () => {
           element={<RequestedOperatorVehicleList />}
         />
         <Route path="/rental-package" element={<SetRentalPackage />} />
+        <Route path="/billing-config" element={<SetBilling />} />
       </Routes>
     </PanelLayout>
   );
