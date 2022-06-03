@@ -43,6 +43,7 @@ import {
   CategoryOutlined,
   SystemUpdate,
   AttachMoney,
+  LocationSearching,
 } from "@mui/icons-material";
 
 const MenuItems = [
@@ -444,6 +445,14 @@ const MenuItems = [
         title: "Referral Charge",
         icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
         route: "/referral-charge",
+      },
+      {
+        key: "11",
+        title: "Set Search Radius",
+        icon: (
+          <LocationSearching className="iconColor" sx={{ color: "#000" }} />
+        ),
+        route: "/search-radius",
       },
       {
         key: "9",

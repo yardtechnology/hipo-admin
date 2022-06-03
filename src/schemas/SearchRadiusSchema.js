@@ -4,7 +4,7 @@ const SearchRadiusSchema = [
   {
     key: "3",
     label: "Search Radius in Km",
-    name: "referral",
+    name: "searchRadius",
     type: "number",
     validationSchema: Yup.number().required("Search Radius is Required"),
     initialValue: "",

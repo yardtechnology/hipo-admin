@@ -84,6 +84,7 @@ import {
   TeamNumberConfig,
   SetRentalPackage,
   SetBilling,
+  SetSearchRadius,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -206,6 +207,7 @@ const PrivateRoutes = () => {
         />
         <Route path="/rental-package" element={<SetRentalPackage />} />
         <Route path="/billing-config" element={<SetBilling />} />
+        <Route path="/search-radius" element={<SetSearchRadius />} />
       </Routes>
     </PanelLayout>
   );
