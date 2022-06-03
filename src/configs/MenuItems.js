@@ -283,12 +283,6 @@ const MenuItems = [
     route: "/statements",
     submenus: [
       {
-        key: "1",
-        title: "Overall Ride Statement",
-        icon: <PriceCheck className="iconColor" sx={{ color: "#000" }} />,
-        route: "/overall-ride-statement",
-      },
-      {
         key: "2",
         title: "Daily Statement",
         icon: <PriceCheck className="iconColor" sx={{ color: "#000" }} />,

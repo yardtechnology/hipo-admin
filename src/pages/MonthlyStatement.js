@@ -5,7 +5,6 @@ import moment from "moment";
 import {
   Card,
   CardContent,
-  Chip,
   IconButton,
   Tooltip,
   Typography,
@@ -15,19 +14,21 @@ import InvoiceDrawer from "components/InvoiceDrawer";
 import { useState } from "react";
 import { PictureAsPdf, Visibility } from "@mui/icons-material";
 import { StatementInvoice } from "components/dialog";
+import { useMonthlyRide } from "hooks";
 
 const MonthlyStatement = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
-
+  const { fetchRides, rides } = useMonthlyRide();
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   return (
-    <>
+    <div>
       <InvoiceDrawer
         rideDetails={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
       />
+
       <MaterialTable
         options={{
           whiteSpace: "nowrap",
@@ -49,30 +50,56 @@ const MonthlyStatement = () => {
           ],
         }}
         title={"Monthly Ride Statement"}
-        data={[
-          {
-            sl: 1,
-            city: "Bhubaneswar",
-            noOfRides: "4",
-            period: "Monthly",
-            country: "India",
-            role: "Driver",
-            rideId: "1234567890",
-            incentiveAmount: 200,
-            earned: formatCurrency(200),
-            range: "",
-            zipCode: 751030,
-            status: "Completed",
-            pick: "Acharya vihar,Bhubaneswar",
-            drop: "Niladri vihar ,Bhubaneswar",
-          },
-        ]}
+        // data={[
+        //   {
+        //     sl: 1,
+        //     city: "Bhubaneswar",
+        //     noOfRides: "4",
+        //     period: "Monthly",
+        //     country: "India",
+        //     role: "Driver",
+        //     rideId: "1234567890",
+        //     incentiveAmount: 200,
+        //     earned: formatCurrency(200),
+        //     range: "",
+        //     zipCode: 751030,
+        //     status: "Completed",
+        //     pick: "Acharya vihar,Bhubaneswar",
+        //     drop: "Niladri vihar ,Bhubaneswar",
+        //   },
+        // ]}
+        data={async (query) => {
+          const data = await fetchRides(
+            query?.pageSize,
+            query?.page,
+            query?.totalCount
+          );
+          console.log(data);
+          return {
+            data: data?.map((rating, i) => ({
+              ...rating,
+              sl: query.page * query.pageSize + i + 1,
+              currentTimestamp: moment(rating.createdAt).format("LL"),
+              rideId: rating?._id,
+              driverImg: rating?.driver?.photoURL,
+              driverName: rating?.driver?.displayName,
+              driverEmail: rating?.driver?.email,
+              driverPhone: rating?.driver?.phoneNumber,
+              riderImg: rating?.rider?.photoURL,
+              riderName: rating?.rider?.displayName,
+              riderEmail: rating?.rider?.email,
+              riderPhone: rating?.rider?.phoneNumber,
+            })),
+            page: query?.page,
+            totalCount: 12,
+          };
+        }}
         columns={[
           {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
+            width: "2%",
           },
           {
             title: "Ride Id",
@@ -81,30 +108,38 @@ const MonthlyStatement = () => {
             searchable: true,
           },
           {
-            title: "Earned",
-            field: "earned",
+            title: "Amount",
+            field: "amount",
+            render: (rowData) => {
+              return formatCurrency(rowData?.amount);
+            },
             searchable: true,
           },
           {
-            title: "Status",
-            field: "status",
-            render: (row) => (
-              <>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  label={row?.status}
-                />
-              </>
-            ),
+            title: "Payment Method",
+            field: "paymentMethod",
+            searchable: true,
           },
+          // {
+          //   title: "Status",
+          //   field: "status",
+          //   render: (row) => (
+          //     <>
+          //       <Chip
+          //         size="small"
+          //         variant="outlined"
+          //         color="secondary"
+          //         label={row?.status}
+          //       />
+          //     </>
+          //   ),
+          // },
           {
             title: "Timestamp",
             // width: "70%",
-            field: "timestamp",
+            field: "createdAt",
             editable: "never",
-            render: ({ timestamp }) => moment(timestamp).format("lll"),
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
             export: false,
             searchable: true,
             // hidden: true,
@@ -180,13 +215,11 @@ const MonthlyStatement = () => {
             //   },
           ]
         }
-        // editable={
-        //   {
-        //     //   onRowAdd: async (data) => {},
-        //     //   onRowUpdate: async (newData, oldData) => {},
-        //     // onRowDelete: async (oldData) => {},
-        //   }
-        // }
+        // editable={{
+        //   //   onRowAdd: async (data) => {},
+        //   //   onRowUpdate: async (newData, oldData) => {},
+        //   onRowDelete: async (oldData) => {},
+        // }}
         // actions={[
         //   {
         //     tooltip: "Delete all selected Days",
@@ -195,7 +228,7 @@ const MonthlyStatement = () => {
         //       handleBulkDelete(data.map((data) => data?.day)),
         //   },
         // ]}
-        // isLoading={days === null}
+        isLoading={rides === null}
         detailPanel={({ rowData }) => {
           return (
             <div
@@ -238,11 +271,31 @@ const MonthlyStatement = () => {
                     </span>
                   </Typography> */}
                   <Typography variant="body1" gutterBottom align="left">
+                    Pickup Time:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.pickupTime
+                        ? moment(rowData?.pickupTime).format("lll")
+                        : "N/A"}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Drop Time:{" "}
+                    <span
+                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                    >
+                      {rowData?.dropTime
+                        ? moment(rowData?.dropTime).format("lll")
+                        : "N/A"}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
                     Pick Address:{" "}
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.pick}
+                      {rowData?.pickupLocation?.address}
                     </span>
                   </Typography>
                   <Typography variant="body1" gutterBottom align="left">
@@ -250,7 +303,7 @@ const MonthlyStatement = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.drop}
+                      {rowData?.dropLocation?.address}
                     </span>
                   </Typography>
                 </CardContent>
@@ -258,12 +311,12 @@ const MonthlyStatement = () => {
             </div>
           );
         }}
-      />{" "}
+      />
       <StatementInvoice
         selectedDetails={openStatementInvoice}
         handleClose={() => setOpenStatementInvoice([])}
       />
-    </>
+    </div>
   );
 };
 

@@ -41,3 +41,6 @@ export { default as useRentalRides } from "./useRentalRides";
 export { default as useCompletedRides } from "./useCompletedRides";
 export { default as useDriverPayments } from "./useDriverPayments";
 export { default as useRentalPackages } from "./useRentalPackages";
+export { default as useDailyRide } from "./useDailyRide";
+export { default as useMonthlyRide } from "./useMonthlyRide";
+export { default as useYearlyRide } from "./useYearlyRide";
