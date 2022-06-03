@@ -16,33 +16,50 @@ import {
 import { BASE_URL } from "configs";
 import { Field, Form, Formik } from "formik";
 import { useConfig } from "hooks";
-import { AppUpdateSchema } from "schemas";
+import { AccessFeeSchema, ConvenienceFeeSchema, GSTSchema } from "schemas";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
 const SetBilling = () => {
   const { config, setRealtime } = useConfig();
-  const initialValues = AppUpdateSchema?.reduce((accumulator, currentValue) => {
+  const initialValues = AccessFeeSchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
   }, {});
-  const validationSchema = AppUpdateSchema?.reduce(
+  const validationSchema = AccessFeeSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
       return accumulator;
     },
     {}
   );
-  const handleSetAndroid = async (values, submitProps) => {
+  const convenienceInitialValues = ConvenienceFeeSchema?.reduce(
+    (accumulator, currentValue) => {
+      accumulator[currentValue.name] = currentValue.initialValue;
+      return accumulator;
+    },
+    {}
+  );
+  const convenienceValidationSchema = ConvenienceFeeSchema?.reduce(
+    (accumulator, currentValue) => {
+      accumulator[currentValue.name] = currentValue.validationSchema;
+      return accumulator;
+    },
+    {}
+  );
+  const GSTInitialValues = GSTSchema?.reduce((accumulator, currentValue) => {
+    accumulator[currentValue.name] = currentValue.initialValue;
+    return accumulator;
+  }, {});
+  const GSTValidationSchema = GSTSchema?.reduce((accumulator, currentValue) => {
+    accumulator[currentValue.name] = currentValue.validationSchema;
+    return accumulator;
+  }, {});
+  const handleSetAccessFee = async (values, submitProps) => {
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
         body: JSON.stringify({
-          userAndroidApp: {
-            title: values?.title,
-            message: values.description,
-            version: values?.version,
-            isDismissible: values?.isDismissible,
-          },
+          accessFee: values?.accessFee,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -52,24 +69,19 @@ const SetBilling = () => {
       setRealtime((prev) => !prev);
       const res = await result.json();
       result.status === 200
-        ? Swal.fire({ icon: "success", text: res?.message })
+        ? Swal.fire({ icon: "success", text: "Access Fee Updated" })
         : Swal.fire({ icon: "error", text: res?.message });
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
     }
   };
-  const handleSetIos = async (values, submitProps) => {
+  const handleSetConvenienceFee = async (values, submitProps) => {
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
         body: JSON.stringify({
-          userIosApp: {
-            title: values?.title,
-            message: values.description,
-            version: values?.version,
-            isDismissible: values?.isDismissible,
-          },
+          convenienceFee: values?.convenienceFee,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +91,29 @@ const SetBilling = () => {
       setRealtime((prev) => !prev);
       const res = await result.json();
       result.status === 200
-        ? Swal.fire({ icon: "success", text: res?.message })
+        ? Swal.fire({ icon: "success", text: "Convenience Fee Updated" })
+        : Swal.fire({ icon: "error", text: res?.message });
+    } catch (error) {
+      Swal.fire({ icon: "error", text: error.message });
+      console.log(error);
+    }
+  };
+  const handleSetGST = async (values, submitProps) => {
+    try {
+      const result = await fetch(`${BASE_URL}/config`, {
+        method: "PUT",
+        body: JSON.stringify({
+          GST: values?.GST,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      });
+      setRealtime((prev) => !prev);
+      const res = await result.json();
+      result.status === 200
+        ? Swal.fire({ icon: "success", text: "GST Updated" })
         : Swal.fire({ icon: "error", text: res?.message });
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
@@ -96,6 +130,7 @@ const SetBilling = () => {
         spacing={5}
         sx={{
           justifyContent: "center",
+          mt: "2vh",
         }}
       >
         <Grid item lg={4} md={4}>
@@ -113,14 +148,11 @@ const SetBilling = () => {
             <Formik
               enableReinitialize
               validationSchema={Yup.object(validationSchema)}
-              onSubmit={handleSetAndroid}
+              onSubmit={handleSetAccessFee}
               initialValues={
-                config?.userAndroidApp?.version
+                config?.accessFee
                   ? {
-                      version: config?.userAndroidApp?.version,
-                      title: config?.userAndroidApp?.title,
-                      description: config?.userAndroidApp?.message,
-                      isDismissible: config?.userAndroidApp?.isDismissible,
+                      accessFee: config?.accessFee,
                     }
                   : initialValues
               }
@@ -128,7 +160,7 @@ const SetBilling = () => {
               {({ isSubmitting, isValid }) => (
                 <Form>
                   <CardContent>
-                    {AppUpdateSchema?.map((inputItem) => (
+                    {AccessFeeSchema?.map((inputItem) => (
                       <Field name={inputItem.name} key={inputItem.key}>
                         {(props) => {
                           if (inputItem.type === "select") {
@@ -200,7 +232,7 @@ const SetBilling = () => {
                         startIcon={<Send />}
                         fullWidth
                       >
-                        Update App
+                        SAVE
                       </LoadingButton>
                     </div>
                   </CardContent>
@@ -212,8 +244,8 @@ const SetBilling = () => {
         <Grid item lg={4} md={4}>
           <Card sx={{ width: { lg: 300, md: 300, sm: 400, sx: 300 } }}>
             <CardHeader
-              title="Rider IOS App Update"
-              //   subheader="Update your app"
+              title="Convenience Fee"
+              subheader="Set your convenience fee"
               titleTypographyProps={{ variant: "h6", textAlign: "center" }}
               subheaderTypographyProps={{
                 variant: "subtitle1",
@@ -222,24 +254,21 @@ const SetBilling = () => {
               }}
             />
             <Formik
-              validationSchema={Yup.object(validationSchema)}
-              onSubmit={handleSetIos}
+              validationSchema={Yup.object(convenienceValidationSchema)}
+              onSubmit={handleSetConvenienceFee}
               enableReinitialize
               initialValues={
-                config?.userIosApp?.version
+                config?.convenienceFee
                   ? {
-                      version: config?.userIosApp?.version,
-                      title: config?.userIosApp?.title,
-                      description: config?.userIosApp?.message,
-                      isDismissible: config?.userIosApp?.isDismissible,
+                      convenienceFee: config?.convenienceFee,
                     }
-                  : initialValues
+                  : convenienceInitialValues
               }
             >
               {({ isSubmitting, isValid }) => (
                 <Form>
                   <CardContent>
-                    {AppUpdateSchema?.map((inputItem) => (
+                    {ConvenienceFeeSchema?.map((inputItem) => (
                       <Field name={inputItem.name} key={inputItem.key}>
                         {(props) => {
                           if (inputItem.type === "select") {
@@ -311,7 +340,7 @@ const SetBilling = () => {
                         startIcon={<Send />}
                         fullWidth
                       >
-                        Update App
+                        SAVE
                       </LoadingButton>
                     </div>
                   </CardContent>
@@ -323,8 +352,8 @@ const SetBilling = () => {
         <Grid item lg={4} md={4}>
           <Card sx={{ width: { lg: 300, md: 300, sm: 400, sx: 300 } }}>
             <CardHeader
-              title="Rider IOS App Update"
-              //   subheader="Update your app"
+              title="GST"
+              subheader="Set your GST"
               titleTypographyProps={{ variant: "h6", textAlign: "center" }}
               subheaderTypographyProps={{
                 variant: "subtitle1",
@@ -333,24 +362,21 @@ const SetBilling = () => {
               }}
             />
             <Formik
-              validationSchema={Yup.object(validationSchema)}
-              onSubmit={handleSetIos}
+              validationSchema={Yup.object(GSTValidationSchema)}
+              onSubmit={handleSetGST}
               enableReinitialize
               initialValues={
-                config?.userIosApp?.version
+                config?.GST
                   ? {
-                      version: config?.userIosApp?.version,
-                      title: config?.userIosApp?.title,
-                      description: config?.userIosApp?.message,
-                      isDismissible: config?.userIosApp?.isDismissible,
+                      GST: config?.GST,
                     }
-                  : initialValues
+                  : GSTInitialValues
               }
             >
               {({ isSubmitting, isValid }) => (
                 <Form>
                   <CardContent>
-                    {AppUpdateSchema?.map((inputItem) => (
+                    {GSTSchema?.map((inputItem) => (
                       <Field name={inputItem.name} key={inputItem.key}>
                         {(props) => {
                           if (inputItem.type === "select") {
@@ -422,7 +448,7 @@ const SetBilling = () => {
                         startIcon={<Send />}
                         fullWidth
                       >
-                        Update App
+                        SAVE
                       </LoadingButton>
                     </div>
                   </CardContent>

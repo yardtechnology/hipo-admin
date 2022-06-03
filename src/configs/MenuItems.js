@@ -416,6 +416,12 @@ const MenuItems = [
         route: "/operator-config",
       },
       {
+        key: "10",
+        title: "Set Billing",
+        icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
+        route: "/billing-config",
+      },
+      {
         key: "4",
         title: "Set Profit",
         icon: <AttachMoney className="iconColor" sx={{ color: "#000" }} />,
