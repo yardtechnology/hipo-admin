@@ -134,6 +134,12 @@ const Supports = () => {
             hidden: true,
           },
           {
+            title: "Email",
+            field: "email",
+            searchable: true,
+            hidden: true,
+          },
+          {
             title: "User Type",
             field: "type",
             searchable: true,

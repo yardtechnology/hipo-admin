@@ -123,7 +123,14 @@ const Enquiries = () => {
             title: "Phone",
             field: "phoneNumber",
             searchable: true,
-            export: false,
+            export: true,
+            hidden: true,
+          },
+          {
+            title: "Email",
+            field: "email",
+            searchable: true,
+            export: true,
             hidden: true,
           },
           {

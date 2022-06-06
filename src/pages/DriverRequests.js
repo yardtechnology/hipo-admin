@@ -3,7 +3,6 @@ import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { DocumentScanner } from "@mui/icons-material";
 import {
   Avatar,
-  Chip,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -122,10 +121,12 @@ const DriverRequests = () => {
         data={
           driverRequests === null
             ? []
-            : driverRequests?.map((item) => ({
+            : driverRequests?.map((item, i) => ({
                 ...item,
+                sl: i + 1,
                 driverEmail: item?.driver?.email || "Not Provided",
                 countryName: item?.country?.name || "Not Provided",
+                requestedAt: moment(item?.createdAt).format("lll"),
               }))
         }
         columns={[
@@ -144,8 +145,7 @@ const DriverRequests = () => {
             title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
-            field: "firstName",
+            field: "displayName",
             render: ({ photoURL, displayName, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
@@ -168,28 +168,20 @@ const DriverRequests = () => {
           {
             title: "Email",
             field: "email",
-            render: (newData) => newData.email || "Not Provided",
             searchable: true,
-            export: false,
-          },
-          {
-            title: "email",
-            field: "driverEmail",
-            searchable: true,
-            hidden: true,
-            export: true,
           },
           {
             title: "DOB",
             field: "dateOfBirth",
             searchable: true,
             render: (rowData) => {
-              return moment(rowData.dateOfBirth).format("LL");
+              return moment(rowData?.dateOfBirth).format("LL");
             },
           },
           {
             title: "Country",
             field: "countryName",
+            searchable: true,
           },
           // {
           //   title: "Trips",
@@ -200,19 +192,25 @@ const DriverRequests = () => {
           //   field: "joiningDate",
           //   render: (rowData) => moment(rowData.joiningDate).format("llll"),
           // },
+          // {
+          //   title: "Status",
+          //   field: "status",
+          //   render: (row) => (
+          //     <>
+          //       <Chip
+          //         size="small"
+          //         variant="outlined"
+          //         color="secondary"
+          //         label={row?.status}
+          //       />
+          //     </>
+          //   ),
+          // },
           {
-            title: "Status",
-            field: "status",
-            render: (row) => (
-              <>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  label={row?.status}
-                />
-              </>
-            ),
+            title: "Requested At",
+            field: "requestedAt",
+            render: (rowData) => moment(rowData.createdAt).format("lll"),
+            searchable: true,
           },
           {
             title: "Actions",

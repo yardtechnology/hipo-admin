@@ -45,7 +45,7 @@ const AllDrivers = () => {
   const [openEditDriverDrawer, setOpenEditDriverDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { drivers, setRealtime } = useDrivers();
-  console.log("drivers", drivers);
+  // console.log("drivers", drivers);
   const handleDeleteDriver = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -68,7 +68,7 @@ const AllDrivers = () => {
             },
           });
           const res = await response.json();
-          console.log(res);
+          // console.log(res);
           res?.status === 200
             ? Swal.fire("Deleted!", "Driver has been deleted.", "success")
             : Swal.fire("Error!", "Something went wrong.", "error");
@@ -328,6 +328,8 @@ const AllDrivers = () => {
                 sl: i + 1,
                 cityName: driver?.city?.name,
                 currentTimestamp: moment(driver?.createdAt).format("ll"),
+                DOB: moment(driver?.DOB).format("ll"),
+                countryName: driver?.country?.name,
               }))
           //   [
           //   {
@@ -360,7 +362,7 @@ const AllDrivers = () => {
             title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
+            width: "2%",
             field: "displayName",
             render: ({ photoURL, displayName, phoneNumber, isOnline }) => (
               <>
@@ -406,13 +408,17 @@ const AllDrivers = () => {
           },
           {
             title: "dateOfBirth",
-            field: "dateOfBirth",
+            field: "DOB",
             hidden: true,
             export: true,
           },
           {
             title: "City",
             field: "cityName",
+          },
+          {
+            title: "Country",
+            field: "countryName",
           },
           // {
           //   title: "Trips",
@@ -659,7 +665,7 @@ const AllDrivers = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      {rowData?.dateOfBirth}
+                      {rowData?.DOB}
                     </span>
                   </Typography>
                   {/* <Typography variant="body1" gutterBottom align="left">

@@ -72,7 +72,7 @@ const IOSSwitch = styled((props) => (
 }));
 const Riders = () => {
   const { riders, setRealtime } = useRiders();
-  console.log(riders);
+  // console.log(riders);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openAddressDrawer, setOpenAddressDrawer] = useState(false);
@@ -94,7 +94,7 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -128,7 +128,7 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -162,7 +162,7 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -196,7 +196,7 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -263,6 +263,7 @@ const Riders = () => {
             : riders?.map((rider, index) => ({
                 ...rider,
                 sl: index + 1,
+                timeStamp: moment(rider?.createdAt).format("lll"),
                 lastLogin: rider?.loginInfo?.createdAt,
                 lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
                   "MMMM Do YYYY, h:mm:ss a"
@@ -285,7 +286,6 @@ const Riders = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "20%",
             field: "displayName",
             render: ({ photoURL, displayName, email, isOnline }) => (
               <>
@@ -326,9 +326,16 @@ const Riders = () => {
             ),
           },
           {
+            title: "Email",
+            field: "email",
+            hidden: true,
+            export: true,
+            searchable: true,
+          },
+          {
             title: "Phone",
             field: "phoneNumber",
-            width: "5%",
+            searchable: true,
           },
           // {
           //   title: "Address",
@@ -349,7 +356,7 @@ const Riders = () => {
                     size="small"
                     checked={row?.isBlocked ? true : false}
                     onChange={(e) => {
-                      console.log(e.target.checked);
+                      // console.log(e.target.checked);
                       if (e.target.checked) {
                         blockUser(row);
                       } else {
@@ -360,10 +367,11 @@ const Riders = () => {
                 </Tooltip>
               </>
             ),
+            searchable: true,
           },
           {
             title: "Created At",
-            field: "createdAt",
+            field: "timeStamp",
             render: ({ createdAt }) => moment(createdAt).format("lll"),
             emptyValue: "--",
           },
@@ -373,9 +381,11 @@ const Riders = () => {
             render: ({ lastLogin }) =>
               lastLogin ? moment(lastLogin).fromNow() : "--",
             emptyValue: "--",
+            searchable: true,
           },
 
           {
+            export: false,
             title: "Actions",
             width: "18%",
             // field: "pick",

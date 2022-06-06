@@ -19,7 +19,7 @@ import { BASE_URL } from "configs";
 const RiderHistory = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const { riderId } = useParams();
-  console.log(riderId);
+  // console.log(riderId);
   const { isMounted } = useIsMounted();
   const [history, setHistory] = useState(null);
   useEffect(() => {
@@ -34,7 +34,7 @@ const RiderHistory = () => {
           },
         });
         const arr = await response.json();
-        console.log(arr);
+        // console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -45,7 +45,7 @@ const RiderHistory = () => {
     };
     fetchData();
   }, [isMounted, riderId]);
-  console.log(history);
+  // console.log(history);
   return (
     <>
       <InvoiceDrawer
@@ -88,8 +88,9 @@ const RiderHistory = () => {
         data={
           history === null
             ? []
-            : history?.map((item) => ({
+            : history?.map((item, i) => ({
                 ...item,
+                sl: i + 1,
                 displayName: item?.rider?.displayName,
                 phoneNumber: item?.rider?.phoneNumber,
                 rideAmount: item?.billing?.totalFare,
@@ -129,24 +130,16 @@ const RiderHistory = () => {
             field: "sl",
             render: (newData) => newData.tableData.id + 1,
             editable: "never",
-            width: "5%",
+            width: "2%",
           },
           // {
           //   title: "Name",
           //   field: "displayName",
           // },
           {
-            title: "Ride Id",
-            field: "rideId",
-            export: true,
-            hidden: true,
-          },
-
-          {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "22%",
             field: "displayName" || "phoneNumber",
             render: ({ photoURL, displayName, email, phoneNumber }) => (
               <>
@@ -194,24 +187,7 @@ const RiderHistory = () => {
             field: "vehicle",
             emptyValue: "--",
           },
-          {
-            title: "Pick Date/Time",
-            field: "pick",
-            hidden: true,
-            export: true,
-          },
-          {
-            title: "Drop Date/Time",
-            field: "drop",
-            hidden: true,
-            export: true,
-          },
-          {
-            title: "Pick/Drop Address",
-            field: "address",
-            hidden: true,
-            export: true,
-          },
+
           {
             title: "Status",
             field: "status",
