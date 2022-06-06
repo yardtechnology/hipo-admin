@@ -67,12 +67,12 @@ const RidersRating = () => {
             {
               label: "Export PDF",
               exportFunc: (cols, datas) =>
-                ExportPdf(cols, datas, "Drivers Rating"),
+                ExportPdf(cols, datas, "Riders Rating"),
             },
             {
               label: "Export CSV",
               exportFunc: (cols, datas) =>
-                ExportCsv(cols, datas, "Drivers Rating"),
+                ExportCsv(cols, datas, "Riders Rating"),
             },
           ],
         }}

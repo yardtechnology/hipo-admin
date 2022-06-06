@@ -93,7 +93,7 @@ const Faqs = () => {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
+            width: "2%",
           },
           // {
           //   title: "Category Image",
@@ -132,6 +132,7 @@ const Faqs = () => {
             title: "Icon",
             field: "iconUrl",
             searchable: true,
+            export: false,
             render: ({ icon }) => (
               <Avatar sx={{ width: "12vh", height: "12vh" }} src={icon?.url} />
             ),
@@ -157,21 +158,12 @@ const Faqs = () => {
           {
             title: "Timestamp",
             // width: "70%",
-            field: "timestamp",
+            field: "timeStamp",
             editable: "never",
             render: ({ createdAt }) => moment(createdAt).format("lll"),
-            export: false,
+            export: true,
             searchable: true,
             // hidden: true,
-          },
-          {
-            title: "Timestamp",
-            // width: "70%",
-            field: "currentTimestamp",
-            editable: "never",
-            hidden: true,
-            export: true,
-            // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
         ]}
         detailPanel={({ rowData }) => {
@@ -203,13 +195,17 @@ const Faqs = () => {
                     ],
                   }}
                   title={`Topics of ${rowData?.title}`}
-                  data={Topics}
+                  data={Topics?.map((topic, i) => ({
+                    ...topic,
+                    sl: i + 1,
+                    timeStamp: moment(topic?.createdAt).format("LLL"),
+                  }))}
                   columns={[
                     {
                       title: "#",
                       field: "sl",
                       editable: "never",
-                      width: "10%",
+                      width: "2%",
                     },
 
                     {
@@ -238,22 +234,13 @@ const Faqs = () => {
                     {
                       title: "Timestamp",
                       // width: "70%",
-                      field: "timestamp",
+                      field: "timeStamp",
                       editable: "never",
                       render: ({ createdAt }) =>
                         moment(createdAt).format("lll"),
-                      export: false,
+                      export: true,
                       searchable: true,
                       // hidden: true,
-                    },
-                    {
-                      title: "Timestamp",
-                      // width: "70%",
-                      field: "currentTimestamp",
-                      editable: "never",
-                      hidden: true,
-                      export: true,
-                      // render: ({ timestamp }) => moment(timestamp).format("lll"),
                     },
                   ]}
                   detailPanel={({ rowData }) => {
