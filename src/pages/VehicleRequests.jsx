@@ -93,11 +93,13 @@ const VehicleRequests = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Vehicle Requests"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Vehicle Requests"),
             },
           ],
         }}
@@ -108,6 +110,9 @@ const VehicleRequests = () => {
             : vehicleRequests?.map((vehicle, i) => ({
                 ...vehicle,
                 sl: i + 1,
+                vehicleName: `${
+                  vehicle?.make?.name ? vehicle?.make?.name : "--"
+                } ${vehicle?.model?.name ? vehicle?.model?.name : ""}`,
                 type: vehicle?.model?.vehicleCategory?.name,
                 ownerName: vehicle?.owner?.displayName,
                 currentTimestamp: moment(vehicle?.createdAt).format("lll"),
@@ -118,7 +123,7 @@ const VehicleRequests = () => {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
+            width: "2%",
           },
 
           {

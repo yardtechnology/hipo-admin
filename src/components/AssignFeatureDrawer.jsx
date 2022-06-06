@@ -2,6 +2,7 @@ import { Done } from "@mui/icons-material";
 import { Avatar, Chip, Container, Drawer, Typography } from "@mui/material";
 import { BASE_URL } from "configs";
 import { useFeaturesList } from "hooks";
+import Swal from "sweetalert2";
 const AssignFeatureDrawer = ({
   open,
   setOpenAssignFeatureDrawer,
@@ -11,10 +12,12 @@ const AssignFeatureDrawer = ({
   const { features } = useFeaturesList();
   // const { setRealtime } = useVehicleCategory();
   const addFeature = async (item) => {
+    console.log(item);
     try {
       const updatedFeatures = open?.features
         ? [...new Set([item._id, ...open?.features])]
         : [item?._id];
+      console.log("updated features", updatedFeatures);
       const response = await fetch(`${BASE_URL}/vehicle-category/${open._id}`, {
         method: "PUT",
         headers: {
@@ -32,19 +35,23 @@ const AssignFeatureDrawer = ({
         ...open,
         features: updatedFeatures,
       });
-      // setOpenAssignFeatureDrawer(false);
+
+      setOpenAssignFeatureDrawer(false);
+      Swal.fire("Success", "Feature Assigned", "success");
     } catch (error) {
       console.log(error);
     }
   };
   const removeFeature = async (item) => {
+    console.log(item);
     try {
       const updatedFeatures = open?.features?.filter(
-        (feature) => feature !== item?._id
+        (feature) => feature?._id !== item?._id
       );
       const removedFeatures = open?.features?.find(
-        (feature) => feature === item?._id
+        (feature) => feature?._id === item?._id
       );
+      console.log(removedFeatures);
       const response = await fetch(`${BASE_URL}/features/remove/${open._id}`, {
         method: "PUT",
         headers: {
@@ -52,7 +59,7 @@ const AssignFeatureDrawer = ({
           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
         body: JSON.stringify({
-          features: removedFeatures,
+          features: removedFeatures?._id,
         }),
       });
       const res = await response.json();
@@ -111,7 +118,7 @@ const AssignFeatureDrawer = ({
               ? []
               : features?.map((feature) => {
                   const hasFeature = open?.features
-                    ? open?.features?.includes(feature?._id)
+                    ? open?.features?.find((item) => item?._id === feature?._id)
                     : false;
                   return (
                     <div className="inline-block my-1 mr-1" key={feature?.key}>

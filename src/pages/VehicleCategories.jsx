@@ -90,10 +90,12 @@ const VehicleCategories = () => {
               );
             },
             searchable: true,
+            export: false,
           },
           {
             title: "Image",
             field: "categoryImageUrl",
+            export: false,
             render: ({ categoryImage }) => (
               <Avatar
                 src={categoryImage?.url}

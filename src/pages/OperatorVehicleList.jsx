@@ -201,11 +201,13 @@ const OperatorVehicleList = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Operator Vehicle List"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Operator Vehicle List"),
             },
           ],
         }}
