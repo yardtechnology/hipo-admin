@@ -23,11 +23,13 @@ const Localization = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Localization"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Localization"),
             },
           ],
         }}

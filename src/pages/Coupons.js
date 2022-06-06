@@ -71,6 +71,8 @@ const Coupons = () => {
             : coupons?.map((coupon, i) => ({
                 ...coupon,
                 sl: i + 1,
+                valid_From: moment(coupon?.startDate).format("DD-MM-YYYY"),
+                valid_Till: moment(coupon?.endDate).format("DD-MM-YYYY"),
                 validFrom: coupon?.startDate,
                 validTill: coupon?.endDate,
                 status: coupon?.isActive ? "Active" : "Inactive",
@@ -119,7 +121,7 @@ const Coupons = () => {
           },
           {
             title: "Valid From",
-            field: "validFrom",
+            field: "valid_From",
             type: "date",
             emptyValue: "--",
             render: (rowData) => moment(rowData.validFrom).format("LL"),
@@ -149,7 +151,7 @@ const Coupons = () => {
 
           {
             title: "Valid Till",
-            field: "validTill",
+            field: "valid_Till",
             type: "date",
             emptyValue: "--",
             render: (rowData) => moment(rowData.validTill).format("LL"),

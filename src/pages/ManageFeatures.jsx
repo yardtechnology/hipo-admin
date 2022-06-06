@@ -35,11 +35,13 @@ const ManageFeatures = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Manage Features"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Manage Features"),
             },
           ],
         }}
@@ -65,6 +67,7 @@ const ManageFeatures = () => {
             width: "2%",
           },
           {
+            export: false,
             title: "Icon",
             field: "featureIconUrl",
             render: ({ featureIcon }) => (
@@ -90,6 +93,7 @@ const ManageFeatures = () => {
             },
           },
           {
+            export: false,
             title: "Image",
             field: "featureImageUrl",
             render: ({ featureImageUrl }) => (
