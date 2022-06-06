@@ -78,13 +78,12 @@ const Career = () => {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
+            width: "2%",
           },
           {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
             field: "name",
             render: ({ photoURL, name, phoneNumber, email }) => (
               <>
@@ -114,10 +113,20 @@ const Career = () => {
             ),
           },
 
-          //   {
-          //     title: "Phone",
-          //     field: "phoneNumber",
-          //   },
+          {
+            title: "Phone",
+            field: "phoneNumber",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+          {
+            title: "Email",
+            field: "email",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
           {
             title: "Gender",
             field: "gender",

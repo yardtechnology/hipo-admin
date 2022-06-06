@@ -98,7 +98,7 @@ const HipoDrive = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            field: "firstName",
+            field: "fullName",
             render: ({ photoURL, fullName, phoneNumber, email }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>

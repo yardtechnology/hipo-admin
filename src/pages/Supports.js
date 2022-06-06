@@ -95,6 +95,7 @@ const Supports = () => {
             : supports.map((supports, i) => ({
                 ...supports,
                 sl: i + 1,
+                timeStamp: moment(supports.createdAt).format("lll"),
                 // createdAt: moment(supports.createdAt).format("DD-MM-YYYY"),
                 // updatedAt: moment(supports.updatedAt).format("DD-MM-YYYY"),
               }))
@@ -132,13 +133,9 @@ const Supports = () => {
             field: "phoneNumber",
             searchable: true,
             hidden: true,
+            export: true,
           },
-          {
-            title: "Email",
-            field: "email",
-            searchable: true,
-            hidden: true,
-          },
+
           {
             title: "User Type",
             field: "type",
@@ -168,9 +165,9 @@ const Supports = () => {
           {
             title: "Timestamp",
             searchable: true,
-            field: "timestamp",
+            field: "timeStamp",
             render: ({ createdAt }) => moment(createdAt).format("lll"),
-            export: false,
+            export: true,
           },
           {
             export: false,
@@ -180,15 +177,6 @@ const Supports = () => {
                 <Reply />
               </IconButton>
             ),
-          },
-          {
-            title: "Timestamp",
-            // width: "70%",
-            field: "currentTimestamp",
-            editable: "never",
-            export: true,
-            hidden: true,
-            // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
         ]}
         editable={{
