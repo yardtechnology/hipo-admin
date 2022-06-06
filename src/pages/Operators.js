@@ -259,11 +259,11 @@ const Operators = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Riders"),
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Operators"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Riders"),
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Operators"),
             },
           ],
           pageSize: 10,
@@ -313,7 +313,6 @@ const Operators = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
             field: "displayName",
             render: ({ photoURL, displayName, phoneNumber, isOnline }) => (
               <>

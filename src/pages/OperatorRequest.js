@@ -108,11 +108,13 @@ const OperatorRequest = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Riders"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Operator Request"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Riders"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Operator Request"),
             },
           ],
           pageSize: 10,
@@ -149,8 +151,7 @@ const OperatorRequest = () => {
             title: "Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
-            field: "firstName",
+            field: "displayName",
             render: ({ photoURL, displayName, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
@@ -169,6 +170,13 @@ const OperatorRequest = () => {
                 </ListItem>
               </>
             ),
+          },
+          {
+            title: "Phone Number",
+            field: "phoneNumber",
+            searchable: true,
+            export: true,
+            hidden: true,
           },
           {
             title: "Email",
@@ -219,7 +227,6 @@ const OperatorRequest = () => {
             render: (row) => (
               <>
                 <div className="d-flex">
-                  {" "}
                   <Tooltip title="View Documents">
                     <Avatar
                       variant="rounded"
