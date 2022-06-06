@@ -42,11 +42,13 @@ const DailyStatement = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Daily Statement"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Daily Statement"),
             },
           ],
         }}
@@ -90,6 +92,10 @@ const DailyStatement = () => {
               riderName: rating?.rider?.displayName,
               riderEmail: rating?.rider?.email,
               riderPhone: rating?.rider?.phoneNumber,
+              pickup_time: moment(rating?.pickupTime).format("LLL"),
+              drop_time: moment(rating?.dropTime).format("LLL"),
+              pickupAddress: rating?.pickupLocation?.address,
+              dropAddress: rating?.dropLocation?.address,
             })),
             page: query?.page,
             totalCount: 12,
@@ -121,6 +127,35 @@ const DailyStatement = () => {
             field: "paymentMethod",
             searchable: true,
           },
+          {
+            title: "Pickup Time",
+            field: "pickup_time",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+          {
+            title: "Drop Time",
+            field: "drop_time",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+          {
+            title: "Pickup Address",
+            field: "pickupAddress",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+          {
+            title: "Drop Address",
+            field: "dropAddress",
+            searchable: true,
+            hidden: true,
+            export: true,
+          },
+
           // {
           //   title: "Status",
           //   field: "status",
