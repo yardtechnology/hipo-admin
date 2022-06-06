@@ -58,7 +58,7 @@ const Localization = () => {
             title: "#",
             field: "sl",
             editable: "never",
-            width: "10%",
+            width: "2%",
           },
           {
             title: "City",

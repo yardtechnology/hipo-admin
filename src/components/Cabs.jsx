@@ -7,7 +7,7 @@ import moment from "moment";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 const Cabs = ({ city }) => {
-  // console.log(city);
+  console.log(city);
   const { vehicleCategory } = useVehicleCategory();
   const { isMounted } = useIsMounted();
   const [cabs, setCabs] = React.useState(null);
@@ -17,7 +17,7 @@ const Cabs = ({ city }) => {
       if (!isMounted.current) return;
 
       try {
-        const response = await fetch(`${BASE_URL}/city/cabs/${city?.name}`, {
+        const response = await fetch(`${BASE_URL}/city/cabs/${city?._id}`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
@@ -37,7 +37,7 @@ const Cabs = ({ city }) => {
     };
     fetchCabs();
   }, [realtime, city, isMounted]);
-  // console.log(cabs);
+  console.log(cabs);
 
   return (
     <div style={{ marginTop: "2vh" }}>
@@ -79,14 +79,13 @@ const Cabs = ({ city }) => {
             field: "sl",
             editable: "never",
           },
-
           {
             title: "Vehicle category",
-            field: "vehicleCategoryId",
+            field: "vehicleCategoryName",
+            export: true,
+            hidden: true,
+
             // field: "vehicleCategory",
-            render: (rowData) => {
-              return rowData?.vehicleCategory?.name;
-            },
 
             // lookup: {
             //   ...vehicleCategory?.reduce((acc, item) => {
@@ -102,6 +101,40 @@ const Cabs = ({ city }) => {
                     props.onChange(e.target.value);
                   }}
                 >
+                  <option>Select vehicle category</option>
+                  {vehicleCategory?.map((item) => (
+                    <option key={item?._id} value={item?._id}>
+                      {item?.name}
+                    </option>
+                  ))}
+                </select>
+              );
+            },
+          },
+          {
+            title: "Vehicle category",
+            field: "vehicleCategoryId",
+            // field: "vehicleCategory",
+            render: (rowData) => {
+              return rowData?.vehicleCategory?.name;
+            },
+            export: false,
+
+            // lookup: {
+            //   ...vehicleCategory?.reduce((acc, item) => {
+            //     acc[item?._id] = item?.name;
+            //     return acc;
+            //   }, {}),
+            // },
+            editComponent: (props) => {
+              return (
+                <select
+                  value={props.value}
+                  onChange={(e) => {
+                    props.onChange(e.target.value);
+                  }}
+                >
+                  <option>Select vehicle category</option>
                   {vehicleCategory?.map((item) => (
                     <option key={item?._id} value={item?._id}>
                       {item?.name}
