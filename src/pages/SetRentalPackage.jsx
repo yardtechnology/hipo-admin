@@ -104,12 +104,17 @@ const SetRentalPackage = () => {
             render: (rowData) => {
               return rowData.distance / 1000;
             },
+            validate: (rowData) =>
+              rowData?.distanceInKm > 0 ? true : "Required",
+
             searchable: true,
           },
           {
             title: "Duration(Min)",
             type: "numeric",
             field: "durationInMin",
+            validate: (rowData) =>
+              rowData?.durationInMin > 0 ? true : "Required",
             render: (rowData) => {
               return rowData.duration / 60;
             },

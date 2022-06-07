@@ -44,7 +44,7 @@ const AllDrivers = () => {
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
   const [openEditDriverDrawer, setOpenEditDriverDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { drivers, setRealtime } = useDrivers();
+  const { drivers, setRealtime, fetchDrivers } = useDrivers();
   // console.log("drivers", drivers);
   const handleDeleteDriver = async (id) => {
     Swal.fire({
@@ -320,31 +320,25 @@ const AllDrivers = () => {
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}
-        data={
-          drivers === null
-            ? []
-            : drivers.map((driver, i) => ({
-                ...driver,
-                sl: i + 1,
-                cityName: driver?.city?.name,
-                currentTimestamp: moment(driver?.createdAt).format("ll"),
-                DOB: moment(driver?.DOB).format("ll"),
-                countryName: driver?.country?.name,
-              }))
-          //   [
-          //   {
-          //     dateOfBirth: "12/12/12",
-          //     displayName: "Alexa",
-          //     email: "alexa@gmail.com",
-          //     phoneNumber: "+91 7778876436",
-          //     city: "Bbsr",
-          //     joiningDate: new Date().toString(),
-          //     trips: "15",
-          //     profileImageUrl: "",
-          //     status: "Approved",
-          //   },
-          // ]
-        }
+        data={async (query) => {
+          const drivers = await fetchDrivers(
+            query?.pageSize,
+            query?.page,
+            query?.totalCount
+          );
+          return {
+            data: drivers.map((driver, i) => ({
+              ...driver,
+              sl: i + 1,
+              cityName: driver?.city?.name,
+              currentTimestamp: moment(driver?.createdAt).format("ll"),
+              DOB: moment(driver?.DOB).format("ll"),
+              countryName: driver?.country?.name,
+            })),
+            page: query?.page,
+            totalCount: 12,
+          };
+        }}
         isLoading={drivers === null || isLoading}
         columns={[
           {

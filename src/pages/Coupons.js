@@ -124,6 +124,21 @@ const Coupons = () => {
             field: "valid_From",
             type: "date",
             emptyValue: "--",
+            export: true,
+          },
+          {
+            title: "Valid Till",
+            field: "valid_Till",
+            type: "date",
+            emptyValue: "--",
+            export: true,
+          },
+          {
+            export: false,
+            title: "Valid From",
+            field: "validFrom",
+            type: "date",
+            emptyValue: "--",
             render: (rowData) => moment(rowData.validFrom).format("LL"),
             editComponent: ({ value, onChange, rowData }) => {
               return (
@@ -148,10 +163,10 @@ const Coupons = () => {
             },
             searchable: true,
           },
-
           {
+            export: false,
             title: "Valid Till",
-            field: "valid_Till",
+            field: "validTill",
             type: "date",
             emptyValue: "--",
             render: (rowData) => moment(rowData.validTill).format("LL"),

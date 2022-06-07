@@ -71,7 +71,7 @@ const IOSSwitch = styled((props) => (
   },
 }));
 const Riders = () => {
-  const { riders, setRealtime } = useRiders();
+  const { riders, setRealtime, fetchRiders } = useRiders();
   // console.log(riders);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -257,19 +257,39 @@ const Riders = () => {
           selection: true,
           sorting: true,
         }}
-        data={
-          riders === null
-            ? []
-            : riders?.map((rider, index) => ({
-                ...rider,
-                sl: index + 1,
-                timeStamp: moment(rider?.createdAt).format("lll"),
-                lastLogin: rider?.loginInfo?.createdAt,
-                lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
-                  "MMMM Do YYYY, h:mm:ss a"
-                ),
-              }))
-        }
+        // data={
+        //   riders === null
+        //     ? []
+        //     : riders?.map((rider, index) => ({
+        //         ...rider,
+        //         sl: index + 1,
+        //         timeStamp: moment(rider?.createdAt).format("lll"),
+        //         lastLogin: rider?.loginInfo?.createdAt,
+        //         lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
+        //           "MMMM Do YYYY, h:mm:ss a"
+        //         ),
+        //       }))
+        // }
+        data={async (query) => {
+          const riders = await fetchRiders(
+            query?.pageSize,
+            query?.page,
+            query?.totalCount
+          );
+          return {
+            data: riders?.map((rider, index) => ({
+              ...rider,
+              sl: index + 1,
+              timeStamp: moment(rider?.createdAt).format("lll"),
+              lastLogin: rider?.loginInfo?.createdAt,
+              lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              ),
+            })),
+            page: query?.page,
+            totalCount: 12,
+          };
+        }}
         columns={[
           {
             title: "#",
