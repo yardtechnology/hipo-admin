@@ -127,8 +127,8 @@ const AssignModels = () => {
           onRowAdd: async (data) => {
             console.log(data);
             var formdata = new FormData();
-            formdata.append("name", "tata");
-            formdata.append("logo", data?.brandLogo.target.files[0]);
+            formdata.append("name", data?.name);
+            // formdata.append("logo", data?.brandLogo.target.files[0]);
             try {
               const response = await fetch(`${BASE_URL}/vehicle-maker`, {
                 method: "POST",
