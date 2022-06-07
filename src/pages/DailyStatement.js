@@ -12,7 +12,7 @@ import {
 import { formatCurrency } from "@ashirbad/js-core";
 import InvoiceDrawer from "components/InvoiceDrawer";
 import { useState } from "react";
-import { PictureAsPdf, Visibility } from "@mui/icons-material";
+import { PictureAsPdf } from "@mui/icons-material";
 import { StatementInvoice } from "components/dialog";
 import { useDailyRide } from "hooks";
 
@@ -196,8 +196,8 @@ const DailyStatement = () => {
               <>
                 <div className="d-flex">
                   {" "}
-                  <Tooltip title="View Details">
-                    {/* <Avatar
+                  {/* <Tooltip title="View Details"> */}
+                  {/* <Avatar
                       variant="rounded"
                       sx={{
                         padding: " 0px !important",
@@ -207,15 +207,15 @@ const DailyStatement = () => {
                       }}
                       // onClick={() => setOpenAddressDrawer(row)}
                     > */}
-                    <IconButton
+                  {/* <IconButton
                       onClick={() => setOpenStatementInvoice(row)}
                       sx={{ mr: 1, cursor: "pointer" }}
                     >
                       {" "}
                       <Visibility sx={{ color: "#1877f2" }} />
-                    </IconButton>
-                    {/* </Avatar> */}
-                  </Tooltip>
+                    </IconButton> */}
+                  {/* </Avatar> */}
+                  {/* </Tooltip> */}
                   <Tooltip title="Download Invoice">
                     {/* <Avatar
                       variant="rounded"
