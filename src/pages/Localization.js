@@ -126,7 +126,7 @@ const Localization = () => {
               true: "Active",
               false: "Inactive",
             },
-            validate: (rowData) => (rowData?.isOperational ? true : "Required"),
+            // validate: (rowData) => (rowData?.isOperational ? true : "Required"),
             // render: (row) => (
             //   <>
             //     <Switch

@@ -145,6 +145,7 @@ const VehicleCategories = () => {
             // render: ({ timestamp }) => moment(timestamp).format("lll"),
           },
           {
+            editable: "never",
             // title: "Features",
             field: "features",
             render: (row) => {

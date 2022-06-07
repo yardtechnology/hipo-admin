@@ -60,6 +60,18 @@ const AssignModels = () => {
             headerStyle: {
               textAlign: "center",
             },
+            validate: (value) => {
+              if (
+                value?.name?.length <= 0 ||
+                value?.name?.length === undefined ||
+                value?.name?.length === null ||
+                value?.name?.length === "" ||
+                value?.name?.length === " "
+              ) {
+                return "Required";
+              }
+              return true;
+            },
             // validate: ({ name }) => {
             //   if (!name) {
             //     return "Vehicle Make is required";
