@@ -49,6 +49,28 @@ const DriverHistory = () => {
     fetchData();
   }, [isMounted, driverId]);
   console.log(history);
+  const downloadPdf = async (data) => {
+    console.log(data);
+    const response = await fetch(
+      `${BASE_URL}/ride-invoice/download/${data?._id}`,
+      {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      }
+    );
+    const blob = await response.blob();
+    console.log(blob);
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, "", "width=800,height=500").print();
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.setAttribute("download", `${data?._id}.pdf`);
+    // document.body.appendChild(link);
+    // link.click();
+  };
   return (
     <>
       <InvoiceDrawer
@@ -171,7 +193,6 @@ const DriverHistory = () => {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "22%",
             field: "displayName" || "phoneNumber",
             render: ({ photoURL, displayName, email, phoneNumber }) => (
               <>
@@ -289,8 +310,9 @@ const DriverHistory = () => {
                     </IconButton>
                     {/* </Avatar> */}
                   </Tooltip>
-                  <Tooltip title="Download Invoice">
-                    {/* <Avatar
+                  {row?.status === "COMPLETED" && (
+                    <Tooltip title="Download Invoice">
+                      {/* <Avatar
                       variant="rounded"
                       sx={{
                         padding: " 0px !important",
@@ -299,12 +321,13 @@ const DriverHistory = () => {
                         cursor: "pointer",
                       }}
                     > */}
-                    <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
-                      <PictureAsPdf sx={{ color: "#1877f2" }} />
-                    </IconButton>
+                      <IconButton onClick={() => downloadPdf(row)}>
+                        <PictureAsPdf sx={{ color: "#1877f2" }} />
+                      </IconButton>
 
-                    {/* </Avatar> */}
-                  </Tooltip>
+                      {/* </Avatar> */}
+                    </Tooltip>
+                  )}
                 </div>
               </>
             ),

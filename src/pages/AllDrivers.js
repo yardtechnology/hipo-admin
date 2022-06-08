@@ -277,6 +277,11 @@ const AllDrivers = () => {
       }),
     },
   }));
+  // useEffect(() => {
+  //   // console.log({ realtime });
+  //   tableRef?.current && tableRef.current.onQueryChange();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [realtime]);
   return (
     <>
       {" "}

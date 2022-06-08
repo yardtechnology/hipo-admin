@@ -45,6 +45,29 @@ const RiderHistory = () => {
     };
     fetchData();
   }, [isMounted, riderId]);
+  const downloadPdf = async (data) => {
+    console.log(data);
+    const response = await fetch(
+      `${BASE_URL}/ride-invoice/download/${data?._id}`,
+      {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      }
+    );
+    const blob = await response.blob();
+    console.log(blob);
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, "", "width=800,height=500").print();
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.setAttribute("download", `${data?._id}.pdf`);
+    // document.body.appendChild(link);
+    // link.click();
+  };
+
   // console.log(history);
   return (
     <>
@@ -272,7 +295,7 @@ const RiderHistory = () => {
                         cursor: "pointer",
                       }}
                     > */}
-                      <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
+                      <IconButton onClick={() => downloadPdf(row)}>
                         <PictureAsPdf sx={{ color: "#1877f2" }} />
                       </IconButton>
 

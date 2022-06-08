@@ -162,15 +162,15 @@ const Riders = () => {
     }
   };
   useEffect(() => {
-    console.log({ realtime });
+    // console.log({ realtime });
     tableRef?.current && tableRef.current.onQueryChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [realtime]);
-  const [txt, setTxt] = useState("");
+  // const [txt, setTxt] = useState("");
   return (
     <>
       <MaterialTable
-        onSearchChange={(search) => setTxt(search)}
+        // onSearchChange={(search) => setTxt(search)}
         title="Riders"
         tableRef={tableRef}
         options={MUIOptions("Riders")}
@@ -192,16 +192,16 @@ const Riders = () => {
           const riders = await fetchRiders(
             query?.pageSize,
             query?.page,
-            query?.totalCount,
-            realtime
+            query?.totalCount
+            // realtime
           );
           return {
             data: riders?.data
-              ?.filter((_) =>
-                _?.displayName
-                  ? true
-                  : _.displayName?.toLowerCase()?.includes(txt?.toLowerCase())
-              )
+              // ?.filter((_) =>
+              //   _?.displayName
+              //     ? true
+              //     : _.displayName?.toLowerCase()?.includes(txt?.toLowerCase())
+              // )
               ?.map((rider, index) => ({
                 ...rider,
                 sl: index + 1,

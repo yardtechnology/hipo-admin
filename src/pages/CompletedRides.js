@@ -15,11 +15,34 @@ import { useState } from "react";
 import { InvoiceDrawer } from "components";
 import { useCompletedRides } from "hooks";
 import moment from "moment";
+import { BASE_URL } from "configs";
 const CompletedRides = () => {
   const { completedRides } = useCompletedRides();
   console.log(completedRides);
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   console.log(openInvoiceDrawer);
+  const downloadPdf = async (data) => {
+    console.log(data);
+    const response = await fetch(
+      `${BASE_URL}/ride-invoice/download/${data?._id}`,
+      {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      }
+    );
+    const blob = await response.blob();
+    console.log(blob);
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, "", "width=800,height=500").print();
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.setAttribute("download", `${data?._id}.pdf`);
+    // document.body.appendChild(link);
+    // link.click();
+  };
 
   return (
     <>
@@ -237,8 +260,9 @@ const CompletedRides = () => {
                     </IconButton>
                     {/* </Avatar> */}
                   </Tooltip>
-                  <Tooltip title="Download Invoice">
-                    {/* <Avatar
+                  {row?.status === "COMPLETED" && (
+                    <Tooltip title="Download Invoice">
+                      {/* <Avatar
                       variant="rounded"
                       sx={{
                         padding: " 0px !important",
@@ -247,12 +271,13 @@ const CompletedRides = () => {
                         cursor: "pointer",
                       }}
                     > */}
-                    <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
-                      <PictureAsPdf sx={{ color: "#1877f2" }} />
-                    </IconButton>
+                      <IconButton onClick={() => downloadPdf(row)}>
+                        <PictureAsPdf sx={{ color: "#1877f2" }} />
+                      </IconButton>
 
-                    {/* </Avatar> */}
-                  </Tooltip>
+                      {/* </Avatar> */}
+                    </Tooltip>
+                  )}
                 </div>
               </>
             ),

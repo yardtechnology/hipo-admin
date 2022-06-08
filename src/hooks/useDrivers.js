@@ -70,13 +70,12 @@ const useDrivers = () => {
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         isMounted.current && setDrivers(sortArr);
-        setRealtime(!realtime);
         return { data: sortArr, totalCount: arr?.length };
       } catch (error) {
         console.log(error);
       }
     },
-    [isMounted, realtime]
+    [isMounted]
   );
 
   useEffect(() => {
