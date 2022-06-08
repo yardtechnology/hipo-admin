@@ -35,6 +35,42 @@ const Vehicles = () => {
   const [loading, setLoading] = useState(false);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
+  const deleteVehicle = async (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.value) {
+        setLoading(true);
+        try {
+          const response = await fetch(`${BASE_URL}/vehicle/${id}`, {
+            method: "DELETE",
+
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+            },
+          });
+          const res = await response.json();
+          // console.log(res);
+          res?.status === 200
+            ? Swal.fire("Deleted!", "Vehicle has been deleted", "success")
+            : Swal.fire("Error!", "Something went wrong.", "error");
+          setLoading(false);
+          setRealtime((prev) => !prev);
+        } catch (error) {
+          console.log(error);
+          setLoading(false);
+        }
+      }
+    });
+  };
   const turnOnVehicle = async (item) => {
     try {
       setLoading(true);
@@ -313,6 +349,7 @@ const Vehicles = () => {
                   <Tooltip title="Delete Driver">
                     <Avatar
                       variant="rounded"
+                      onClick={() => deleteVehicle(row._id)}
                       // onClick={() => setOpenDocumentDrawer(row)}
                       sx={{
                         padding: "0px !important",

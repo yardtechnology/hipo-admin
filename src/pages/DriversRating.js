@@ -79,14 +79,15 @@ const DriversRating = () => {
         }}
         title={"Drivers Rating"}
         data={async (query) => {
+          console.log(query?.page);
           const data = await fetchRatings(
+            query,
             query?.pageSize,
             query?.page,
             query?.totalCount
           );
-          console.log(data);
           return {
-            data: data?.map((rating, i) => ({
+            data: data?.data?.map((rating, i) => ({
               ...rating,
               sl: query.page * query.pageSize + i + 1,
               currentTimestamp: moment(rating.createdAt).format("LL"),
@@ -101,7 +102,7 @@ const DriversRating = () => {
               riderPhone: rating?.rider?.phoneNumber,
             })),
             page: query?.page,
-            totalCount: 12,
+            totalCount: data?.totalCount,
           };
         }}
         columns={[

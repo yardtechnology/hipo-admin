@@ -143,7 +143,6 @@ const RidersRating = () => {
             query?.page,
             query?.totalCount
           );
-          console.log(data);
           return {
             data: data?.map((rating, i) => ({
               ...rating,

@@ -125,6 +125,7 @@ const Coupons = () => {
             type: "date",
             emptyValue: "--",
             export: true,
+            hidden: true,
           },
           {
             title: "Valid Till",
@@ -132,6 +133,7 @@ const Coupons = () => {
             type: "date",
             emptyValue: "--",
             export: true,
+            hidden: true,
           },
           {
             export: false,

@@ -47,6 +47,7 @@ const AllDrivers = () => {
   const { drivers, setRealtime, fetchDrivers } = useDrivers();
   // console.log("drivers", drivers);
   const handleDeleteDriver = async (id) => {
+    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

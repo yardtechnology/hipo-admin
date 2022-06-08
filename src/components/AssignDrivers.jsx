@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { BASE_URL } from "configs";
 import { useDriver } from "hooks";
+import Swal from "sweetalert2";
 const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
   console.log(open);
   const { drivers } = useDriver();
@@ -42,6 +43,10 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
       //   drivers: updatedDrivers,
       // });
       setOpenAssignDriverDrawer(false);
+      Swal.fire({
+        text: "Driver Assigned Successfully",
+        icon: "success",
+      });
       // setOpenAssignFeatureDrawer(false);
     } catch (error) {
       console.log(error);
@@ -79,6 +84,10 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
       //   drivers: updatedDrivers,
       // });
       setOpenAssignDriverDrawer(false);
+      Swal.fire({
+        text: "Driver Removed Successfully",
+        icon: "success",
+      });
     } catch (error) {
       console.log(error);
     }
