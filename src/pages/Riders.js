@@ -6,74 +6,23 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  styled,
-  Switch,
   Tooltip,
   Typography,
   Badge,
 } from "@mui/material";
 import { AddressDrawer, ReferralDrawer } from "components";
 import { SendNotification } from "components/dialog";
+import { IOSSwitch } from "components/core";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useRiders } from "hooks";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
-const IOSSwitch = styled((props) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
-  width: 42,
-  height: 26,
-  padding: 0,
-  "& .MuiSwitch-switchBase": {
-    padding: 0,
-    margin: 2,
-    transitionDuration: "300ms",
-    "&.Mui-checked": {
-      transform: "translateX(16px)",
-      color: "#fff",
-      "& + .MuiSwitch-track": {
-        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "red",
-        opacity: 1,
-        border: 0,
-      },
-      "&.Mui-disabled + .MuiSwitch-track": {
-        opacity: 0.5,
-      },
-    },
-    "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#33cf4d",
-      border: "6px solid #fff",
-    },
-    "&.Mui-disabled .MuiSwitch-thumb": {
-      color:
-        theme.palette.mode === "light"
-          ? theme.palette.grey[100]
-          : theme.palette.grey[600],
-    },
-    "&.Mui-disabled + .MuiSwitch-track": {
-      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
-    },
-  },
-  "& .MuiSwitch-thumb": {
-    boxSizing: "border-box",
-    width: 22,
-    height: 22,
-  },
-  "& .MuiSwitch-track": {
-    borderRadius: 26 / 2,
-    backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
-    opacity: 1,
-    transition: theme.transitions.create(["background-color"], {
-      duration: 500,
-    }),
-  },
-}));
+
 const Riders = () => {
   const tableRef = React.createRef();
   const { riders, realtime, setRealtime, fetchRiders } = useRiders();
-  // console.log(riders);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openAddressDrawer, setOpenAddressDrawer] = useState(false);
@@ -95,7 +44,6 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -111,7 +59,6 @@ const Riders = () => {
       console.log(error);
     } finally {
       setRealtime((prev) => !prev);
-      // tableRef.current && tableRef.current.onQueryChange();
     }
   };
   const handleUnblockAll = async (user) => {
@@ -130,7 +77,6 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -164,7 +110,6 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -181,7 +126,6 @@ const Riders = () => {
     } finally {
       fetchRiders();
       setRealtime((prev) => !prev);
-      // tableRef.current && tableRef.current.onQueryChange();
     }
   };
   const unblockUser = async (user) => {
@@ -200,7 +144,6 @@ const Riders = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      // console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -216,7 +159,6 @@ const Riders = () => {
       console.log(error);
     } finally {
       setRealtime((prev) => !prev);
-      // tableRef.current.onQueryChange();
     }
   };
   return (
@@ -292,10 +234,6 @@ const Riders = () => {
             render: (newData) => newData.tableData.id + 1,
             editable: "never",
           },
-          // {
-          //   title: "Name",
-          //   field: "displayName",
-          // },
           {
             title: "Profile",
             tooltip: "Profile",
@@ -351,14 +289,6 @@ const Riders = () => {
             field: "phoneNumber",
             searchable: true,
           },
-          // {
-          //   title: "Address",
-          //   field: "address",
-          // },
-          // {
-          //   title: "Trips",
-          //   field: "trips",
-          // },
           {
             title: "Status",
             field: "status",
@@ -406,7 +336,6 @@ const Riders = () => {
             render: (row) => (
               <>
                 <div className="d-flex">
-                  {" "}
                   <Tooltip title="Rider Address">
                     <Avatar
                       variant="rounded"
@@ -452,44 +381,7 @@ const Riders = () => {
               </>
             ),
           },
-
-          // {
-          //   title: "",
-          //   width: "2%",
-          //   // field: "pick",
-          //   render: (row) => (
-          //     <Tooltip title="Block this Rider">
-          //       <IconButton>
-          //         <Block />
-          //       </IconButton>
-          //     </Tooltip>
-          //   ),
-          // },
-
-          // {
-          //   title: "",
-          //   // field: "pick",
-          //   render: (row) => (
-          //     <Button
-          //       variant="contained"
-          //       size="small"
-          //       sx={{ textTransform: "none", padding: "5px" }}
-          //     >
-          //       Block
-          //     </Button>
-          //   ),
-          // },
-          // {
-          //   title: "Drop Date/Time",
-          //   field: "drop",
-          // },
         ]}
-        // editable={{
-        //   onRowDelete: async (oldData) => {
-        //     try {
-        //     } catch (error) {}
-        //   },
-        // }}
         actions={[
           {
             tooltip: "Send notification to all selected users",
