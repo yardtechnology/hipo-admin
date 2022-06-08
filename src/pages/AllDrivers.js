@@ -47,7 +47,6 @@ const AllDrivers = () => {
   const { drivers, setRealtime, fetchDrivers } = useDrivers();
   // console.log("drivers", drivers);
   const handleDeleteDriver = async (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -73,10 +72,13 @@ const AllDrivers = () => {
           res?.status === 200
             ? Swal.fire("Deleted!", "Driver has been deleted.", "success")
             : Swal.fire("Error!", "Something went wrong.", "error");
-          setIsLoading(false);
           setRealtime((prev) => !prev);
+          setIsLoading(false);
         } catch (error) {
           console.log(error);
+          setIsLoading(false);
+        } finally {
+          setRealtime((prev) => !prev);
           setIsLoading(false);
         }
       }
@@ -328,7 +330,7 @@ const AllDrivers = () => {
             query?.totalCount
           );
           return {
-            data: drivers.map((driver, i) => ({
+            data: drivers?.data?.map((driver, i) => ({
               ...driver,
               sl: i + 1,
               cityName: driver?.city?.name,
@@ -337,7 +339,7 @@ const AllDrivers = () => {
               countryName: driver?.country?.name,
             })),
             page: query?.page,
-            totalCount: 12,
+            totalCount: drivers?.totalCount,
           };
         }}
         isLoading={drivers === null || isLoading}

@@ -76,7 +76,7 @@ const MonthlyStatement = () => {
           );
           console.log(data);
           return {
-            data: data?.map((rating, i) => ({
+            data: data?.data?.map((rating, i) => ({
               ...rating,
               sl: query.page * query.pageSize + i + 1,
               currentTimestamp: moment(rating.createdAt).format("LL"),
@@ -95,7 +95,7 @@ const MonthlyStatement = () => {
               dropAddress: rating?.dropLocation?.address,
             })),
             page: query?.page,
-            totalCount: 12,
+            totalCount: data?.totalCount,
           };
         }}
         columns={[

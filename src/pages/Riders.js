@@ -277,7 +277,7 @@ const Riders = () => {
             query?.totalCount
           );
           return {
-            data: riders?.map((rider, index) => ({
+            data: riders?.data.map((rider, index) => ({
               ...rider,
               sl: index + 1,
               timeStamp: moment(rider?.createdAt).format("lll"),
@@ -287,7 +287,7 @@ const Riders = () => {
               ),
             })),
             page: query?.page,
-            totalCount: 12,
+            totalCount: riders?.totalCount,
           };
         }}
         columns={[

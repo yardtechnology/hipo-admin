@@ -30,7 +30,10 @@ const useYearlyRide = () => {
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         isMounted.current && setRides(sortArr);
-        return sortArr;
+        return {
+          data: sortArr,
+          totalCount: arr?.length,
+        };
       } catch (error) {
         console.log(error);
       }
