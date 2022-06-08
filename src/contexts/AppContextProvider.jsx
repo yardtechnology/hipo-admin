@@ -77,7 +77,6 @@ const AppContextProvider = ({ children }) => {
     ifscCode: "",
     bankName: "",
   });
-  // const { isMounted } = useIsMounted();
   const login = async (email, password, submitProps) => {
     try {
       const result = await fetch(`${BASE_URL}/admin-login`, {
@@ -92,7 +91,6 @@ const AppContextProvider = ({ children }) => {
       });
 
       const res = await result.json();
-      console.log(res);
       submitProps.resetForm();
       if (res.status === 200) {
         // Swal.fire({ icon: "success", text: res.message });
@@ -103,16 +101,13 @@ const AppContextProvider = ({ children }) => {
         }
         window.localStorage.setItem("SAL", res?.token);
         setUser(res?.data);
-        console.log(res?.data);
       } else {
         Swal.fire({ icon: "error", text: res.message });
       }
-      // navigate("/vetify-otp");
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     const fetchFun = async () => {
       const Sal = window.localStorage.getItem("SAL");
@@ -120,20 +115,15 @@ const AppContextProvider = ({ children }) => {
       try {
         const result = await fetch(`${BASE_URL}/account`, {
           method: "GET",
-
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${Sal}`,
           },
         });
         const res = await result.json();
-        // console.log(res);
-        result.status === 200
-          ? console.log(res?.data)
-          : Swal.fire({ icon: "error", text: res.message });
+        result.status !== 200 &&
+          Swal.fire({ icon: "error", text: res.message });
         setUser(res?.data);
-        // isMounted.current && setUser();
-        // document.cookie = res?.data;
       } catch (error) {
         console.log(error);
       }
@@ -158,8 +148,6 @@ const AppContextProvider = ({ children }) => {
         },
       });
       const res = await result.json();
-      console.log(res);
-      console.log(res.message);
       res?.status === 200 ? console.log(res?.data) : console.log(res.message);
       return setNot(res?.data);
     } catch (error) {
@@ -177,9 +165,7 @@ const AppContextProvider = ({ children }) => {
           },
         });
         const res = await result.json();
-        console.log(res);
-        console.log(res.message);
-        res?.status === 200 ? console.log(res?.data) : console.log(res.message);
+        res?.status !== 200 && console.log(res.message);
         return setNot(res?.data);
       } catch (error) {
         console.log(error);

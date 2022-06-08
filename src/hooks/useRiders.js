@@ -8,12 +8,6 @@ const useRiders = () => {
   const { isMounted } = useIsMounted();
   const fetchRiders = useCallback(
     async (pageSize = 10, page = 0) => {
-      console.log({
-        realtime,
-        url: `${BASE_URL}/users/all?role=user&limit=${pageSize}&skip=${
-          pageSize * page
-        }`,
-      });
       try {
         const response = await fetch(
           `${BASE_URL}/users/all?role=user&limit=${pageSize}&skip=${
@@ -27,7 +21,6 @@ const useRiders = () => {
           }
         );
         const arr = await response.json();
-        console.log({ arr });
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -37,7 +30,7 @@ const useRiders = () => {
         console.log(error);
       }
     },
-    [isMounted, realtime]
+    [isMounted]
   );
 
   useEffect(() => {

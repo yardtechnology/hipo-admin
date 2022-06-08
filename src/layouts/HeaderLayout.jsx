@@ -23,10 +23,6 @@ import { useAppContext } from "contexts";
 
 const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
   const { user, logout, not } = useAppContext();
-  console.log(not);
-  // console.log(notifications);
-
-  // console.log(user);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
