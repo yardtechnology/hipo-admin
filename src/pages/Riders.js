@@ -1,5 +1,4 @@
 import MaterialTable from "@material-table/core";
-import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { History, LocationCity, PersonAdd } from "@mui/icons-material";
 import {
   Avatar,
@@ -13,16 +12,17 @@ import {
 import { AddressDrawer, ReferralDrawer } from "components";
 import { SendNotification } from "components/dialog";
 import { IOSSwitch } from "components/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useRiders } from "hooks";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
+import { MUIOptions } from "helpers";
 
 const Riders = () => {
   const tableRef = React.createRef();
-  const { riders, realtime, setRealtime, fetchRiders } = useRiders();
+  const { riders, fetchRiders, realtime, setRealtime } = useRiders();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openAddressDrawer, setOpenAddressDrawer] = useState(false);
@@ -161,37 +161,20 @@ const Riders = () => {
       setRealtime((prev) => !prev);
     }
   };
+  useEffect(() => {
+    console.log({ realtime });
+    tableRef?.current && tableRef.current.onQueryChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [realtime]);
+  const [txt, setTxt] = useState("");
   return (
     <>
-      <AddressDrawer
-        open={openAddressDrawer}
-        setOpenAddressDrawer={setOpenAddressDrawer}
-      />
-      <ReferralDrawer
-        open={openReferralDrawer}
-        setOpenReferralDrawer={setOpenReferralDrawer}
-      />
       <MaterialTable
+        onSearchChange={(search) => setTxt(search)}
         title="Riders"
         tableRef={tableRef}
-        options={{
-          exportAllData: true,
-          exportMenu: [
-            {
-              label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Riders"),
-            },
-            {
-              label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Riders"),
-            },
-          ],
-          pageSize: "10",
-          actionsColumnIndex: -1,
-          search: true,
-          selection: true,
-          sorting: true,
-        }}
+        options={MUIOptions("Riders")}
+        totalCount={30}
         // data={
         //   riders === null
         //     ? []
@@ -213,15 +196,21 @@ const Riders = () => {
             realtime
           );
           return {
-            data: riders?.data?.map((rider, index) => ({
-              ...rider,
-              sl: index + 1,
-              timeStamp: moment(rider?.createdAt).format("lll"),
-              lastLogin: rider?.loginInfo?.createdAt,
-              lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
-                "MMMM Do YYYY, h:mm:ss a"
-              ),
-            })),
+            data: riders?.data
+              ?.filter((_) =>
+                _?.displayName
+                  ? true
+                  : _.displayName?.toLowerCase()?.includes(txt?.toLowerCase())
+              )
+              ?.map((rider, index) => ({
+                ...rider,
+                sl: index + 1,
+                timeStamp: moment(rider?.createdAt).format("lll"),
+                lastLogin: rider?.loginInfo?.createdAt,
+                lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
+                  "MMMM Do YYYY, h:mm:ss a"
+                ),
+              })),
             page: query?.page,
             totalCount: riders?.totalCount,
           };
@@ -400,8 +389,22 @@ const Riders = () => {
             onClick: (evt, data) => handleUnblockAll(data.map((d) => d._id)),
             // onClick: (evt, data) => setSelectedUsers(data),
           },
+          {
+            icon: "refresh",
+            tooltip: "Refresh Data",
+            isFreeAction: true,
+            onClick: () => tableRef.current && tableRef.current.onQueryChange(),
+          },
         ]}
         isLoading={riders === null || isLoading}
+      />
+      <AddressDrawer
+        open={openAddressDrawer}
+        setOpenAddressDrawer={setOpenAddressDrawer}
+      />
+      <ReferralDrawer
+        open={openReferralDrawer}
+        setOpenReferralDrawer={setOpenReferralDrawer}
       />
       <SendNotification
         selectedUsers={selectedUsers}
