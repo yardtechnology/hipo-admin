@@ -7,17 +7,19 @@ const useRiders = () => {
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   const fetchRiders = useCallback(
-    async (pageSize, page, totalCount) => {
-      console.log(pageSize, page, totalCount);
-      console.log(pageSize ? pageSize * 0 : 0);
+    async (pageSize = 10, page = 0) => {
+      console.log({
+        realtime,
+        url: `${BASE_URL}/users/all?role=user&limit=${pageSize}&skip=${
+          pageSize * page
+        }`,
+      });
       try {
         const response = await fetch(
           `${BASE_URL}/users/all?role=user&limit=${pageSize}&skip=${
-            pageSize ? pageSize * page : 0
+            pageSize * page
           }`,
           {
-            // method: "GET",
-            // body: JSON.stringify({ ...values }),
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("SAL")}`,
@@ -25,7 +27,7 @@ const useRiders = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
+        console.log({ arr });
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -35,7 +37,7 @@ const useRiders = () => {
         console.log(error);
       }
     },
-    [isMounted]
+    [isMounted, realtime]
   );
 
   useEffect(() => {
@@ -45,6 +47,7 @@ const useRiders = () => {
     fetchRiders,
     riders,
     setRealtime,
+    realtime,
   };
 };
 

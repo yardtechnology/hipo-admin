@@ -71,7 +71,8 @@ const IOSSwitch = styled((props) => (
   },
 }));
 const Riders = () => {
-  const { riders, setRealtime, fetchRiders } = useRiders();
+  const tableRef = React.createRef();
+  const { riders, realtime, setRealtime, fetchRiders } = useRiders();
   // console.log(riders);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,6 +111,7 @@ const Riders = () => {
       console.log(error);
     } finally {
       setRealtime((prev) => !prev);
+      // tableRef.current && tableRef.current.onQueryChange();
     }
   };
   const handleUnblockAll = async (user) => {
@@ -177,7 +179,9 @@ const Riders = () => {
     } catch (error) {
       console.log(error);
     } finally {
+      fetchRiders();
       setRealtime((prev) => !prev);
+      // tableRef.current && tableRef.current.onQueryChange();
     }
   };
   const unblockUser = async (user) => {
@@ -212,35 +216,24 @@ const Riders = () => {
       console.log(error);
     } finally {
       setRealtime((prev) => !prev);
+      // tableRef.current.onQueryChange();
     }
   };
-
   return (
     <>
       <AddressDrawer
         open={openAddressDrawer}
         setOpenAddressDrawer={setOpenAddressDrawer}
-      />{" "}
+      />
       <ReferralDrawer
         open={openReferralDrawer}
         setOpenReferralDrawer={setOpenReferralDrawer}
       />
       <MaterialTable
         title="Riders"
-        // onSelectionChange={(data) => {
-        //   setSelectedUserFCMToken({
-        //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
-        //     fcmToken: data?.[0]?.fcmToken || null,
-        //   });
-        // }}
-        localization={{
-          header: {
-            actions: "",
-          },
-        }}
+        tableRef={tableRef}
         options={{
           exportAllData: true,
-
           exportMenu: [
             {
               label: "Export PDF",
@@ -274,10 +267,11 @@ const Riders = () => {
           const riders = await fetchRiders(
             query?.pageSize,
             query?.page,
-            query?.totalCount
+            query?.totalCount,
+            realtime
           );
           return {
-            data: riders?.data.map((rider, index) => ({
+            data: riders?.data?.map((rider, index) => ({
               ...rider,
               sl: index + 1,
               timeStamp: moment(rider?.createdAt).format("lll"),
@@ -374,7 +368,7 @@ const Riders = () => {
                 <Tooltip title={row?.isBlocked ? "Unblock User" : "Block User"}>
                   <IOSSwitch
                     size="small"
-                    checked={row?.isBlocked ? true : false}
+                    checked={row?.isBlocked}
                     onChange={(e) => {
                       // console.log(e.target.checked);
                       if (e.target.checked) {

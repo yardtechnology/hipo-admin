@@ -34,6 +34,7 @@ import { useDrivers } from "hooks";
 import moment from "moment";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { memo } from "react";
 import Swal from "sweetalert2";
 
 const AllDrivers = () => {
@@ -45,6 +46,7 @@ const AllDrivers = () => {
   const [openEditDriverDrawer, setOpenEditDriverDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { drivers, setRealtime, fetchDrivers } = useDrivers();
+
   // console.log("drivers", drivers);
   const handleDeleteDriver = async (id) => {
     Swal.fire({
@@ -713,4 +715,4 @@ const AllDrivers = () => {
   );
 };
 
-export default AllDrivers;
+export default memo(AllDrivers);

@@ -261,8 +261,9 @@ const RiderHistory = () => {
                     </IconButton>
                     {/* </Avatar> */}
                   </Tooltip>
-                  <Tooltip title="Download Invoice">
-                    {/* <Avatar
+                  {row?.status === "COMPLETED" && (
+                    <Tooltip title="Download Invoice">
+                      {/* <Avatar
                       variant="rounded"
                       sx={{
                         padding: " 0px !important",
@@ -271,12 +272,13 @@ const RiderHistory = () => {
                         cursor: "pointer",
                       }}
                     > */}
-                    <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
-                      <PictureAsPdf sx={{ color: "#1877f2" }} />
-                    </IconButton>
+                      <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
+                        <PictureAsPdf sx={{ color: "#1877f2" }} />
+                      </IconButton>
 
-                    {/* </Avatar> */}
-                  </Tooltip>
+                      {/* </Avatar> */}
+                    </Tooltip>
+                  )}
                 </div>
               </>
             ),
