@@ -147,9 +147,19 @@ const VehicleBasicDetails = ({ handleNext }) => {
             ? {
                 vehicleType: vehicleBasicDetails?.vehicleType,
                 vehicleNumber: vehicleBasicDetails?.vehicleNumber,
-                vehicleModel: vehicleBasicDetails?.vehicleModel,
-                vehicleMaker:
-                  vehicleBasicDetails?.vehicleMaker || vehicleMakerId,
+                vehicleMaker: {
+                  vehicleType: vehicleBasicDetails?.vehicleMaker?.vehicleType,
+                  value: vehicleBasicDetails?.vehicleMaker?.value,
+                  key: vehicleBasicDetails?.vehicleMaker?.key,
+                },
+                vehicleModel: {
+                  vehicleType: vehicleBasicDetails?.vehicleModel?.vehicleType,
+                  value: vehicleBasicDetails?.vehicleModel?.value,
+                  key: vehicleBasicDetails?.vehicleModel?.key,
+                },
+
+                // vehicleMaker:
+                //   vehicleBasicDetails?.vehicleMaker || vehicleMakerId,
               }
             : initialValues
         }
@@ -264,20 +274,25 @@ const VehicleBasicDetails = ({ handleNext }) => {
                               mb: "2vh",
                             }}
                             id="combo-box-demo"
+                            name={"vehicleMaker"}
                             options={inputItem?.options}
                             getOptionLabel={(option) => option?.vehicleType}
-                            value={props.field.value}
+                            isOptionEqualToValue={(option, value) =>
+                              option?.key === value
+                            }
+                            value={
+                              props.field.value || formik.values.vehicleMaker
+                            }
                             onChange={(e, value) => {
-                              console.log({ props });
-                              console.log({ value });
-                              setVehicleMakerId(value?.key);
-                              formik.setFieldValue("vehicleMaker", value?.key);
+                              setVehicleMakerId(value?.value);
+                              formik.setFieldValue("vehicleMaker", value);
                               formik.setFieldTouched("vehicleMaker", true);
                             }}
                             renderInput={(params) => (
                               <TextField
-                                // value={vehicleBasicDetails?.vehicleMaker}
                                 {...params}
+                                name={"vehicleMaker"}
+                                value={formik.values.vehicleMaker}
                                 required={inputItem?.required}
                                 label="Vehicle Maker"
                                 variant="outlined"
@@ -294,14 +309,17 @@ const VehicleBasicDetails = ({ handleNext }) => {
                         return (
                           <Autocomplete
                             id="combo-box-demo"
-                            value={formik?.values?.vehicleModel}
+                            value={props.field.value}
                             onChange={(e, value) => {
                               setVehicleModelId(value?.key);
-                              formik.setFieldValue("vehicleModel", value?.key);
+                              formik.setFieldValue("vehicleModel", value);
                               formik.setFieldTouched("vehicleModel", true);
                             }}
                             options={inputItem?.options}
                             getOptionLabel={(option) => option?.vehicleType}
+                            isOptionEqualToValue={(option, value) =>
+                              option?.key === value
+                            }
                             renderInput={(params) => (
                               <TextField
                                 {...params}

@@ -99,24 +99,85 @@ const YearlyStatement = () => {
           );
           console.log(data);
           return {
-            data: data?.data?.map((rating, i) => ({
-              ...rating,
-              sl: query.page * query.pageSize + i + 1,
-              currentTimestamp: moment(rating.createdAt).format("LL"),
-              rideId: rating?._id,
-              driverImg: rating?.driver?.photoURL,
-              driverName: rating?.driver?.displayName,
-              driverEmail: rating?.driver?.email,
-              driverPhone: rating?.driver?.phoneNumber,
-              riderImg: rating?.rider?.photoURL,
-              riderName: rating?.rider?.displayName,
-              riderEmail: rating?.rider?.email,
-              riderPhone: rating?.rider?.phoneNumber,
-              pickup_time: moment(rating?.pickupTime).format("LLL"),
-              drop_time: moment(rating?.dropTime).format("LLL"),
-              pickupAddress: rating?.pickupLocation?.address,
-              dropAddress: rating?.dropLocation?.address,
-            })),
+            data:
+              query?.search?.length > 0
+                ? data?.data
+                    ?.map((rating, i) => ({
+                      ...rating,
+                      sl: query.page * query.pageSize + i + 1,
+                      currentTimestamp: moment(rating.createdAt).format("LL"),
+                      rideId: rating?.ride?._id,
+                      driverImg: rating?.driver?.photoURL,
+                      driverName: rating?.driver?.displayName,
+                      driverEmail: rating?.driver?.email,
+                      driverPhone: rating?.driver?.phoneNumber,
+                      riderImg: rating?.rider?.photoURL,
+                      riderName: rating?.rider?.displayName,
+                      riderEmail: rating?.rider?.email,
+                      riderPhone: rating?.rider?.phoneNumber,
+                      pickup_time: moment(rating?.pickupTime).format("LLL"),
+                      drop_time: moment(rating?.dropTime).format("LLL"),
+                      pickupAddress: rating?.pickupLocation?.address,
+                      dropAddress: rating?.dropLocation?.address,
+                    }))
+                    ?.filter(
+                      (rating) =>
+                        rating?.driverName
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderName
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.rideId
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderPhone
+                          ?.toString()
+                          ?.includes(query?.search?.toString()) ||
+                        rating?.driverPhone
+                          ?.toString()
+                          ?.includes(query?.search?.toString()) ||
+                        rating?.driverEmail
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderEmail
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderRating
+                          .toString()
+                          ?.includes(query?.search?.toString()) ||
+                        rating?.pickupAddress?.includes(
+                          query?.search?.toLowerCase()
+                        ) ||
+                        rating?.dropAddress?.includes(
+                          query?.search?.toLowerCase()
+                        ) ||
+                        rating?.pickup_time?.includes(
+                          query?.search?.toLowerCase()
+                        ) ||
+                        rating?.drop_time?.includes(
+                          query?.search?.toLowerCase()
+                        ) ||
+                        rating?.status?.includes(query?.search?.toLowerCase())
+                    )
+                : data?.data?.map((rating, i) => ({
+                    ...rating,
+                    sl: query.page * query.pageSize + i + 1,
+                    currentTimestamp: moment(rating.createdAt).format("LL"),
+                    rideId: rating?._id,
+                    driverImg: rating?.driver?.photoURL,
+                    driverName: rating?.driver?.displayName,
+                    driverEmail: rating?.driver?.email,
+                    driverPhone: rating?.driver?.phoneNumber,
+                    riderImg: rating?.rider?.photoURL,
+                    riderName: rating?.rider?.displayName,
+                    riderEmail: rating?.rider?.email,
+                    riderPhone: rating?.rider?.phoneNumber,
+                    pickup_time: moment(rating?.pickupTime).format("LLL"),
+                    drop_time: moment(rating?.dropTime).format("LLL"),
+                    pickupAddress: rating?.pickupLocation?.address,
+                    dropAddress: rating?.dropLocation?.address,
+                  })),
             page: query?.page,
             totalCount: data?.totalCount,
           };

@@ -53,8 +53,8 @@ const PUCInfo = ({ handleReset, handleBack }) => {
     const formdata = new FormData();
     formdata.append("vehicleType", vehicleBasicDetails?.vehicleType);
     formdata.append("vehicleNumber", vehicleBasicDetails?.vehicleNumber);
-    formdata.append("make", vehicleBasicDetails?.vehicleMaker);
-    formdata.append("model", vehicleBasicDetails?.vehicleModel);
+    formdata.append("make", vehicleBasicDetails?.vehicleMaker?.value);
+    formdata.append("model", vehicleBasicDetails?.vehicleModel?.value);
     formdata.append("rc", RCInfo?.RCImage?.target.files[0]);
     formdata.append("rcNumber", RCInfo?.RCNumber);
     formdata.append("rcExpiry", RCInfo?.validTill);
