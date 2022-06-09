@@ -7,7 +7,7 @@ const useRiders = () => {
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   const fetchRiders = useCallback(
-    async (pageSize = 10, page = 0) => {
+    async (pageSize, page, search) => {
       try {
         const response = await fetch(
           `${BASE_URL}/users/all?role=user&limit=${pageSize}&skip=${

@@ -84,6 +84,7 @@ const useDrivers = () => {
   return {
     fetchDrivers,
     drivers,
+    realtime,
     setRealtime,
   };
 };

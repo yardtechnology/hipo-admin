@@ -153,7 +153,7 @@ const Dashboard = () => {
         <div style={{ height: "50vh", width: "100%", marginBottom: "2vh" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: "AIzaSyC61d5ftTpAnHONe8k5tbo4mkSmzvDNO-4",
+              key: "AIzaSyDYIlpw2g2dPkPaUhAu_CAakZzyJi-6w6s",
             }}
             defaultCenter={currentLocation}
             defaultZoom={13}

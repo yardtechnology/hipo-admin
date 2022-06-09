@@ -32,12 +32,12 @@ import { SendNotification } from "components/dialog";
 import { BASE_URL } from "configs";
 import { useDrivers } from "hooks";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { memo } from "react";
 import Swal from "sweetalert2";
 
 const AllDrivers = () => {
+  const tableRef = React.createRef();
   const navigate = useNavigate();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
@@ -45,7 +45,7 @@ const AllDrivers = () => {
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
   const [openEditDriverDrawer, setOpenEditDriverDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { drivers, setRealtime, fetchDrivers } = useDrivers();
+  const { drivers, setRealtime, fetchDrivers, realtime } = useDrivers();
 
   // console.log("drivers", drivers);
   const handleDeleteDriver = async (id) => {
@@ -277,14 +277,13 @@ const AllDrivers = () => {
       }),
     },
   }));
-  // useEffect(() => {
-  //   // console.log({ realtime });
-  //   tableRef?.current && tableRef.current.onQueryChange();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [realtime]);
+  useEffect(() => {
+    // console.log({ realtime });
+    tableRef?.current && tableRef.current.onQueryChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [realtime]);
   return (
     <>
-      {" "}
       <ReferralDrawer
         open={openReferralDrawer}
         setOpenReferralDrawer={setOpenReferralDrawer}
@@ -305,6 +304,7 @@ const AllDrivers = () => {
       />
       <MaterialTable
         title="All Drivers"
+        tableRef={tableRef}
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -720,4 +720,4 @@ const AllDrivers = () => {
   );
 };
 
-export default memo(AllDrivers);
+export default AllDrivers;

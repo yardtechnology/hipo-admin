@@ -18,7 +18,8 @@ import moment from "moment";
 import { useRiders } from "hooks";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
-import { MUIOptions } from "helpers";
+// import { MUIOptions } from "helpers";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
 
 const Riders = () => {
   const tableRef = React.createRef();
@@ -124,7 +125,6 @@ const Riders = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      fetchRiders();
       setRealtime((prev) => !prev);
     }
   };
@@ -173,8 +173,28 @@ const Riders = () => {
         // onSearchChange={(search) => setTxt(search)}
         title="Riders"
         tableRef={tableRef}
-        options={MUIOptions("Riders")}
-        totalCount={30}
+        options={{
+          debounceInterval: 700,
+          padding: "dense",
+          exportAllData: true,
+          exportMenu: [
+            {
+              label: "Export PDF",
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Drivers"),
+            },
+            {
+              label: "Export CSV",
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Drivers"),
+            },
+          ],
+          pageSize: 10,
+          actionsColumnIndex: -1,
+          search: true,
+          selection: true,
+          detailPanelColumnAlignment: "right",
+          sorting: true,
+        }}
+        // options={MUIOptions("Riders")}
         // data={
         //   riders === null
         //     ? []
@@ -189,28 +209,44 @@ const Riders = () => {
         //       }))
         // }
         data={async (query) => {
+          console.log(query?.search);
           const riders = await fetchRiders(
             query?.pageSize,
             query?.page,
-            query?.totalCount
+            query.search
             // realtime
           );
           return {
-            data: riders?.data
-              // ?.filter((_) =>
-              //   _?.displayName
-              //     ? true
-              //     : _.displayName?.toLowerCase()?.includes(txt?.toLowerCase())
-              // )
-              ?.map((rider, index) => ({
-                ...rider,
-                sl: index + 1,
-                timeStamp: moment(rider?.createdAt).format("lll"),
-                lastLogin: rider?.loginInfo?.createdAt,
-                lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
-                  "MMMM Do YYYY, h:mm:ss a"
-                ),
-              })),
+            data: query?.search
+              ? riders?.data?.filter(
+                  (rider) =>
+                    rider?.displayName
+                      ?.toLowerCase()
+                      ?.includes(query.search?.toLowerCase()) ||
+                    rider?.email
+                      ?.toLowerCase()
+                      ?.includes(query.search?.toLowerCase()) ||
+                    rider?.phoneNumber
+                      ?.toString()
+                      .includes(query.search?.toLowerCase())
+                )
+              : riders?.data
+
+                  // ?.filter((_) =>
+                  //   _?.displayName
+                  //     ? true
+                  //     : _.displayName?.toLowerCase()?.includes(txt?.toLowerCase())
+                  // )
+
+                  ?.map((rider, index) => ({
+                    ...rider,
+                    sl: index + 1,
+                    timeStamp: moment(rider?.createdAt).format("lll"),
+                    lastLogin: rider?.loginInfo?.createdAt,
+                    lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
+                      "MMMM Do YYYY, h:mm:ss a"
+                    ),
+                  })),
             page: query?.page,
             totalCount: riders?.totalCount,
           };
