@@ -337,14 +337,43 @@ const AllDrivers = () => {
             query?.totalCount
           );
           return {
-            data: drivers?.data?.map((driver, i) => ({
-              ...driver,
-              sl: i + 1,
-              cityName: driver?.city?.name,
-              currentTimestamp: moment(driver?.createdAt).format("ll"),
-              DOB: moment(driver?.DOB).format("ll"),
-              countryName: driver?.country?.name,
-            })),
+            data:
+              query?.search?.length > 0
+                ? drivers.data
+                    .map((driver, i) => ({
+                      ...driver,
+                      sl: i + 1,
+                      cityName: driver?.city?.name,
+                      currentTimestamp: moment(driver?.createdAt).format("ll"),
+                      DOB: moment(driver?.DOB).format("ll"),
+                      countryName: driver?.country?.name,
+                    }))
+                    .filter(
+                      (driver) =>
+                        driver?.displayName
+                          .toLowerCase()
+                          .includes(query?.search?.toLowerCase()) ||
+                        driver?.email
+                          .toLowerCase()
+                          .includes(query?.search?.toLowerCase()) ||
+                        driver?.phoneNumber
+                          ?.toString()
+                          .includes(query?.search) ||
+                        driver?.cityName
+                          ?.toLowerCase()
+                          .includes(query?.search?.toLowerCase()) ||
+                        driver?.countryName
+                          ?.toLowerCase()
+                          .includes(query?.search?.toLowerCase())
+                    )
+                : drivers?.data?.map((driver, i) => ({
+                    ...driver,
+                    sl: i + 1,
+                    cityName: driver?.city?.name,
+                    currentTimestamp: moment(driver?.createdAt).format("ll"),
+                    DOB: moment(driver?.DOB).format("ll"),
+                    countryName: driver?.country?.name,
+                  })),
             page: query?.page,
             totalCount: drivers?.totalCount,
           };
@@ -419,10 +448,12 @@ const AllDrivers = () => {
           {
             title: "City",
             field: "cityName",
+            searchable: true,
           },
           {
             title: "Country",
             field: "countryName",
+            searchable: true,
           },
           // {
           //   title: "Trips",

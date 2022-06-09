@@ -217,36 +217,37 @@ const Riders = () => {
             // realtime
           );
           return {
-            data: query?.search
-              ? riders?.data?.filter(
-                  (rider) =>
-                    rider?.displayName
-                      ?.toLowerCase()
-                      ?.includes(query.search?.toLowerCase()) ||
-                    rider?.email
-                      ?.toLowerCase()
-                      ?.includes(query.search?.toLowerCase()) ||
-                    rider?.phoneNumber
-                      ?.toString()
-                      .includes(query.search?.toLowerCase())
-                )
-              : riders?.data
+            data:
+              query?.search?.length > 0
+                ? riders?.data?.filter(
+                    (rider) =>
+                      rider?.displayName
+                        ?.toLowerCase()
+                        ?.includes(query.search?.toLowerCase()) ||
+                      rider?.email
+                        ?.toLowerCase()
+                        ?.includes(query.search?.toLowerCase()) ||
+                      rider?.phoneNumber
+                        ?.toString()
+                        .includes(query.search?.toLowerCase())
+                  )
+                : riders?.data
 
-                  // ?.filter((_) =>
-                  //   _?.displayName
-                  //     ? true
-                  //     : _.displayName?.toLowerCase()?.includes(txt?.toLowerCase())
-                  // )
+                    // ?.filter((_) =>
+                    //   _?.displayName
+                    //     ? true
+                    //     : _.displayName?.toLowerCase()?.includes(txt?.toLowerCase())
+                    // )
 
-                  ?.map((rider, index) => ({
-                    ...rider,
-                    sl: index + 1,
-                    timeStamp: moment(rider?.createdAt).format("lll"),
-                    lastLogin: rider?.loginInfo?.createdAt,
-                    lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
-                      "MMMM Do YYYY, h:mm:ss a"
-                    ),
-                  })),
+                    ?.map((rider, index) => ({
+                      ...rider,
+                      sl: index + 1,
+                      timeStamp: moment(rider?.createdAt).format("lll"),
+                      lastLogin: rider?.loginInfo?.createdAt,
+                      lastLoginInfo: moment(rider?.loginInfo?.createdAt).format(
+                        "MMMM Do YYYY, h:mm:ss a"
+                      ),
+                    })),
             page: query?.page,
             totalCount: riders?.totalCount,
           };

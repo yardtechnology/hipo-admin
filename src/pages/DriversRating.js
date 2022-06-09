@@ -81,26 +81,70 @@ const DriversRating = () => {
         data={async (query) => {
           console.log(query?.page);
           const data = await fetchRatings(
-            query,
             query?.pageSize,
             query?.page,
             query?.totalCount
           );
           return {
-            data: data?.data?.map((rating, i) => ({
-              ...rating,
-              sl: query.page * query.pageSize + i + 1,
-              currentTimestamp: moment(rating.createdAt).format("LL"),
-              rideId: rating?.ride?._id,
-              driverImg: rating?.driver?.photoURL,
-              driverName: rating?.driver?.displayName,
-              driverEmail: rating?.driver?.email,
-              driverPhone: rating?.driver?.phoneNumber,
-              riderImg: rating?.rider?.photoURL,
-              riderName: rating?.rider?.displayName,
-              riderEmail: rating?.rider?.email,
-              riderPhone: rating?.rider?.phoneNumber,
-            })),
+            data:
+              query?.search?.length > 0
+                ? data?.data
+                    ?.map((rating, i) => ({
+                      ...rating,
+                      sl: query.page * query.pageSize + i + 1,
+                      currentTimestamp: moment(rating.createdAt).format("LL"),
+                      rideId: rating?.ride?._id,
+                      driverImg: rating?.driver?.photoURL,
+                      driverName: rating?.driver?.displayName,
+                      driverEmail: rating?.driver?.email,
+                      driverPhone: rating?.driver?.phoneNumber,
+                      riderImg: rating?.rider?.photoURL,
+                      riderName: rating?.rider?.displayName,
+                      riderEmail: rating?.rider?.email,
+                      riderPhone: rating?.rider?.phoneNumber,
+                    }))
+                    ?.filter(
+                      (rating) =>
+                        rating?.driverName
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderName
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.rideId
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderPhone
+                          ?.toString()
+                          ?.includes(query?.search?.toString()) ||
+                        rating?.driverPhone
+                          ?.toString()
+                          ?.includes(query?.search?.toString()) ||
+                        rating?.driverEmail
+                          ?.toLowerCase()
+
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderEmail
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.riderRating
+                          .toString()
+                          ?.includes(query?.search?.toString())
+                    )
+                : data?.data?.map((rating, i) => ({
+                    ...rating,
+                    sl: query.page * query.pageSize + i + 1,
+                    currentTimestamp: moment(rating.createdAt).format("LL"),
+                    rideId: rating?.ride?._id,
+                    driverImg: rating?.driver?.photoURL,
+                    driverName: rating?.driver?.displayName,
+                    driverEmail: rating?.driver?.email,
+                    driverPhone: rating?.driver?.phoneNumber,
+                    riderImg: rating?.rider?.photoURL,
+                    riderName: rating?.rider?.displayName,
+                    riderEmail: rating?.rider?.email,
+                    riderPhone: rating?.rider?.phoneNumber,
+                  })),
             page: query?.page,
             totalCount: data?.totalCount,
           };
@@ -180,7 +224,7 @@ const DriversRating = () => {
           // },
           {
             title: "Ratings",
-            field: "driverRating",
+            field: "riderRating",
             type: "numeric",
             searchable: true,
             cellStyle: {
