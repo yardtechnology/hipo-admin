@@ -125,43 +125,27 @@ const DailyStatement = () => {
                     }))
                     ?.filter(
                       (rating) =>
-                        rating?.driverName
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderName
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
                         rating?.rideId
                           ?.toLowerCase()
                           ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderPhone
-                          ?.toString()
-                          ?.includes(query?.search?.toString()) ||
-                        rating?.driverPhone
-                          ?.toString()
-                          ?.includes(query?.search?.toString()) ||
-                        rating?.driverEmail
+                        rating?.pickupAddress
+                          ?.toLowerCase()
+                          .includes(query?.search?.toLowerCase()) ||
+                        rating?.dropAddress
                           ?.toLowerCase()
                           ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderEmail
+                        rating?.pickup_time
                           ?.toLowerCase()
                           ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderRating
-                          .toString()
-                          ?.includes(query?.search?.toString()) ||
-                        rating?.pickupAddress?.includes(
-                          query?.search?.toLowerCase()
-                        ) ||
-                        rating?.dropAddress?.includes(
-                          query?.search?.toLowerCase()
-                        ) ||
-                        rating?.pickup_time?.includes(
-                          query?.search?.toLowerCase()
-                        ) ||
-                        rating?.drop_time?.includes(
-                          query?.search?.toLowerCase()
-                        ) ||
-                        rating?.status?.includes(query?.search?.toLowerCase())
+                        rating?.drop_time
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.status
+                          ?.toLowerCase()
+                          ?.includes(query?.search?.toLowerCase()) ||
+                        rating?.paymentMethod
+                          ?.toLowerCase()
+                          .includes(query?.search?.toLowerCase())
                     )
                 : data?.data?.map((rating, i) => ({
                     ...rating,

@@ -8,6 +8,7 @@ import {
   Select,
   TextField,
   Typography,
+  Autocomplete,
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -19,11 +20,21 @@ import { Done } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
+import { useState } from "react";
 // import { PhotoUpload } from "./core";
 
 const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
-  const { addVehicleTypeSchema } = useVehicleTypeSchema();
+  const [categoryId, setCategoryId] = useState(open?.vehicleType);
+  const [vehicleMakerId, setVehicleMakerId] = useState(open?.make?._id);
+  const [vehicleModelId, setVehicleModelId] = useState(open?.model?._id);
+  const { addVehicleTypeSchema } = useVehicleTypeSchema(
+    vehicleMakerId,
+    categoryId
+  );
 
+  console.log(vehicleModelId);
+  console.log(vehicleMakerId);
+  console.log(categoryId);
   console.log(open);
 
   const initialValues = addVehicleTypeSchema?.reduce(
@@ -41,18 +52,20 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
     {}
   );
   const handleSend = async (values, submitProps) => {
+    const formdata = new FormData();
+    formdata.append("vehicleType", categoryId);
+    formdata.append("vehicleNumber", values.vehicleNumber);
+    formdata.append("make", vehicleMakerId);
+    formdata.append("model", vehicleModelId);
+
     try {
       const response = await fetch(`${BASE_URL}/vehicle/${open?._id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("SAL")}`,
         },
-        body: JSON.stringify({
-          vehicleName: values?.vehicleName,
-          vehicleType: values?.vehicleType,
-          vehicleNumber: values?.vehicleNumber,
-        }),
+        body: formdata,
       });
       const res = await response.json();
       console.log(res);
@@ -109,8 +122,18 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
                 ? {
                     vehicleNumber: open?.vehicleNumber,
                     vehicleType: open?.vehicleType,
-                    vehicleMaker: open?.make?._id,
-                    vehicleModel: open?.model?._id,
+                    vehicleMaker: {
+                      vehicleType: open?.make?.name,
+                      value: open?.make?._id,
+                      key: open?.make?._id,
+                    },
+                    vehicleModel: {
+                      vehicleType: open?.model?.name,
+                      value: open?.model?._id,
+                      key: open?.model?._id,
+                    },
+                    // vehicleMaker:{ open?.make?._id},
+                    // vehicleModel: open?.model?._id,
                   }
                 : initialValues
             }
@@ -123,33 +146,56 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
                 {addVehicleTypeSchema?.map((inputItem) => (
                   <Field name={inputItem.name} key={inputItem.key}>
                     {(props) => {
-                      if (inputItem.type === "select") {
+                      if (
+                        inputItem.type === "select" &&
+                        inputItem.name !== "vehicleMaker" &&
+                        inputItem.name !== "vehicleModel"
+                      ) {
                         return (
                           <FormControl
                             required
-                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             margin="normal"
                             variant="outlined"
-                            error={Boolean(
-                              props.meta.touched && props.meta.error
-                            )}
+                            // error={Boolean(formik.errors.vehicleType)}
                           >
                             <InputLabel
-                              shrink={true}
                               id={`label-${inputItem.name}`}
+                              shrink={true}
                             >
                               {inputItem.label}
                             </InputLabel>
                             <Select
-                              labelId={`label-${inputItem.name}`}
-                              id={inputItem.name}
-                              label={inputItem.label}
-                              {...props.field}
                               notched={true}
+                              labelId={`label-${inputItem?.name}`}
+                              id={inputItem?.name}
+                              label={inputItem?.label}
+                              value={props.field.value}
+                              displayEmpty
+                              onChange={(e) => {
+                                if (inputItem?.name === "vehicleType") {
+                                  setCategoryId(e.target.value);
+                                  formik.setFieldValue(
+                                    "vehicleType",
+                                    e.target.value
+                                  );
+                                  formik.setFieldTouched("vehicleType", true);
+                                  return;
+                                }
+
+                                props?.input?.onChange(e.target.value);
+                              }}
+                              error={Boolean(formik.errors.vehicleType)}
+                              helperText={
+                                // formik.touched.phoneNumber &&
+                                formik.errors.vehicleType
+                              }
                             >
-                              {inputItem.options.map((option) => (
-                                <MenuItem value={option.value} key={option.key}>
+                              {inputItem?.options?.map((option) => (
+                                <MenuItem
+                                  value={option?.value}
+                                  key={option?.key}
+                                >
                                   {option?.phone && (
                                     <img
                                       loading="lazy"
@@ -166,15 +212,90 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
                                   ) : (
                                     option?.vehicleType
                                   )}
+                                  {option?.phone ? (
+                                    <>{`${option.value} (${option.key}) +${option.phone} `}</>
+                                  ) : (
+                                    option?.driverName
+                                  )}
                                 </MenuItem>
                               ))}
                             </Select>
                             <FormHelperText>
-                              {props.meta.touched && props.meta.error}
+                              {/* {formik.errors.vehicleType} */}
                             </FormHelperText>
                           </FormControl>
                         );
                       }
+                      if (
+                        inputItem?.name === "vehicleMaker" &&
+                        inputItem?.type === "select"
+                      ) {
+                        return (
+                          <Autocomplete
+                            sx={{
+                              width: "100%",
+                              mb: "2vh",
+                            }}
+                            id="combo-box-demo"
+                            name={"vehicleMaker"}
+                            options={inputItem?.options}
+                            getOptionLabel={(option) => option?.vehicleType}
+                            isOptionEqualToValue={(option, value) =>
+                              option?.key === value
+                            }
+                            value={
+                              props.field.value || formik.values.vehicleMaker
+                            }
+                            onChange={(e, value) => {
+                              setVehicleMakerId(value?.value);
+                              formik.setFieldValue("vehicleMaker", value);
+                              formik.setFieldTouched("vehicleMaker", true);
+                            }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                name={"vehicleMaker"}
+                                value={formik.values.vehicleMaker}
+                                required={inputItem?.required}
+                                label="Vehicle Maker"
+                                variant="outlined"
+                                InputLabelProps={{ shrink: true }}
+                              />
+                            )}
+                          />
+                        );
+                      }
+                      if (
+                        inputItem?.name === "vehicleModel" &&
+                        inputItem?.type === "select"
+                      ) {
+                        return (
+                          <Autocomplete
+                            id="combo-box-demo"
+                            value={props.field.value}
+                            onChange={(e, value) => {
+                              setVehicleModelId(value?.key);
+                              formik.setFieldValue("vehicleModel", value);
+                              formik.setFieldTouched("vehicleModel", true);
+                            }}
+                            options={inputItem?.options}
+                            getOptionLabel={(option) => option?.vehicleType}
+                            isOptionEqualToValue={(option, value) =>
+                              option?.key === value
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Vehicle Model"
+                                InputLabelProps={{ shrink: true }}
+                                required={inputItem?.required}
+                                variant="outlined"
+                              />
+                            )}
+                          />
+                        );
+                      }
+
                       return (
                         <div>
                           <TextField
