@@ -241,7 +241,7 @@ const Career = () => {
         //       handleBulkDelete(data.map((data) => data?.day)),
         //   },
         // ]}
-        // isLoading={days === null}
+        isLoading={career === null}
       />
     </>
   );

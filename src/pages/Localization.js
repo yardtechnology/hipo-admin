@@ -245,7 +245,7 @@ const Localization = () => {
         //       handleBulkDelete(data.map((data) => data?.day)),
         //   },
         // ]}
-        // isLoading={days === null}
+        isLoading={cities === null}
       />
     </>
   );

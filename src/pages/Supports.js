@@ -100,7 +100,7 @@ const Supports = () => {
                 // updatedAt: moment(supports.updatedAt).format("DD-MM-YYYY"),
               }))
         }
-        isLoading={loading === true}
+        isLoading={loading === true || supports === null}
         columns={[
           {
             title: "#",

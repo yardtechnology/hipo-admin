@@ -217,7 +217,7 @@ const AssignModels = () => {
         //       handleBulkDelete(data.map((data) => data?.day)),
         //   },
         // ]}
-        // isLoading={days === null}
+        isLoading={vehicleMaker?.length === 0 ? true : false}
       />
     </>
   );

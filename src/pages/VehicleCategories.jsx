@@ -270,7 +270,7 @@ const VehicleCategories = () => {
         //       handleBulkDelete(data.map((data) => data?.day)),
         //   },
         // ]}
-        // isLoading={days === null}
+        isLoading={vehicleCategory === null}
       />
     </>
   );

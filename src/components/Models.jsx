@@ -244,8 +244,9 @@ const Models = ({ rowData, setRealtime }) => {
             }
           },
         }}
-
-        // isLoading={SUBTOPICS === null}
+        isLoading={
+          vehicleModels === null || vehicleCategory === null ? true : false
+        }
       />
     </div>
   );
