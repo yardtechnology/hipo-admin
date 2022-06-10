@@ -45,6 +45,7 @@ const ManageFeatures = () => {
             },
           ],
         }}
+        isLoading={features === null}
         title={"Manage Features"}
         data={
           features === null

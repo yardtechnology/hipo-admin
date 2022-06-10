@@ -64,7 +64,7 @@ export const OverallRideStatement = lazy(() =>
 export const DailyStatement = lazy(() => import("./DailyStatement"));
 export const MonthlyStatement = lazy(() => import("./MonthlyStatement"));
 export const YearlyStatement = lazy(() => import("./YearlyStatement"));
-
+export const TotalRevenue = lazy(() => import("./TotalRevenue"));
 export const ManageArtists = lazy(() => import("./ManageArtists"));
 export const ManageManagers = lazy(() => import("./ManageManagers"));
 export const ChangePassword = lazy(() => import("./ChangePassword"));

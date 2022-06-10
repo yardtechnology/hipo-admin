@@ -131,6 +131,44 @@ const MenuItems = [
     ],
   },
   {
+    key: "11",
+    icon: <Category className="iconColor" />,
+    title: "Vehicles",
+    route: "/view-vehicles",
+    submenus: [
+      {
+        key: "3",
+        title: "Vehicle Categories",
+        icon: <CategoryOutlined className="iconColor" sx={{ color: "#000" }} />,
+        route: "/vehicle-categories",
+      },
+      {
+        key: "1",
+        title: "Add New Vehicle",
+        icon: <Add className="iconColor" sx={{ color: "#000" }} />,
+        route: "/add-new-vehicle",
+      },
+      {
+        key: "2",
+        title: "View Vehicles",
+        icon: <Visibility className="iconColor" sx={{ color: "#000" }} />,
+        route: "/vehicles",
+      },
+      {
+        key: "4",
+        title: "Vehicle Requests",
+        icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
+        route: "/vehicle-requests",
+      },
+      {
+        key: "5",
+        title: "Assign Models",
+        icon: <Add className="iconColor" sx={{ color: "#000" }} />,
+        route: "/assign-models",
+      },
+    ],
+  },
+  {
     key: "2",
     icon: <TwoWheeler className="iconColor" />,
     title: "Rides",
@@ -175,43 +213,12 @@ const MenuItems = [
     ],
   },
   {
-    key: "11",
-    icon: <Category className="iconColor" />,
-    title: "Vehicles",
-    route: "/view-vehicles",
-    submenus: [
-      {
-        key: "3",
-        title: "Vehicle Categories",
-        icon: <CategoryOutlined className="iconColor" sx={{ color: "#000" }} />,
-        route: "/vehicle-categories",
-      },
-      {
-        key: "1",
-        title: "Add New Vehicle",
-        icon: <Add className="iconColor" sx={{ color: "#000" }} />,
-        route: "/add-new-vehicle",
-      },
-      {
-        key: "2",
-        title: "View Vehicles",
-        icon: <Visibility className="iconColor" sx={{ color: "#000" }} />,
-        route: "/vehicles",
-      },
-      {
-        key: "4",
-        title: "Vehicle Requests",
-        icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
-        route: "/vehicle-requests",
-      },
-      {
-        key: "5",
-        title: "Assign Models",
-        icon: <Add className="iconColor" sx={{ color: "#000" }} />,
-        route: "/assign-models",
-      },
-    ],
+    key: "54",
+    title: "Total Revenue",
+    icon: <AttachMoney className="iconColor" />,
+    route: "/total-revenue",
   },
+
   // {
   //   key: "20",
   //   icon: <Category className="iconColor" />,

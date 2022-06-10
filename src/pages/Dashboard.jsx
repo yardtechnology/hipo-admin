@@ -222,9 +222,13 @@ const Dashboard = () => {
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
                   title={formatCurrency(
-                    adminData?.metaData?.online_transaction +
-                      adminData?.metaData?.cash_transaction +
-                      adminData?.metaData?.wallet_transaction || 0
+                    adminData?.metaData?.online_transaction
+                      ? adminData?.metaData?.online_transaction
+                      : 0 + adminData?.metaData?.cash_transaction
+                      ? adminData?.metaData?.cash_transaction
+                      : 0 + adminData?.metaData?.wallet_transaction
+                      ? adminData?.metaData?.wallet_transaction
+                      : 0 || 0
                   )}
                   subtitle="Revenue"
                   icon={<Money className="iconColor" />}
@@ -252,8 +256,11 @@ const Dashboard = () => {
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
                   title={
-                    adminData?.metaData?.on_the_way_rides +
-                      adminData?.metaData?.ongoing_rides || "00"
+                    adminData?.metaData?.on_the_way_rides
+                      ? adminData?.metaData?.on_the_way_rides
+                      : 0 + adminData?.metaData?.ongoing_rides
+                      ? adminData?.metaData?.ongoing_rides
+                      : 0 || "00"
                   }
                   subtitle="Active Rides"
                   icon={<ToggleOn className="iconColor" />}
@@ -273,10 +280,15 @@ const Dashboard = () => {
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
                   title={
-                    adminData?.metaData?.cancelled_rides +
-                      adminData?.metaData?.on_the_way_rides +
-                      adminData?.metaData?.ongoing_rides +
-                      adminData?.metaData?.pending_rides || "00"
+                    adminData?.metaData?.cancelled_rides
+                      ? adminData?.metaData?.cancelled_rides
+                      : 0 + adminData?.metaData?.on_the_way_rides
+                      ? adminData?.metaData?.on_the_way_rides
+                      : 0 + adminData?.metaData?.ongoing_rides
+                      ? adminData?.metaData?.ongoing_rides
+                      : 0 + adminData?.metaData?.pending_rides
+                      ? adminData?.metaData?.pending_rides
+                      : 0 || "00"
                   }
                   subtitle="Total Rides"
                   icon={<DirectionsCar className="iconColor" />}
