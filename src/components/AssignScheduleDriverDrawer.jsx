@@ -12,7 +12,7 @@ import {
   List,
 } from "@mui/material";
 import { BASE_URL } from "configs";
-import { useDrivers } from "hooks";
+import { useDriver } from "hooks";
 import Swal from "sweetalert2";
 const AssignScheduleDriverDrawer = ({
   open,
@@ -20,7 +20,7 @@ const AssignScheduleDriverDrawer = ({
   setRealtime,
 }) => {
   console.log(open);
-  const { drivers } = useDrivers();
+  const { drivers } = useDriver();
   console.log(drivers);
   // const { setRealtime } = useVehicleCategory();
   const addDriver = async (item) => {

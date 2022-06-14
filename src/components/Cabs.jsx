@@ -161,7 +161,11 @@ const Cabs = ({ city }) => {
             render: ({ twoWayOutstationPerKilometer }) =>
               formatCurrency(twoWayOutstationPerKilometer),
             validate: (rowData) =>
-              rowData?.twoWayOutstationPerKilometer > 0 ? true : "Required",
+              rowData?.vehicleCategory?.name !== "Auto"
+                ? rowData?.twoWayOutstationPerKilometer > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Outstation Price Per KM(One Way)",
@@ -171,7 +175,11 @@ const Cabs = ({ city }) => {
             render: ({ oneWayOutstationPerKilometer }) =>
               formatCurrency(oneWayOutstationPerKilometer),
             validate: (rowData) =>
-              rowData?.oneWayOutstationPerKilometer > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.oneWayOutstationPerKilometer > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "With Driver Price Per KM",
@@ -181,7 +189,11 @@ const Cabs = ({ city }) => {
             render: ({ withDriverPerKilometer }) =>
               formatCurrency(withDriverPerKilometer),
             validate: (rowData) =>
-              rowData?.withDriverPerKilometer > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withDriverPerKilometer > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Without Driver Price Per KM",
@@ -191,7 +203,11 @@ const Cabs = ({ city }) => {
             render: ({ withoutDriverPerKilometer }) =>
               formatCurrency(withoutDriverPerKilometer),
             validate: (rowData) =>
-              rowData?.withoutDriverPerKilometer > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withoutDriverPerKilometer > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Price Per Min",
@@ -209,7 +225,11 @@ const Cabs = ({ city }) => {
             render: ({ twoWayOutstationPerMinute }) =>
               formatCurrency(twoWayOutstationPerMinute),
             validate: (rowData) =>
-              rowData?.twoWayOutstationPerMinute > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.twoWayOutstationPerMinute > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Outstation Price Per Min(One Way)",
@@ -219,7 +239,11 @@ const Cabs = ({ city }) => {
             render: ({ oneWayOutstationPerMinute }) =>
               formatCurrency(oneWayOutstationPerMinute),
             validate: (rowData) =>
-              rowData?.oneWayOutstationPerMinute > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.oneWayOutstationPerMinute > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "With Driver Price Per Min",
@@ -229,7 +253,11 @@ const Cabs = ({ city }) => {
             render: ({ withDriverPerMinute }) =>
               formatCurrency(withDriverPerMinute),
             validate: (rowData) =>
-              rowData?.withDriverPerMinute > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withDriverPerMinute > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Without Driver Price Per Min",
@@ -239,7 +267,11 @@ const Cabs = ({ city }) => {
             render: ({ withoutDriverPerMinute }) =>
               formatCurrency(withoutDriverPerMinute),
             validate: (rowData) =>
-              rowData?.withoutDriverPerMinute > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withoutDriverPerMinute > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Base Fare",
@@ -257,7 +289,11 @@ const Cabs = ({ city }) => {
             render: ({ twoWayOutstationBaseFare }) =>
               formatCurrency(twoWayOutstationBaseFare),
             validate: (rowData) =>
-              rowData?.twoWayOutstationBaseFare > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.twoWayOutstationBaseFare > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Outstation Base Fare(One Way)",
@@ -267,7 +303,11 @@ const Cabs = ({ city }) => {
             render: ({ oneWayOutstationBaseFare }) =>
               formatCurrency(oneWayOutstationBaseFare),
             validate: (rowData) =>
-              rowData?.oneWayOutstationBaseFare > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.oneWayOutstationBaseFare > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "With Driver Base Fare",
@@ -277,7 +317,11 @@ const Cabs = ({ city }) => {
             render: ({ withDriverBaseFare }) =>
               formatCurrency(withDriverBaseFare),
             validate: (rowData) =>
-              rowData?.withDriverBaseFare > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withDriverBaseFare > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Without Driver Base Fare",
@@ -287,7 +331,11 @@ const Cabs = ({ city }) => {
             render: ({ withoutDriverBaseFare }) =>
               formatCurrency(withoutDriverBaseFare),
             validate: (rowData) =>
-              rowData?.withoutDriverBaseFare > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withoutDriverBaseFare > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Allowance",
@@ -305,7 +353,11 @@ const Cabs = ({ city }) => {
             render: ({ twoWayOutstationAllowance }) =>
               formatCurrency(twoWayOutstationAllowance),
             validate: (rowData) =>
-              rowData?.twoWayOutstationAllowance > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.twoWayOutstationAllowance > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Outstation Allowance(One Way)",
@@ -315,7 +367,11 @@ const Cabs = ({ city }) => {
             render: ({ oneWayOutstationAllowance }) =>
               formatCurrency(oneWayOutstationAllowance),
             validate: (rowData) =>
-              rowData?.oneWayOutstationAllowance > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.oneWayOutstationAllowance > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "With Driver Allowance",
@@ -325,7 +381,11 @@ const Cabs = ({ city }) => {
             render: ({ withDriverAllowance }) =>
               formatCurrency(withDriverAllowance),
             validate: (rowData) =>
-              rowData?.withDriverAllowance > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withDriverAllowance > 0
+                  ? true
+                  : "Required"
+                : true,
           },
           {
             title: "Without Driver Allowance",
@@ -335,7 +395,11 @@ const Cabs = ({ city }) => {
             render: ({ withoutDriverAllowance }) =>
               formatCurrency(withoutDriverAllowance),
             validate: (rowData) =>
-              rowData?.withoutDriverAllowance > 0 ? true : "Required",
+              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+                ? rowData?.withoutDriverAllowance > 0
+                  ? true
+                  : "Required"
+                : true,
           },
 
           {

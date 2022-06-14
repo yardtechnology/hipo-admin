@@ -173,6 +173,14 @@ const ScheduledRides = () => {
             render: (rowData) => moment(rowData.pickupTime).format("llll"),
           },
           {
+            title: "Timestamp",
+            field: "currentTimestamp",
+            emptyValue: "--",
+            searchable: true,
+            export: true,
+            render: (rowData) => moment(rowData.createdAt).format("llll"),
+          },
+          {
             title: "Actions",
             render: (rowData) => (
               <div className="d-flex">
