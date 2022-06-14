@@ -18,6 +18,7 @@ const AssignScheduleDriverDrawer = ({
   open,
   setOpenAssignDriverDrawer,
   setRealtime,
+  setLoading,
 }) => {
   console.log(open);
   const { drivers } = useDriver();
@@ -25,6 +26,7 @@ const AssignScheduleDriverDrawer = ({
   // const { setRealtime } = useVehicleCategory();
   const addDriver = async (item) => {
     try {
+      setLoading(true);
       const updatedDrivers = open?.drivers
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
@@ -49,7 +51,7 @@ const AssignScheduleDriverDrawer = ({
         ? Swal.fire("Success", "Driver Assigned", "success")
         : Swal.fire("Error", "Driver not assigned", "error");
       setOpenAssignDriverDrawer(false);
-
+      setLoading(false);
       // setOpenAssignDriverDrawer({
       //   ...open,
       //   drivers: updatedDrivers,
