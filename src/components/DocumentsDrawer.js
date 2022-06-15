@@ -379,7 +379,11 @@ const DocumentsDrawer = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
                           marginBottom: "1vh",
                         }}
                       >
-                        {`Account Holder Name - ${open?.bankDetails?.accountHolderName}`}
+                        {`Account Holder Name - ${
+                          open?.bankDetails?.accountHolderName
+                            ? open?.bankDetails?.accountHolderName
+                            : "Not Provided"
+                        }`}
                       </Typography>
                       {open?.bankDetails?.bankName ? (
                         <Typography

@@ -411,6 +411,16 @@ const Cabs = ({ city }) => {
             validate: (rowData) => (rowData?.tax > 0 ? true : "Required"),
           },
           {
+            title: "Cancellation %",
+            field: "cancellationPercentage",
+            type: "numeric",
+            searchable: true,
+            render: ({ cancellationPercentage }) =>
+              `${cancellationPercentage}%`,
+            validate: (rowData) =>
+              rowData?.cancellationPercentage > 0 ? true : "Required",
+          },
+          {
             title: "Timestamp",
             // width: "70%",
             field: "timestamp",
@@ -448,6 +458,7 @@ const Cabs = ({ city }) => {
                   allowance: data?.allowance,
                   city: city?._id,
                   tax: data?.tax,
+                  cancellationPercentage: data?.cancellationPercentage,
                 }),
               });
               const res = await response.json();
@@ -477,6 +488,7 @@ const Cabs = ({ city }) => {
                   baseFare: newData?.baseFare,
                   allowance: newData?.allowance,
                   tax: newData?.tax,
+                  cancellationPercentage: newData?.cancellationPercentage,
                 }),
               });
               const res = await response.json();

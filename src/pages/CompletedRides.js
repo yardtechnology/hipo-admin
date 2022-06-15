@@ -83,6 +83,7 @@ const CompletedRides = () => {
                 rideAmount: ride?.billing?.totalFare,
               }))
         }
+        isLoading={completedRides === null}
         columns={[
           {
             title: "#",

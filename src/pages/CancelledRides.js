@@ -10,6 +10,7 @@ import {
   Avatar,
 } from "@mui/material";
 import { useCancelledRides } from "hooks";
+import moment from "moment";
 const CancelledRides = () => {
   const { cancelledRides } = useCancelledRides();
   console.log(cancelledRides);
@@ -45,8 +46,10 @@ const CancelledRides = () => {
                 ...ride,
                 sl: i + 1,
                 vehicle: ride?.cab?.vehicleCategory?.name,
+                currentTimestamp: moment(ride?.createdAt).format("ll"),
               }))
         }
+        isLoading={cancelledRides === null}
         columns={[
           {
             title: "#",
@@ -138,6 +141,14 @@ const CancelledRides = () => {
             hidden: true,
             export: true,
           },
+          {
+            title: "Timestamp",
+            field: "currentTimestamp",
+            emptyValue: "--",
+            searchable: true,
+            export: true,
+            render: (rowData) => moment(rowData.createdAt).format("llll"),
+          },
         ]}
         detailPanel={({ rowData }) => {
           return (
@@ -213,7 +224,7 @@ const CancelledRides = () => {
                     <span
                       style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
                     >
-                      Expected shorter waiting time
+                      {rowData?.cancellationReason}
                     </span>
                   </Typography>
                 </CardContent>
