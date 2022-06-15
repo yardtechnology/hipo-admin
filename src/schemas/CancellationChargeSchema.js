@@ -1,14 +1,14 @@
 import * as Yup from "yup";
 
 const CancellationChargeSchema = [
-  {
-    key: "3",
-    label: "% of Total Fare",
-    name: "percentage",
-    type: "number",
-    validationSchema: Yup.number().required("% of Total Fare is Required"),
-    initialValue: "",
-  },
+  // {
+  //   key: "3",
+  //   label: "% of Total Fare",
+  //   name: "percentage",
+  //   type: "number",
+  //   validationSchema: Yup.number().required("% of Total Fare is Required"),
+  //   initialValue: "",
+  // },
   {
     key: "4",
     label: "Max Charge",
@@ -19,11 +19,11 @@ const CancellationChargeSchema = [
   },
   {
     key: "5",
-    label: "Min Time Percentage Of Total Distance",
+    label: "Cancellation Fee Will Be Charged After Minutes",
     name: "minTimePercentage",
     type: "number",
     validationSchema: Yup.number().required(
-      "Min Time Percentage Of Total Distance is Required"
+      "Cancellation Fee Will Be Charged After Minutes is Required"
     ),
     initialValue: "",
   },
