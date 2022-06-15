@@ -153,62 +153,62 @@ const Cabs = ({ city }) => {
             validate: (rowData) =>
               rowData?.perKilometer > 0 ? true : "Required",
           },
-          {
-            title: "Outstation Price Per KM(Two Way)",
-            field: "twoWayOutstationPerKilometer",
-            type: "numeric",
-            searchable: true,
-            render: ({ twoWayOutstationPerKilometer }) =>
-              formatCurrency(twoWayOutstationPerKilometer),
-            validate: (rowData) =>
-              rowData?.vehicleCategory?.name !== "Auto"
-                ? rowData?.twoWayOutstationPerKilometer > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Outstation Price Per KM(One Way)",
-            field: "oneWayOutstationPerKilometer",
-            type: "numeric",
-            searchable: true,
-            render: ({ oneWayOutstationPerKilometer }) =>
-              formatCurrency(oneWayOutstationPerKilometer),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.oneWayOutstationPerKilometer > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "With Driver Price Per KM",
-            field: "withDriverPerKilometer",
-            type: "numeric",
-            searchable: true,
-            render: ({ withDriverPerKilometer }) =>
-              formatCurrency(withDriverPerKilometer),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withDriverPerKilometer > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Without Driver Price Per KM",
-            field: "withoutDriverPerKilometer",
-            type: "numeric",
-            searchable: true,
-            render: ({ withoutDriverPerKilometer }) =>
-              formatCurrency(withoutDriverPerKilometer),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withoutDriverPerKilometer > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
+          // {
+          //   title: "Outstation Price Per KM(Two Way)",
+          //   field: "twoWayOutstationPerKilometer",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ twoWayOutstationPerKilometer }) =>
+          //     formatCurrency(twoWayOutstationPerKilometer),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategory?.name !== "Auto"
+          //       ? rowData?.twoWayOutstationPerKilometer > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Outstation Price Per KM(One Way)",
+          //   field: "oneWayOutstationPerKilometer",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ oneWayOutstationPerKilometer }) =>
+          //     formatCurrency(oneWayOutstationPerKilometer),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.oneWayOutstationPerKilometer > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "With Driver Price Per KM",
+          //   field: "withDriverPerKilometer",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withDriverPerKilometer }) =>
+          //     formatCurrency(withDriverPerKilometer),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.withDriverPerKilometer > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Without Driver Price Per KM",
+          //   field: "withoutDriverPerKilometer",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withoutDriverPerKilometer }) =>
+          //     formatCurrency(withoutDriverPerKilometer),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.withoutDriverPerKilometer > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
           {
             title: "Price Per Min",
             field: "perMinute",
@@ -217,62 +217,62 @@ const Cabs = ({ city }) => {
             render: ({ perMinute }) => formatCurrency(perMinute),
             validate: (rowData) => (rowData?.perMinute > 0 ? true : "Required"),
           },
-          {
-            title: "Outstation Price Per Min(Two Way)",
-            field: "twoWayOutstationPerMinute",
-            type: "numeric",
-            searchable: true,
-            render: ({ twoWayOutstationPerMinute }) =>
-              formatCurrency(twoWayOutstationPerMinute),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.twoWayOutstationPerMinute > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Outstation Price Per Min(One Way)",
-            field: "oneWayOutstationPerMinute",
-            type: "numeric",
-            searchable: true,
-            render: ({ oneWayOutstationPerMinute }) =>
-              formatCurrency(oneWayOutstationPerMinute),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.oneWayOutstationPerMinute > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "With Driver Price Per Min",
-            field: "withDriverPerMinute",
-            type: "numeric",
-            searchable: true,
-            render: ({ withDriverPerMinute }) =>
-              formatCurrency(withDriverPerMinute),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withDriverPerMinute > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Without Driver Price Per Min",
-            field: "withoutDriverPerMinute",
-            type: "numeric",
-            searchable: true,
-            render: ({ withoutDriverPerMinute }) =>
-              formatCurrency(withoutDriverPerMinute),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withoutDriverPerMinute > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
+          // {
+          //   title: "Outstation Price Per Min(Two Way)",
+          //   field: "twoWayOutstationPerMinute",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ twoWayOutstationPerMinute }) =>
+          //     formatCurrency(twoWayOutstationPerMinute),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.twoWayOutstationPerMinute > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Outstation Price Per Min(One Way)",
+          //   field: "oneWayOutstationPerMinute",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ oneWayOutstationPerMinute }) =>
+          //     formatCurrency(oneWayOutstationPerMinute),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.oneWayOutstationPerMinute > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "With Driver Price Per Min",
+          //   field: "withDriverPerMinute",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withDriverPerMinute }) =>
+          //     formatCurrency(withDriverPerMinute),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //? rowData?.withDriverPerMin       ute > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Without Driver Price Per Min",
+          //   field: "withoutDriverPerMinute",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withoutDriverPerMinute }) =>
+          //     formatCurrency(withoutDriverPerMinute),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.withoutDriverPerMinute > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
           {
             title: "Base Fare",
             field: "baseFare",
@@ -281,62 +281,62 @@ const Cabs = ({ city }) => {
             render: ({ baseFare }) => formatCurrency(baseFare),
             validate: (rowData) => (rowData?.baseFare > 0 ? true : "Required"),
           },
-          {
-            title: "Outstation Base Fare(Two Way)",
-            field: "twoWayOutstationBaseFare",
-            type: "numeric",
-            searchable: true,
-            render: ({ twoWayOutstationBaseFare }) =>
-              formatCurrency(twoWayOutstationBaseFare),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.twoWayOutstationBaseFare > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Outstation Base Fare(One Way)",
-            field: "oneWayOutstationBaseFare",
-            type: "numeric",
-            searchable: true,
-            render: ({ oneWayOutstationBaseFare }) =>
-              formatCurrency(oneWayOutstationBaseFare),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.oneWayOutstationBaseFare > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "With Driver Base Fare",
-            field: "withDriverBaseFare",
-            type: "numeric",
-            searchable: true,
-            render: ({ withDriverBaseFare }) =>
-              formatCurrency(withDriverBaseFare),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withDriverBaseFare > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Without Driver Base Fare",
-            field: "withoutDriverBaseFare",
-            type: "numeric",
-            searchable: true,
-            render: ({ withoutDriverBaseFare }) =>
-              formatCurrency(withoutDriverBaseFare),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withoutDriverBaseFare > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
+          // {
+          //   title: "Outstation Base Fare(Two Way)",
+          //   field: "twoWayOutstationBaseFare",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ twoWayOutstationBaseFare }) =>
+          //     formatCurrency(twoWayOutstationBaseFare),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.twoWayOutstationBaseFare > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Outstation Base Fare(One Way)",
+          //   field: "oneWayOutstationBaseFare",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ oneWayOutstationBaseFare }) =>
+          //     formatCurrency(oneWayOutstationBaseFare),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.oneWayOutstationBaseFare > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "With Driver Base Fare",
+          //   field: "withDriverBaseFare",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withDriverBaseFare }) =>
+          //     formatCurrency(withDriverBaseFare),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.withDriverBaseFare > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Without Driver Base Fare",
+          //   field: "withoutDriverBaseFare",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withoutDriverBaseFare }) =>
+          //     formatCurrency(withoutDriverBaseFare),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.withoutDriverBaseFare > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
           {
             title: "Allowance",
             field: "allowance",
@@ -345,62 +345,62 @@ const Cabs = ({ city }) => {
             render: ({ allowance }) => formatCurrency(allowance),
             validate: (rowData) => (rowData?.allowance > 0 ? true : "Required"),
           },
-          {
-            title: "Outstation Allowance(Two Way)",
-            field: "twoWayOutstationAllowance",
-            type: "numeric",
-            searchable: true,
-            render: ({ twoWayOutstationAllowance }) =>
-              formatCurrency(twoWayOutstationAllowance),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.twoWayOutstationAllowance > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Outstation Allowance(One Way)",
-            field: "oneWayOutstationAllowance",
-            type: "numeric",
-            searchable: true,
-            render: ({ oneWayOutstationAllowance }) =>
-              formatCurrency(oneWayOutstationAllowance),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.oneWayOutstationAllowance > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "With Driver Allowance",
-            field: "withDriverAllowance",
-            type: "numeric",
-            searchable: true,
-            render: ({ withDriverAllowance }) =>
-              formatCurrency(withDriverAllowance),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withDriverAllowance > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
-          {
-            title: "Without Driver Allowance",
-            field: "withoutDriverAllowance",
-            type: "numeric",
-            searchable: true,
-            render: ({ withoutDriverAllowance }) =>
-              formatCurrency(withoutDriverAllowance),
-            validate: (rowData) =>
-              rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
-                ? rowData?.withoutDriverAllowance > 0
-                  ? true
-                  : "Required"
-                : true,
-          },
+          // {
+          //   title: "Outstation Allowance(Two Way)",
+          //   field: "twoWayOutstationAllowance",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ twoWayOutstationAllowance }) =>
+          //     formatCurrency(twoWayOutstationAllowance),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.twoWayOutstationAllowance > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Outstation Allowance(One Way)",
+          //   field: "oneWayOutstationAllowance",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ oneWayOutstationAllowance }) =>
+          //     formatCurrency(oneWayOutstationAllowance),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.oneWayOutstationAllowance > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "With Driver Allowance",
+          //   field: "withDriverAllowance",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withDriverAllowance }) =>
+          //     formatCurrency(withDriverAllowance),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.withDriverAllowance > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
+          // {
+          //   title: "Without Driver Allowance",
+          //   field: "withoutDriverAllowance",
+          //   type: "numeric",
+          //   searchable: true,
+          //   render: ({ withoutDriverAllowance }) =>
+          //     formatCurrency(withoutDriverAllowance),
+          //   validate: (rowData) =>
+          //     rowData?.vehicleCategoryName?.toLowerCase() !== "auto"
+          //       ? rowData?.withoutDriverAllowance > 0
+          //         ? true
+          //         : "Required"
+          //       : true,
+          // },
 
           {
             title: "Tax",
