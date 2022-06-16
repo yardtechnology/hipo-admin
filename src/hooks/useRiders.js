@@ -10,7 +10,7 @@ const useRiders = () => {
     async (pageSize, page, search) => {
       try {
         const response = await fetch(
-          `${BASE_URL}/users/all?role=user&limit=${pageSize}&skip=${
+          `${BASE_URL}/users/all?role=user&status=completed&limit=${pageSize}&skip=${
             pageSize * page
           }`,
           {

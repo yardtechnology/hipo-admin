@@ -107,7 +107,7 @@ const Contacts = () => {
                       <>
                         <div>{email}</div>
                         <div>
-                          {countryCode ? `+${countryCode}` : ""}
+                          {countryCode ? `${countryCode}` : ""}
                           {phoneNumber}
                         </div>
                       </>

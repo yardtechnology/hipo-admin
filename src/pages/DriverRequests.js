@@ -118,6 +118,7 @@ const DriverRequests = () => {
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}
+        isLoading={driverRequests === null}
         data={
           driverRequests === null
             ? []
