@@ -1,4 +1,4 @@
-import { Done } from "@mui/icons-material";
+import { Done, DriveEta } from "@mui/icons-material";
 import {
   Avatar,
   ListItem,
@@ -11,8 +11,10 @@ import {
   IconButton,
   List,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import { BASE_URL } from "configs";
-import { useDriver } from "hooks";
+import { useIsMounted } from "hooks";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 const AssignScheduleDriverDrawer = ({
   open,
@@ -20,9 +22,38 @@ const AssignScheduleDriverDrawer = ({
   setRealtime,
 }) => {
   console.log(open);
-  const { drivers } = useDriver();
-  console.log(drivers);
+  const { isMounted } = useIsMounted();
+  const [drivers, setDrivers] = useState([]);
   // const { setRealtime } = useVehicleCategory();
+  useEffect(() => {
+    const fetchCabs = async () => {
+      if (!isMounted.current) return;
+      try {
+        const response = await fetch(
+          `${BASE_URL}/driver-type/${open?.cab?.vehicleCategory?._id}`,
+          {
+            // method: "GET",
+            // body: JSON.stringify({ ...values }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+            },
+          }
+        );
+        const arr = await response.json();
+        // console.log(arr);
+        const sortArr = arr?.data?.sort(
+          (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
+        );
+        setDrivers(sortArr);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCabs();
+  }, [isMounted, open]);
+  console.log(drivers);
+
   const addDriver = async (item) => {
     try {
       const updatedDrivers = open?.drivers
@@ -72,20 +103,22 @@ const AssignScheduleDriverDrawer = ({
             marginTop: "12vh",
           }}
         >
-          <Typography
-            align="left"
-            color="Highlight"
-            sx={{ fontWeight: "bold", paddingLeft: "1.10vw" }}
-            variant="h5"
-          >
-            Assign Driver
-          </Typography>
-          <div>
-            {/* <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "" }}> */}
-            {/* <ListItemAvatar>
+          {drivers?.length > 0 ? (
+            <>
+              <Typography
+                align="left"
+                color="Highlight"
+                sx={{ fontWeight: "bold", paddingLeft: "1.10vw" }}
+                variant="h5"
+              >
+                Assign Driver
+              </Typography>
+              <div>
+                {/* <ListItem sx={{ paddingLeft: "1.4vw", marginTop: "" }}> */}
+                {/* <ListItemAvatar>
                 <Avatar sx={{ backgroundColor: "#1877f2" }}></Avatar>
               </ListItemAvatar> */}
-            {/* <ListItemText
+                {/* <ListItemText
                 primary={open?.title}
                 secondary={open?.answer}
                 primaryTypographyProps={{
@@ -98,8 +131,8 @@ const AssignScheduleDriverDrawer = ({
                   marginTop: "1vh",
                 }}
               /> */}
-            {/* </ListItem> */}
-            {/* {features === null
+                {/* </ListItem> */}
+                {/* {features === null
               ? []
               : features?.map((feature) => {
                   const hasFeature = open?.features
@@ -129,61 +162,85 @@ const AssignScheduleDriverDrawer = ({
                     </div>
                   );
                 })} */}
-            {drivers === null
-              ? []
-              : drivers?.map((driver) => {
-                  const hasDriver = open?.driver
-                    ? open?.driver?._id === driver?._id
-                    : false;
-                  console.log("hasDriver", hasDriver);
-                  return (
-                    <div className="" key={driver?.key}>
-                      <List>
-                        <ListItem>
-                          <ListItemAvatar>
-                            <Avatar
-                              alt=""
-                              src={driver?.photoURL || ""}
-                              sx={{ background: "transparent" }}
-                            />
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={driver?.displayName}
-                            secondary={
-                              <Typography>
-                                {driver?.phoneNumber}
-                                <br />
-                                {driver?.email}
-                              </Typography>
-                            }
-                            primaryTypographyProps={{
-                              fontWeight: "bold",
-                              fontSize: "1.5vw",
-                              color: "#1877f2",
-                            }}
-                            secondaryTypographyProps={{
-                              fontSize: "1.3vw",
-                              marginTop: "1vh",
-                            }}
-                          />
+                {drivers === null
+                  ? []
+                  : drivers?.map((driver) => {
+                      const hasDriver = open?.driver
+                        ? open?.driver?._id === driver?._id
+                        : false;
+                      console.log("hasDriver", hasDriver);
+                      return (
+                        <div className="" key={driver?.key}>
+                          <List>
+                            <ListItem>
+                              <ListItemAvatar>
+                                <Avatar
+                                  alt=""
+                                  src={driver?.photoURL || ""}
+                                  sx={{ background: "transparent" }}
+                                />
+                              </ListItemAvatar>
+                              <ListItemText
+                                primary={driver?.displayName}
+                                secondary={
+                                  <Typography>
+                                    {driver?.phoneNumber}
+                                    <br />
+                                    {driver?.email}
+                                  </Typography>
+                                }
+                                primaryTypographyProps={{
+                                  fontWeight: "bold",
+                                  fontSize: "1.5vw",
+                                  color: "#1877f2",
+                                }}
+                                secondaryTypographyProps={{
+                                  fontSize: "1.3vw",
+                                  marginTop: "1vh",
+                                }}
+                              />
 
-                          <ListItemSecondaryAction>
-                            <IconButton
-                              edge="end"
-                              aria-label="delete"
-                              onClick={() =>
-                                !hasDriver ? addDriver(driver) : ""
-                              }
-                            >
-                              {!hasDriver ? <Done /> : ""}
-                            </IconButton>
-                          </ListItemSecondaryAction>
-                        </ListItem>
-                      </List>
-                    </div>
-                  );
-                })}
-          </div>
+                              <ListItemSecondaryAction>
+                                <IconButton
+                                  edge="end"
+                                  aria-label="delete"
+                                  onClick={() =>
+                                    !hasDriver ? addDriver(driver) : ""
+                                  }
+                                >
+                                  {!hasDriver ? <Done /> : ""}
+                                </IconButton>
+                              </ListItemSecondaryAction>
+                            </ListItem>
+                          </List>
+                        </div>
+                      );
+                    })}
+              </div>
+            </>
+          ) : (
+            <Box>
+              <div
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  margin: "auto",
+                }}
+              >
+                <IconButton color="primary">
+                  <DriveEta />
+                </IconButton>
+              </div>
+              <Typography
+                align="center"
+                color="Highlight"
+                sx={{ fontWeight: "bold", paddingLeft: "1.10vw" }}
+                variant="h5"
+              >
+                No Drivers Available
+              </Typography>
+            </Box>
+          )}
         </Container>
       </Drawer>
     </>

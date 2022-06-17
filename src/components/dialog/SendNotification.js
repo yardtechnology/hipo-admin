@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 import * as Yup from "yup";
 const SendNotification = ({ selectedUsers, handleClose }) => {
+  console.log(selectedUsers);
   // const { user } = useAppContext();
   const initialValues = MessageSchema.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
@@ -26,14 +27,15 @@ const SendNotification = ({ selectedUsers, handleClose }) => {
     accumulator[currentValue.name] = currentValue.validationSchema;
     return accumulator;
   }, {});
+
   //   const sendREPLY = () => {};
   const handleSendReply = async (values, submitProps) => {
     try {
-      const result = await fetch(`${BASE_URL}/notifications/all`, {
+      const result = await fetch(`${BASE_URL}/send-notification`, {
         method: "POST",
         body: JSON.stringify({
-          users: selectedUsers,
-          description: values?.message,
+          userId: selectedUsers,
+          body: values?.message,
           title: values?.subject,
         }),
         headers: {
@@ -45,12 +47,11 @@ const SendNotification = ({ selectedUsers, handleClose }) => {
       console.log(res);
       console.log(result.status);
       result.status === 200
-        ? console.log(res?.success?.message)
+        ? console.log(res?.message)
         : Swal.fire({ icon: "error", text: res?.message });
       handleClose();
       console.log(values, selectedUsers);
       submitProps.resetForm();
-
       Swal.fire({ icon: "success", text: "Notification Sent Successfully" });
     } catch (error) {
       console.log(error);

@@ -410,9 +410,16 @@ const Riders = () => {
         ]}
         actions={[
           {
-            tooltip: "Send notification to all selected users",
+            tooltip: "Send notification to selected rider",
             icon: "send",
-            onClick: (evt, data) => setSelectedUsers(data.map((d) => d._id)),
+            onClick: (evt, data) =>
+              data?.length > 1
+                ? Swal.fire({
+                    text: "Please select only one rider to send notification",
+                    icon: "warning",
+                    confirmButtonText: "Ok",
+                  })
+                : setSelectedUsers(data[0]?._id),
           },
           {
             tooltip: "Block all selected users",

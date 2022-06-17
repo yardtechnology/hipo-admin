@@ -148,6 +148,13 @@ const ScheduledRides = () => {
           //   ),
           // },
           {
+            title: "Vehicle Type",
+            field: "vehicleType",
+            emptyValue: "--",
+            searchable: true,
+            // width: "5%",
+          },
+          {
             title: "Ride Type",
             field: "rideType",
             emptyValue: "--",

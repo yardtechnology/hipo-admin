@@ -468,9 +468,16 @@ const Operators = () => {
         ]}
         actions={[
           {
-            tooltip: "Send notification to selected operators",
+            tooltip: "Send notification to selected operator",
             icon: "send",
-            onClick: (evt, data) => setSelectedUsers(data),
+            onClick: (evt, data) =>
+              data?.length > 1
+                ? Swal.fire({
+                    text: "Please select only one operator to send notification",
+                    icon: "warning",
+                    confirmButtonText: "Ok",
+                  })
+                : setSelectedUsers(data[0]?._id),
           },
           {
             tooltip: "Block selected operators",
