@@ -11,7 +11,7 @@ const CancellationChargeSchema = [
   // },
   {
     key: "4",
-    label: "Max Charge",
+    label: "Max Charge In Rupees",
     name: "maxCharge",
     type: "number",
     validationSchema: Yup.number().required("Max Charge is Required"),
@@ -19,7 +19,7 @@ const CancellationChargeSchema = [
   },
   {
     key: "5",
-    label: "Cancellation Fee Will Be Charged After Minutes",
+    label: "Cancellation Fee Will Be Charged After Minutes (Minutes)",
     name: "minTimePercentage",
     type: "number",
     validationSchema: Yup.number().required(

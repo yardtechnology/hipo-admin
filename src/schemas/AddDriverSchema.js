@@ -63,13 +63,15 @@ const AddDriverSchema = [
     required: true,
     label: "Date of birth",
     name: "dob",
-    validationSchema: Yup.string()
+    validationSchema: Yup.date()
       .required("DOB is required ")
       .test("DOB", "Please choose a valid date of birth", (value) => {
         return moment().diff(moment(value), "years") >= 18;
       }),
     type: "date",
-    initialValue: "",
+    initialValue: new Date(new Date().getFullYear() - 18, 1, -29)
+      .toISOString()
+      .split("T")[0],
     startIcon: <Person />,
   },
   // {

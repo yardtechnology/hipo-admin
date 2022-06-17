@@ -32,6 +32,7 @@ const BasicDetails = ({ handleNext }) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
   }, {});
+  console.log("initialValues", initialValues);
   const validationSchema = addDriverSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
