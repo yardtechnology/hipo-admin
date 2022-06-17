@@ -60,7 +60,7 @@ const DailyStatement = () => {
           addRowPosition: "first",
           detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,
-          pageSize: 10,
+          pageSize: 20,
           exportAllData: true,
           exportMenu: [
             {

@@ -177,6 +177,7 @@ const Riders = () => {
           debounceInterval: 700,
           padding: "dense",
           exportAllData: true,
+          pageSize: 20,
           exportMenu: [
             {
               label: "Export PDF",
@@ -187,7 +188,6 @@ const Riders = () => {
               exportFunc: (cols, datas) => ExportCsv(cols, datas, "Drivers"),
             },
           ],
-          pageSize: 10,
           actionsColumnIndex: -1,
           search: true,
           selection: true,

@@ -266,7 +266,7 @@ const Operators = () => {
               exportFunc: (cols, datas) => ExportCsv(cols, datas, "Operators"),
             },
           ],
-          pageSize: 10,
+          pageSize: 20,
           actionsColumnIndex: -1,
           search: true,
           selection: true,

@@ -323,7 +323,7 @@ const AllDrivers = () => {
               exportFunc: (cols, datas) => ExportCsv(cols, datas, "Drivers"),
             },
           ],
-          pageSize: 10,
+          pageSize: 20,
           actionsColumnIndex: -1,
           search: true,
           selection: true,
