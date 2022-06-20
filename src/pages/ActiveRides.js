@@ -146,6 +146,13 @@ const ActiveRides = () => {
 
             // width: "5%",
           },
+          {
+            title: "Status",
+            field: "status",
+            emptyValue: "--",
+            searchable: true,
+            // width: "5%",
+          },
 
           {
             title: "Pick Time",

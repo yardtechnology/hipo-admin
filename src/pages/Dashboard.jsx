@@ -396,9 +396,7 @@ const Dashboard = () => {
                   backgroundColor: "rgba(239,239,247,.7)",
                   color: "#3b3e66",
                   fontSize: 16,
-                  paddingLeft: "4vh",
                   fontWeight: 560,
-                  textAlign: "left",
                   "&:hover": {
                     color: "#ff4f00 !important",
                     cursor: "pointer",
@@ -522,6 +520,13 @@ const Dashboard = () => {
                 {
                   title: "Vehicle Type",
                   field: "vehicleType",
+                  emptyValue: "--",
+                  searchable: true,
+                  // width: "5%",
+                },
+                {
+                  title: "Status",
+                  field: "status",
                   emptyValue: "--",
                   searchable: true,
                   // width: "5%",
