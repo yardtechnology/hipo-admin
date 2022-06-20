@@ -146,13 +146,7 @@ const ActiveRides = () => {
 
             // width: "5%",
           },
-          {
-            title: "Vehicle Type",
-            field: "vehicleType",
-            emptyValue: "--",
-            searchable: true,
-            // width: "5%",
-          },
+
           {
             title: "Pick Time",
             field: "pick",

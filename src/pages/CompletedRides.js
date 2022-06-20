@@ -70,7 +70,6 @@ const CompletedRides = () => {
           ],
           pageSize: 10,
           actionsColumnIndex: -1,
-          selection: true,
           sorting: true,
         }}
         data={

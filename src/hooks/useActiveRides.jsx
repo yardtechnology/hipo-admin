@@ -9,7 +9,7 @@ const useActiveRides = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/rides/all?status=ONGOING`, {
+        const response = await fetch(`${BASE_URL}/rides/all?status=ACTIVE`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
