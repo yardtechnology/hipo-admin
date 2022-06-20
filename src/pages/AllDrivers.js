@@ -751,6 +751,7 @@ const AllDrivers = () => {
         // ]}
       />
       <SendNotification
+        setRealtime={setRealtime}
         selectedUsers={selectedUsers}
         handleClose={() => setSelectedUsers([])}
       />

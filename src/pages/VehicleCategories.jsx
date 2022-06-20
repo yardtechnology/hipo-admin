@@ -32,7 +32,6 @@ const VehicleCategories = () => {
       />
       <MaterialTable
         options={{
-          selection: "true",
           addRowPosition: "first",
           detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,

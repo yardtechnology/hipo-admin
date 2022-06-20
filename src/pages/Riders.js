@@ -451,6 +451,7 @@ const Riders = () => {
         setOpenReferralDrawer={setOpenReferralDrawer}
       />
       <SendNotification
+        setRealtime={setRealtime}
         selectedUsers={selectedUsers}
         handleClose={() => setSelectedUsers([])}
       />

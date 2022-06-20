@@ -16,7 +16,7 @@ import { MessageSchema } from "schemas";
 import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 import * as Yup from "yup";
-const SendNotification = ({ selectedUsers, handleClose }) => {
+const SendNotification = ({ selectedUsers, handleClose, setRealtime }) => {
   console.log(selectedUsers);
   // const { user } = useAppContext();
   const initialValues = MessageSchema.reduce((accumulator, currentValue) => {
@@ -49,6 +49,7 @@ const SendNotification = ({ selectedUsers, handleClose }) => {
       result.status === 200
         ? console.log(res?.message)
         : Swal.fire({ icon: "error", text: res?.message });
+      setRealtime((prev) => !prev);
       handleClose();
       console.log(values, selectedUsers);
       submitProps.resetForm();
