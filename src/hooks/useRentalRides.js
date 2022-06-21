@@ -9,7 +9,7 @@ const useRentalRides = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/rides/all?rideType=RENTAL`, {
+        const response = await fetch(`${BASE_URL}/rides/all?RENTAL`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
