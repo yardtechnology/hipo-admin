@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { formatCurrency } from "@ashirbad/js-core";
 import InvoiceDrawer from "components/InvoiceDrawer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Cancel,
   DirectionsCar,
@@ -23,7 +23,7 @@ import {
   PictureAsPdf,
 } from "@mui/icons-material";
 import { StatementInvoice } from "components/dialog";
-import { useDailyRide } from "hooks";
+import { useDailyRide, useTotalRevenue } from "hooks";
 import { BASE_URL } from "configs";
 import { Card as DashboardCard } from "components/dashboard";
 import React from "react";
@@ -33,6 +33,7 @@ const TotalRevenue = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
   const { fetchRides, rides } = useDailyRide();
+  const { fetchData } = useTotalRevenue();
   console.log(rides);
   const downloadPdf = async (data) => {
     console.log(data);
@@ -67,6 +68,9 @@ const TotalRevenue = () => {
 
   const toggle = () => setOpen(!open);
   console.log(dateRange);
+  useEffect(() => {
+    fetchData(dateRange?.startDate, dateRange?.endDate);
+  }, [fetchData, dateRange]);
   return (
     <div>
       <InvoiceDrawer
