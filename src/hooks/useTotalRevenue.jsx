@@ -3,7 +3,7 @@ import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
 const useTotalRevenue = () => {
-  const [rideData, setRideData] = useState([]);
+  const [rideData, setRideData] = useState(null);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   const fetchData = useCallback(
@@ -24,7 +24,7 @@ const useTotalRevenue = () => {
         // const sortArr = arr?.data?.sort(
         //   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         // );
-        isMounted.current && setRideData(arr);
+        isMounted.current && setRideData(arr?.data);
         // return { data: sortArr };
       } catch (error) {
         console.log(error);

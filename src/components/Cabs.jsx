@@ -315,6 +315,24 @@ const Cabs = ({ city }) => {
             validate: (rowData) =>
               rowData?.withDriverAllowance > 0 ? true : "Required",
           },
+          {
+            title: "Rental Exceeded Price(KM)",
+            field: "rentalExtraPerKilometer",
+            type: "numeric",
+            emptyValue: 0,
+            searchable: true,
+            render: ({ rentalExtraPerKilometer }) =>
+              formatCurrency(rentalExtraPerKilometer),
+          },
+          {
+            title: "Rental Exceeded Price(Min)",
+            field: "rentalExtraPerMinute",
+            type: "numeric",
+            emptyValue: 0,
+            searchable: true,
+            render: ({ rentalExtraPerMinute }) =>
+              formatCurrency(rentalExtraPerMinute),
+          },
 
           {
             title: "Tax",
@@ -390,6 +408,8 @@ const Cabs = ({ city }) => {
                   withDriverAllowance: data?.withDriverAllowance,
                   oneWayOutstationAllowance: data?.oneWayOutstationAllowance,
                   twoWayOutstationAllowance: data?.twoWayOutstationAllowance,
+                  rentalExtraPerKilometer: data?.rentalExtraPerKilometer,
+                  rentalExtraPerMinute: data?.rentalExtraPerMinute,
                 }),
               });
               const res = await response.json();
@@ -435,6 +455,8 @@ const Cabs = ({ city }) => {
                   withDriverAllowance: newData?.withDriverAllowance,
                   oneWayOutstationAllowance: newData?.oneWayOutstationAllowance,
                   twoWayOutstationAllowance: newData?.twoWayOutstationAllowance,
+                  rentalExtraPerKilometer: newData?.rentalExtraPerKilometer,
+                  rentalExtraPerMinute: newData?.rentalExtraPerMinute,
                 }),
               });
               const res = await response.json();

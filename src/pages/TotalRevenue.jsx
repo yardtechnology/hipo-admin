@@ -14,16 +14,9 @@ import {
 import { formatCurrency } from "@ashirbad/js-core";
 import InvoiceDrawer from "components/InvoiceDrawer";
 import { useEffect, useState } from "react";
-import {
-  Cancel,
-  DirectionsCar,
-  Done,
-  Money,
-  MoreVert,
-  PictureAsPdf,
-} from "@mui/icons-material";
+import { Done, Money, PictureAsPdf } from "@mui/icons-material";
 import { StatementInvoice } from "components/dialog";
-import { useDailyRide, useTotalRevenue } from "hooks";
+import { useTotalRevenue } from "hooks";
 import { BASE_URL } from "configs";
 import { Card as DashboardCard } from "components/dashboard";
 import React from "react";
@@ -32,9 +25,8 @@ import { DateRangePicker } from "materialui-daterange-picker";
 const TotalRevenue = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
-  const { fetchRides, rides } = useDailyRide();
-  const { fetchData } = useTotalRevenue();
-  console.log(rides);
+  const { fetchData, rideData } = useTotalRevenue();
+  console.log(rideData);
   const downloadPdf = async (data) => {
     console.log(data);
     const response = await fetch(
@@ -155,27 +147,39 @@ const TotalRevenue = () => {
         />
       </div>
       <Grid container spacing={2} sx={{ marginBottom: "5vh" }}>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <DashboardCard
-            title={formatCurrency(0) || "00"}
+            title={
+              rideData?.metadata?.totalFare
+                ? formatCurrency(rideData?.metadata?.totalFare)
+                : "00"
+            }
             subtitle="Revenue"
             icon={<Money className="iconColor" />}
             // iconAction={<MoreVert sx={{ color: "snow" }} />}
             menuName={"total revenue"}
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <DashboardCard
-            title={0 || "00"}
+            title={
+              rideData?.metadata?.totalCompletedRide ||
+              // ? rideData?.metaData?.totalCompletedRide
+              "00"
+            }
             subtitle="Completed Rides"
             icon={<Done className="iconColor" />}
             iconAction={"/rides/completed-rides"}
             menuName={"view Completed Rides"}
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+        {/* <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
-            title={0 || "00"}
+            title={
+              rideData?.metadata?.totalRide ||
+              // ? rideData?.metadata?.totalRides
+              "00"
+            }
             subtitle="Total Rides"
             icon={<DirectionsCar className="iconColor" />}
             iconAction={"/vehicles"}
@@ -184,13 +188,16 @@ const TotalRevenue = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
-            title={0 || "00"}
+            title={
+              // rideData?.metadata?.totalCancelledRides
+              rideData?.metadata?.totalCancelledRide || "00"
+            }
             subtitle="Cancelled Rides"
             icon={<Cancel className="iconColor" />}
             iconAction={<MoreVert sx={{ color: "snow" }} />}
             menuName={"View Cancelled Rides"}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <MaterialTable
@@ -234,81 +241,29 @@ const TotalRevenue = () => {
         //     drop: "Niladri vihar ,Bhubaneswar",
         //   },
         // ]}
-        data={async (query) => {
-          const data = await fetchRides(
-            query?.pageSize,
-            query?.page,
-            query?.totalCount
-          );
-          console.log(data);
-          return {
-            data:
-              query?.search?.length > 0
-                ? data?.data
-                    ?.map((rating, i) => ({
-                      ...rating,
-                      sl: query.page * query.pageSize + i + 1,
-                      currentTimestamp: moment(rating.createdAt).format("LL"),
-                      rideId: rating?.ride?._id,
-                      driverImg: rating?.driver?.photoURL,
-                      driverName: rating?.driver?.displayName,
-                      driverEmail: rating?.driver?.email,
-                      driverPhone: rating?.driver?.phoneNumber,
-                      riderImg: rating?.rider?.photoURL,
-                      riderName: rating?.rider?.displayName,
-                      riderEmail: rating?.rider?.email,
-                      riderPhone: rating?.rider?.phoneNumber,
-                      pickup_time: moment(rating?.pickupTime).format("LLL"),
-                      drop_time: moment(rating?.dropTime).format("LLL"),
-                      pickupAddress: rating?.pickupLocation?.address,
-                      dropAddress: rating?.dropLocation?.address,
-                    }))
-                    ?.filter(
-                      (rating) =>
-                        rating?.rideId
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.pickupAddress
-                          ?.toLowerCase()
-                          .includes(query?.search?.toLowerCase()) ||
-                        rating?.dropAddress
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.pickup_time
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.drop_time
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.status
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.paymentMethod
-                          ?.toLowerCase()
-                          .includes(query?.search?.toLowerCase())
-                    )
-                : data?.data?.map((rating, i) => ({
-                    ...rating,
-                    sl: query.page * query.pageSize + i + 1,
-                    currentTimestamp: moment(rating.createdAt).format("LL"),
-                    rideId: rating?._id,
-                    driverImg: rating?.driver?.photoURL,
-                    driverName: rating?.driver?.displayName,
-                    driverEmail: rating?.driver?.email,
-                    driverPhone: rating?.driver?.phoneNumber,
-                    riderImg: rating?.rider?.photoURL,
-                    riderName: rating?.rider?.displayName,
-                    riderEmail: rating?.rider?.email,
-                    riderPhone: rating?.rider?.phoneNumber,
-                    pickup_time: moment(rating?.pickupTime).format("LLL"),
-                    drop_time: moment(rating?.dropTime).format("LLL"),
-                    pickupAddress: rating?.pickupLocation?.address,
-                    dropAddress: rating?.dropLocation?.address,
-                  })),
-            page: query?.page,
-            totalCount: data?.totalCount,
-          };
-        }}
+        data={
+          rideData?.rideData === null
+            ? []
+            : rideData?.rideData?.map((ride, index) => {
+                return {
+                  ...ride,
+                  sl: index + 1,
+                  city: ride.city,
+                  noOfRides: ride.noOfRides,
+                  period: ride.period,
+                  country: ride.country,
+                  role: ride.role,
+                  rideId: ride.rideId,
+                  incentiveAmount: ride.incentiveAmount,
+                  earned: formatCurrency(ride.incentiveAmount),
+                  range: ride.range,
+                  zipCode: ride.zipCode,
+                  status: ride.status,
+                  pick: ride.pick,
+                  drop: ride.drop,
+                };
+              })
+        }
         columns={[
           {
             title: "#",
@@ -474,7 +429,7 @@ const TotalRevenue = () => {
         //       handleBulkDelete(data.map((data) => data?.day)),
         //   },
         // ]}
-        isLoading={rides === null}
+        isLoading={rideData?.rideData === null}
         detailPanel={({ rowData }) => {
           return (
             <div
