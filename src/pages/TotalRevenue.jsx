@@ -10,6 +10,8 @@ import {
   Tooltip,
   Button,
   Typography,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { formatCurrency } from "@ashirbad/js-core";
 import InvoiceDrawer from "components/InvoiceDrawer";
@@ -208,7 +210,6 @@ const TotalRevenue = () => {
       <MaterialTable
         options={{
           whiteSpace: "nowrap",
-          selection: "true",
           addRowPosition: "first",
           detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,
@@ -228,24 +229,6 @@ const TotalRevenue = () => {
           ],
         }}
         title={"Ride Statement"}
-        // data={[
-        //   {
-        //     sl: 1,
-        //     city: "Bhubaneswar",
-        //     noOfRides: "4",
-        //     period: "Monthly",
-        //     country: "India",
-        //     role: "Driver",
-        //     rideId: "1234567890",
-        //     incentiveAmount: 200,
-        //     earned: formatCurrency(200),
-        //     range: "",
-        //     zipCode: 751030,
-        //     status: "Completed",
-        //     pick: "Acharya vihar,Bhubaneswar",
-        //     drop: "Niladri vihar ,Bhubaneswar",
-        //   },
-        // ]}
         data={
           rideData?.rideData === null
             ? []
@@ -253,19 +236,13 @@ const TotalRevenue = () => {
                 return {
                   ...ride,
                   sl: index + 1,
-                  city: ride.city,
-                  noOfRides: ride.noOfRides,
-                  period: ride.period,
-                  country: ride.country,
-                  role: ride.role,
-                  rideId: ride.rideId,
-                  incentiveAmount: ride.incentiveAmount,
-                  earned: formatCurrency(ride.incentiveAmount),
-                  range: ride.range,
-                  zipCode: ride.zipCode,
-                  status: ride.status,
-                  pick: ride.pick,
-                  drop: ride.drop,
+                  amount: ride?.billing?.subTotal || 0,
+                  paymentMethod: ride?.billing?.paymentMethod || "--",
+                  driverDisplayName: ride?.driver?.displayName,
+                  driverPhoneNumber: ride?.driver?.phoneNumber,
+                  displayName: ride?.rider?.displayName,
+                  phoneNumber: ride?.rider?.phoneNumber,
+                  rideId: ride?._id,
                 };
               })
         }
@@ -279,8 +256,52 @@ const TotalRevenue = () => {
           {
             title: "Ride Id",
             field: "rideId",
-
+            hidden: true,
+            export: true,
             searchFable: true,
+          },
+          {
+            title: "Driver Profile",
+            tooltip: "Profile",
+            searchable: true,
+            emptyValue: "N/A",
+            width: "22%",
+            field: "driverPhoneNumber",
+            render: ({ photoURL, driverDisplayName, driverPhoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {driverDisplayName || "Not Provided"}
+                      </Typography>
+                    }
+                    secondary={driverPhoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
+          },
+
+          {
+            title: "Rider Profile",
+            tooltip: "Profile",
+            searchable: true,
+            field: "displayName" || "phoneNumber",
+            render: ({ photoURL, displayName, email, phoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {displayName}
+                      </Typography>
+                    }
+                    secondary={phoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
           },
           {
             title: "Amount",
@@ -460,7 +481,7 @@ const TotalRevenue = () => {
                 }}
               >
                 <CardContent>
-                  {/* <Typography
+                  <Typography
                     variant="body1"
                     component="p"
                     gutterBottom
@@ -475,7 +496,7 @@ const TotalRevenue = () => {
                     >
                       {rowData?.rideId}
                     </span>
-                  </Typography> */}
+                  </Typography>
                   <Typography variant="body1" gutterBottom align="left">
                     Pickup Time:{" "}
                     <span

@@ -283,6 +283,38 @@ const ScheduledRides = () => {
                       {rowData?.rideId}
                     </span>
                   </Typography>
+                  {rowData?.rideType === "OUTSTATION_RIDE" && (
+                    <Typography variant="body1" gutterBottom align="left">
+                      Outstation Type:{" "}
+                      <span
+                        style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                      >
+                        {` ${
+                          rowData?.outstationType
+                            ? rowData?.outstationType
+                            : "Not Provided"
+                        }`}
+                      </span>
+                    </Typography>
+                  )}
+                  {rowData?.rideType === "RENTAL_RIDE" && (
+                    <Typography variant="body1" gutterBottom align="left">
+                      Package:{" "}
+                      <span
+                        style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
+                      >
+                        {` ${
+                          rowData?.rentalPackage?.duration
+                            ? +rowData?.rentalPackage?.duration / 3600
+                            : 0
+                        }Hrs ${
+                          rowData?.rentalPackage?.distance
+                            ? +rowData?.rentalPackage?.distance / 1000
+                            : 0
+                        }Km `}
+                      </span>
+                    </Typography>
+                  )}
                   <Typography variant="body1" gutterBottom align="left">
                     Pick Address:{" "}
                     <span
