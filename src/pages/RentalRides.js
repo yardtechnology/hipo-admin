@@ -2,29 +2,54 @@ import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { PictureAsPdf, Visibility } from "@mui/icons-material";
 import {
-  Button,
   Tooltip,
   Typography,
   ListItem,
   ListItemText,
   IconButton,
+  ListItemAvatar,
+  Avatar,
 } from "@mui/material";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useState } from "react";
 import { InvoiceDrawer } from "components";
 import { useRentalRides } from "hooks";
+import moment from "moment";
+import { BASE_URL } from "configs";
 const RentalRides = () => {
   const { rentalRides } = useRentalRides();
   console.log(rentalRides);
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
+  console.log(openInvoiceDrawer);
+  const downloadPdf = async (data) => {
+    console.log(data);
+    const response = await fetch(
+      `${BASE_URL}/ride-invoice/download/${data?._id}`,
+      {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+        },
+      }
+    );
+    const blob = await response.blob();
+    console.log(blob);
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, "", "width=800,height=500").print();
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.setAttribute("download", `${data?._id}.pdf`);
+    // document.body.appendChild(link);
+    // link.click();
+  };
 
   return (
     <>
       <InvoiceDrawer
-        rideDetails={openInvoiceDrawer}
+        Details={openInvoiceDrawer}
         setOpenInvoiceDrawer={setOpenInvoiceDrawer}
-      />
-
+      />{" "}
       <MaterialTable
         title="Rental Rides"
         options={{
@@ -45,37 +70,25 @@ const RentalRides = () => {
           ],
           pageSize: 10,
           actionsColumnIndex: -1,
-          selection: true,
           sorting: true,
         }}
-        data={[
-          {
-            bookingTime: new Date().toString(),
-            pickAddress: "Sector-12, Noida",
-            dropAddress: "Sector-15, Noida",
-            invoiceNumber: "CRN-001121432546",
-            displayName: "Aliva Priyadarshini",
-            driverName: "Alexa",
-            pick: new Date().toString(),
-            drop: new Date().toString(),
-            rideId: "12345",
-            driveBy: "self",
-            distance: "10km",
-            rideAmount: 245,
-            vehicleType: "Car",
-            phoneNumber: "+91 7887643625",
-            address: "Bbsr",
-            trips: "15",
-            status: "Completed",
-          },
-        ]}
+        data={
+          rentalRides === null
+            ? []
+            : rentalRides?.map((ride, i) => ({
+                ...ride,
+                sl: i + 1,
+                vehicleType: ride?.cab?.vehicleCategory?.name,
+                rideAmount: ride?.billing?.totalFare,
+              }))
+        }
+        isLoading={rentalRides === null}
         columns={[
           {
             title: "#",
             field: "sl",
             render: (newData) => newData.tableData.id + 1,
             editable: "never",
-            width: "5%",
           },
           // {
           //   title: "Name",
@@ -92,18 +105,24 @@ const RentalRides = () => {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
-            field: "firstName",
-            render: ({ photoURL, displayName, email, phoneNumber }) => (
+            field: "profile",
+            render: ({ rider }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={rider?.displayName}
+                      src={rider?.photoURL}
+                      variant="circular"
+                    />
+                  </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {rider?.displayName || "Not Provided"}
                       </Typography>
                     }
-                    secondary={phoneNumber}
+                    secondary={rider?.phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
@@ -111,31 +130,37 @@ const RentalRides = () => {
           },
           {
             title: "Driver Profile",
-            tooltip: "Profile",
+            tooltip: "driverProfile",
             searchable: true,
-            width: "25%",
             field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            render: ({ driver }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={driver?.displayName}
+                      src={driver?.photoURL}
+                      variant="circular"
+                    />
+                  </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {driver?.displayName || "Not Provided"}
                       </Typography>
                     }
-                    secondary={phoneNumber}
+                    secondary={driver?.phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
           {
-            title: "Drive By",
-            field: "driveBy",
+            title: "Ride Type",
+            field: "rideType",
           },
           {
-            title: "Vehicle",
+            title: "Vehicle Type",
             field: "vehicleType",
           },
           {
@@ -156,50 +181,58 @@ const RentalRides = () => {
             hidden: true,
             export: true,
           },
-          {
-            title: "Status",
-            field: "status",
-            // width: "5%",
-            render: (row) => (
-              <>
-                <Button
-                  sx={{ padding: "4px 5px", textTransform: "none" }}
-                  size="small"
-                  variant="contained"
-                  color="success"
-                >
-                  {row?.status}
-                </Button>
-                {/* <Button
-                  sx={{ padding: "4px 5px", textTransform: "none" }}
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                >
-                  initiated
-                </Button>
-                <Button
-                  sx={{ padding: "4px 5px", textTransform: "none" }}
-                  size="small"
-                  variant="contained"
-                  color="success"
-                >
-                  ongoing
-                </Button> */}
-              </>
-            ),
-          },
+          // {
+          //   title: "Status",
+          //   field: "status",
+          //   // width: "5%",
+          //   render: (row) => (
+          //     <>
+          //       <Button
+          //         sx={{ padding: "4px 5px", textTransform: "none" }}
+          //         size="small"
+          //         variant="contained"
+          //         color="success"
+          //       >
+          //         {row?.status}
+          //       </Button>
+          //       {/* <Button
+          //         sx={{ padding: "4px 5px", textTransform: "none" }}
+          //         size="small"
+          //         variant="contained"
+          //         color="primary"
+          //       >
+          //         initiated
+          //       </Button>
+          //       <Button
+          //         sx={{ padding: "4px 5px", textTransform: "none" }}
+          //         size="small"
+          //         variant="contained"
+          //         color="success"
+          //       >
+          //         ongoing
+          //       </Button> */}
+          //     </>
+          //   ),
+          // },
           {
             title: "Distance",
-            field: "distance",
+            field: "totalDistance",
+            render: (row) => `${row?.totalDistance} KM`,
+            emptyValue: "-",
             // render: (row) => formatCurrency(row.rideAmount),
           },
           {
             title: "Fare",
             field: "rideAmount",
-            render: (row) => formatCurrency(row.rideAmount),
+            render: (row) => formatCurrency(row?.billing?.totalFare),
           },
-
+          {
+            title: "Timestamp",
+            searchable: true,
+            field: "createdAt",
+            render: ({ createdAt }) => moment(createdAt).format("lll"),
+            export: false,
+          },
           {
             title: "Actions",
             // field: "pick",
@@ -227,8 +260,9 @@ const RentalRides = () => {
                     </IconButton>
                     {/* </Avatar> */}
                   </Tooltip>
-                  <Tooltip title="Download Invoice">
-                    {/* <Avatar
+                  {row?.status === "COMPLETED" && (
+                    <Tooltip title="Download Invoice">
+                      {/* <Avatar
                       variant="rounded"
                       sx={{
                         padding: " 0px !important",
@@ -237,12 +271,13 @@ const RentalRides = () => {
                         cursor: "pointer",
                       }}
                     > */}
-                    <IconButton onClick={() => setOpenInvoiceDrawer(row)}>
-                      <PictureAsPdf sx={{ color: "#1877f2" }} />
-                    </IconButton>
+                      <IconButton onClick={() => downloadPdf(row)}>
+                        <PictureAsPdf sx={{ color: "#1877f2" }} />
+                      </IconButton>
 
-                    {/* </Avatar> */}
-                  </Tooltip>
+                      {/* </Avatar> */}
+                    </Tooltip>
+                  )}
                 </div>
               </>
             ),

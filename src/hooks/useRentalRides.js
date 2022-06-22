@@ -9,14 +9,17 @@ const useRentalRides = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/rides/all?rideType=RENTAL`, {
-          // method: "GET",
-          // body: JSON.stringify({ ...values }),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("SAL")}`,
-          },
-        });
+        const response = await fetch(
+          `${BASE_URL}/rides/all?rideType=RENTAL_RIDE`,
+          {
+            // method: "GET",
+            // body: JSON.stringify({ ...values }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SAL")}`,
+            },
+          }
+        );
         const arr = await response.json();
         console.log(arr);
         const sortArr = arr?.data?.sort(

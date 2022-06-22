@@ -10,7 +10,7 @@ const useOutstationRides = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${BASE_URL}/rides/all?rideType=OUTSTATION_RIDE&status=COMPLETED`,
+          `${BASE_URL}/rides/all?rideType=OUTSTATION_RIDE`,
           {
             // method: "GET",
             // body: JSON.stringify({ ...values }),
