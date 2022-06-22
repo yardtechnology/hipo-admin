@@ -194,6 +194,7 @@ const Dashboard = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={adminData?.metaData?.user_data || "00"}
                   subtitle="Riders"
                   icon={<People className="iconColor" />}
@@ -203,6 +204,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={adminData?.metaData?.driver_data || "00"}
                   subtitle="Drivers"
                   icon={<DirectionsCar className="iconColor" />}
@@ -212,6 +214,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={adminData?.metaData?.operator_data || "00"}
                   subtitle="Operators"
                   icon={<Category className="iconColor" />}
@@ -221,6 +224,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={formatCurrency(
                     adminData?.metaData?.online_transaction
                       ? adminData?.metaData?.online_transaction
@@ -255,6 +259,7 @@ const Dashboard = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={
                     adminData?.metaData?.on_the_way_rides
                       ? adminData?.metaData?.on_the_way_rides
@@ -270,6 +275,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={adminData?.metaData?.pending_rides || "00"}
                   subtitle="Pending Rides"
                   icon={<Done className="iconColor" />}
@@ -279,6 +285,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={
                     adminData?.metaData?.cancelled_rides
                       ? adminData?.metaData?.cancelled_rides
@@ -298,6 +305,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <DashboardCard
+                  ICON={<MoreVert sx={{ color: "snow" }} />}
                   title={adminData?.metaData?.cancelled_rides || "00"}
                   subtitle="Cancelled Rides"
                   icon={<Cancel className="iconColor" />}

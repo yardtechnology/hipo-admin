@@ -81,6 +81,7 @@ const DriverStatements = () => {
       <Grid container spacing={2} sx={{ marginBottom: "5vh" }}>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
+            ICON={<MoreVert sx={{ color: "snow" }} />}
             title={formatCurrency(statement?.metaData?.revenue) || "00"}
             subtitle="Revenue"
             icon={<Money className="iconColor" />}
@@ -90,6 +91,7 @@ const DriverStatements = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
+            ICON={<MoreVert sx={{ color: "snow" }} />}
             title={statement?.metaData?.completed_ride || "00"}
             subtitle="Completed Rides"
             icon={<Done className="iconColor" />}
@@ -99,6 +101,7 @@ const DriverStatements = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
+            ICON={<MoreVert sx={{ color: "snow" }} />}
             title={statement?.metaData?.total_ride || "00"}
             subtitle="Total Rides"
             icon={<DirectionsCar className="iconColor" />}
@@ -108,6 +111,7 @@ const DriverStatements = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <DashboardCard
+            ICON={<MoreVert sx={{ color: "snow" }} />}
             title={statement?.metaData?.cancelled_ride || "00"}
             subtitle="Cancelled Rides"
             icon={<Cancel className="iconColor" />}

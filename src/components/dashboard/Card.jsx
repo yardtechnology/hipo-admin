@@ -1,4 +1,3 @@
-import { MoreVert } from "@mui/icons-material";
 import {
   Avatar,
   CardHeader,
@@ -12,7 +11,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 // import { useState } from "react";
-const Card = ({ icon, title, subtitle, onClick, iconAction, menuName }) => {
+const Card = ({
+  icon,
+  title,
+  subtitle,
+  onClick,
+  iconAction,
+  menuName,
+  ICON,
+}) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -47,7 +54,8 @@ const Card = ({ icon, title, subtitle, onClick, iconAction, menuName }) => {
                   // aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
                 >
-                  <MoreVert sx={{ color: "snow" }} />
+                  {/* <MoreVert sx={{ color: "snow" }} /> */}
+                  {ICON}
                 </IconButton>{" "}
                 <Menu
                   anchorOrigin={{
