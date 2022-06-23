@@ -52,7 +52,11 @@ const OperatorDriverData = ({ operatorData, setRealtime }) => {
   return (
     <div>
       <MaterialTable
-        title={`${operatorData?.rowData?.displayName}'s Driver List`}
+        title={`${
+          operatorData?.rowData?.displayName
+            ? operatorData?.rowData?.displayName
+            : "Operator"
+        }'s Driver List`}
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,

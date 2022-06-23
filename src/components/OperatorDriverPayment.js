@@ -65,12 +65,12 @@ const OperatorDriverPayment = ({ operatorDrivers }) => {
             {
               label: "Export PDF",
               exportFunc: (cols, datas) =>
-                ExportPdf(cols, datas, "Driver Statements"),
+                ExportPdf(cols, datas, "Operator Driver Payments"),
             },
             {
               label: "Export CSV",
               exportFunc: (cols, datas) =>
-                ExportCsv(cols, datas, "Driver Statements"),
+                ExportCsv(cols, datas, "Operator Driver Payments"),
             },
           ],
           actionsColumnIndex: -1,
@@ -163,6 +163,7 @@ const OperatorDriverPayment = ({ operatorDrivers }) => {
           {
             title: "Commission",
             field: "margin",
+            type: "numeric",
             render: (rowData) => formatCurrency(rowData?.margin),
             emptyValue: "--",
           },
