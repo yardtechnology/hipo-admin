@@ -17,7 +17,7 @@ import {
   Visibility,
   // LocalActivity,
   Notifications,
-  Paid,
+  // Paid,
   People,
   PeopleAlt,
   Person,
@@ -316,26 +316,26 @@ const MenuItems = [
       },
     ],
   },
-  {
-    key: "18",
-    icon: <Paid className="iconColor" />,
-    title: "Earning Reports",
-    route: "/earning-report",
-    submenus: [
-      {
-        key: "1",
-        title: "Driver Payment",
-        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
-        route: "/driver-earning-reports",
-      },
-      {
-        key: "2",
-        title: "Operator Payment",
-        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
-        route: "/operator-earning-reports",
-      },
-    ],
-  },
+  // {
+  //   key: "18",
+  //   icon: <Paid className="iconColor" />,
+  //   title: "Earning Reports",
+  //   route: "/earning-report",
+  //   submenus: [
+  //     {
+  //       key: "1",
+  //       title: "Driver Payment",
+  //       icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+  //       route: "/driver-earning-reports",
+  //     },
+  //     {
+  //       key: "2",
+  //       title: "Operator Payment",
+  //       icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+  //       route: "/operator-earning-reports",
+  //     },
+  //   ],
+  // },
   {
     key: "8",
     icon: <Quiz className="iconColor" />,
