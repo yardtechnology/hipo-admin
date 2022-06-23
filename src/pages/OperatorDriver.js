@@ -339,7 +339,6 @@ const OperatorDriver = () => {
           pageSize: 10,
           actionsColumnIndex: -1,
           search: true,
-          selection: true,
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}

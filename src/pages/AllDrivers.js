@@ -345,7 +345,9 @@ const AllDrivers = () => {
                       sl: i + 1,
                       cityName: driver?.city?.name,
                       currentTimestamp: moment(driver?.createdAt).format("ll"),
-                      DOB: moment(driver?.DOB).format("ll"),
+                      DOB: driver?.dateOfBirth
+                        ? moment(driver?.dateOfBirth).format("ll")
+                        : "--",
                       countryName: driver?.country?.name,
                     }))
                     .filter(
@@ -371,7 +373,9 @@ const AllDrivers = () => {
                     sl: i + 1,
                     cityName: driver?.city?.name,
                     currentTimestamp: moment(driver?.createdAt).format("ll"),
-                    DOB: moment(driver?.DOB).format("ll"),
+                    DOB: driver?.dateOfBirth
+                      ? moment(driver?.dateOfBirth).format("ll")
+                      : "--",
                     countryName: driver?.country?.name,
                   })),
             page: query?.page,

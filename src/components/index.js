@@ -20,9 +20,13 @@ import Models from "./Models";
 import AssignScheduleDriverDrawer from "./AssignScheduleDriverDrawer";
 import AssignVehicleDrawer from "./AssignVehicleDrawer";
 import OperatorDocumentsDrawer from "./OperatorDocumentsDrawer";
+import OperatorDriverData from "./OperatorDriverData";
+import OperatorDriverPayment from "./OperatorDriverPayment";
 export { default as AssignDrivers } from "./AssignDrivers";
 
 export {
+  OperatorDriverPayment,
+  OperatorDriverData,
   AssignTypeDrawerFeature,
   CustomPhoneNumberPicker,
   AssignTypeDrawer,

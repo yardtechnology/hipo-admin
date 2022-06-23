@@ -102,6 +102,7 @@ export const SetPassword = lazy(() => import("./SetPassword"));
 export const SetRentalPackage = lazy(() => import("./SetRentalPackage"));
 export const SetBilling = lazy(() => import("./SetBilling"));
 export const SetSearchRadius = lazy(() => import("./SetSearchRadius"));
+export const OperatorPayment = lazy(() => import("./OperatorPayment"));
 // export const OperatorDriverList = lazy(() => import("./OperatorDriverList"));
 // export const OperatorRequestedDriverList = lazy(() =>
 //   import("./OperatorRequestedDriverList")

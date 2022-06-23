@@ -179,7 +179,7 @@ const Notifications = () => {
                   <AlertTitle>{notification?.title}</AlertTitle>
                   {notification?.description}{" "}
                   <strong>
-                    {moment(notification?.timestamp).format("lll")}
+                    {moment(notification?.createdAt).format("lll")}
                   </strong>
                 </Alert>
               </>

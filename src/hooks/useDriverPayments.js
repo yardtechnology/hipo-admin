@@ -3,13 +3,13 @@ import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
 const useDriverPayments = () => {
-  const [driverPayments, setDriverPayments] = useState(null);
+  const [soloDrivers, setSoloDrivers] = useState(null);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/payments/all`, {
+        const response = await fetch(`${BASE_URL}/solo-drivers/all`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),
           headers: {
@@ -22,7 +22,7 @@ const useDriverPayments = () => {
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        isMounted.current && setDriverPayments(sortArr);
+        isMounted.current && setSoloDrivers(sortArr);
       } catch (error) {
         console.log(error);
       }
@@ -30,7 +30,7 @@ const useDriverPayments = () => {
     fetchFaqs();
   }, [isMounted, realtime]);
   return {
-    driverPayments,
+    soloDrivers,
     setRealtime,
   };
 };

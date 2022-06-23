@@ -86,6 +86,7 @@ import {
   SetBilling,
   SetSearchRadius,
   TotalRevenue,
+  OperatorPayment,
 } from "pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -206,6 +207,7 @@ const PrivateRoutes = () => {
           path="/requested-operator-vehicle-list/:operatorId"
           element={<RequestedOperatorVehicleList />}
         />
+        <Route path="/operator-payment" element={<OperatorPayment />} />
         <Route path="/rental-package" element={<SetRentalPackage />} />
         <Route path="/billing-config" element={<SetBilling />} />
         <Route path="/search-radius" element={<SetSearchRadius />} />

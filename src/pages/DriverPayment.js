@@ -1,33 +1,39 @@
-import { formatCurrency } from "@ashirbad/js-core";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
 
 import {
   Avatar,
-  Card,
-  CardContent,
-  Chip,
+  Badge,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Typography,
 } from "@mui/material";
-import { DocumentsDrawer, ReferralDrawer, VehicleInfoDrawer } from "components";
+import {
+  DocumentsDrawer,
+  EditDriverDrawer,
+  OperatorDriverPayment,
+  ReferralDrawer,
+  VehicleInfoDrawer,
+} from "components";
+import { SendNotification } from "components/dialog";
 import { useDriverPayments } from "hooks";
-// import { SendNotification } from "components/dialog";
 import moment from "moment";
 import React, { useState } from "react";
 
 const DriverPayment = () => {
-  // const [selectedUsers, setSelectedUsers] = useState([]);
+  const tableRef = React.createRef();
+  const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
-  const { driverPayments } = useDriverPayments();
-  console.log(driverPayments);
+  const [openEditDriverDrawer, setOpenEditDriverDrawer] = useState(false);
+  const { soloDrivers, setRealtime } = useDriverPayments();
+
+  // console.log("drivers", drivers);
+
   return (
     <>
-      {" "}
       <ReferralDrawer
         open={openReferralDrawer}
         setOpenReferralDrawer={setOpenReferralDrawer}
@@ -37,11 +43,18 @@ const DriverPayment = () => {
         setOpenVehicleInfoDrawer={setOpenVehicleInfoDrawer}
       />
       <DocumentsDrawer
+        setRealtime={setRealtime}
         open={openDocumentDrawer}
         setOpenDocumentsDrawer={setOpenDocumentDrawer}
       />
+      <EditDriverDrawer
+        setRealtime={setRealtime}
+        open={openEditDriverDrawer}
+        setOpenEditDriverDrawer={setOpenEditDriverDrawer}
+      />
       <MaterialTable
-        title="Driver Payments"
+        title="Drivers"
+        tableRef={tableRef}
         // onSelectionChange={(data) => {
         //   setSelectedUserFCMToken({
         //     fcmTokenWeb: data?.[0]?.fcmTokenWeb || null,
@@ -53,38 +66,34 @@ const DriverPayment = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Riders"),
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Drivers"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Riders"),
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Drivers"),
             },
           ],
-          pageSize: 10,
+          pageSize: 20,
           actionsColumnIndex: -1,
           search: true,
-          selection: true,
           detailPanelColumnAlignment: "right",
           sorting: true,
         }}
-        data={[
-          {
-            dateOfBirth: "12/12/12",
-            displayName: "Alexa",
-            email: "alexa@gmail.com",
-            phoneNumber: "+91 7778876436",
-            city: "Bbsr",
-            joiningDate: new Date().toString(),
-            trips: "15",
-            profileImageUrl: "",
-            status: "Paid",
-            transactionId: "#123456",
-            onDate: new Date().toString(),
-            amount: "1000",
-            commission: "10%",
-            incentives: "150",
-          },
-        ]}
+        data={
+          soloDrivers === null
+            ? []
+            : soloDrivers.map((driver) => {
+                return {
+                  ...driver,
+                  countryName: driver?.country?.name,
+                  DOB: driver?.dateOfBirth
+                    ? moment(driver?.dateOfBirth).format("ll")
+                    : "--",
+                  isBlocked: driver.isBlocked ? "Yes" : "No",
+                };
+              })
+        }
+        isLoading={soloDrivers === null}
         columns={[
           {
             title: "#",
@@ -101,56 +110,58 @@ const DriverPayment = () => {
             title: "Driver Profile",
             tooltip: "Profile",
             searchable: true,
-            width: "25%",
-            field: "firstName",
-            render: ({ photoURL, displayName, phoneNumber }) => (
+            field: "displayName",
+            render: ({ photoURL, displayName, phoneNumber, isOnline }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
                   <ListItemAvatar>
-                    <Avatar src={photoURL} alt={"img"} />
+                    <Badge
+                      overlap="circle"
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      variant="dot"
+                      color={isOnline ? "success" : "error"}
+                      invisible={!isOnline}
+                    >
+                      <Avatar src={photoURL} alt={"img"} />
+                    </Badge>
                   </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Typography component="span" variant="body2">
-                        {displayName || "Not Provided"}
+                        {displayName}
                       </Typography>
                     }
                     // secondary={email}
-                    secondary={phoneNumber || "Not Provided"}
+                    secondary={phoneNumber}
                   ></ListItemText>
                 </ListItem>
               </>
             ),
           },
           {
-            title: "Transaction Id",
-            field: "transactionId",
-            width: "5%",
-          },
-          {
-            title: "Date",
-            field: "onDate",
-            render: (rowData) => moment(rowData.joiningDate).format("LL"),
-          },
-          {
-            title: "Amount",
-            field: "amount",
-            render: (rowData) => formatCurrency(rowData.amount),
-          },
-          {
-            title: "Commission",
-            field: "commission",
-          },
-          {
-            title: "Incentives",
-            field: "incentives",
-            render: (rowData) => formatCurrency(rowData?.incentives),
-          },
-          {
-            title: "City",
-            field: "city",
+            title: "Phone",
+            field: "phoneNumber",
             hidden: true,
             export: true,
+          },
+
+          {
+            title: "DOB",
+            field: "DOB",
+            // render: ({ dateOfBirth }) => {
+            //   moment(dateOfBirth).format("ll");
+            // },
+            searchable: true,
+            emptyValue: "--",
+          },
+          {
+            title: "Country",
+            field: "countryName",
+            searchable: true,
+            emptyValue: "--",
           },
           // {
           //   title: "Trips",
@@ -158,24 +169,15 @@ const DriverPayment = () => {
           // },
           {
             title: "Joining Date",
-            field: "joiningDate",
-            hidden: true,
-            export: true,
-            render: (rowData) => moment(rowData.joiningDate).format("llll"),
+            field: "createdAt",
+            render: (rowData) => moment(rowData.createdAt).format("ll"),
+            export: false,
           },
           {
-            title: "Status",
-            field: "status",
-            render: (row) => (
-              <>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  label={row?.status}
-                />
-              </>
-            ),
+            title: "Joining Date",
+            field: "currentTimestamp",
+            hidden: true,
+            export: true,
           },
 
           // {
@@ -183,106 +185,18 @@ const DriverPayment = () => {
           //   field: "drop",
           // },
         ]}
-        actions={
-          [
-            // {
-            //   tooltip: "Send notification to all selected users",
-            //   icon: "send",
-            //   onClick: (evt, data) => setSelectedUsers(data),
-            // },
-            // {
-            //   tooltip: "Block all selected users",
-            //   icon: "block",
-            //   // onClick: (evt, data) => setSelectedUsers(data),
-            // },
-            // {
-            //   tooltip: "Unblock all selected users",
-            //   icon: "done",
-            //   // onClick: (evt, data) => setSelectedUsers(data),
-            // },
-          ]
-        }
-        detailPanel={({ rowData }) => {
+        detailPanel={(rowData) => {
           return (
             <div
               style={{
-                padding: "20px",
+                padding: "5px",
                 margin: "auto",
                 backgroundColor: "#eef5f9",
               }}
             >
-              <Card
-                sx={{
-                  minWidth: 500,
-                  maxWidth: 550,
-                  transition: "0.3s",
-                  margin: "auto",
-                  padding: "2vh 2vw",
-                  borderRadius: "10px",
-                  // fontFamily: italic,
-                  boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-                  "&:hover": {
-                    boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-                  },
-                }}
-              >
-                <CardContent>
-                  <Typography
-                    variant="body1"
-                    component="p"
-                    gutterBottom
-                    align="left"
-                  >
-                    Email:{" "}
-                    <span
-                      style={{
-                        color: "rgb(30, 136, 229)",
-                        fontSize: "15px",
-                      }}
-                    >
-                      {rowData?.email}
-                    </span>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
-                    DOB:{" "}
-                    <span
-                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-                    >
-                      {rowData?.dateOfBirth}
-                    </span>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
-                    City:{" "}
-                    <span
-                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-                    >
-                      {rowData?.city}
-                    </span>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
-                    Joining Date:{" "}
-                    <span
-                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-                    >
-                      {moment(rowData?.joiningDate).format("ll")}
-                    </span>
-                  </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
-                    Trips:{" "}
-                    <span
-                      style={{ color: "rgb(30, 136, 229)", fontSize: "15px" }}
-                    >
-                      {rowData?.trips}
-                    </span>
-                  </Typography>
-                </CardContent>
-              </Card>
+              <OperatorDriverPayment operatorDrivers={rowData} />
             </div>
           );
-        }}
-        editable={{
-          onRowUpdate: (newData, oldData) => {},
-          onRowDelete: (oldData) => {},
         }}
         // actions={[
         //   {
@@ -295,10 +209,11 @@ const DriverPayment = () => {
         //   },
         // ]}
       />
-      {/* <SendNotification
+      <SendNotification
+        setRealtime={setRealtime}
         selectedUsers={selectedUsers}
         handleClose={() => setSelectedUsers([])}
-      /> */}
+      />
     </>
   );
 };

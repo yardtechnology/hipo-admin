@@ -123,6 +123,12 @@ const MenuItems = [
         route: "/view-operators",
       },
       {
+        key: "3",
+        title: "Operator Payment",
+        icon: <Money className="iconColor" sx={{ color: "#000" }} />,
+        route: "/operator-payment",
+      },
+      {
         key: "2",
         title: "Requests",
         icon: <PersonAdd className="iconColor" sx={{ color: "#000" }} />,
