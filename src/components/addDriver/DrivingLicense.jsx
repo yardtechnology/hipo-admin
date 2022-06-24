@@ -41,7 +41,6 @@ const DrivingLicense = ({ handleNext, handleBack }) => {
   const handleDrivingLicenseInfo = async (values, submitProps) => {
     try {
       setDrivingLicenceInfo({ ...values, imgFile: value });
-      console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
@@ -49,7 +48,6 @@ const DrivingLicense = ({ handleNext, handleBack }) => {
       handleNext();
     }
   };
-  console.log(drivingLicenceInfo);
   return (
     <>
       <Grid

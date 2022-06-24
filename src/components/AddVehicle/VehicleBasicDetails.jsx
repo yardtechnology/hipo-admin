@@ -92,10 +92,7 @@ const VehicleBasicDetails = ({ handleNext }) => {
       handleNext();
     } catch {}
   };
-  console.log({ categoryId });
-  console.log({ vehicleMakerId });
-  console.log({ vehicleBasicDetails });
-  console.log({ vehicleModelId });
+
   return (
     <div style={{ marginTop: "4vh" }}>
       {/* <div

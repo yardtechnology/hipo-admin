@@ -40,7 +40,6 @@ const AssignVehicleDrawer = ({
         }
       );
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Vehicle Assigned", "success")
@@ -133,7 +132,6 @@ const AssignVehicleDrawer = ({
                   const hasVehicle = open?.vehicle
                     ? open?.vehicle?._id === vehicle?._id
                     : false;
-                  console.log("hasDriver", hasVehicle);
                   return (
                     <div className="" key={vehicle?.key}>
                       <List>

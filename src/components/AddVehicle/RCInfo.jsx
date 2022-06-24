@@ -38,7 +38,6 @@ const RCInfo = ({ handleNext, handleBack }) => {
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
       setRCInfo({ ...values, RCImage: value });
-      console.log(values);
       handleNext();
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });

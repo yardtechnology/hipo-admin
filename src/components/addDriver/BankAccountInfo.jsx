@@ -30,12 +30,9 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     setAadharCardInfo,
     setDrivingLicenceInfo,
   } = useAppContext();
-  console.log("basicDetails", basicDetails);
-  console.log("drivingLicenceInfo", drivingLicenceInfo);
-  console.log("aadharCardInfo", aadharCardInfo);
+
   // const [value, setValue] = useState(basicDetails.imgFile);
   // console.log(value);
-  console.log("bankAccountInfo", bankAccountInfo);
   const initialValues = AccountInfoSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -90,11 +87,10 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
     );
     formdata.append("aadharCardNumber", aadharCardInfo?.aadharCardNumber);
     try {
-      console.log(values);
+      // console.log(values);
       // await setBankAccountInfo({
       //   ...values,
       // })
-      console.log(formdata);
       const response = await fetch(`${BASE_URL}/driver`, {
         method: "POST",
         body: formdata,
@@ -103,8 +99,7 @@ const BankAccountInfo = ({ handleBack, handleNext, handleReset }) => {
         },
       });
       const res = await response.json();
-      console.log(res);
-      res.status === 200
+      res?.status === 200
         ? Swal.fire({
             title: "Success",
             text: "Driver added successfully",

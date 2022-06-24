@@ -8,8 +8,6 @@ const useRatings = () => {
   const { isMounted } = useIsMounted();
   const fetchRatings = useCallback(
     async (pageSize, page, totalCount) => {
-      console.log(pageSize, page, totalCount);
-      console.log(pageSize ? pageSize * 0 : 0);
       try {
         const response = await fetch(
           `${BASE_URL}/ratings/all?limit=${pageSize}&skip=${
@@ -25,7 +23,7 @@ const useRatings = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
+
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );

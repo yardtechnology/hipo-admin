@@ -82,11 +82,9 @@ const PUCInfo = ({ handleReset, handleBack }) => {
         body: formdata,
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire({ icon: "success", text: "Vehicle added successfully" })
         : Swal.fire({ icon: "error", text: "Something Went Wrong" });
-      console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);

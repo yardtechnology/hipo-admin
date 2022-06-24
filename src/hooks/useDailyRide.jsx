@@ -8,8 +8,6 @@ const useDailyRide = () => {
   const { isMounted } = useIsMounted();
   const fetchRides = useCallback(
     async (pageSize, page, totalCount) => {
-      console.log(pageSize, page, totalCount);
-      console.log(pageSize ? pageSize * 0 : 0);
       try {
         const response = await fetch(
           `${BASE_URL}/admin/ride/day-wise-ride?for=DAY&limit=${
@@ -25,7 +23,7 @@ const useDailyRide = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
+
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );

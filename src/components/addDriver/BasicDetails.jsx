@@ -21,18 +21,15 @@ import { CustomPhoneNumberPicker } from "components";
 const BasicDetails = ({ handleNext }) => {
   const { basicDetails, setBasicDetails } = useAppContext();
   const { addDriverSchema } = useAddDriverSchema();
-  console.log("basicDetails", basicDetails);
   const [countryCode, setCountryCode] = useState(
     basicDetails.countryCode || "+91"
   );
   const [value, setValue] = useState(basicDetails?.imgFile);
-  console.log(value);
 
   const initialValues = addDriverSchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
   }, {});
-  console.log("initialValues", initialValues);
   const validationSchema = addDriverSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.validationSchema;
@@ -42,7 +39,6 @@ const BasicDetails = ({ handleNext }) => {
   );
   const handleSend = async (values, submitProps) => {
     try {
-      console.log(values);
       await setBasicDetails({
         ...values,
         imgFile: value,

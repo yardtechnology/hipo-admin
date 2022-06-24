@@ -40,7 +40,6 @@ const EditAccountInfo = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
     formdata.append("bankAccountType", values?.bankAccountType);
     formdata.append("bankAccountHolderName", values?.accountHolderName);
     try {
-      console.log(values);
       const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
         method: "PUT",
         headers: {
@@ -49,7 +48,6 @@ const EditAccountInfo = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
         body: formdata,
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire("Success", "Driver Updated Successfully", "success")
         : Swal.fire("Error", "Driver Not Updated", "error");

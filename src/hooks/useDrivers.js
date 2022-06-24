@@ -48,8 +48,6 @@ const useDrivers = () => {
   const { isMounted } = useIsMounted();
   const fetchDrivers = useCallback(
     async (pageSize, page, totalCount) => {
-      console.log(pageSize, page, totalCount);
-      console.log(pageSize ? pageSize * 0 : 0);
       try {
         const response = await fetch(
           `${BASE_URL}/users/all?role=driver&status=approved&limit=${pageSize}&skip=${
@@ -65,7 +63,6 @@ const useDrivers = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );

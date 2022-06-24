@@ -37,7 +37,6 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
       setInsuranceInfo({ ...values, insuranceImage: value });
-      console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);
@@ -45,7 +44,6 @@ const InsuranceInfo = ({ handleNext, handleBack }) => {
       handleNext();
     }
   };
-  console.log(insuranceInfo);
   return (
     <>
       <Grid

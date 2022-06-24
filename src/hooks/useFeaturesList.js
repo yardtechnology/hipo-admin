@@ -18,7 +18,7 @@ const useFeaturesList = () => {
           },
         });
         const arr = await response.json();
-        console.log(arr);
+
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );

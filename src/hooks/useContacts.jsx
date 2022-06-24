@@ -16,9 +16,9 @@ const useContacts = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("SAL")}`,
           },
-        });
+        }); // response.json(); // response.json().then(data => console.log(data)); // response.json().then(data => console.log(data));
         const arr = await response.json();
-        console.log(arr);
+
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );

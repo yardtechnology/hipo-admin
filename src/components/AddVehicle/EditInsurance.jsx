@@ -15,7 +15,6 @@ const EditInsuranceInfo = ({
   setOpenVehicleDocumentDrawer,
   handleNext,
 }) => {
-  console.log(details);
   const [value, setValue] = useState(details?.insurance?.url);
   const initialValues = {
     insuranceNumber: "",
@@ -34,7 +33,6 @@ const EditInsuranceInfo = ({
     ),
   };
   const handleEditInsurance = async (values, submitProps) => {
-    console.log(values);
     const formdata = new FormData();
     value !== details?.insurance?.url &&
       formdata.append("insurance", value?.target.files[0]);
@@ -42,7 +40,6 @@ const EditInsuranceInfo = ({
     formdata.append("insuranceNumber", values?.insuranceNumber);
 
     try {
-      console.log(values);
       const response = await fetch(`${BASE_URL}/vehicle/${details?._id}`, {
         method: "PUT",
         headers: {
@@ -51,7 +48,6 @@ const EditInsuranceInfo = ({
         body: formdata,
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire("Success", "Insurance Updated", "success")
         : Swal.fire("Error", "Insurance Not Updated", "error");

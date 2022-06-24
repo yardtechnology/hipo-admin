@@ -18,7 +18,6 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
   const { aadharCardInfo, setAadharCardInfo } = useAppContext();
   const [value, setValue] = useState(aadharCardInfo?.imgFile);
   const [value1, setValue1] = useState(aadharCardInfo?.imgFile1);
-  console.log(aadharCardInfo);
   const initialValues = {
     aadharCardNumber: "",
   };
@@ -36,7 +35,7 @@ const AadharCardInfo = ({ handleNext, handleBack }) => {
   const handleAadharCardInfo = async (values, submitProps) => {
     try {
       setAadharCardInfo({ imgFile: value, imgFile1: value1, ...values });
-      console.log(values);
+      // console.log(values);
     } catch (error) {
       Swal.fire({ icon: "error", text: error.message });
       console.log(error);

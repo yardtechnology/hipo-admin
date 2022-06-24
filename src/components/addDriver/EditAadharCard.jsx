@@ -9,7 +9,6 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { BASE_URL } from "configs";
 const EditAadharCard = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
-  console.log(open);
   const [value, setValue] = useState(open?.aadharCard?.front?.url);
   const [value1, setValue1] = useState(open?.aadharCard?.back?.url);
 
@@ -49,7 +48,6 @@ const EditAadharCard = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
     value1 && formdata.append("aadharCardBack", value1?.target?.files[0]);
 
     try {
-      console.log(values);
       const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
         method: "PUT",
         headers: {
@@ -58,7 +56,6 @@ const EditAadharCard = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
         body: formdata,
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire("Success", "Driver Updated Successfully", "success")
         : Swal.fire("Error", "Driver Not Updated", "error");

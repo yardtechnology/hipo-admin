@@ -4,13 +4,11 @@ import { BASE_URL } from "configs";
 
 const useSupports = () => {
   const [supports, setSupports] = useState([]);
-  console.log(supports);
   const [realtime, setRealtime] = useState(false);
   const { isMounted } = useIsMounted();
   const fetchSupports = useCallback(
     async (pageSize, page) => {
       try {
-        console.log(pageSize, page);
         const response = await fetch(`${BASE_URL}/support-forms/all`, {
           // method: "GET",
           // body: JSON.stringify({ ...values }),

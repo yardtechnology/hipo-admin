@@ -27,7 +27,6 @@ const VehicleDocumentDrawer = ({
   setRealtime,
 }) => {
   const [value, setValue] = useState(0);
-  console.log(open);
 
   return (
     <>

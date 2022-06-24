@@ -71,7 +71,6 @@ const AssignScheduleDriverDrawer = ({
         }
       );
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Driver Assigned", "success")

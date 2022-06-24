@@ -18,7 +18,6 @@ const useDashboardStatistics = () => {
           },
         });
         const arr = await response.json();
-        console.log(arr);
 
         isMounted.current && setAdminData(arr?.data);
       } catch (error) {

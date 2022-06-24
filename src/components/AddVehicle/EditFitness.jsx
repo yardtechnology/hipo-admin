@@ -14,7 +14,6 @@ const EditFitness = ({
   setRealtime,
   setOpenVehicleDocumentDrawer,
 }) => {
-  console.log(details);
   const [value, setValue] = useState(details?.fitness?.url);
   const initialValues = {
     fitnessNumber: "",
@@ -33,7 +32,6 @@ const EditFitness = ({
     ),
   };
   const handleEditFitness = async (values, submitProps) => {
-    console.log(values);
     const formdata = new FormData();
     value !== details?.fitness?.url &&
       formdata.append("fitness", value?.target.files[0]);
@@ -41,7 +39,6 @@ const EditFitness = ({
     formdata.append("fitnessNumber", values?.fitnessNumber);
 
     try {
-      console.log(values);
       const response = await fetch(`${BASE_URL}/vehicle/${details?._id}`, {
         method: "PUT",
         headers: {
@@ -50,7 +47,6 @@ const EditFitness = ({
         body: formdata,
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire("Success", "Fitness Info Updated", "success")
         : Swal.fire("Error", "Fitness Not Updated", "error");

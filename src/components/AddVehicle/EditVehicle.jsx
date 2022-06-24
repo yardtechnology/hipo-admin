@@ -32,11 +32,6 @@ const EditVehicle = ({ open, setOpenEditVehicleDrawer, setRealtime }) => {
     categoryId
   );
 
-  console.log(vehicleModelId);
-  console.log(vehicleMakerId);
-  console.log(categoryId);
-  console.log(open);
-
   const initialValues = addVehicleTypeSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;

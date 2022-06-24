@@ -37,22 +37,18 @@ const EditDrivingLicense = ({ open, setRealtime, setOpenDocumentsDrawer }) => {
     {}
   );
   const handleDrivingLicenseInfo = async (values, submitProps) => {
-    console.log(values);
     const formdata = new FormData();
     if (value) {
       formdata.append("drivingLicenseNumber", values?.drivingLicenseNumber);
       formdata.append("drivingLicense", value?.target?.files[0]);
       formdata.append("drivingLicenseExpiry", values?.drivingLicenseExpiryDate);
       formdata.append("licenseType", values?.category);
-      console.log("formdata", formdata);
     } else {
       formdata.append("drivingLicenseNumber", values?.drivingLicenseNumber);
       formdata.append("drivingLicenseExpiry", values?.drivingLicenseExpiryDate);
       formdata.append("licenseType", values?.category);
-      console.log("formdata", formdata);
     }
     try {
-      console.log(values);
       const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
         method: "PUT",
         headers: {
@@ -61,7 +57,6 @@ const EditDrivingLicense = ({ open, setRealtime, setOpenDocumentsDrawer }) => {
         body: formdata,
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire("Success", "Driver Updated Successfully", "success")
         : Swal.fire("Error", "Driver Not Updated", "error");

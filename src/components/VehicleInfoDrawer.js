@@ -18,7 +18,6 @@ import { useIsMounted } from "hooks";
 import { BASE_URL } from "configs";
 
 const VehicleInfoDrawer = ({ open, setOpenVehicleInfoDrawer }) => {
-  console.log(open?._id);
   const { isMounted } = useIsMounted();
   const [vehicleInfo, setVehicleInfo] = useState({});
   useEffect(() => {

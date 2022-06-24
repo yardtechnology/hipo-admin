@@ -8,7 +8,6 @@ const useTotalRevenue = () => {
   const { isMounted } = useIsMounted();
   const fetchData = useCallback(
     async (startDate, endDate) => {
-      console.log(startDate, endDate);
       try {
         const response = await fetch(
           `${BASE_URL}/rides/total-revenue?startDate=${startDate}&endDate=${endDate}`,
@@ -20,7 +19,6 @@ const useTotalRevenue = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         // const sortArr = arr?.data?.sort(
         //   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         // );
