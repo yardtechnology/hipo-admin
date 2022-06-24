@@ -156,7 +156,7 @@ const OperatorDriverPayment = ({ operatorDrivers }) => {
           // },
           {
             title: "Earned",
-            field: "earned",
+            field: "amount",
             render: (rowData) => formatCurrency(rowData?.amount),
             editable: "never",
           },

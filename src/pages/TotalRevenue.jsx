@@ -108,41 +108,53 @@ const TotalRevenue = () => {
             // },
             {
               label: "Yesterday",
-              startDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+              startDate: new Date(new Date().setDate(new Date().getDate() - 1))
+                .toISOString()
+                .split("T")[0],
               endDate: new Date(new Date().setDate(new Date().getDate() - 1)),
             },
             {
               label: "Last 7 Days",
-              startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
+              startDate: new Date(new Date().setDate(new Date().getDate() - 7))
+                .toISOString()
+                .split("T")[0],
               endDate: new Date(),
             },
             {
               label: "Last 15 Days",
-              startDate: new Date(
-                new Date().setDate(new Date().getDate() - 15)
-              ),
+              startDate: new Date(new Date().setDate(new Date().getDate() - 15))
+                .toISOString()
+                .split("T")[0],
               endDate: new Date(),
             },
             {
               label: "Last 30 Days",
-              startDate: new Date(
-                new Date().setDate(new Date().getDate() - 30)
-              ),
+              startDate: new Date(new Date().setDate(new Date().getDate() - 30))
+                .toISOString()
+                .split("T")[0],
               endDate: new Date(),
             },
             {
               label: "This Month",
-              startDate: new Date(new Date().setDate(1)),
+              startDate: new Date(new Date().setDate(1))
+                .toISOString()
+                .split("T")[0],
               endDate: new Date(),
             },
             {
               label: "Last Month",
-              startDate: new Date(new Date().setDate(1)),
+              startDate: new Date(new Date().setDate(1))
+                .toISOString()
+                .split("T")[0],
               endDate: new Date(new Date().setDate(1)),
             },
             {
               label: "Last 365 Days",
-              startDate: moment().subtract(365, "days").toDate(),
+              startDate: moment()
+                .subtract(365, "days")
+                .toDate()
+                .toISOString()
+                .split("T")[0],
               endDate: moment().toDate(),
             },
           ]}
@@ -219,12 +231,12 @@ const TotalRevenue = () => {
             {
               label: "Export PDF",
               exportFunc: (cols, datas) =>
-                ExportPdf(cols, datas, "Daily Statement"),
+                ExportPdf(cols, datas, "Total Revenue"),
             },
             {
               label: "Export CSV",
               exportFunc: (cols, datas) =>
-                ExportCsv(cols, datas, "Daily Statement"),
+                ExportCsv(cols, datas, "Total Revenue"),
             },
           ],
         }}
@@ -242,6 +254,11 @@ const TotalRevenue = () => {
                   driverPhoneNumber: ride?.driver?.phoneNumber,
                   displayName: ride?.rider?.displayName,
                   phoneNumber: ride?.rider?.phoneNumber,
+                  pickup_time: moment(ride?.pickupTime).format("LLL"),
+                  drop_time: moment(ride?.dropTime).format("LLL"),
+                  pickupAddress: ride?.pickupLocation?.address,
+                  dropAddress: ride?.dropLocation?.address,
+                  currentTimestamp: moment(ride?.createdAt).format("LLL"),
                   rideId: ride?._id,
                 };
               })
