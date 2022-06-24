@@ -54,7 +54,6 @@ const YearlyStatement = () => {
       <MaterialTable
         options={{
           whiteSpace: "nowrap",
-          selection: "true",
           addRowPosition: "first",
           detailPanelColumnAlignment: "right",
           actionsColumnIndex: -1,

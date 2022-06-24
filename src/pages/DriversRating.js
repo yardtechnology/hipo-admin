@@ -82,49 +82,53 @@ const DriversRating = () => {
           return {
             data:
               query?.search?.length > 0
-                ? data?.data
-                    ?.map((rating, i) => ({
-                      ...rating,
-                      sl: query.page * query.pageSize + i + 1,
-                      currentTimestamp: moment(rating.createdAt).format("LL"),
-                      rideId: rating?.ride?._id,
-                      driverImg: rating?.driver?.photoURL,
-                      driverName: rating?.driver?.displayName,
-                      driverEmail: rating?.driver?.email,
-                      driverPhone: rating?.driver?.phoneNumber,
-                      riderImg: rating?.rider?.photoURL,
-                      riderName: rating?.rider?.displayName,
-                      riderEmail: rating?.rider?.email,
-                      riderPhone: rating?.rider?.phoneNumber,
-                    }))
-                    ?.filter(
-                      (rating) =>
-                        rating?.driverName
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderName
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.rideId
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderPhone
-                          ?.toString()
-                          ?.includes(query?.search?.toString()) ||
-                        rating?.driverPhone
-                          ?.toString()
-                          ?.includes(query?.search?.toString()) ||
-                        rating?.driverEmail
-                          ?.toLowerCase()
+                ? data?.data === undefined
+                  ? []
+                  : data?.data
+                      ?.map((rating, i) => ({
+                        ...rating,
+                        sl: query.page * query.pageSize + i + 1,
+                        currentTimestamp: moment(rating.createdAt).format("LL"),
+                        rideId: rating?.ride?._id,
+                        driverImg: rating?.driver?.photoURL,
+                        driverName: rating?.driver?.displayName,
+                        driverEmail: rating?.driver?.email,
+                        driverPhone: rating?.driver?.phoneNumber,
+                        riderImg: rating?.rider?.photoURL,
+                        riderName: rating?.rider?.displayName,
+                        riderEmail: rating?.rider?.email,
+                        riderPhone: rating?.rider?.phoneNumber,
+                      }))
+                      ?.filter(
+                        (rating) =>
+                          rating?.driverName
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.riderName
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.rideId
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.riderPhone
+                            ?.toString()
+                            ?.includes(query?.search?.toString()) ||
+                          rating?.driverPhone
+                            ?.toString()
+                            ?.includes(query?.search?.toString()) ||
+                          rating?.driverEmail
+                            ?.toLowerCase()
 
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderEmail
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.riderRating
-                          .toString()
-                          ?.includes(query?.search?.toString())
-                    )
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.riderEmail
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.riderRating
+                            .toString()
+                            ?.includes(query?.search?.toString())
+                      )
+                : data?.data === undefined
+                ? []
                 : data?.data?.map((rating, i) => ({
                     ...rating,
                     sl: query.page * query.pageSize + i + 1,
