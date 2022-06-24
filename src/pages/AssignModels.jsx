@@ -33,13 +33,17 @@ const AssignModels = () => {
           ],
         }}
         title={"Assign Models"}
-        data={vehicleMaker?.map((maker, i) => {
-          return {
-            ...maker,
-            sl: i + 1,
-            // brandLogo: maker?.logo?.url,
-          };
-        })}
+        data={
+          vehicleMaker === null
+            ? []
+            : vehicleMaker?.map((maker, i) => {
+                return {
+                  ...maker,
+                  sl: i + 1,
+                  // brandLogo: maker?.logo?.url,
+                };
+              })
+        }
         columns={[
           {
             title: "#",
