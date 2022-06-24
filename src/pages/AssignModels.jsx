@@ -12,6 +12,7 @@ const AssignModels = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const { vehicleMaker, setRealtime } = useVehicleMaker();
+  console.log(vehicleMaker);
 
   return (
     <>
@@ -218,7 +219,7 @@ const AssignModels = () => {
         //       handleBulkDelete(data.map((data) => data?.day)),
         //   },
         // ]}
-        isLoading={vehicleMaker?.length === 0 ? true : false}
+        isLoading={vehicleMaker===null}
       />
     </>
   );
