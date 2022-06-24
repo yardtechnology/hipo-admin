@@ -339,35 +339,41 @@ const AllDrivers = () => {
           return {
             data:
               query?.search?.length > 0
-                ? drivers.data
-                    .map((driver, i) => ({
-                      ...driver,
-                      sl: i + 1,
-                      cityName: driver?.city?.name,
-                      currentTimestamp: moment(driver?.createdAt).format("ll"),
-                      DOB: driver?.dateOfBirth
-                        ? moment(driver?.dateOfBirth).format("ll")
-                        : "--",
-                      countryName: driver?.country?.name,
-                    }))
-                    .filter(
-                      (driver) =>
-                        driver?.displayName
-                          .toLowerCase()
-                          .includes(query?.search?.toLowerCase()) ||
-                        driver?.email
-                          .toLowerCase()
-                          .includes(query?.search?.toLowerCase()) ||
-                        driver?.phoneNumber
-                          ?.toString()
-                          .includes(query?.search) ||
-                        driver?.cityName
-                          ?.toLowerCase()
-                          .includes(query?.search?.toLowerCase()) ||
-                        driver?.countryName
-                          ?.toLowerCase()
-                          .includes(query?.search?.toLowerCase())
-                    )
+                ? drivers?.data === undefined
+                  ? []
+                  : drivers?.data
+                      ?.map((driver, i) => ({
+                        ...driver,
+                        sl: i + 1,
+                        cityName: driver?.city?.name,
+                        currentTimestamp: moment(driver?.createdAt).format(
+                          "ll"
+                        ),
+                        DOB: driver?.dateOfBirth
+                          ? moment(driver?.dateOfBirth).format("ll")
+                          : "--",
+                        countryName: driver?.country?.name,
+                      }))
+                      .filter(
+                        (driver) =>
+                          driver?.displayName
+                            .toLowerCase()
+                            .includes(query?.search?.toLowerCase()) ||
+                          driver?.email
+                            .toLowerCase()
+                            .includes(query?.search?.toLowerCase()) ||
+                          driver?.phoneNumber
+                            ?.toString()
+                            .includes(query?.search) ||
+                          driver?.cityName
+                            ?.toLowerCase()
+                            .includes(query?.search?.toLowerCase()) ||
+                          driver?.countryName
+                            ?.toLowerCase()
+                            .includes(query?.search?.toLowerCase())
+                      )
+                : drivers?.data === undefined
+                ? []
                 : drivers?.data?.map((driver, i) => ({
                     ...driver,
                     sl: i + 1,

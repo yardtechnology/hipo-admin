@@ -218,18 +218,22 @@ const Riders = () => {
           return {
             data:
               query?.search?.length > 0
-                ? riders?.data?.filter(
-                    (rider) =>
-                      rider?.displayName
-                        ?.toLowerCase()
-                        ?.includes(query.search?.toLowerCase()) ||
-                      rider?.email
-                        ?.toLowerCase()
-                        ?.includes(query.search?.toLowerCase()) ||
-                      rider?.phoneNumber
-                        ?.toString()
-                        .includes(query.search?.toLowerCase())
-                  )
+                ? riders?.data === undefined
+                  ? []
+                  : riders?.data?.filter(
+                      (rider) =>
+                        rider?.displayName
+                          ?.toLowerCase()
+                          ?.includes(query.search?.toLowerCase()) ||
+                        rider?.email
+                          ?.toLowerCase()
+                          ?.includes(query.search?.toLowerCase()) ||
+                        rider?.phoneNumber
+                          ?.toString()
+                          .includes(query.search?.toLowerCase())
+                    )
+                : riders?.data === undefined
+                ? []
                 : riders?.data
 
                     // ?.filter((_) =>

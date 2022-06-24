@@ -100,49 +100,53 @@ const YearlyStatement = () => {
           return {
             data:
               query?.search?.length > 0
-                ? data?.data
-                    ?.map((rating, i) => ({
-                      ...rating,
-                      sl: query.page * query.pageSize + i + 1,
-                      currentTimestamp: moment(rating.createdAt).format("LL"),
-                      rideId: rating?.ride?._id,
-                      driverImg: rating?.driver?.photoURL,
-                      driverName: rating?.driver?.displayName,
-                      driverEmail: rating?.driver?.email,
-                      driverPhone: rating?.driver?.phoneNumber,
-                      riderImg: rating?.rider?.photoURL,
-                      riderName: rating?.rider?.displayName,
-                      riderEmail: rating?.rider?.email,
-                      riderPhone: rating?.rider?.phoneNumber,
-                      pickup_time: moment(rating?.pickupTime).format("LLL"),
-                      drop_time: moment(rating?.dropTime).format("LLL"),
-                      pickupAddress: rating?.pickupLocation?.address,
-                      dropAddress: rating?.dropLocation?.address,
-                    }))
-                    ?.filter(
-                      (rating) =>
-                        rating?.rideId
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.pickupAddress
-                          ?.toLowerCase()
-                          .includes(query?.search?.toLowerCase()) ||
-                        rating?.dropAddress
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.pickup_time
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.drop_time
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.status
-                          ?.toLowerCase()
-                          ?.includes(query?.search?.toLowerCase()) ||
-                        rating?.paymentMethod
-                          ?.toLowerCase()
-                          .includes(query?.search?.toLowerCase())
-                    )
+                ? data?.data === undefined
+                  ? []
+                  : data?.data
+                      ?.map((rating, i) => ({
+                        ...rating,
+                        sl: query.page * query.pageSize + i + 1,
+                        currentTimestamp: moment(rating.createdAt).format("LL"),
+                        rideId: rating?.ride?._id,
+                        driverImg: rating?.driver?.photoURL,
+                        driverName: rating?.driver?.displayName,
+                        driverEmail: rating?.driver?.email,
+                        driverPhone: rating?.driver?.phoneNumber,
+                        riderImg: rating?.rider?.photoURL,
+                        riderName: rating?.rider?.displayName,
+                        riderEmail: rating?.rider?.email,
+                        riderPhone: rating?.rider?.phoneNumber,
+                        pickup_time: moment(rating?.pickupTime).format("LLL"),
+                        drop_time: moment(rating?.dropTime).format("LLL"),
+                        pickupAddress: rating?.pickupLocation?.address,
+                        dropAddress: rating?.dropLocation?.address,
+                      }))
+                      ?.filter(
+                        (rating) =>
+                          rating?.rideId
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.pickupAddress
+                            ?.toLowerCase()
+                            .includes(query?.search?.toLowerCase()) ||
+                          rating?.dropAddress
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.pickup_time
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.drop_time
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.status
+                            ?.toLowerCase()
+                            ?.includes(query?.search?.toLowerCase()) ||
+                          rating?.paymentMethod
+                            ?.toLowerCase()
+                            .includes(query?.search?.toLowerCase())
+                      )
+                : data?.data === undefined
+                ? []
                 : data?.data?.map((rating, i) => ({
                     ...rating,
                     sl: query.page * query.pageSize + i + 1,
