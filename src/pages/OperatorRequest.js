@@ -44,7 +44,6 @@ const OperatorRequest = () => {
         },
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire({ text: res?.message, icon: "success" })
         : Swal.fire({ text: res?.message, icon: "error" });
@@ -70,7 +69,6 @@ const OperatorRequest = () => {
         },
       });
       const res = await response.json();
-      console.log(res);
       res?.status === 200
         ? Swal.fire({ text: res?.message, icon: "success" })
         : Swal.fire({ text: res?.message, icon: "error" });

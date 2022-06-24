@@ -19,10 +19,6 @@ import { Done } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
 const EditPaymentsDrawer = ({ open, setOpenEditPaymentsDrawer }) => {
-  const drawerData = open;
-  console.log(drawerData);
-  console.log(open);
-
   const initialValues = AddPaymentSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -39,7 +35,7 @@ const EditPaymentsDrawer = ({ open, setOpenEditPaymentsDrawer }) => {
   );
   const handleSend = async (values, submitProps) => {
     try {
-      console.log(values);
+      // console.log(values);
       submitProps.resetForm();
     } catch (error) {
       console.log(error);

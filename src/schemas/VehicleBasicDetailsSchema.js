@@ -142,7 +142,7 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
   const [addVehicleTypeSchema, setAddVehicleTypeSchema] = useState([]);
   const { vehicleCategory } = useVehicleCategory();
   const { vehicleMaker, model, fetchVehicleModel } = useVehicleMaker();
-  console.log(model);
+  // console.log(model);
 
   useEffect(() => {
     if ((vehicleMakerId, categoryId)) {
@@ -150,7 +150,7 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
     }
   }, [categoryId, vehicleMakerId, fetchVehicleModel]);
   // const { drivers } = useDrivers();
-  console.log("vehicleCategory", vehicleCategory);
+  // console.log("vehicleCategory", vehicleCategory);
   useEffect(() => {
     if (vehicleCategory) {
       setAddVehicleTypeSchema([

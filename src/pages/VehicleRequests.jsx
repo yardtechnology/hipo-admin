@@ -18,7 +18,6 @@ import Swal from "sweetalert2";
 
 const VehicleRequests = () => {
   const { vehicleRequests, setRealtime } = useVehicleRequests();
-  console.log(vehicleRequests);
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,7 +38,6 @@ const VehicleRequests = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Vehicles Rejected", "success")
@@ -64,7 +62,6 @@ const VehicleRequests = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Vehicle Approved", "success")

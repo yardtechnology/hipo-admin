@@ -6,7 +6,6 @@ const AssignTypeDrawerFeature = ({
   setOpenAssignTypeDrawer,
   setRealtime,
 }) => {
-  console.log(open);
   const RideTypes = ["DAILY_RIDE", "OUTSTATION_RIDE", "RENTAL_RIDE"];
 
   const addRideType = async (item) => {
@@ -37,7 +36,6 @@ const AssignTypeDrawerFeature = ({
     }
   };
   const removeRideType = async (item) => {
-    console.log(item);
     try {
       const updatedRideTypes = open?.Types?.filter(
         (rideType) => rideType !== item
@@ -58,7 +56,6 @@ const AssignTypeDrawerFeature = ({
           }),
         }
       );
-      console.log(removedRideTypes);
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);

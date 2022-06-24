@@ -22,13 +22,9 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 const ManageUsers = () => {
   const { users, setRealtime } = useUsers();
-  console.log(users);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedDetails, setSelectedDetails] = useState({});
-
-  console.log(selectedDetails);
   const userBlock = async (data) => {
-    console.log(data);
     try {
       const result = await fetch(`${BASE_URL}/user/account-status`, {
         method: "POST",
@@ -40,8 +36,7 @@ const ManageUsers = () => {
         },
       });
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+      res.status === 200
         ? Swal.fire({ icon: "success", text: res?.success?.message })
         : Swal.fire({ icon: "error", text: res?.error?.message });
     } catch (error) {
@@ -334,7 +329,6 @@ const ManageUsers = () => {
           // onRowAdd: () => {},
           // onRowUpdate: () => {},
           onRowDelete: async (oldData) => {
-            console.log(oldData._id);
             try {
               const result = await fetch(
                 `${BASE_URL}/user/accounts-delete/${oldData._id}`,
@@ -346,7 +340,7 @@ const ManageUsers = () => {
                 }
               );
               const res = await result.json();
-              console.log(res);
+
               result.status === 200
                 ? Swal.fire({
                     icon: "success",

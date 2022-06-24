@@ -20,7 +20,6 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 const TeamNumberConfig = () => {
   const { config, setRealtime } = useConfig();
-  console.log(config);
   const initialValues = TeamNumberSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -36,7 +35,7 @@ const TeamNumberConfig = () => {
     {}
   );
   const handleSetProfit = async (values, submitProps) => {
-    console.log(values);
+    // console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -50,8 +49,7 @@ const TeamNumberConfig = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+      res.status === 200
         ? Swal.fire({
             icon: "success",
             text: "Hipo Team Number Updated Successfully",

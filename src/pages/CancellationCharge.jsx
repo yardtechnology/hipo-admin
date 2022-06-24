@@ -36,7 +36,7 @@ const CancellationCharge = () => {
     {}
   );
   const handleSetProfit = async (values, submitProps) => {
-    console.log(values);
+    // console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",

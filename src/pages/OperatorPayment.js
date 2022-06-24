@@ -28,7 +28,6 @@ const OperatorPayment = () => {
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
   const { operators, setRealtime } = useOperators();
-  console.log(operators);
 
   return (
     <>

@@ -12,12 +12,11 @@ const AssignFeatureDrawer = ({
   const { features } = useFeaturesList();
   // const { setRealtime } = useVehicleCategory();
   const addFeature = async (item) => {
-    console.log(item);
+    // console.log(item);
     try {
       const updatedFeatures = open?.features
         ? [...new Set([item._id, ...open?.features])]
         : [item?._id];
-      console.log("updated features", updatedFeatures);
       const response = await fetch(`${BASE_URL}/vehicle-category/${open._id}`, {
         method: "PUT",
         headers: {
@@ -43,7 +42,6 @@ const AssignFeatureDrawer = ({
     }
   };
   const removeFeature = async (item) => {
-    console.log(item);
     try {
       const updatedFeatures = open?.features?.filter(
         (feature) => feature?._id !== item?._id
@@ -51,7 +49,7 @@ const AssignFeatureDrawer = ({
       const removedFeatures = open?.features?.find(
         (feature) => feature?._id === item?._id
       );
-      console.log(removedFeatures);
+      // console.log(removedFeatures);
       const response = await fetch(`${BASE_URL}/features/remove/${open._id}`, {
         method: "PUT",
         headers: {

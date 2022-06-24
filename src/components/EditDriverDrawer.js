@@ -24,7 +24,6 @@ import Swal from "sweetalert2";
 const EditDriverDrawer = ({ open, setOpenEditDriverDrawer, setRealtime }) => {
   const [value, setValue] = useState("");
   const { addDriverSchema } = useAddDriverSchema();
-  console.log(open);
   const initialValues = addDriverSchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;
@@ -37,7 +36,7 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer, setRealtime }) => {
     {}
   );
   const handleSend = async (values, submitProps) => {
-    console.log(values);
+    // console.log(values);
     const formdata = new FormData();
     if (value) {
       formdata.append("displayName", values?.displayName);
@@ -47,7 +46,6 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer, setRealtime }) => {
       formdata.append("avatar", value?.target.files[0]);
       formdata.append("countryName", values?.country);
       formdata.append("city", values?.city);
-      console.log("formdata", formdata);
     } else {
       formdata.append("displayName", values?.displayName);
       formdata.append("email", values?.email);
@@ -55,10 +53,9 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer, setRealtime }) => {
       formdata.append("phoneNumber", values?.phoneNumber);
       formdata.append("countryName", values?.country);
       formdata.append("city", values?.city);
-      console.log("formdata", formdata);
     }
     try {
-      console.log(values);
+      // console.log(values);
       const response = await fetch(`${BASE_URL}/driver/${open._id}`, {
         method: "PUT",
         headers: {
@@ -67,7 +64,7 @@ const EditDriverDrawer = ({ open, setOpenEditDriverDrawer, setRealtime }) => {
         body: formdata,
       });
       const res = await response.json();
-      console.log(res);
+
       res?.status === 200
         ? Swal.fire("Success", "Driver Updated Successfully", "success")
         : Swal.fire("Error", "Driver Not Updated", "error");

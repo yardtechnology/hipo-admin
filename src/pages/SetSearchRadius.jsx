@@ -20,7 +20,6 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 const SetSearchRadius = () => {
   const { config, setRealtime } = useConfig();
-  console.log(config);
   const initialValues = SearchRadiusSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -36,7 +35,6 @@ const SetSearchRadius = () => {
     {}
   );
   const handleSetSearchRadius = async (values, submitProps) => {
-    console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -50,8 +48,7 @@ const SetSearchRadius = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+      res.status === 200
         ? Swal.fire({
             icon: "success",
             text: "Search Radius Updated Successfully",

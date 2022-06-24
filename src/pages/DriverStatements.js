@@ -24,7 +24,6 @@ import { Link, useParams } from "react-router-dom";
 
 const DriverStatements = () => {
   const { driverId, driverName } = useParams();
-  console.log(driverId);
   const { isMounted } = useIsMounted();
   const [statement, setStatement] = useState(null);
   useEffect(() => {
@@ -42,7 +41,6 @@ const DriverStatements = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         // const sortArr = arr?.data?.sort(
         //   (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         // );
@@ -53,7 +51,6 @@ const DriverStatements = () => {
     };
     fetchData();
   }, [isMounted, driverId]);
-  console.log(statement?.metaData?.revenue);
   return (
     <>
       <Breadcrumbs

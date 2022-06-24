@@ -22,7 +22,6 @@ const YearlyStatement = () => {
   const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
   const { fetchRides, rides } = useYearlyRide();
   const downloadPdf = async (data) => {
-    console.log(data);
     const response = await fetch(
       `${BASE_URL}/ride-invoice/download/${data?._id}`,
       {
@@ -64,11 +63,13 @@ const YearlyStatement = () => {
           exportMenu: [
             {
               label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportPdf(cols, datas, "Yearly Statement"),
             },
             {
               label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, "Vehicles"),
+              exportFunc: (cols, datas) =>
+                ExportCsv(cols, datas, "Yearly Statement"),
             },
           ],
         }}
@@ -97,7 +98,6 @@ const YearlyStatement = () => {
             query?.page,
             query?.totalCount
           );
-          console.log(data);
           return {
             data:
               query?.search?.length > 0

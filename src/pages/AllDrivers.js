@@ -70,7 +70,7 @@ const AllDrivers = () => {
             },
           });
           const res = await response.json();
-          // console.log(res);
+          //
           res?.status === 200
             ? Swal.fire("Deleted!", "Driver has been deleted.", "success")
             : Swal.fire("Error!", "Something went wrong.", "error");
@@ -103,8 +103,8 @@ const AllDrivers = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
-      res.status === 200
+
+      res?.status === 200
         ? Swal.fire({
             title: "Success",
             text: "Drivers has been blocked",
@@ -137,7 +137,7 @@ const AllDrivers = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -171,7 +171,7 @@ const AllDrivers = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -205,7 +205,7 @@ const AllDrivers = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+
       res.status === 200
         ? Swal.fire({
             title: "Success",

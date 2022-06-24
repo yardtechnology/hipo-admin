@@ -28,7 +28,6 @@ const TotalRevenue = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
   const { fetchData, rideData } = useTotalRevenue();
-  console.log(rideData);
   const downloadPdf = async (data) => {
     console.log(data);
     const response = await fetch(
@@ -61,7 +60,7 @@ const TotalRevenue = () => {
   });
 
   const toggle = () => setOpen(!open);
-  console.log(dateRange);
+  // console.log(dateRange);
   useEffect(() => {
     fetchData(dateRange?.startDate, dateRange?.endDate);
   }, [fetchData, dateRange]);

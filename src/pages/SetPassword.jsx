@@ -13,17 +13,13 @@ import { TextInput } from "components/core";
 import { LoadingButton } from "@mui/lab";
 import { VpnKey } from "@mui/icons-material";
 import { SetPasswordSchema } from "schemas";
-import { useAppContext } from "contexts";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const SetPassword = () => {
   const navigate = useNavigate();
-  const { user } = useAppContext();
-  console.log(user);
   const { email } = useParams();
-  console.log(email);
   const initialValues = SetPasswordSchema?.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -40,7 +36,7 @@ const SetPassword = () => {
   );
   const handleChangePassword = async (values, submitProps) => {
     try {
-      console.log(values);
+      // console.log(values);
       const result = await fetch(`${BASE_URL}/change-password`, {
         method: "PUT",
         body: JSON.stringify({
@@ -54,7 +50,7 @@ const SetPassword = () => {
       });
       const res = await result.json();
       console.log(res);
-      result.status === 200
+      res?.status === 200
         ? Swal.fire({ icon: "success", text: res?.message })
         : Swal.fire({ icon: "error", text: res?.message });
       submitProps.resetForm();

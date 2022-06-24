@@ -17,11 +17,8 @@ import Swal from "sweetalert2";
 const Enquiries = () => {
   const [loading, setLoading] = useState(false);
   const { enquiries, setRealtime } = useEnquiries();
-  console.log(enquiries);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  console.log(selectedUsers);
   const handleBulkDelete = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/enquiry-form/all`, {
@@ -35,15 +32,14 @@ const Enquiries = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
-      response.status === 200
+
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             title: "Deleted!",
             text: "Enquiry Deleted Successfully",
           })
         : Swal.fire({ icon: "error", text: "Something Went Wrong" });
-      console.log(res.error.message);
       setRealtime((prev) => !prev);
       setLoading(false);
     } catch (error) {
@@ -200,8 +196,8 @@ const Enquiries = () => {
                 }
               );
               const res = await result.json();
-              console.log(res);
-              result.status === 200
+
+              res?.status === 200
                 ? Swal.fire({ icon: "success", text: res.message })
                 : Swal.fire({ icon: "error", text: res.message });
             } catch (error) {

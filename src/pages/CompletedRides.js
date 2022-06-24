@@ -18,11 +18,8 @@ import moment from "moment";
 import { BASE_URL } from "configs";
 const CompletedRides = () => {
   const { completedRides } = useCompletedRides();
-  console.log(completedRides);
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
-  console.log(openInvoiceDrawer);
   const downloadPdf = async (data) => {
-    console.log(data);
     const response = await fetch(
       `${BASE_URL}/ride-invoice/download/${data?._id}`,
       {

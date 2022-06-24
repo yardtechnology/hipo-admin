@@ -14,9 +14,7 @@ import moment from "moment";
 
 const ManageReviews = () => {
   const { users } = useUsers();
-  console.log(users);
   const Reviews = users?.filter((user) => user?.role === "artist");
-  console.log(Reviews);
 
   return (
     <div style={{ marginTop: "2vh" }}>

@@ -36,9 +36,7 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const { activeRides } = useActiveRides();
   const { driversNearby } = useDriversNearby();
-  console.log(driversNearby);
   const { adminData } = useDashboardStatistics();
-  console.log(adminData?.monthlyTransaction?.timeLine);
   const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] = useState({
     lat: 20.2682801,
@@ -55,7 +53,7 @@ const Dashboard = () => {
       });
     });
   }, []);
-  console.log(currentLocation);
+
   const AnyReactComponent = ({ icon }) => <div>{icon}</div>;
   // const location = {
   //   address: "1600 Amphitheatre Parkway, Mountain View, california.",

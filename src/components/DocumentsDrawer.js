@@ -20,7 +20,6 @@ import {
 } from "./addDriver";
 const DocumentsDrawer = ({ open, setOpenDocumentsDrawer, setRealtime }) => {
   const [value, setValue] = useState(0);
-  console.log(open);
   return (
     <>
       <Drawer

@@ -13,7 +13,6 @@ const Premium = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const { premiums, setRealtime } = usePremium();
-  console.log(premiums);
   return (
     <>
       <MaterialTable

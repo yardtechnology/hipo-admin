@@ -11,10 +11,8 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 const Coupons = () => {
   const { coupons, setRealtime } = useCoupons();
-  console.log(coupons);
   const [loading, setLoading] = useState(false);
   const handleBulkDelete = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/coupon/all`, {
@@ -28,15 +26,14 @@ const Coupons = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
-      response.status === 200
+
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             title: "Deleted!",
             text: "Coupon Deleted Successfully",
           })
         : Swal.fire({ icon: "error", text: "Something Went Wrong" });
-      console.log(res.error.message);
       setLoading(false);
       setRealtime((prev) => !prev);
     } catch (error) {
@@ -179,7 +176,7 @@ const Coupons = () => {
             //   }
             // },
             editComponent: ({ value, onChange, rowData }) => {
-              console.log(value);
+              // console.log(value);
               return (
                 <>
                   <TextField
@@ -321,7 +318,6 @@ const Coupons = () => {
         ]}
         editable={{
           onRowAdd: async (data) => {
-            console.log(data);
             // const { data } = await axios.post(`${BASE_URL}/coupons`, data);
             // console.log(data);
             try {
@@ -341,7 +337,7 @@ const Coupons = () => {
                 }),
               });
               const res = await response.json();
-              console.log(res);
+
               res.status === 200
                 ? Swal.fire({ text: res.message, icon: "success" })
                 : Swal.fire({ text: res.message, icon: "error" });
@@ -352,7 +348,6 @@ const Coupons = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
-            console.log(newData);
             try {
               const response = await fetch(
                 `${BASE_URL}/coupon/${oldData?._id}`,
@@ -374,7 +369,7 @@ const Coupons = () => {
                 }
               );
               const res = await response.json();
-              console.log(res);
+
               res.status === 200
                 ? Swal.fire({ text: res.message, icon: "success" })
                 : Swal.fire({ text: res.message, icon: "error" });
@@ -385,7 +380,6 @@ const Coupons = () => {
             }
           },
           onRowDelete: async (oldData) => {
-            console.log(oldData);
             try {
               const response = await fetch(
                 `${BASE_URL}/coupon/${oldData?._id}`,
@@ -398,8 +392,8 @@ const Coupons = () => {
                 }
               );
               const res = await response.json();
-              console.log(res);
-              res.status === 200
+
+              res?.status === 200
                 ? Swal.fire({ text: res.message, icon: "success" })
                 : Swal.fire({ text: res.message, icon: "error" });
             } catch (error) {

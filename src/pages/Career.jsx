@@ -19,11 +19,9 @@ import Swal from "sweetalert2";
 
 const Career = () => {
   const { career, setRealtime } = useCareer();
-  console.log(career);
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const onRowDelete = async (oldData) => {
-    console.log(oldData);
     try {
       const response = await fetch(`${BASE_URL}/career-form/${oldData?._id}`, {
         method: "DELETE",

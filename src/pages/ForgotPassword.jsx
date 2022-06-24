@@ -27,7 +27,6 @@ const ForgotPassword = () => {
   };
   const handleForgotPassword = async (values, submitProps) => {
     try {
-      console.log(values?.email);
       const result = await fetch(`${BASE_URL}/forgot-password`, {
         method: "PUT",
         headers: {

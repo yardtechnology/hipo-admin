@@ -22,7 +22,6 @@ const MonthlyStatement = () => {
   const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
   const { fetchRides, rides } = useMonthlyRide();
   const downloadPdf = async (data) => {
-    console.log(data);
     const response = await fetch(
       `${BASE_URL}/ride-invoice/download/${data?._id}`,
       {
@@ -97,7 +96,6 @@ const MonthlyStatement = () => {
             query?.page,
             query?.totalCount
           );
-          console.log(data);
           return {
             data:
               query?.search?.length > 0

@@ -24,7 +24,6 @@ import { Link, useParams } from "react-router-dom";
 
 const RequestedOperatorVehicleList = () => {
   const { operatorId } = useParams();
-  console.log(operatorId);
   const { isMounted } = useIsMounted();
   const { vehicles, setRealtime } = useVehicles();
   const [vehicleList, setVehicleList] = useState(null);
@@ -43,7 +42,6 @@ const RequestedOperatorVehicleList = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -54,7 +52,6 @@ const RequestedOperatorVehicleList = () => {
     };
     fetchData();
   }, [isMounted, operatorId]);
-  console.log(vehicleList);
 
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);

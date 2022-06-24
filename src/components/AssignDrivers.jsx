@@ -15,16 +15,16 @@ import { BASE_URL } from "configs";
 import { useDriver } from "hooks";
 import Swal from "sweetalert2";
 const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
-  console.log(open);
+  // console.log(open);
   const { drivers } = useDriver();
-  console.log(drivers);
+  // console.log(drivers);
   // const { setRealtime } = useVehicleCategory();
   const addDriver = async (item) => {
     try {
       const updatedDrivers = open?.drivers
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
-      console.log("updated drivers", updatedDrivers);
+      // console.log("updated drivers", updatedDrivers);
       const response = await fetch(`${BASE_URL}/vehicle/${open?._id}`, {
         method: "PUT",
         headers: {
@@ -36,33 +36,36 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
         }),
       });
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       // setOpenAssignDriverDrawer({
       //   ...open,
       //   drivers: updatedDrivers,
       // });
       setOpenAssignDriverDrawer(false);
-      Swal.fire({
-        text: "Driver Assigned Successfully",
-        icon: "success",
-      });
+      res?.status === 200
+        ? Swal.fire({
+            text: "Driver Assigned Successfully",
+            icon: "success",
+          })
+        : Swal.fire({
+            text: "Driver Assignment Failed",
+            icon: "error",
+          });
       // setOpenAssignFeatureDrawer(false);
     } catch (error) {
       console.log(error);
     }
   };
   const removeDriver = async (item) => {
-    console.log("driver", item);
     try {
-      const updatedDrivers = open?.drivers?.filter(
-        (driver) => driver !== item?._id
-      );
+      // const updatedDrivers = open?.drivers?.filter(
+      //   (driver) => driver !== item?._id
+      // );
       const removedDrivers = open?.drivers?.find(
         (driver) => driver === item?._id
       );
-      console.log("removedDrivers", removedDrivers);
-      console.log("updatedDrivers", updatedDrivers);
+      // console.log("removedDrivers", removedDrivers);
+      // console.log("updatedDrivers", updatedDrivers);
       const response = await fetch(
         `${BASE_URL}/vehicle/${open._id}/${item._id}`,
         {
@@ -171,7 +174,6 @@ const AssignDrivers = ({ open, setOpenAssignDriverDrawer, setRealtime }) => {
                         ?.map((driver) => driver)
                         .includes(driver?._id)
                     : false;
-                  console.log("hasDriver", hasDriver);
                   return (
                     <div className="" key={driver?.key}>
                       <List>

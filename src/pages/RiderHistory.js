@@ -46,7 +46,6 @@ const RiderHistory = () => {
     fetchData();
   }, [isMounted, riderId]);
   const downloadPdf = async (data) => {
-    console.log(data);
     const response = await fetch(
       `${BASE_URL}/ride-invoice/download/${data?._id}`,
       {

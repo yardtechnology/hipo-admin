@@ -10,7 +10,6 @@ const SetRentalPackage = () => {
   const { packages, setRealtime } = useRentalPackages();
   const [loading, setLoading] = useState(false);
   const handleBulkDelete = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/rental-package/all`, {
@@ -24,8 +23,7 @@ const SetRentalPackage = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
-      response.status === 200
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             title: "Deleted!",
@@ -142,7 +140,6 @@ const SetRentalPackage = () => {
         ]}
         editable={{
           onRowAdd: async (newData) => {
-            console.log(newData);
             try {
               setLoading(true);
               const response = await fetch(`${BASE_URL}/rental-package`, {
@@ -158,7 +155,7 @@ const SetRentalPackage = () => {
               });
               const res = await response.json();
               console.log(res);
-              response.status === 200
+              res?.status === 200
                 ? Swal.fire({
                     icon: "success",
                     title: "Added!",
@@ -175,7 +172,6 @@ const SetRentalPackage = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
-            console.log(newData);
             try {
               setLoading(true);
               const response = await fetch(
@@ -193,8 +189,7 @@ const SetRentalPackage = () => {
                 }
               );
               const res = await response.json();
-              console.log(res);
-              response.status === 200
+              res.status === 200
                 ? Swal.fire({
                     icon: "success",
                     title: "Updated!",
@@ -225,8 +220,7 @@ const SetRentalPackage = () => {
                 }
               );
               const res = await result.json();
-              console.log(res);
-              result.status === 200
+              res?.status === 200
                 ? Swal.fire({ icon: "success", text: res.message })
                 : Swal.fire({ icon: "error", text: res.message });
             } catch (error) {

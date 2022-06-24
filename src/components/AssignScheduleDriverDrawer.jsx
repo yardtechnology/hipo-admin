@@ -21,7 +21,6 @@ const AssignScheduleDriverDrawer = ({
   setOpenAssignDriverDrawer,
   setRealtime,
 }) => {
-  console.log(open);
   const { isMounted } = useIsMounted();
   const [drivers, setDrivers] = useState([]);
   // const { setRealtime } = useVehicleCategory();
@@ -52,14 +51,12 @@ const AssignScheduleDriverDrawer = ({
     };
     fetchCabs();
   }, [isMounted, open]);
-  console.log(drivers);
 
   const addDriver = async (item) => {
     try {
       const updatedDrivers = open?.drivers
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
-      console.log("updated drivers", updatedDrivers);
       const response = await fetch(
         `${BASE_URL}/assign-driver-vehicle/${open?._id}`,
         {
@@ -168,7 +165,6 @@ const AssignScheduleDriverDrawer = ({
                       const hasDriver = open?.driver
                         ? open?.driver?._id === driver?._id
                         : false;
-                      console.log("hasDriver", hasDriver);
                       return (
                         <div className="" key={driver?.key}>
                           <List>

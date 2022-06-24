@@ -12,7 +12,6 @@ const AssignModels = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const { vehicleMaker, setRealtime } = useVehicleMaker();
-  console.log(vehicleMaker);
 
   return (
     <>
@@ -125,7 +124,6 @@ const AssignModels = () => {
         }}
         editable={{
           onRowAdd: async (data) => {
-            console.log(data);
             var formdata = new FormData();
             formdata.append("name", data?.name);
             // formdata.append("logo", data?.brandLogo.target.files[0]);
@@ -138,7 +136,7 @@ const AssignModels = () => {
                 body: formdata,
               });
               const res = await response.json();
-              console.log(res);
+
               res?.status === 200
                 ? Swal.fire({
                     text: "Vehicle Maker added successfully",
@@ -152,7 +150,6 @@ const AssignModels = () => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
-            console.log(newData);
             const formdata = new FormData();
             formdata.append("name", newData?.name);
             oldData?.brandLogo !== newData?.brandLogo &&
@@ -169,7 +166,7 @@ const AssignModels = () => {
                 }
               );
               const res = await response.json();
-              console.log(res);
+
               res?.status === 200
                 ? Swal.fire({
                     text: "Vehicle Maker updated Successfully",
@@ -195,7 +192,7 @@ const AssignModels = () => {
                 }
               );
               const res = await response.json();
-              console.log(res);
+
               res?.status === 200
                 ? Swal.fire({
                     text: "Vehicle Maker deleted Successfully",

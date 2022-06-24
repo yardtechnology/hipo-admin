@@ -11,7 +11,6 @@ const Models = ({ rowData, setRealtime }) => {
   const [vehicleModels, setVehicleModels] = React.useState([]);
   const { isMounted } = useIsMounted();
   const { vehicleCategory } = useVehicleCategory();
-  console.log(vehicleModels);
 
   useEffect(() => {
     const fetchVehicleModels = async () => {
@@ -27,7 +26,6 @@ const Models = ({ rowData, setRealtime }) => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -148,7 +146,6 @@ const Models = ({ rowData, setRealtime }) => {
         ]}
         editable={{
           onRowAdd: async (data) => {
-            console.log(data);
             var formdata = new FormData();
             formdata.append("name", data?.name);
             formdata.append("make", rowData?._id);
@@ -162,7 +159,7 @@ const Models = ({ rowData, setRealtime }) => {
                 body: formdata,
               });
               const res = await response.json();
-              console.log(res);
+
               res?.status === 200
                 ? Swal.fire({
                     text: "Vehicle Model Updated successfully",
@@ -180,7 +177,6 @@ const Models = ({ rowData, setRealtime }) => {
             }
           },
           onRowUpdate: async (newData, oldData) => {
-            console.log(newData);
             var formdata = new FormData();
             formdata.append("name", newData?.name);
             formdata.append("make", rowData?._id);
@@ -197,7 +193,7 @@ const Models = ({ rowData, setRealtime }) => {
                 }
               );
               const res = await response.json();
-              console.log(res);
+
               res?.status === 200
                 ? Swal.fire({
                     text: "Vehicle Model updated successfully",
@@ -226,7 +222,7 @@ const Models = ({ rowData, setRealtime }) => {
                 }
               );
               const res = await response.json();
-              console.log(res);
+
               res?.status === 200
                 ? Swal.fire({
                     text: "Vehicle Model deleted successfully",

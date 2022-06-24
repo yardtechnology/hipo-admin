@@ -2,7 +2,6 @@ import { Done } from "@mui/icons-material";
 import { Chip, Container, Drawer, Typography } from "@mui/material";
 import { BASE_URL } from "configs";
 const AssignTypeDrawer = ({ open, setOpenAssignTypeDrawer, setRealtime }) => {
-  console.log(open);
   const RideTypes = ["DAILY_RIDE", "OUTSTATION_RIDE", "RENTAL_RIDE"];
 
   const addRideType = async (item) => {
@@ -33,7 +32,6 @@ const AssignTypeDrawer = ({ open, setOpenAssignTypeDrawer, setRealtime }) => {
     }
   };
   const removeRideType = async (item) => {
-    console.log(item);
     try {
       const updatedRideTypes = open?.Types?.filter(
         (rideType) => rideType !== item
@@ -54,7 +52,6 @@ const AssignTypeDrawer = ({ open, setOpenAssignTypeDrawer, setRealtime }) => {
           }),
         }
       );
-      console.log(removedRideTypes);
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);

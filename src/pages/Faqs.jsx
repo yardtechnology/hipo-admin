@@ -21,7 +21,7 @@ const Faqs = () => {
   const { faqs, setRealtime } = useFaqs();
   // console.log(faqs);
   const handleDelete = async (id) => {
-    console.log(id);
+    // console.log(id);
     try {
       const response = await fetch(`${BASE_URL}/supports/${id}`, {
         method: "DELETE",
@@ -31,7 +31,7 @@ const Faqs = () => {
         },
       });
       const res = await response.json();
-      console.log(res);
+
       res?.status === 200
         ? Swal.fire({ text: res.message, icon: "success" })
         : Swal.fire({ text: res.message, icon: "error" });
@@ -419,7 +419,6 @@ const Faqs = () => {
                   editable={{
                     onRowAdd: async (data) => {
                       try {
-                        console.log(data);
                         const response = await fetch(`${BASE_URL}/support`, {
                           method: "POST",
                           headers: {
@@ -436,7 +435,7 @@ const Faqs = () => {
                           }),
                         });
                         const res = await response.json();
-                        console.log(res);
+
                         const topicResponse = await fetch(
                           `${BASE_URL}/support/${rowData?._id}`,
                           {
@@ -515,7 +514,7 @@ const Faqs = () => {
                           }
                         );
                         const res = await response.json();
-                        // console.log(res);
+                        //
                         res?.status === 200
                           ? Swal.fire({ text: res.message, icon: "success" })
                           : Swal.fire({ text: res.message, icon: "error" });

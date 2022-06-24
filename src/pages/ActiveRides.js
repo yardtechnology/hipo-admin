@@ -18,7 +18,6 @@ import { useActiveRides } from "hooks";
 const ActiveRides = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const { activeRides } = useActiveRides();
-  console.log(activeRides);
   return (
     <>
       <InvoiceDrawer

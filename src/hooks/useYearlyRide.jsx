@@ -8,8 +8,6 @@ const useYearlyRide = () => {
   const { isMounted } = useIsMounted();
   const fetchRides = useCallback(
     async (pageSize, page, totalCount) => {
-      console.log(pageSize, page, totalCount);
-      console.log(pageSize ? pageSize * 0 : 0);
       try {
         const response = await fetch(
           `${BASE_URL}/admin/ride/day-wise-ride?for=YEAR&limit=${

@@ -29,7 +29,7 @@ const Profit = () => {
     return accumulator;
   }, {});
   const handleSetProfit = async (values, submitProps) => {
-    console.log(values);
+    // console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -43,8 +43,7 @@ const Profit = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+      res?.status === 200
         ? Swal.fire({ icon: "success", text: "Profit updated successfully" })
         : Swal.fire({ icon: "error", text: res?.message });
     } catch (error) {

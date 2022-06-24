@@ -15,11 +15,9 @@ import React, { useEffect, useState } from "react";
 import OperatorDriverPayment from "./OperatorDriverPayment";
 
 const OperatorDriverData = ({ operatorData, setRealtime }) => {
-  console.log(operatorData);
   const { isMounted } = useIsMounted();
   // const { setRealtime } = useDrivers();
   const [driverList, setDriverList] = useState(null);
-  console.log(driverList);
   useEffect(() => {
     const fetchData = async () => {
       if (!isMounted) return;
@@ -38,7 +36,6 @@ const OperatorDriverData = ({ operatorData, setRealtime }) => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );

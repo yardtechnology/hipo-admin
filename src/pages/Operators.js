@@ -93,7 +93,6 @@ const Operators = () => {
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { operators, setRealtime } = useOperators();
-  console.log(operators);
 
   const handleBlockAll = async (user) => {
     try {
@@ -111,7 +110,6 @@ const Operators = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -145,7 +143,6 @@ const Operators = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -179,7 +176,6 @@ const Operators = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -213,7 +209,6 @@ const Operators = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",

@@ -17,7 +17,6 @@ const VehicleCategories = () => {
   // const { days, setRealtime } = useDays();
   // const handleBulkDelete = async (data) => {};
   const { vehicleCategory, setRealtime } = useVehicleCategory();
-  console.log(vehicleCategory);
   return (
     <>
       <AssignFeatureDrawer

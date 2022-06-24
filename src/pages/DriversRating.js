@@ -18,13 +18,10 @@ import Swal from "sweetalert2";
 const DriversRating = () => {
   const [loading, setLoading] = useState(false);
   const { ratings, setRealtime, fetchRatings } = useRatings();
-  console.log(ratings);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
-  console.log(selectedUsers);
 
   const handleBulkDelete = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/rating/all`, {
@@ -38,15 +35,13 @@ const DriversRating = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
-      response.status === 200
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             title: "Deleted!",
             text: "Rating Deleted Successfully",
           })
         : Swal.fire({ icon: "error", text: "Something Went Wrong" });
-      console.log(res.error.message);
       setLoading(false);
       setRealtime((prev) => !prev);
     } catch (error) {
@@ -79,7 +74,6 @@ const DriversRating = () => {
         }}
         title={"Drivers Rating"}
         data={async (query) => {
-          console.log(query?.page);
           const data = await fetchRatings(
             query?.pageSize,
             query?.page,
@@ -287,7 +281,6 @@ const DriversRating = () => {
                   Authorization: `Bearer ${localStorage.getItem("SAL")}`,
                 },
               });
-              console.log(res);
               res?.status === 200
                 ? Swal.fire({
                     text: "Rating Deleted Successfully",

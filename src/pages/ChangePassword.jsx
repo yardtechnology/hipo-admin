@@ -12,7 +12,6 @@ import Swal from "sweetalert2";
 
 const ChangePassword = () => {
   const { user } = useAppContext();
-  console.log(user);
   const initialValues = ChangePasswordSchema.reduce(
     (accumulator, currentValue) => {
       accumulator[currentValue.name] = currentValue.initialValue;
@@ -42,8 +41,7 @@ const ChangePassword = () => {
         },
       });
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+      res?.status === 200
         ? Swal.fire({ icon: "success", text: res?.message })
         : Swal.fire({ icon: "error", text: res?.message });
       submitProps.resetForm();

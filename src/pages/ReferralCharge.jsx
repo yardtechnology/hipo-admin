@@ -32,7 +32,7 @@ const ReferralCharge = () => {
     {}
   );
   const handleSetProfit = async (values, submitProps) => {
-    console.log(values);
+    // console.log(values);
     try {
       const result = await fetch(`${BASE_URL}/config`, {
         method: "PUT",
@@ -46,8 +46,7 @@ const ReferralCharge = () => {
       });
       setRealtime((prev) => !prev);
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             text: "Referral Charge Updated Successfully",

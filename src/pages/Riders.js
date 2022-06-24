@@ -209,7 +209,6 @@ const Riders = () => {
         //       }))
         // }
         data={async (query) => {
-          console.log(query?.search);
           const riders = await fetchRiders(
             query?.pageSize,
             query?.page,

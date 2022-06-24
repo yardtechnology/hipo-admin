@@ -19,7 +19,6 @@ import Swal from "sweetalert2";
 
 const DriverRequests = () => {
   const { driverRequests, setRealtime } = useDriverRequests();
-  console.log(driverRequests);
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
@@ -38,7 +37,7 @@ const DriverRequests = () => {
         },
       });
       const res = await response.json();
-      console.log(res);
+      
       res?.status === 200
         ? Swal.fire({ text: res?.message, icon: "success" })
         : Swal.fire({ text: res?.message, icon: "error" });
@@ -64,7 +63,7 @@ const DriverRequests = () => {
         },
       });
       const res = await response.json();
-      console.log(res);
+      
       res?.status === 200
         ? Swal.fire({ text: res?.message, icon: "success" })
         : Swal.fire({ text: res?.message, icon: "error" });

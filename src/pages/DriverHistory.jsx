@@ -19,7 +19,6 @@ import { BASE_URL } from "configs";
 const DriverHistory = () => {
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const { driverId } = useParams();
-  console.log(driverId);
   const { isMounted } = useIsMounted();
   const [history, setHistory] = useState(null);
   useEffect(() => {
@@ -37,7 +36,6 @@ const DriverHistory = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -48,9 +46,7 @@ const DriverHistory = () => {
     };
     fetchData();
   }, [isMounted, driverId]);
-  console.log(history);
   const downloadPdf = async (data) => {
-    console.log(data);
     const response = await fetch(
       `${BASE_URL}/ride-invoice/download/${data?._id}`,
       {

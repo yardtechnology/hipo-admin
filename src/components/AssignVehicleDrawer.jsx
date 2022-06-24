@@ -19,16 +19,13 @@ const AssignVehicleDrawer = ({
   setOpenAssignDriverDrawer,
   setRealtime,
 }) => {
-  console.log(open);
   const { vehicles } = useVehicles();
-  console.log(vehicles);
   // const { setRealtime } = useVehicleCategory();
   const addVehicle = async (item) => {
     try {
       const updatedDrivers = open?.drivers
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
-      console.log("updated drivers", updatedDrivers);
       const response = await fetch(
         `${BASE_URL}/assign-driver-vehicle/${open?._id}`,
         {

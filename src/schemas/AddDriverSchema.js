@@ -125,9 +125,7 @@ const AddDriverSchema = [
 export const useAddDriverSchema = () => {
   const [addDriverSchema, setAddDriverSchema] = useState([]);
   const { cities } = useCities();
-  console.log("cities", cities);
   // const { drivers } = useDrivers();
-  console.log("Cities", cities);
   useEffect(() => {
     if (cities) {
       setAddDriverSchema([

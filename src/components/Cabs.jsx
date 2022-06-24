@@ -7,7 +7,6 @@ import moment from "moment";
 import { BASE_URL } from "configs";
 import Swal from "sweetalert2";
 const Cabs = ({ city }) => {
-  console.log(city);
   const { vehicleCategory } = useVehicleCategory();
   const { isMounted } = useIsMounted();
   const [cabs, setCabs] = React.useState(null);
@@ -37,7 +36,6 @@ const Cabs = ({ city }) => {
     };
     fetchCabs();
   }, [realtime, city, isMounted]);
-  console.log(cabs);
 
   return (
     <div style={{ marginTop: "2vh" }}>

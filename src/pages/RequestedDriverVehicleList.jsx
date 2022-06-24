@@ -24,7 +24,6 @@ import { Link, useParams } from "react-router-dom";
 
 const RequestedDriverVehicleList = () => {
   const { driverId } = useParams();
-  console.log(driverId);
   const { isMounted } = useIsMounted();
   const { vehicles, setRealtime } = useVehicles();
   const [vehicleList, setVehicleList] = useState(null);
@@ -54,7 +53,6 @@ const RequestedDriverVehicleList = () => {
     };
     fetchData();
   }, [isMounted, driverId]);
-  console.log(vehicleList);
 
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);

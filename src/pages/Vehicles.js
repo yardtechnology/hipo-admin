@@ -26,7 +26,7 @@ import Swal from "sweetalert2";
 
 const Vehicles = () => {
   const { vehicles, setRealtime } = useVehicles();
-  console.log(vehicles);
+  // console.log(vehicles);
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);
   const [openEditVehicleDocumentDrawer, setOpenEditVehicleDocumentDrawer] =
@@ -130,7 +130,6 @@ const Vehicles = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Vehicles turned on", "success")
@@ -155,7 +154,6 @@ const Vehicles = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Vehicles turned off", "success")

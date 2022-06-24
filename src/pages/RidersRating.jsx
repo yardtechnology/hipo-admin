@@ -20,10 +20,8 @@ const RidersRating = () => {
   const { ratings, setRealtime, fetchRatings } = useRatings();
 
   const [selectedUsers, setSelectedUsers] = useState([]);
-  console.log(selectedUsers);
 
   const handleBulkDelete = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/rating/all`, {
@@ -38,7 +36,7 @@ const RidersRating = () => {
       });
       const res = await response.json();
       console.log(res);
-      response.status === 200
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             title: "Deleted!",

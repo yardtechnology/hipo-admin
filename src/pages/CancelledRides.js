@@ -13,7 +13,6 @@ import { useCancelledRides } from "hooks";
 import moment from "moment";
 const CancelledRides = () => {
   const { cancelledRides } = useCancelledRides();
-  console.log(cancelledRides);
   return (
     <>
       <MaterialTable

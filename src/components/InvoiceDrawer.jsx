@@ -17,8 +17,6 @@ import {
 import { MAP_KEY } from "configs";
 import moment from "moment";
 const InvoiceDrawer = ({ Details, setOpenInvoiceDrawer }) => {
-  console.log(Details);
-
   return (
     <>
       <Drawer

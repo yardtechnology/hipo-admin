@@ -21,7 +21,7 @@ const ManageServices = () => {
         },
       });
       const res = await result.json();
-      console.log(res);
+
       result.status === 200
         ? Swal.fire({ icon: "success", text: res.success.message })
         : Swal.fire({ icon: "error", text: res.error.message });
@@ -32,7 +32,6 @@ const ManageServices = () => {
       setRealtime((prev) => !prev);
     }
   };
-  console.log(services);
   return (
     <div style={{ marginTop: "2vh" }}>
       <MaterialTable
@@ -145,8 +144,8 @@ const ManageServices = () => {
                 body: formdata,
               });
               const res = await result.json();
-              console.log(res);
-              result.status === 200
+
+              res?.status === 200
                 ? Swal.fire({ icon: "success", text: res?.success?.message })
                 : Swal.fire({ icon: "error", text: res.error.message });
             } catch (error) {
@@ -170,8 +169,8 @@ const ManageServices = () => {
                 body: formdata,
               });
               const res = await result.json();
-              console.log(res);
-              result.status === 200
+
+              res?.status === 200
                 ? Swal.fire({ icon: "success", text: res?.success?.message })
                 : Swal.fire({ icon: "error", text: res.error.message });
             } catch (error) {
@@ -180,10 +179,8 @@ const ManageServices = () => {
             } finally {
               setRealtime((prev) => !prev);
             }
-            console.log(newData);
           },
           onRowDelete: async (oldData) => {
-            console.log(oldData._id);
             try {
               const result = await fetch(`${BASE_URL}/service/delete`, {
                 method: "DELETE",
@@ -195,8 +192,8 @@ const ManageServices = () => {
                 },
               });
               const res = await result.json();
-              console.log(res);
-              result.status === 200
+
+              res?.status === 200
                 ? Swal.fire({ icon: "success", text: res.success.message })
                 : Swal.fire({ icon: "error", text: res.error.message });
             } catch (error) {

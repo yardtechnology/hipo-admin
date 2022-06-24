@@ -20,9 +20,7 @@ const HipoDrive = () => {
   const [loading, setLoading] = useState(false);
   const { partnerApplications, setRealtime } = usePartnerApplications();
   const [selectedUsers, setSelectedUsers] = useState([]);
-  console.log(selectedUsers);
   const handleBulkDelete = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/partner-application-form/all`, {
@@ -36,15 +34,13 @@ const HipoDrive = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
-      response.status === 200
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             title: "Deleted!",
             text: "Partner Application Deleted Successfully",
           })
         : Swal.fire({ icon: "error", text: "Something Went Wrong" });
-      console.log(res.error.message);
       setLoading(false);
       setRealtime((prev) => !prev);
     } catch (error) {
@@ -190,8 +186,7 @@ const HipoDrive = () => {
                 }
               );
               const res = await result.json();
-              console.log(res);
-              result.status === 200
+              res?.status === 200
                 ? Swal.fire({ icon: "success", text: res.message })
                 : Swal.fire({ icon: "error", text: res.message });
             } catch (error) {

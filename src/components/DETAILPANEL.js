@@ -16,11 +16,9 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const DETAILPANEL = (rowData) => {
-  console.log(rowData);
   const { isMounted } = useIsMounted();
   const [realtime, setRealtime] = useState(false);
   const [reviews, setReviews] = useState(null);
-  console.log(reviews);
   const handleBulkDelete = async (data) => {
     try {
       const result = await fetch(`${BASE_URL}/review/delete`, {
@@ -34,8 +32,7 @@ const DETAILPANEL = (rowData) => {
         },
       });
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+      res?.status === 200
         ? Swal.fire({ icon: "success", text: res?.success?.message })
         : Swal.fire({ icon: "error", text: res.error.message });
     } catch (error) {

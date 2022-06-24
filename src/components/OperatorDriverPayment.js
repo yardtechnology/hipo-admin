@@ -8,12 +8,10 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const OperatorDriverPayment = ({ operatorDrivers }) => {
-  console.log(operatorDrivers);
   const { isMounted } = useIsMounted();
   // const { setRealtime } = useDrivers();
   const [state, setState] = useState(false);
   const [driverPayments, setDriverPayments] = useState(null);
-  console.log(driverPayments);
   useEffect(() => {
     const fetchData = async () => {
       if (!isMounted) return;
@@ -32,7 +30,6 @@ const OperatorDriverPayment = ({ operatorDrivers }) => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -189,8 +186,6 @@ const OperatorDriverPayment = ({ operatorDrivers }) => {
         // ]}
         editable={{
           onRowUpdate: async (newData, oldData) => {
-            console.log(newData);
-            console.log(oldData);
             try {
               const response = await fetch(
                 `${BASE_URL}/payment/${oldData?._id}`,

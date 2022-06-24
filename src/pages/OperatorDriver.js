@@ -32,7 +32,6 @@ const OperatorDriver = () => {
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { operatorId } = useParams();
-  console.log(operatorId);
   const { isMounted } = useIsMounted();
   const [realtime, setRealtime] = useState(false);
   // const { setRealtime } = useDrivers();
@@ -59,7 +58,6 @@ const OperatorDriver = () => {
             },
           });
           const res = await response.json();
-          console.log(res);
           res?.status === 200
             ? Swal.fire("Deleted!", "Driver has been deleted.", "success")
             : Swal.fire("Error!", "Something went wrong.", "error");
@@ -90,7 +88,6 @@ const OperatorDriver = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -101,7 +98,6 @@ const OperatorDriver = () => {
     };
     fetchData();
   }, [isMounted, operatorId, realtime]);
-  console.log(driverList);
   const handleBlockAll = async (user) => {
     try {
       setIsLoading(true);
@@ -118,7 +114,6 @@ const OperatorDriver = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -152,7 +147,7 @@ const OperatorDriver = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -186,7 +181,7 @@ const OperatorDriver = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+
       res.status === 200
         ? Swal.fire({
             title: "Success",
@@ -220,7 +215,7 @@ const OperatorDriver = () => {
       });
       setIsLoading(false);
       const res = await response.json();
-      console.log(res);
+
       res.status === 200
         ? Swal.fire({
             title: "Success",

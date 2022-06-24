@@ -29,7 +29,6 @@ import { Link, useParams } from "react-router-dom";
 
 const DriverVehicleList = () => {
   const { driverId } = useParams();
-  console.log(driverId);
   const { isMounted } = useIsMounted();
   const { vehicles, setRealtime } = useVehicles();
   const [vehicleList, setVehicleList] = useState(null);
@@ -48,7 +47,6 @@ const DriverVehicleList = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
         const sortArr = arr?.data?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
@@ -59,7 +57,6 @@ const DriverVehicleList = () => {
     };
     fetchData();
   }, [isMounted, driverId]);
-  console.log(vehicleList);
 
   const [openVehicleDocumentDrawer, setOpenVehicleDocumentDrawer] =
     useState(false);
@@ -128,7 +125,6 @@ const DriverVehicleList = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Vehicles turned on", "success")
@@ -153,7 +149,6 @@ const DriverVehicleList = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
       setRealtime((prev) => !prev);
       res?.status === 200
         ? Swal.fire("Success", "Vehicles turned off", "success")

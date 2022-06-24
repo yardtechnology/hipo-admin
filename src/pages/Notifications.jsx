@@ -30,8 +30,8 @@ const Notifications = () => {
         }
       );
       const res = await result.json();
-      console.log(res);
-      result.status === 200
+
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             text: "All notifications have been read",
@@ -56,7 +56,7 @@ const Notifications = () => {
         },
       });
       const res = await result.json();
-      console.log(res);
+
       result.status === 200
         ? Swal.fire({ icon: "success", text: "Deleted All Notifications" })
         : Swal.fire({ icon: "error", text: res.message });
@@ -82,7 +82,7 @@ const Notifications = () => {
         }),
       });
       const res = await result.json();
-      console.log(res);
+
       result.status === 200
         ? Swal.fire({ icon: "success", text: "Marked as seen" })
         : Swal.fire({ icon: "error", text: res.message });
@@ -107,7 +107,7 @@ const Notifications = () => {
         },
       });
       const res = await result.json();
-      console.log(res);
+
       result.status === 200
         ? Swal.fire({ icon: "success", text: "Deleted" })
         : Swal.fire({ icon: "error", text: res.message });

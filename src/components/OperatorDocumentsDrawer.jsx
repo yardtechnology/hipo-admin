@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 const OperatorDocumentsDrawer = ({ open, setOpenDocumentsDrawer }) => {
-  console.log(open);
   return (
     <>
       <Drawer

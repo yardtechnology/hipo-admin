@@ -22,9 +22,6 @@ import { BASE_URL } from "configs";
 // import { PhotoUpload } from "./core";
 
 const AddQADrawer = ({ open, setOpenAddQADrawer, setRealtime }) => {
-  // const drawerData = open;
-  // console.log(drawerData);
-
   const initialValues = QASchema?.reduce((accumulator, currentValue) => {
     accumulator[currentValue.name] = currentValue.initialValue;
     return accumulator;

@@ -21,7 +21,7 @@ const useVehicleRequests = () => {
           }
         );
         const arr = await response.json();
-        console.log(arr);
+        // console.log(arr);
         isMounted.current && setVehicleRequests(arr?.data);
       } catch (error) {
         console.log(error);

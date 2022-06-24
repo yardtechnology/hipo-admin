@@ -18,11 +18,8 @@ import Swal from "sweetalert2";
 const Contacts = () => {
   const [loading, setLoading] = useState(false);
   const { contacts, setRealtime } = useContacts();
-  console.log(contacts);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  console.log(selectedUsers);
   const handleBulkDelete = async (data) => {
-    console.log(data);
     try {
       setLoading(true);
       const response = await fetch(`${BASE_URL}/contact-us-form/all`, {
@@ -36,15 +33,13 @@ const Contacts = () => {
         }),
       });
       const res = await response.json();
-      console.log(res);
-      response.status === 200
+      res?.status === 200
         ? Swal.fire({
             icon: "success",
             title: "Deleted!",
             text: "Contact Deleted Successfully",
           })
         : Swal.fire({ icon: "error", text: "Something Went Wrong" });
-      console.log(res.error.message);
       setLoading(false);
       setRealtime((prev) => !prev);
     } catch (error) {
@@ -180,7 +175,6 @@ const Contacts = () => {
         ]}
         editable={{
           onRowDelete: async (oldData) => {
-            console.log(oldData);
             // setRealtime(oldData);
             try {
               const response = await fetch(
