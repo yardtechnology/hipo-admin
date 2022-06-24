@@ -181,8 +181,8 @@ const Cabs = ({ city }) => {
             searchable: true,
             render: ({ withDriverPerKilometer }) =>
               formatCurrency(withDriverPerKilometer),
-            validate: (rowData) =>
-              rowData?.withDriverPerKilometer > 0 ? true : "Required",
+            // validate: (rowData) =>
+            //   rowData?.withDriverPerKilometer > 0 ? true : "Required",
           },
 
           {
