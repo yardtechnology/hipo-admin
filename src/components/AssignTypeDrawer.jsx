@@ -33,9 +33,9 @@ const AssignTypeDrawer = ({ open, setOpenAssignTypeDrawer, setRealtime }) => {
   };
   const removeRideType = async (item) => {
     try {
-      const updatedRideTypes = open?.Types?.filter(
-        (rideType) => rideType !== item
-      );
+      // const updatedRideTypes = open?.Types?.filter(
+      //   (rideType) => rideType !== item
+      // );
       const removedRideTypes = open?.types?.find(
         (rideType) => rideType === item
       );
@@ -56,10 +56,10 @@ const AssignTypeDrawer = ({ open, setOpenAssignTypeDrawer, setRealtime }) => {
       console.log(res);
       setRealtime((prev) => !prev);
       setOpenAssignTypeDrawer({});
-      setOpenAssignTypeDrawer({
-        ...open,
-        types: updatedRideTypes,
-      });
+      // setOpenAssignTypeDrawer({
+      //   ...open,
+      //   types: updatedRideTypes,
+      // });
     } catch (error) {
       console.log(error);
     }
