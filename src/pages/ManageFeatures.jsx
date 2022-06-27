@@ -13,7 +13,6 @@ import { AssignTypeDrawerFeature } from "components";
 
 const ManageFeatures = () => {
   const { features, setRealtime } = useFeaturesList();
-  console.log(features);
   const [openAssignTypeDrawer, setOpenAssignTypeDrawer] = useState({});
 
   // const { days, setRealtime } = useDays();
