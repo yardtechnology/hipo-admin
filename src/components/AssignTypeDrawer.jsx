@@ -55,6 +55,7 @@ const AssignTypeDrawer = ({ open, setOpenAssignTypeDrawer, setRealtime }) => {
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
+      setOpenAssignTypeDrawer({});
       setOpenAssignTypeDrawer({
         ...open,
         types: updatedRideTypes,
