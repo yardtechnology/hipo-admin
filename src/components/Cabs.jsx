@@ -332,15 +332,15 @@ const Cabs = ({ city }) => {
               formatCurrency(rentalExtraPerMinute),
           },
 
-          {
-            title: "Tax",
-            field: "tax",
-            type: "numeric",
-            emptyValue: 0,
-            searchable: true,
-            render: ({ tax }) => `${tax}%`,
-            validate: (rowData) => (rowData?.tax > 0 ? true : "Required"),
-          },
+          // {
+          //   title: "Tax",
+          //   field: "tax",
+          //   type: "numeric",
+          //   emptyValue: 0,
+          //   searchable: true,
+          //   render: ({ tax }) => `${tax}%`,
+          //   validate: (rowData) => (rowData?.tax > 0 ? true : "Required"),
+          // },
           {
             title: "Cancellation %",
             field: "cancellationPercentage",
