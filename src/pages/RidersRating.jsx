@@ -141,7 +141,7 @@ const RidersRating = () => {
             query?.page,
             query?.totalCount
           );
-          console.log(data);
+          // console.log(data);
           return {
             data:
               query?.search?.length > 0
