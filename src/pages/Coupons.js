@@ -150,6 +150,9 @@ const Coupons = () => {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    inputProps={{
+                      min: new Date().toISOString().split("T")[0],
+                    }}
                     error={value === "" || value === undefined ? true : false}
                     helperText={
                       value === "" || value === undefined ? "Required" : ""
@@ -182,6 +185,9 @@ const Coupons = () => {
                   <TextField
                     id="date"
                     type="date"
+                    inputProps={{
+                      min: new Date().toISOString().split("T")[0],
+                    }}
                     value={value?.split("T")[0]}
                     onChange={(e) => onChange(e.target.value)}
                     InputLabelProps={{

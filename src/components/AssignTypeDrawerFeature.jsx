@@ -40,11 +40,14 @@ const AssignTypeDrawerFeature = ({
       const updatedRideTypes = open?.Types?.filter(
         (rideType) => rideType !== item
       );
+      console.log(item);
+      console.log(open);
+      console.log(updatedRideTypes);
       const removedRideTypes = open?.types?.find(
         (rideType) => rideType === item
       );
       const response = await fetch(
-        `${BASE_URL}/feature/remove/types/${open._id}`,
+        `${BASE_URL}/feature/remove/types/${open?._id}`,
         {
           method: "PUT",
           headers: {
@@ -59,10 +62,11 @@ const AssignTypeDrawerFeature = ({
       const res = await response.json();
       console.log(res);
       setRealtime((prev) => !prev);
-      setOpenAssignTypeDrawer({
-        ...open,
-        types: updatedRideTypes,
-      });
+      setOpenAssignTypeDrawer({});
+      // setOpenAssignTypeDrawer({
+      //   ...open,
+      //   types: updatedRideTypes,
+      // });
     } catch (error) {
       console.log(error);
     }
