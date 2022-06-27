@@ -1,4 +1,5 @@
 import { Done, DriveEta } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
   ListItem,
@@ -23,6 +24,7 @@ const AssignScheduleDriverDrawer = ({
 }) => {
   const { isMounted } = useIsMounted();
   const [drivers, setDrivers] = useState([]);
+  const [loading, setLoading] = useState([]);
   // const { setRealtime } = useVehicleCategory();
   useEffect(() => {
     const fetchCabs = async () => {
@@ -54,6 +56,7 @@ const AssignScheduleDriverDrawer = ({
 
   const addDriver = async (item) => {
     try {
+      setLoading((prev) => [...prev, item._id]);
       const updatedDrivers = open?.drivers
         ? [...new Set([item._id, ...open?.drivers])]
         : [item?._id];
@@ -72,6 +75,7 @@ const AssignScheduleDriverDrawer = ({
       );
       const res = await response.json();
       setRealtime((prev) => !prev);
+      setLoading([]);
       res?.status === 200
         ? Swal.fire("Success", "Driver Assigned", "success")
         : Swal.fire("Error", "Driver not assigned", "error");
@@ -196,7 +200,8 @@ const AssignScheduleDriverDrawer = ({
                               />
 
                               <ListItemSecondaryAction>
-                                <IconButton
+                                <LoadingButton
+                                  loading={loading.includes(driver?._id)}
                                   edge="end"
                                   aria-label="delete"
                                   onClick={() =>
@@ -204,7 +209,7 @@ const AssignScheduleDriverDrawer = ({
                                   }
                                 >
                                   {!hasDriver ? <Done /> : ""}
-                                </IconButton>
+                                </LoadingButton>
                               </ListItemSecondaryAction>
                             </ListItem>
                           </List>
