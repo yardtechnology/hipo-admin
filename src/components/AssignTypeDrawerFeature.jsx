@@ -37,12 +37,10 @@ const AssignTypeDrawerFeature = ({
   };
   const removeRideType = async (item) => {
     try {
-      const updatedRideTypes = open?.Types?.filter(
-        (rideType) => rideType !== item
-      );
-      console.log(item);
-      console.log(open);
-      console.log(updatedRideTypes);
+      // const updatedRideTypes = open?.Types?.filter(
+      //   (rideType) => rideType !== item
+      // );
+
       const removedRideTypes = open?.types?.find(
         (rideType) => rideType === item
       );
