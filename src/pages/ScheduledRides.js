@@ -19,7 +19,7 @@ import { useState } from "react";
 
 const ScheduledRides = () => {
   const { scheduledRides, setRealtime } = useScheduledRides();
-  console.log(scheduledRides);
+  // console.log(scheduledRides);
   const [openAssignDriverDrawer, setOpenAssignDriverDrawer] = useState(false);
   const [openAssignVehicleDrawer, setOpenAssignVehicleDrawer] = useState(false);
   return (
