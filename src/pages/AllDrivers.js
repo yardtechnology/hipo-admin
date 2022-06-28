@@ -670,6 +670,12 @@ const AllDrivers = () => {
             icon: "done",
             onClick: (evt, data) => handleUnblockAll(data.map((d) => d._id)),
           },
+          {
+            icon: "refresh",
+            tooltip: "Refresh Data",
+            isFreeAction: true,
+            onClick: () => tableRef.current && tableRef.current.onQueryChange(),
+          },
         ]}
         detailPanel={({ rowData }) => {
           return (

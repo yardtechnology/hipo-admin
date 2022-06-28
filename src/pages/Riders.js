@@ -436,12 +436,12 @@ const Riders = () => {
             onClick: (evt, data) => handleUnblockAll(data.map((d) => d._id)),
             // onClick: (evt, data) => setSelectedUsers(data),
           },
-          // {
-          //   icon: "refresh",
-          //   tooltip: "Refresh Data",
-          //   isFreeAction: true,
-          //   onClick: () => tableRef.current && tableRef.current.onQueryChange(),
-          // },
+          {
+            icon: "refresh",
+            tooltip: "Refresh Data",
+            isFreeAction: true,
+            onClick: () => tableRef.current && tableRef.current.onQueryChange(),
+          },
         ]}
         isLoading={riders === null || isLoading}
       />

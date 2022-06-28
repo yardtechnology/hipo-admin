@@ -13,9 +13,10 @@ import { SendReply } from "components/dialog";
 import { BASE_URL } from "configs";
 import { useRatings } from "hooks";
 import moment from "moment";
-import { useState } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 const DriversRating = () => {
+  const tableRef = React.createRef();
   const [loading, setLoading] = useState(false);
   const { ratings, setRealtime, fetchRatings } = useRatings();
 
@@ -310,6 +311,12 @@ const DriversRating = () => {
                 data?.map((data) => data?._id),
                 setRealtime((prev) => !prev)
               ),
+          },
+          {
+            icon: "refresh",
+            tooltip: "Refresh Data",
+            isFreeAction: true,
+            onClick: () => tableRef.current && tableRef.current.onQueryChange(),
           },
         ]}
         detailPanel={({ rowData }) => {

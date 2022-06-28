@@ -331,7 +331,6 @@ const Cabs = ({ city }) => {
             render: ({ rentalExtraPerMinute }) =>
               formatCurrency(rentalExtraPerMinute),
           },
-
           // {
           //   title: "Tax",
           //   field: "tax",
