@@ -1,9 +1,8 @@
 // import { countries } from "configs";
 import { Person } from "@mui/icons-material";
 import * as Yup from "yup";
-import { useVehicleCategory, useVehicleMaker } from "hooks";
+import { useIsMounted, useVehicleCategory, useVehicleMaker } from "hooks";
 import { useEffect, useState } from "react";
-
 const VehicleBasicDetailsSchema = [
   // {
   //   key: "2",
@@ -143,15 +142,17 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
   const { vehicleCategory } = useVehicleCategory();
   const { vehicleMaker, model, fetchVehicleModel } = useVehicleMaker();
   // console.log(model);
-
+  const { isMounted } = useIsMounted();
   useEffect(() => {
+    if (!isMounted.current) return;
     if ((vehicleMakerId, categoryId)) {
       fetchVehicleModel(vehicleMakerId, categoryId);
     }
-  }, [categoryId, vehicleMakerId, fetchVehicleModel]);
+  }, [categoryId, vehicleMakerId, fetchVehicleModel, isMounted]);
   // const { drivers } = useDrivers();
   // console.log("vehicleCategory", vehicleCategory);
   useEffect(() => {
+    if (!isMounted.current) return;
     if (vehicleCategory) {
       setAddVehicleTypeSchema([
         ...VehicleBasicDetailsSchema,
@@ -231,7 +232,7 @@ export const useVehicleTypeSchema = (vehicleMakerId, categoryId) => {
     } else {
       setAddVehicleTypeSchema(VehicleBasicDetailsSchema);
     }
-  }, [vehicleCategory, vehicleMaker, model]);
+  }, [vehicleCategory, vehicleMaker, model, isMounted]);
   return { addVehicleTypeSchema };
 };
 

@@ -18,13 +18,14 @@ import InvoiceDrawer from "components/InvoiceDrawer";
 import { useEffect, useState } from "react";
 import { Money, Person, PictureAsPdf } from "@mui/icons-material";
 import { StatementInvoice } from "components/dialog";
-import { useTotalRevenue } from "hooks";
+import { useIsMounted, useTotalRevenue } from "hooks";
 import { BASE_URL } from "configs";
 import { Card as DashboardCard } from "components/dashboard";
 import React from "react";
 
 import { DateRangePicker } from "materialui-daterange-picker";
 const TotalRevenue = () => {
+  const { isMounted } = useIsMounted();
   const [openInvoiceDrawer, setOpenInvoiceDrawer] = useState(false);
   const [openStatementInvoice, setOpenStatementInvoice] = useState(false);
   const { fetchData, rideData } = useTotalRevenue();
@@ -62,8 +63,9 @@ const TotalRevenue = () => {
   const toggle = () => setOpen(!open);
   // console.log(dateRange);
   useEffect(() => {
+    if (!isMounted.current) return;
     fetchData(dateRange?.startDate, dateRange?.endDate);
-  }, [fetchData, dateRange]);
+  }, [fetchData, dateRange, isMounted]);
   return (
     <div>
       <InvoiceDrawer

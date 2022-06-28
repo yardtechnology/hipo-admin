@@ -15,13 +15,13 @@ import { IOSSwitch } from "components/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { useRiders } from "hooks";
+import { useIsMounted, useRiders } from "hooks";
 import Swal from "sweetalert2";
 import { BASE_URL } from "configs";
 // import { MUIOptions } from "helpers";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-
 const Riders = () => {
+  const { isMounted } = useIsMounted();
   const tableRef = React.createRef();
   const { riders, fetchRiders, realtime, setRealtime } = useRiders();
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -163,6 +163,7 @@ const Riders = () => {
   };
   useEffect(() => {
     // console.log({ realtime });
+    if (!isMounted.current) return;
     tableRef?.current && tableRef.current.onQueryChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [realtime]);

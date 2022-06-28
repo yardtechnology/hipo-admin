@@ -2,12 +2,14 @@ import { BASE_URL } from "configs";
 // import { useIsMounted } from "hooks";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import { useIsMounted } from "hooks";
 const { createContext, useState } = require("react");
 
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   // const navigate = useNavigate();
+  const { isMounted } = useIsMounted();
   const [not, setNot] = useState([]);
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState({});
@@ -123,13 +125,13 @@ const AppContextProvider = ({ children }) => {
         const res = await result.json();
         result.status !== 200 &&
           Swal.fire({ icon: "error", text: res.message });
-        setUser(res?.data);
+        isMounted.current && setUser(res?.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchFun();
-  }, []);
+  }, [isMounted]);
   const logout = () => {
     try {
       window.localStorage.removeItem("SAL");
@@ -139,6 +141,8 @@ const AppContextProvider = ({ children }) => {
     }
   };
   const fetchNotifications = async () => {
+    if (!isMounted.current) return;
+
     try {
       const result = await fetch(`${BASE_URL}/notifications/all`, {
         method: "GET",
@@ -166,13 +170,13 @@ const AppContextProvider = ({ children }) => {
         });
         const res = await result.json();
         res?.status !== 200 && console.log(res.message);
-        return setNot(res?.data);
+        return isMounted.current && setNot(res?.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchNotifications();
-  }, []);
+  }, [isMounted]);
 
   return (
     <AppContext.Provider

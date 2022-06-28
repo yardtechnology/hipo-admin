@@ -30,7 +30,7 @@ import {
 } from "components";
 import { SendNotification } from "components/dialog";
 import { BASE_URL } from "configs";
-import { useDrivers } from "hooks";
+import { useDrivers, useIsMounted } from "hooks";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -39,6 +39,7 @@ import Swal from "sweetalert2";
 const AllDrivers = () => {
   const tableRef = React.createRef();
   const navigate = useNavigate();
+  const { isMounted } = useIsMounted();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [openReferralDrawer, setOpenReferralDrawer] = useState(false);
   const [openVehicleInfoDrawer, setOpenVehicleInfoDrawer] = useState(false);
@@ -279,6 +280,7 @@ const AllDrivers = () => {
   }));
   useEffect(() => {
     // console.log({ realtime });
+    if (!isMounted.current) return;
     tableRef?.current && tableRef.current.onQueryChange();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [realtime]);
