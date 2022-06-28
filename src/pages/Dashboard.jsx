@@ -32,6 +32,7 @@ import Chart from "react-apexcharts";
 import { formatCurrency } from "@ashirbad/js-core";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { MAP_KEY } from "configs";
 
 const Dashboard = () => {
   const { activeRides } = useActiveRides();
@@ -151,7 +152,7 @@ const Dashboard = () => {
         <div style={{ height: "50vh", width: "100%", marginBottom: "2vh" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: "AIzaSyDYIlpw2g2dPkPaUhAu_CAakZzyJi-6w6s",
+              key: MAP_KEY,
             }}
             defaultCenter={currentLocation}
             defaultZoom={13}
