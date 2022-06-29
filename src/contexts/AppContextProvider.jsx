@@ -8,13 +8,10 @@ const { createContext, useState } = require("react");
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
-  // const navigate = useNavigate();
   const { isMounted } = useIsMounted();
   const [not, setNot] = useState([]);
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState({});
-  //verify user
-  // const ID = window.localStorage.getItem("ID");
 
   const [vehicleBasicDetails, setVehicleBasicDetails] = useState({
     vehicleName: "",
