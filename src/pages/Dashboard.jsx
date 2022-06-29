@@ -30,7 +30,7 @@ import moment from "moment";
 import GoogleMapReact from "google-map-react";
 import Chart from "react-apexcharts";
 import { formatCurrency } from "@ashirbad/js-core";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { MAP_KEY } from "configs";
 
@@ -61,12 +61,17 @@ const Dashboard = () => {
   //   lat: 20.256266994936375,
   //   lng: 85.77953439361694,
   // };
-
+  const memorizedData = useMemo(() => {
+    return {
+      seriesData: adminData?.monthlyTransaction?.amount,
+      categoriesData: adminData?.monthlyTransaction?.timeLine,
+    };
+  }, [adminData]);
   const areaOptions = {
     series: [
       {
         name: "Total Income",
-        data: adminData?.monthlyTransaction?.amount,
+        data: memorizedData?.seriesData,
       },
     ],
     options: {
@@ -115,7 +120,7 @@ const Dashboard = () => {
         curve: "smooth",
       },
       xaxis: {
-        categories: adminData?.monthlyTransaction?.timeLine,
+        categories: memorizedData?.categoriesData,
       },
       legend: {
         position: "top",
