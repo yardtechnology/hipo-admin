@@ -1,3 +1,3 @@
 const BASE_URL = "https://hipo-dev-api.herokuapp.com/api";
-const MAP_KEY = "AIzaSyDYIlpw2g2dPkPaUhAu_CAakZzyJi-6w6s";
+const MAP_KEY = "AIzaSyBFteIJ7PGw3Tc0iGxs56rpveHYTPX9t_c";
 export { BASE_URL, MAP_KEY };
