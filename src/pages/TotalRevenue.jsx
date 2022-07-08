@@ -276,7 +276,7 @@ const TotalRevenue = () => {
             field: "rideId",
             hidden: true,
             export: true,
-            searchFable: true,
+            searchable: true,
           },
           {
             title: "Driver Profile",
@@ -300,12 +300,57 @@ const TotalRevenue = () => {
               </>
             ),
           },
-
+          {
+            title: "Driver Profile",
+            tooltip: "Profile",
+            searchable: true,
+            emptyValue: "N/A",
+            width: "22%",
+            field: "driverDisplayName",
+            hidden: true,
+            export:false,
+            render: ({ photoURL, driverDisplayName, driverPhoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {driverDisplayName || "Not Provided"}
+                      </Typography>
+                    }
+                    secondary={driverPhoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
+          },
           {
             title: "Rider Profile",
             tooltip: "Profile",
             searchable: true,
             field: "displayName" || "phoneNumber",
+            render: ({ photoURL, displayName, email, phoneNumber }) => (
+              <>
+                <ListItem sx={{ paddingLeft: "0px" }}>
+                  <ListItemText
+                    primary={
+                      <Typography component="span" variant="body2">
+                        {displayName}
+                      </Typography>
+                    }
+                    secondary={phoneNumber}
+                  ></ListItemText>
+                </ListItem>
+              </>
+            ),
+          },
+          {
+            export: false,
+            hidden: true,
+            title: "Rider Profile",
+            tooltip: "Profile",
+            searchable: true,
+            field: "phoneNumber",
             render: ({ photoURL, displayName, email, phoneNumber }) => (
               <>
                 <ListItem sx={{ paddingLeft: "0px" }}>
