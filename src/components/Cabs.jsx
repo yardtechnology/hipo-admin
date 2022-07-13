@@ -152,6 +152,44 @@ const Cabs = ({ city }) => {
               rowData?.perKilometer > 0 ? true : "Required",
           },
           {
+            title: "Price Per Min",
+            field: "perMinute",
+            type: "numeric",
+            emptyValue: 0,
+            searchable: true,
+            render: ({ perMinute }) => formatCurrency(perMinute),
+            validate: (rowData) => (rowData?.perMinute > 0 ? true : "Required"),
+          },
+          {
+            title: "Base Fare",
+            field: "baseFare",
+            type: "numeric",
+            emptyValue: 0,
+            searchable: true,
+            render: ({ baseFare }) => formatCurrency(baseFare),
+            validate: (rowData) => (rowData?.baseFare > 0 ? true : "Required"),
+          },
+          {
+            title: "Allowance",
+            field: "allowance",
+            type: "numeric",
+            emptyValue: 0,
+            searchable: true,
+            render: ({ allowance }) => formatCurrency(allowance),
+            validate: (rowData) => (rowData?.allowance > 0 ? true : "Required"),
+          },
+          {
+            title: "Cancellation %",
+            field: "cancellationPercentage",
+            type: "numeric",
+            emptyValue: 0,
+            searchable: true,
+            render: ({ cancellationPercentage }) =>
+              `${cancellationPercentage}%`,
+            validate: (rowData) =>
+              rowData?.cancellationPercentage > 0 ? true : "Required",
+          },
+          {
             title: "Outstation Price Per KM(Two Way)",
             field: "twoWayOutstationPerKilometer",
             type: "numeric",
@@ -185,15 +223,7 @@ const Cabs = ({ city }) => {
             //   rowData?.withDriverPerKilometer > 0 ? true : "Required",
           },
 
-          {
-            title: "Price Per Min",
-            field: "perMinute",
-            type: "numeric",
-            emptyValue: 0,
-            searchable: true,
-            render: ({ perMinute }) => formatCurrency(perMinute),
-            validate: (rowData) => (rowData?.perMinute > 0 ? true : "Required"),
-          },
+         
           {
             title: "Outstation Price Per Min(Two Way)",
             field: "twoWayOutstationPerMinute",
@@ -228,15 +258,7 @@ const Cabs = ({ city }) => {
             //   rowData?.withDriverPerMinute > 0 ? true : "Required",
           },
 
-          {
-            title: "Base Fare",
-            field: "baseFare",
-            type: "numeric",
-            emptyValue: 0,
-            searchable: true,
-            render: ({ baseFare }) => formatCurrency(baseFare),
-            validate: (rowData) => (rowData?.baseFare > 0 ? true : "Required"),
-          },
+         
           {
             title: "Outstation Base Fare(Two Way)",
             field: "twoWayOutstationBaseFare",
@@ -271,15 +293,7 @@ const Cabs = ({ city }) => {
             //   rowData?.withDriverBaseFare > 0 ? true : "Required",
           },
 
-          {
-            title: "Allowance",
-            field: "allowance",
-            type: "numeric",
-            emptyValue: 0,
-            searchable: true,
-            render: ({ allowance }) => formatCurrency(allowance),
-            validate: (rowData) => (rowData?.allowance > 0 ? true : "Required"),
-          },
+         
           {
             title: "Outstation Allowance(Two Way)",
             field: "twoWayOutstationAllowance",
@@ -340,17 +354,7 @@ const Cabs = ({ city }) => {
           //   render: ({ tax }) => `${tax}%`,
           //   validate: (rowData) => (rowData?.tax > 0 ? true : "Required"),
           // },
-          {
-            title: "Cancellation %",
-            field: "cancellationPercentage",
-            type: "numeric",
-            emptyValue: 0,
-            searchable: true,
-            render: ({ cancellationPercentage }) =>
-              `${cancellationPercentage}%`,
-            validate: (rowData) =>
-              rowData?.cancellationPercentage > 0 ? true : "Required",
-          },
+         
           {
             title: "Timestamp",
             // width: "70%",
