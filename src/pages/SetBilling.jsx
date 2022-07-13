@@ -244,8 +244,8 @@ const SetBilling = () => {
         <Grid item lg={4} md={4}>
           <Card sx={{ width: { lg: 300, md: 300, sm: 400, sx: 300 } }}>
             <CardHeader
-              title="Convenience Fee"
-              subheader="Set your convenience fee"
+              title="Access Fee Tax"
+              subheader="Set your access fee tax"
               titleTypographyProps={{ variant: "h6", textAlign: "center" }}
               subheaderTypographyProps={{
                 variant: "subtitle1",
@@ -352,8 +352,8 @@ const SetBilling = () => {
         <Grid item lg={4} md={4}>
           <Card sx={{ width: { lg: 300, md: 300, sm: 400, sx: 300 } }}>
             <CardHeader
-              title="GST"
-              subheader="Set your GST"
+              title="Ride GST"
+              subheader="Set your ride GST"
               titleTypographyProps={{ variant: "h6", textAlign: "center" }}
               subheaderTypographyProps={{
                 variant: "subtitle1",
