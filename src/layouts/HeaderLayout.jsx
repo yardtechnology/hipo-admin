@@ -186,7 +186,12 @@ const HeaderLayout = ({ handleDrawerOpen, isDrawerOpen }) => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={() => logout()}>
+        <MenuItem
+          onClick={() => {
+            logout();
+            navigate("/");
+          }}
+        >
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
