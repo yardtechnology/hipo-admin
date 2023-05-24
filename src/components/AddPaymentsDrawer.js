@@ -35,7 +35,6 @@ const AddPaymentsDrawer = ({ open, setOpenAddPaymentsDrawer }) => {
   );
   const handleSend = async (values, submitProps) => {
     try {
-      // console.log(values);
       submitProps.resetForm();
     } catch (error) {
       console.log(error);
